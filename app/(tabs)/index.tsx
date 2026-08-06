@@ -1,27 +1,304 @@
-import { Stack } from 'expo-router';
-import { Text } from 'heroui-native';
-import { View } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable, ScrollView, View } from 'react-native';
+import { router } from 'expo-router';
+import {
+  ArrowRight,
+  Award,
+  Coffee,
+  Flame,
+  LifeBuoy,
+  Moon,
+  Timer,
+  Users,
+} from 'lucide-react-native';
 
-export default function Home() {
-  return <ScreenContent />;
+import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
+import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { C, alpha } from '@/lib/colors';
+import { MATCH_MODULES } from '@/lib/data/match';
+import { SCENARIOS } from '@/lib/data/scenarios';
+import { TOTALS, moduleProgress, saferScore, useCapeStore } from '@/lib/store/useCapeStore';
+
+export default function Compass() {
+  const codename = useCapeStore((s) => s.codename);
+  const xp = useCapeStore((s) => s.xp);
+  const streak = useCapeStore((s) => s.streak);
+  const badges = useCapeStore((s) => s.badges);
+  const completedLessons = useCapeStore((s) => s.completedLessons);
+  const boundaries = useCapeStore((s) => s.boundaries);
+  const circle = useCapeStore((s) => s.circle);
+  const scenarioResults = useCapeStore((s) => s.scenarioResults);
+  const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
+  const registerVisit = useCapeStore((s) => s.registerVisit);
+
+  useEffect(() => {
+    registerVisit();
+  }, [registerVisit]);
+
+  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults });
+  const playedSims = Object.keys(scenarioResults).length;
+  const nextSim = SCENARIOS.find((s) => !scenarioResults[s.id]) ?? SCENARIOS[0];
+
+  return (
+    <View className="bg-ink flex-1">
+      <SafeAreaView edges={['top']} className="bg-ink" />
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="px-5 pt-4 pb-16"
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Eyebrow color={C.teal}>WEAR YOUR CAPE</Eyebrow>
+            <Display className="mt-1.5 text-3xl">
+              {codename.length > 0 ? codename : 'Anonymous'}
+            </Display>
+          </View>
+          <View className="flex-row items-center gap-2">
+            <View
+              className="flex-row items-center gap-1.5 rounded-full px-3 py-1.5"
+              style={{
+                backgroundColor: alpha(C.flame, 0.1),
+                borderWidth: 1,
+                borderColor: alpha(C.flame, 0.28),
+              }}
+            >
+              <Flame size={13} color={C.flame} />
+              <Mono bold color={C.flame} className="text-[10px]">
+                {streak}d
+              </Mono>
+            </View>
+            <View
+              className="flex-row items-center gap-1.5 rounded-full px-3 py-1.5"
+              style={{
+                backgroundColor: alpha(C.gold, 0.1),
+                borderWidth: 1,
+                borderColor: alpha(C.gold, 0.28),
+              }}
+            >
+              <Award size={13} color={C.gold} />
+              <Mono bold color={C.gold} className="text-[10px]">
+                {xp} XP
+              </Mono>
+            </View>
+          </View>
+        </View>
+
+        {/* SafER SCORE */}
+        <Panel tint={C.teal} fill={0.06} stroke={0.2} className="mt-5">
+          <View className="flex-row items-end justify-between">
+            <View>
+              <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
+              <Mono className="mt-1.5 text-[10px]">Readiness across all five modules</Mono>
+            </View>
+            <Display color={C.teal} className="text-5xl">
+              {score}
+            </Display>
+          </View>
+          <View className="mt-3">
+            <Rail value={score} color={C.teal} height={6} />
+          </View>
+          <View className="mt-4 flex-row flex-wrap gap-2">
+            <Chip label={`${completedLessons.length}/${TOTALS.lessons} LESSONS`} tint={C.modM} />
+            <Chip label={`${playedSims}/${TOTALS.scenarios} SIMS`} tint={C.violet} />
+            <Chip
+              label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
+              tint={C.amber}
+            />
+            <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
+          </View>
+        </Panel>
+
+        {pepStartedAt ? (
+          <TintedRow
+            tint={C.flame}
+            fill={0.12}
+            stroke={0.35}
+            className="mt-4"
+            onPress={() => router.push('/tools/pep-clock')}
+          >
+            <View className="flex-row items-center gap-3">
+              <Timer size={18} color={C.flame} />
+              <View className="flex-1">
+                <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
+                  PEP CLOCK IS RUNNING
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  Tap to see time left in the 72-hour window
+                </Mono>
+              </View>
+              <ArrowRight size={14} color={C.flame} />
+            </View>
+          </TintedRow>
+        ) : null}
+
+        {/* MATCH COMPASS */}
+        <View className="mt-8">
+          <Eyebrow color={C.teal}>MATCH COMPASS</Eyebrow>
+          <Display className="mt-2 text-3xl">Five modules. One compass.</Display>
+          <View className="mt-4 gap-3">
+            {MATCH_MODULES.map((mod) => {
+              const progress = moduleProgress(mod.id, completedLessons);
+              const done = mod.lessons.filter((l) => completedLessons.includes(l.id)).length;
+              return (
+                <TintedRow
+                  key={mod.id}
+                  tint={mod.color}
+                  fill={0.05}
+                  stroke={0.16}
+                  onPress={() => router.push({ pathname: '/module/[id]', params: { id: mod.id } })}
+                >
+                  <View className="flex-row items-center gap-4">
+                    <View
+                      className="h-12 w-12 items-center justify-center rounded-xl"
+                      style={{
+                        backgroundColor: alpha(mod.color, 0.1),
+                        borderWidth: 1,
+                        borderColor: alpha(mod.color, 0.25),
+                      }}
+                    >
+                      <Display color={mod.color} className="text-2xl">
+                        {mod.letter}
+                      </Display>
+                    </View>
+                    <View className="flex-1">
+                      <View className="flex-row items-center gap-2">
+                        <Mono className="text-sm">{mod.emoji}</Mono>
+                        <Mono bold color={mod.color} className="text-[12px]">
+                          {mod.name}
+                        </Mono>
+                      </View>
+                      <View className="mt-2">
+                        <Rail value={progress} color={mod.color} />
+                      </View>
+                      <Mono className="mt-1.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                        {done}/{mod.lessons.length} lessons · {progress}%
+                      </Mono>
+                    </View>
+                    <ArrowRight size={14} color={alpha(mod.color, 0.8)} />
+                  </View>
+                </TintedRow>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* TONIGHT'S SIM */}
+        <View className="mt-8">
+          <Eyebrow color={C.violet}>MIDNIGHT SIM</Eyebrow>
+          <Display className="mt-2 text-3xl">Practice before it&apos;s real.</Display>
+          <TintedRow
+            tint={C.violet}
+            fill={0.07}
+            stroke={0.22}
+            className="mt-4"
+            onPress={() => router.push({ pathname: '/sim/[id]', params: { id: nextSim.id } })}
+          >
+            <View className="flex-row items-center gap-3">
+              <Mono className="text-xl">{nextSim.emoji}</Mono>
+              <View className="flex-1">
+                <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
+                  {nextSim.time} · {nextSim.title.toUpperCase()}
+                </Mono>
+                <Mono className="mt-1 text-[10px]">{nextSim.setup}</Mono>
+              </View>
+              <ArrowRight size={14} color={C.violet} />
+            </View>
+          </TintedRow>
+        </View>
+
+        {/* QUICK TOOLS */}
+        <View className="mt-8">
+          <Eyebrow color={C.amber}>QUICK ACCESS</Eyebrow>
+          <View className="mt-4 flex-row flex-wrap gap-3">
+            <QuickTile
+              tint={C.amber}
+              icon={<Coffee size={18} color={C.amber} />}
+              label="CONSENT CAFÉ"
+              detail={`${Object.keys(boundaries).length} items ordered`}
+              onPress={() => router.push('/tools/consent-cafe')}
+            />
+            <QuickTile
+              tint={C.azure}
+              icon={<Users size={18} color={C.azure} />}
+              label="SAFETY CIRCLE"
+              detail={`${circle.length} people`}
+              onPress={() => router.push('/tools/safety-circle')}
+            />
+            <QuickTile
+              tint={C.flame}
+              icon={<LifeBuoy size={18} color={C.flame} />}
+              label="CRISIS PROTOCOL"
+              detail="24/7 lines"
+              onPress={() => router.push('/(tabs)/crisis')}
+            />
+            <QuickTile
+              tint={C.violet}
+              icon={<Moon size={18} color={C.violet} />}
+              label="ALL SCENARIOS"
+              detail={`${playedSims}/${TOTALS.scenarios} played`}
+              onPress={() => router.push('/(tabs)/tools')}
+            />
+          </View>
+        </View>
+
+        {/* BADGES */}
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push('/badges')}
+          className="mt-8 active:opacity-70"
+        >
+          <Panel tint={C.gold} fill={0.05} stroke={0.2}>
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1">
+                <Eyebrow color={C.gold}>BADGES</Eyebrow>
+                <Body className="mt-1.5" color={alpha(C.slateSoft, 0.7)}>
+                  {badges.length === 0
+                    ? 'Finish one lesson to earn your first badge.'
+                    : `${badges.length} earned. Keep stacking.`}
+                </Body>
+              </View>
+              <Award size={22} color={C.gold} />
+            </View>
+          </Panel>
+        </Pressable>
+      </ScrollView>
+    </View>
+  );
 }
 
-function ScreenContent() {
+function QuickTile({
+  tint,
+  icon,
+  label,
+  detail,
+  onPress,
+}: {
+  tint: string;
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+  onPress: () => void;
+}) {
   return (
-    <View className="bg-background p-safe flex basis-full flex-col">
-      <Stack.Screen
-        options={{
-          title: 'Home',
-        }}
-      />
-      <View className="flex-1 items-center justify-center">
-        <Text.Heading type="h2" align="center" className="mb-4">
-          Welcome to Your App
-        </Text.Heading>
-        <Text.Paragraph align="center" color="muted">
-          This is your starting point. Start building something amazing!
-        </Text.Paragraph>
-      </View>
-    </View>
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      className="flex-1 basis-[45%] rounded-2xl p-4 active:opacity-70"
+      style={{
+        backgroundColor: alpha(tint, 0.06),
+        borderWidth: 1,
+        borderColor: alpha(tint, 0.18),
+      }}
+    >
+      {icon}
+      <Mono bold color={tint} className="mt-2.5 text-[10px]" tracking={1}>
+        {label}
+      </Mono>
+      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+        {detail}
+      </Mono>
+    </Pressable>
   );
 }

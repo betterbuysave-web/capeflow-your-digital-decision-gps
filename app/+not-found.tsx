@@ -1,15 +1,32 @@
 import { Link, Stack } from 'expo-router';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+
+import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
+import { C, alpha } from '@/lib/colors';
 
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View>
-        <Text>This screen doesn&apos;t exist.</Text>
-
-        <Link href="/">
-          <Text>Go to home screen!</Text>
+      <Stack.Screen options={{ title: 'Off the map' }} />
+      <View className="bg-ink flex-1 items-center justify-center gap-3 px-8">
+        <Eyebrow color={C.flame}>OFF THE MAP</Eyebrow>
+        <Display className="text-center text-4xl">This screen doesn&apos;t exist.</Display>
+        <Body className="text-center">
+          The compass lost this route. Head back and pick a module.
+        </Body>
+        <Link href="/" asChild>
+          <View
+            className="mt-4 rounded-full px-6 py-3"
+            style={{
+              backgroundColor: alpha(C.teal, 0.12),
+              borderWidth: 1,
+              borderColor: alpha(C.teal, 0.35),
+            }}
+          >
+            <Mono bold color={C.teal} tracking={2} className="text-[11px]">
+              BACK TO CAPE FLOW
+            </Mono>
+          </View>
         </Link>
       </View>
     </>

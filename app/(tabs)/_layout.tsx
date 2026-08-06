@@ -1,42 +1,68 @@
-import { Home } from 'lucide-react-native';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useThemeColor } from 'heroui-native';
-import { useUniwind } from 'uniwind';
+import { Compass, LifeBuoy, Moon, User, Wrench } from 'lucide-react-native';
+
+import { C, alpha } from '@/lib/colors';
 
 export default function TabLayout() {
-  const { theme } = useUniwind();
-  const [background, foreground, border, accent, muted] = useThemeColor([
-    'background',
-    'foreground',
-    'border',
-    'accent',
-    'muted',
-  ]);
-
   return (
     <>
-      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar style="light" />
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: background },
-          headerTintColor: foreground,
-          headerTitleStyle: { color: foreground },
-          headerShadowVisible: false,
-          sceneStyle: { backgroundColor: background },
+          headerShown: false,
+          sceneStyle: { backgroundColor: C.ink },
           tabBarStyle: {
-            backgroundColor: background,
-            borderTopColor: border,
+            backgroundColor: C.ink2,
+            borderTopColor: alpha('#ffffff', 0.07),
+            borderTopWidth: 1,
+            elevation: 0,
+            shadowColor: 'transparent',
+            shadowOpacity: 0,
+            shadowRadius: 0,
           },
-          tabBarActiveTintColor: accent,
-          tabBarInactiveTintColor: muted,
+          tabBarActiveTintColor: C.teal,
+          tabBarInactiveTintColor: alpha(C.slateFaint, 0.6),
+          tabBarLabelStyle: {
+            fontFamily: 'JetBrainsMono_700Bold',
+            fontSize: 9,
+            letterSpacing: 1,
+          },
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color, size }) => <Home color={color} size={size ?? 24} />,
+            title: 'COMPASS',
+            tabBarIcon: ({ color, size }) => <Compass color={color} size={size ?? 24} />,
+          }}
+        />
+        <Tabs.Screen
+          name="learn"
+          options={{
+            title: 'M.A.T.C.H.',
+            tabBarIcon: ({ color, size }) => <Moon color={color} size={size ?? 24} />,
+          }}
+        />
+        <Tabs.Screen
+          name="tools"
+          options={{
+            title: 'TOOLS',
+            tabBarIcon: ({ color, size }) => <Wrench color={color} size={size ?? 24} />,
+          }}
+        />
+        <Tabs.Screen
+          name="crisis"
+          options={{
+            title: 'CRISIS',
+            tabBarIcon: ({ color, size }) => <LifeBuoy color={color} size={size ?? 24} />,
+          }}
+        />
+        <Tabs.Screen
+          name="me"
+          options={{
+            title: 'ME',
+            tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 24} />,
           }}
         />
       </Tabs>

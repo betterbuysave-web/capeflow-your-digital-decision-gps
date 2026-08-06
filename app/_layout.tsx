@@ -9,6 +9,12 @@ import {
   Inter_700Bold,
   useFonts,
 } from '@expo-google-fonts/inter';
+import { BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_500Medium,
+  JetBrainsMono_700Bold,
+} from '@expo-google-fonts/jetbrains-mono';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
@@ -26,6 +32,7 @@ import { initPostHog } from '@/lib/posthog';
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
+import { C } from '@/lib/colors';
 
 /**
  * Custom ErrorBoundary that reports React render errors to the parent window (Bilt preview iframe)
@@ -43,8 +50,8 @@ function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 
 export { ErrorBoundary };
 
-// Starter is light-only by default. Remove this when implementing requested dark mode.
-Uniwind.setTheme('light');
+// CAPE FLOW is a dark-only experience.
+Uniwind.setTheme('dark');
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -54,6 +61,10 @@ export default function RootLayout() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
+    BebasNeue_400Regular,
+    JetBrainsMono_400Regular,
+    JetBrainsMono_500Medium,
+    JetBrainsMono_700Bold,
   });
 
   // Report uncaught JS errors and unhandled promise rejections to parent (Bilt preview iframe)
@@ -80,29 +91,20 @@ export default function RootLayout() {
     };
   }, []);
 
-  // Inject Google Fonts link tag for web to ensure fonts load through proxy
-  // Also register font family names as fallback if expo-font fails
   useEffect(() => {
     if (Platform.OS === 'web') {
-      // Check if link already exists
-      const existingLink = document.querySelector(
-        'link[href*="fonts.googleapis.com/css2?family=Inter"]',
-      );
+      const href =
+        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap';
+      const existingLink = document.querySelector('link[data-cape-fonts="1"]');
 
       if (!existingLink) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href =
-          'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+        link.href = href;
         link.crossOrigin = 'anonymous';
+        link.dataset.capeFonts = '1';
         document.head.appendChild(link);
       }
-
-      // Note: The @import in global.css and the link tag above ensure Inter font loads
-      // expo-font will register the font family names (Inter_400Regular, etc.)
-      // If expo-font fails due to proxy issues, the fonts should still be available
-      // via the direct Google Fonts CDN link, though the specific font family names
-      // might not be registered. The app should still render with Inter font.
     }
   }, []);
 
@@ -139,10 +141,32 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: C.ink }}>
       <HeroUINativeProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ title: 'Habits', headerShown: false }} />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: C.ink },
+          }}
+        >
+          <Stack.Screen name="index" options={{ title: 'CAPE Flow' }} />
+          <Stack.Screen name="(tabs)" options={{ title: 'CAPE Flow' }} />
+          <Stack.Screen name="onboarding" options={{ title: 'Get Started' }} />
+          <Stack.Screen
+            name="sample"
+            options={{
+              title: 'Sample Scenario',
+              presentation: 'modal',
+              contentStyle: { backgroundColor: C.ink },
+            }}
+          />
+          <Stack.Screen name="parents" options={{ title: 'Parents & Schools' }} />
+          <Stack.Screen name="module/[id]" options={{ title: 'Module' }} />
+          <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
+          <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
+          <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
+          <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
+          <Stack.Screen name="badges" options={{ title: 'Badges' }} />
         </Stack>
         <InstallPrompt />
       </HeroUINativeProvider>

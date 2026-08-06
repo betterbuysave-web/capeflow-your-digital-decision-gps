@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @import 'tailwindcss';
 @import 'uniwind';
@@ -6,35 +7,91 @@
 @import 'heroui-native/styles';
 
 /*
- * HeroUI Native + Uniwind tokens
- *
- * HeroUI component variants compile to semantic utilities such as bg-accent,
- * text-accent-foreground, bg-default, and text-foreground. The imported
- * heroui-native/styles package defines the default semantic theme and maps it
- * to --color-* Tailwind utilities.
- *
- * When changing brand colors, override semantic tokens inside Uniwind theme
- * variants. Do not put --accent only in a plain :root block: web may look
- * correct through CSS cascade order while Expo Go/native keeps HeroUI's
- * default blue from the active light/dark theme table.
- *
- * Example:
- *
- * @layer theme {
- *   :root {
- *     @variant light {
- *       --accent: oklch(0.63 0.18 148);
- *       --accent-foreground: oklch(0.99 0 0);
- *       --focus: var(--accent);
- *     }
- *
- *     @variant dark {
- *       --accent: oklch(0.63 0.18 148);
- *       --accent-foreground: oklch(0.99 0 0);
- *       --focus: var(--accent);
- *     }
- *   }
- * }
+ * CAPE FLOW theme — dark, high contrast, teal + gold accents.
+ * HeroUI semantic tokens are overridden inside Uniwind theme variants so both
+ * web and native resolve the same values.
  */
+@layer theme {
+  :root {
+    @variant light {
+      --background: oklch(0.13 0.014 280);
+      --foreground: oklch(1 0 0);
+      --panel: oklch(0.18 0.018 280);
+      --surface: oklch(0.18 0.018 280);
+      --surface-foreground: oklch(1 0 0);
+      --default: oklch(0.24 0.018 280);
+      --default-foreground: oklch(0.96 0 0);
+      --muted: oklch(0.72 0.03 250);
+      --muted-foreground: oklch(0.72 0.03 250);
+      --border: oklch(0.28 0.02 280);
+      --accent: oklch(0.88 0.19 172);
+      --accent-foreground: oklch(0.13 0.014 280);
+      --accent-soft: oklch(0.28 0.06 172);
+      --accent-soft-foreground: oklch(0.88 0.19 172);
+      --success: oklch(0.75 0.18 160);
+      --warning: oklch(0.85 0.17 90);
+      --danger: oklch(0.62 0.24 25);
+      --focus: oklch(0.88 0.19 172);
+      --link: oklch(0.88 0.19 172);
+    }
+
+    @variant dark {
+      --background: oklch(0.13 0.014 280);
+      --foreground: oklch(1 0 0);
+      --panel: oklch(0.18 0.018 280);
+      --surface: oklch(0.18 0.018 280);
+      --surface-foreground: oklch(1 0 0);
+      --default: oklch(0.24 0.018 280);
+      --default-foreground: oklch(0.96 0 0);
+      --muted: oklch(0.72 0.03 250);
+      --muted-foreground: oklch(0.72 0.03 250);
+      --border: oklch(0.28 0.02 280);
+      --accent: oklch(0.88 0.19 172);
+      --accent-foreground: oklch(0.13 0.014 280);
+      --accent-soft: oklch(0.28 0.06 172);
+      --accent-soft-foreground: oklch(0.88 0.19 172);
+      --success: oklch(0.75 0.18 160);
+      --warning: oklch(0.85 0.17 90);
+      --danger: oklch(0.62 0.24 25);
+      --focus: oklch(0.88 0.19 172);
+      --link: oklch(0.88 0.19 172);
+    }
+  }
+}
+
+@theme {
+  --color-ink: #050508;
+  --color-ink-2: #0b0b14;
+  --color-card: #0f0f1a;
+  --color-hairline: #1c1c2b;
+
+  --color-teal: #00ffcc;
+  --color-teal-dim: #00c4a8;
+  --color-gold: #d4af37;
+  --color-gold-light: #f7e9a0;
+  --color-flame: #ff4d00;
+  --color-azure: #0088ff;
+  --color-amber: #f59e0b;
+  --color-violet: #cc44ff;
+  --color-lemon: #ffcc00;
+
+  --color-yes: #00d084;
+  --color-maybe: #ffd500;
+  --color-no: #e8003d;
+
+  --color-mod-m: #90b14b;
+  --color-mod-a: #6e99a3;
+  --color-mod-t: #a8005d;
+  --color-mod-c: #dfc401;
+  --color-mod-h: #ff751f;
+
+  --color-slate-soft: #cbd5e1;
+  --color-slate-faint: #94a3b8;
+
+  --font-display: 'BebasNeue_400Regular', 'Bebas Neue', 'Inter_700Bold', sans-serif;
+  --font-mono: 'JetBrainsMono_400Regular', 'JetBrains Mono', monospace;
+  --font-monobold: 'JetBrainsMono_700Bold', 'JetBrains Mono', monospace;
+  --font-body: 'Inter_400Regular', 'Inter', sans-serif;
+}
 
 @source './node_modules/heroui-native/lib';
