@@ -16,7 +16,9 @@ import {
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { GhostButton, MetallicButton, TintedRow } from '@/components/cape/Buttons';
-import { Wordmark } from '@/components/cape/Wordmark';
+import { BrandBanner } from '@/components/cape/BrandBanner';
+import { BrandFooter } from '@/components/cape/BrandFooter';
+import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES } from '@/lib/data/match';
 import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, PROBLEM_STATS, SOURCES } from '@/lib/data/content';
@@ -84,7 +86,7 @@ export default function Landing() {
               <Eyebrow color={C.teal}>THE HARNESS PROJECT</Eyebrow>
             </View>
 
-            <Wordmark />
+            <BrandBanner className="w-full" />
 
             <Body className="mt-6 text-center" color={alpha(C.slateSoft, 0.8)}>
               A gamified health &amp; safety compass for youth. Turn anxiety into agency with the{' '}
@@ -145,6 +147,10 @@ export default function Landing() {
               Five modules. One compass. Each builds a layer of real-world readiness — from medical
               knowledge to communication skills to daily habits.
             </Body>
+          </View>
+
+          <View className="mt-8">
+            <MatchCompass band={null} preview />
           </View>
 
           <View className="mt-8 gap-3">
@@ -489,6 +495,8 @@ export default function Landing() {
             onPress={() => router.push('/onboarding')}
             className="w-full"
           />
+
+          <BrandFooter className="mt-12 w-full" />
         </View>
       </ScrollView>
 

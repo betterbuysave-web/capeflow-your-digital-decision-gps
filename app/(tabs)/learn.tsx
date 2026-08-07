@@ -4,15 +4,18 @@ import { ArrowRight, CircleCheck } from 'lucide-react-native';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { TintedRow } from '@/components/cape/Buttons';
+import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
-import { MATCH_MODULES } from '@/lib/data/match';
+import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
 import { FRIES } from '@/lib/data/boundaries';
+import { trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function Learn() {
   const completedLessons = useCapeStore((s) => s.completedLessons);
   const gradeBand = useCapeStore((s) => s.gradeBand);
+  const track = trackFor(gradeBand);
 
   return (
     <View className="bg-ink flex-1">
@@ -28,16 +31,16 @@ export default function Learn() {
           Five modules. One compass. Each builds a layer of real-world readiness — from medical
           knowledge to communication skills to daily habits.
         </Body>
-        {gradeBand ? (
-          <View className="mt-4 flex-row">
-            <Chip label={`TRACK · GRADES ${gradeBand}`} tint={C.gold} />
-          </View>
-        ) : null}
 
-        <View className="mt-6 gap-3">
+        <View className="mt-5">
+          <MatchCompass />
+        </View>
+
+        <View className="mt-8 gap-3">
           {MATCH_MODULES.map((mod) => {
-            const progress = moduleProgress(mod.id, completedLessons);
-            const done = mod.lessons.filter((l) => completedLessons.includes(l.id)).length;
+            const progress = moduleProgress(mod.id, completedLessons, track);
+            const available = lessonsForTrack(mod, track);
+            const done = available.filter((l) => completedLessons.includes(l.id)).length;
             return (
               <TintedRow
                 key={mod.id}
@@ -75,7 +78,7 @@ export default function Learn() {
                     </View>
                     <View className="mt-1.5 flex-row items-center justify-between">
                       <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
-                        {done}/{mod.lessons.length} lessons
+                        {done}/{available.length} lessons
                       </Mono>
                       <ArrowRight size={13} color={alpha(mod.color, 0.8)} />
                     </View>

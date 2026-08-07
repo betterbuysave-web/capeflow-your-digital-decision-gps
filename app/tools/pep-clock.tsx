@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { CircleAlert, MapPin, Phone, Play, Square } from 'lucide-react-native';
+import { CircleAlert, Lock, MapPin, Phone, Play, Square } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
 import { PEP_WINDOW_MS } from '@/lib/data/crisis';
+import { PEP_LOCK_NOTE, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const pad = (n: number) => n.toString().padStart(2, '0');
@@ -23,6 +24,7 @@ export default function PepClock() {
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
   const startPep = useCapeStore((s) => s.startPep);
   const clearPep = useCapeStore((s) => s.clearPep);
+  const gradeBand = useCapeStore((s) => s.gradeBand);
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -35,6 +37,49 @@ export default function PepClock() {
   const left = PEP_WINDOW_MS - elapsed;
   const pct = pepStartedAt ? Math.max(0, (left / PEP_WINDOW_MS) * 100) : 100;
   const expired = pepStartedAt !== null && left <= 0;
+
+  if (!pepUnlocked(gradeBand)) {
+    return (
+      <View className="bg-ink flex-1">
+        <StackHeader title="PEP Clock" tint={C.lemon} fallback="/(tabs)/tools" />
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="px-5 pt-6 pb-16"
+          showsVerticalScrollIndicator={false}
+        >
+          <Eyebrow color={C.lemon}>LOCKED ON THIS TRACK</Eyebrow>
+          <Display className="mt-2 text-4xl">This shield opens in grades 9–12.</Display>
+          <Body className="mt-3">{PEP_LOCK_NOTE}</Body>
+
+          <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-6">
+            <View className="flex-row items-start gap-2.5">
+              <Lock size={15} color={C.lemon} />
+              <Mono className="flex-1 text-[10px]">
+                If something just happened right now, that is still an emergency and you deserve
+                help. Open the Crisis Protocol, call 911, or tell a trusted adult immediately.
+              </Mono>
+            </View>
+          </Panel>
+
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push('/(tabs)/crisis')}
+            className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
+            style={{
+              backgroundColor: alpha(C.teal, 0.1),
+              borderWidth: 1,
+              borderColor: alpha(C.teal, 0.3),
+            }}
+          >
+            <Phone size={14} color={C.teal} />
+            <Mono bold color={C.teal} tracking={2} className="text-[11px]">
+              OPEN CRISIS PROTOCOL
+            </Mono>
+          </Pressable>
+        </ScrollView>
+      </View>
+    );
+  }
 
   return (
     <View className="bg-ink flex-1">

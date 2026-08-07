@@ -1,20 +1,23 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { Check, ChevronDown, Clock, Sparkles } from 'lucide-react-native';
+import { Check, ChevronDown, Clock, Lock, Sparkles } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
-import { getModule } from '@/lib/data/match';
+import { getModule, lessonsForTrack, lockedLessonsForTrack } from '@/lib/data/match';
+import { TRACKS, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function ModuleDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const mod = getModule(id ?? '');
   const completedLessons = useCapeStore((s) => s.completedLessons);
+  const gradeBand = useCapeStore((s) => s.gradeBand);
   const completeLesson = useCapeStore((s) => s.completeLesson);
   const [openId, setOpenId] = useState<string | null>(null);
+  const track = trackFor(gradeBand);
 
   if (!mod) {
     return (
@@ -30,8 +33,10 @@ export default function ModuleDetail() {
     );
   }
 
-  const progress = moduleProgress(mod.id, completedLessons);
-  const done = mod.lessons.filter((l) => completedLessons.includes(l.id)).length;
+  const progress = moduleProgress(mod.id, completedLessons, track);
+  const lessons = lessonsForTrack(mod, track);
+  const locked = lockedLessonsForTrack(mod, track);
+  const done = lessons.filter((l) => completedLessons.includes(l.id)).length;
 
   return (
     <View className="bg-ink flex-1">
@@ -73,12 +78,12 @@ export default function ModuleDetail() {
             <Rail value={progress} color={mod.color} height={5} />
           </View>
           <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
-            {done} of {mod.lessons.length} lessons complete
+            {done} of {lessons.length} lessons complete
           </Mono>
         </Panel>
 
         <View className="mt-6 gap-3">
-          {mod.lessons.map((lesson, index) => {
+          {lessons.map((lesson, index) => {
             const isDone = completedLessons.includes(lesson.id);
             const isOpen = openId === lesson.id;
             return (
@@ -185,6 +190,34 @@ export default function ModuleDetail() {
             );
           })}
         </View>
+
+        {locked.length > 0 ? (
+          <View className="mt-6 gap-2.5">
+            <Eyebrow color={C.lemon}>LOCKED ON THIS TRACK</Eyebrow>
+            {locked.map((lesson) => (
+              <View
+                key={lesson.id}
+                className="flex-row items-start gap-3 rounded-2xl p-4"
+                style={{
+                  backgroundColor: alpha(C.lemon, 0.04),
+                  borderWidth: 1,
+                  borderColor: alpha(C.lemon, 0.18),
+                }}
+              >
+                <Lock size={15} color={C.lemon} />
+                <View className="flex-1">
+                  <Mono bold className="text-[11px]" color={alpha(C.slateSoft, 0.85)}>
+                    {lesson.title}
+                  </Mono>
+                  <Mono className="mt-1 text-[10px]">
+                    Protection shields open on the {TRACKS.blue.label.toLowerCase()} — grades 9–12.
+                    On this track the focus stays on mindset, consent, and digital safety.
+                  </Mono>
+                </View>
+              </View>
+            ))}
+          </View>
+        ) : null}
       </ScrollView>
     </View>
   );

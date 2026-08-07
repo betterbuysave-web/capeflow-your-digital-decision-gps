@@ -34,6 +34,47 @@ export const GRADE_BANDS: GradeBandInfo[] = [
   },
 ];
 
+/** Tiered track architecture: Green = grades 4–8, Blue = grades 9–12. */
+export type Track = 'green' | 'blue';
+
+export interface TrackInfo {
+  id: Track;
+  label: string;
+  name: string;
+  tint: string;
+  scope: string;
+}
+
+export const TRACKS: Record<Track, TrackInfo> = {
+  green: {
+    id: 'green',
+    label: 'GREEN TRACK',
+    name: 'Internal CAPE',
+    tint: C.modM,
+    scope: 'Mindset, consent, digital safety. Protection shields stay locked.',
+  },
+  blue: {
+    id: 'blue',
+    label: 'BLUE TRACK',
+    name: 'Full CAPE Scope',
+    tint: C.azure,
+    scope: 'Frontline gear, medical shields (PrEP/PEP/vaccines), clinical intake drills.',
+  },
+};
+
+/** Grades 9–12 run the Blue track; everything below is Green. */
+export function trackFor(band: GradeBand | null): Track {
+  return band === '9-12' ? 'blue' : 'green';
+}
+
+/** The PEP clock is a Blue-track (grades 9–12) medical shield only. */
+export function pepUnlocked(band: GradeBand | null): boolean {
+  return trackFor(band) === 'blue';
+}
+
+export const PEP_LOCK_NOTE =
+  'The PEP Clock is part of the Grades 9–12 medical shields. On the Grades 4–8 track it stays locked — the tools here focus on mindset, consent, and digital safety.';
+
 export interface CurriculumRow {
   band: string;
   topics: string[];

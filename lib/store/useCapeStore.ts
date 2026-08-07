@@ -2,10 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { ALL_LESSONS, MATCH_MODULES, type ModuleId } from '@/lib/data/match';
+import {
+  ALL_LESSONS,
+  MATCH_MODULES,
+  type ModuleId,
+  allLessonsForTrack,
+  lessonsForTrack,
+} from '@/lib/data/match';
 import { BOUNDARY_MENU, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { SCENARIOS, type Verdict } from '@/lib/data/scenarios';
-import type { GradeBand } from '@/lib/data/content';
+import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
 
 export interface CircleContact {
   id: string;
@@ -62,14 +68,21 @@ function isYesterday(key: string): boolean {
   return dayKey(yesterday) === key;
 }
 
+/** Lessons available on the reader's track — Green keeps blue-only lessons locked. */
+export function lessonTotal(band: GradeBand | null): number {
+  return allLessonsForTrack(trackFor(band)).length;
+}
+
 /** SafER Score: 0–100 readiness across knowledge, boundaries, team, and practice. */
 export function saferScore(state: {
   completedLessons: string[];
   boundaries: Record<string, BoundaryAnswer>;
   circle: CircleContact[];
   scenarioResults: Record<string, ScenarioResult>;
+  gradeBand?: GradeBand | null;
 }): number {
-  const lessons = (state.completedLessons.length / TOTAL_LESSONS) * 45;
+  const total = lessonTotal(state.gradeBand ?? null);
+  const lessons = (Math.min(state.completedLessons.length, total) / total) * 45;
   const answered = Object.keys(state.boundaries).length;
   const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 15;
   const team = (Math.min(state.circle.length, 3) / 3) * 15;
@@ -78,11 +91,17 @@ export function saferScore(state: {
   return Math.round(lessons + menu + team + sims);
 }
 
-export function moduleProgress(moduleId: ModuleId, completedLessons: string[]): number {
+export function moduleProgress(
+  moduleId: ModuleId,
+  completedLessons: string[],
+  track: Track = 'blue',
+): number {
   const mod = MATCH_MODULES.find((m) => m.id === moduleId);
   if (!mod) return 0;
-  const done = mod.lessons.filter((l) => completedLessons.includes(l.id)).length;
-  return Math.round((done / mod.lessons.length) * 100);
+  const available = lessonsForTrack(mod, track);
+  if (available.length === 0) return 0;
+  const done = available.filter((l) => completedLessons.includes(l.id)).length;
+  return Math.round((done / available.length) * 100);
 }
 
 const MODULE_BADGE: Record<ModuleId, string> = {
@@ -95,10 +114,12 @@ const MODULE_BADGE: Record<ModuleId, string> = {
 
 function earnedBadges(state: CapeState): string[] {
   const earned = new Set(state.badges);
+  const track = trackFor(state.gradeBand);
 
   if (state.completedLessons.length > 0) earned.add('first-step');
   for (const mod of MATCH_MODULES) {
-    if (moduleProgress(mod.id, state.completedLessons) === 100) earned.add(MODULE_BADGE[mod.id]);
+    if (moduleProgress(mod.id, state.completedLessons, track) === 100)
+      earned.add(MODULE_BADGE[mod.id]);
   }
   if (state.circle.length >= 3) earned.add('circle-built');
   if (Object.keys(state.boundaries).length >= 8) earned.add('menu-set');

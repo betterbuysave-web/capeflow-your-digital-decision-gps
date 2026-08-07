@@ -7,7 +7,7 @@ import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { C, alpha } from '@/lib/colors';
 import { CRISIS_LINES, CRISIS_STEPS } from '@/lib/data/crisis';
-import { DISCLAIMER } from '@/lib/data/content';
+import { DISCLAIMER, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const open = (url: string) => {
@@ -17,6 +17,8 @@ const open = (url: string) => {
 export default function Crisis() {
   const circle = useCapeStore((s) => s.circle);
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
+  const gradeBand = useCapeStore((s) => s.gradeBand);
+  const pepAvailable = pepUnlocked(gradeBand);
 
   return (
     <View className="bg-ink flex-1">
@@ -91,24 +93,26 @@ export default function Crisis() {
         </View>
 
         <View className="mt-6 gap-3">
-          <TintedRow
-            tint={C.flame}
-            fill={pepStartedAt ? 0.12 : 0.07}
-            stroke={0.28}
-            onPress={() => router.push('/tools/pep-clock')}
-          >
-            <View className="flex-row items-center gap-3">
-              <Timer size={18} color={C.flame} />
-              <View className="flex-1">
-                <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
-                  {pepStartedAt ? 'PEP CLOCK IS RUNNING' : 'START THE PEP CLOCK'}
-                </Mono>
-                <Mono className="mt-0.5 text-[9px]">
-                  PEP must begin within 72 hours of a possible exposure
-                </Mono>
+          {pepAvailable ? (
+            <TintedRow
+              tint={C.flame}
+              fill={pepStartedAt ? 0.12 : 0.07}
+              stroke={0.28}
+              onPress={() => router.push('/tools/pep-clock')}
+            >
+              <View className="flex-row items-center gap-3">
+                <Timer size={18} color={C.flame} />
+                <View className="flex-1">
+                  <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
+                    {pepStartedAt ? 'PEP CLOCK IS RUNNING' : 'START THE PEP CLOCK'}
+                  </Mono>
+                  <Mono className="mt-0.5 text-[9px]">
+                    PEP must begin within 72 hours of a possible exposure
+                  </Mono>
+                </View>
               </View>
-            </View>
-          </TintedRow>
+            </TintedRow>
+          ) : null}
 
           <TintedRow
             tint={C.azure}

@@ -15,13 +15,23 @@ import {
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { BrandBanner } from '@/components/cape/BrandBanner';
+import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
-import { MATCH_MODULES } from '@/lib/data/match';
+import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
 import { SCENARIOS } from '@/lib/data/scenarios';
-import { TOTALS, moduleProgress, saferScore, useCapeStore } from '@/lib/store/useCapeStore';
+import { pepUnlocked, trackFor } from '@/lib/data/content';
+import {
+  TOTALS,
+  lessonTotal,
+  moduleProgress,
+  saferScore,
+  useCapeStore,
+} from '@/lib/store/useCapeStore';
 
 export default function Compass() {
   const codename = useCapeStore((s) => s.codename);
+  const gradeBand = useCapeStore((s) => s.gradeBand);
   const xp = useCapeStore((s) => s.xp);
   const streak = useCapeStore((s) => s.streak);
   const badges = useCapeStore((s) => s.badges);
@@ -36,7 +46,8 @@ export default function Compass() {
     registerVisit();
   }, [registerVisit]);
 
-  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults });
+  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults, gradeBand });
+  const track = trackFor(gradeBand);
   const playedSims = Object.keys(scenarioResults).length;
   const nextSim = SCENARIOS.find((s) => !scenarioResults[s.id]) ?? SCENARIOS[0];
 
@@ -48,7 +59,39 @@ export default function Compass() {
         contentContainerClassName="px-5 pt-4 pb-16"
         showsVerticalScrollIndicator={false}
       >
-        <View className="flex-row items-center justify-between">
+        {/* BRAND BANNER */}
+        <BrandBanner />
+
+        {/* SafER SCORE */}
+        <Panel tint={C.teal} fill={0.06} stroke={0.2} className="mt-5">
+          <View className="flex-row items-end justify-between">
+            <View>
+              <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
+              <Mono className="mt-1.5 text-[10px]">Readiness across all five modules</Mono>
+            </View>
+            <Display color={C.teal} className="text-5xl">
+              {score}
+            </Display>
+          </View>
+          <View className="mt-3">
+            <Rail value={score} color={C.teal} height={6} />
+          </View>
+          <View className="mt-4 flex-row flex-wrap gap-2">
+            <Chip
+              label={`${completedLessons.length}/${lessonTotal(gradeBand)} LESSONS`}
+              tint={C.modM}
+            />
+            <Chip label={`${playedSims}/${TOTALS.scenarios} SIMS`} tint={C.violet} />
+            <Chip
+              label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
+              tint={C.amber}
+            />
+            <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
+          </View>
+        </Panel>
+
+        {/* PILOT */}
+        <View className="mt-4 flex-row items-center justify-between">
           <View>
             <Eyebrow color={C.teal}>WEAR YOUR CAPE</Eyebrow>
             <Display className="mt-1.5 text-3xl">
@@ -85,32 +128,7 @@ export default function Compass() {
           </View>
         </View>
 
-        {/* SafER SCORE */}
-        <Panel tint={C.teal} fill={0.06} stroke={0.2} className="mt-5">
-          <View className="flex-row items-end justify-between">
-            <View>
-              <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
-              <Mono className="mt-1.5 text-[10px]">Readiness across all five modules</Mono>
-            </View>
-            <Display color={C.teal} className="text-5xl">
-              {score}
-            </Display>
-          </View>
-          <View className="mt-3">
-            <Rail value={score} color={C.teal} height={6} />
-          </View>
-          <View className="mt-4 flex-row flex-wrap gap-2">
-            <Chip label={`${completedLessons.length}/${TOTALS.lessons} LESSONS`} tint={C.modM} />
-            <Chip label={`${playedSims}/${TOTALS.scenarios} SIMS`} tint={C.violet} />
-            <Chip
-              label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
-              tint={C.amber}
-            />
-            <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
-          </View>
-        </Panel>
-
-        {pepStartedAt ? (
+        {pepStartedAt && pepUnlocked(gradeBand) ? (
           <TintedRow
             tint={C.flame}
             fill={0.12}
@@ -137,10 +155,14 @@ export default function Compass() {
         <View className="mt-8">
           <Eyebrow color={C.teal}>MATCH COMPASS</Eyebrow>
           <Display className="mt-2 text-3xl">Five modules. One compass.</Display>
-          <View className="mt-4 gap-3">
+          <View className="mt-4">
+            <MatchCompass />
+          </View>
+          <View className="mt-5 gap-3">
             {MATCH_MODULES.map((mod) => {
-              const progress = moduleProgress(mod.id, completedLessons);
-              const done = mod.lessons.filter((l) => completedLessons.includes(l.id)).length;
+              const progress = moduleProgress(mod.id, completedLessons, track);
+              const available = lessonsForTrack(mod, track);
+              const done = available.filter((l) => completedLessons.includes(l.id)).length;
               return (
                 <TintedRow
                   key={mod.id}
@@ -173,7 +195,7 @@ export default function Compass() {
                         <Rail value={progress} color={mod.color} />
                       </View>
                       <Mono className="mt-1.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
-                        {done}/{mod.lessons.length} lessons · {progress}%
+                        {done}/{available.length} lessons · {progress}%
                       </Mono>
                     </View>
                     <ArrowRight size={14} color={alpha(mod.color, 0.8)} />

@@ -9,7 +9,8 @@ import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { BADGES } from '@/lib/data/badges';
 import { PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
-import { TOTALS, saferScore, useCapeStore } from '@/lib/store/useCapeStore';
+import { TOTALS, lessonTotal, saferScore, useCapeStore } from '@/lib/store/useCapeStore';
+import { BrandFooter } from '@/components/cape/BrandFooter';
 
 export default function Me() {
   const codename = useCapeStore((s) => s.codename);
@@ -23,7 +24,7 @@ export default function Me() {
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const resetAll = useCapeStore((s) => s.resetAll);
 
-  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults });
+  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults, gradeBand });
 
   const confirmReset = () => {
     const wipe = () => {
@@ -75,9 +76,9 @@ export default function Me() {
           <View className="mt-4 gap-4">
             <ScoreRow
               label="MODULE LESSONS"
-              detail={`${completedLessons.length} of ${TOTALS.lessons}`}
+              detail={`${completedLessons.length} of ${lessonTotal(gradeBand)}`}
               weight="45 pts"
-              value={(completedLessons.length / TOTALS.lessons) * 100}
+              value={(completedLessons.length / lessonTotal(gradeBand)) * 100}
               tint={C.modM}
             />
             <ScoreRow
@@ -213,6 +214,8 @@ export default function Me() {
             Nothing you do in CAPE FLOW is uploaded. Deleting here removes it permanently.
           </Body>
         </View>
+
+        <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
   );

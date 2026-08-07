@@ -1,4 +1,5 @@
 import { C } from '@/lib/colors';
+import type { Track } from '@/lib/data/content';
 
 export type ModuleId = 'medical' | 'awareness' | 'tools' | 'comms' | 'habits';
 
@@ -10,6 +11,8 @@ export interface Lesson {
   intro: string;
   points: string[];
   tryIt: string;
+  /** Present when the lesson belongs to a single track only. */
+  track?: Track;
 }
 
 export interface MatchModule {
@@ -82,6 +85,7 @@ export const MATCH_MODULES: MatchModule[] = [
         title: 'PrEP, PEP, and the 72-hour window',
         minutes: 5,
         xp: 35,
+        track: 'blue',
         intro:
           'PrEP is taken before a possible exposure. PEP is taken after one, and it is time-limited.',
         points: [
@@ -400,6 +404,20 @@ export const MATCH_MODULES: MatchModule[] = [
 ];
 
 export const ALL_LESSONS: Lesson[] = MATCH_MODULES.flatMap((m) => m.lessons);
+
+/** Lessons a given track can actually open. */
+export function lessonsForTrack(mod: MatchModule, track: Track): Lesson[] {
+  return mod.lessons.filter((lesson) => !lesson.track || lesson.track === track);
+}
+
+/** Lessons held back from a given track (Green keeps protection shields locked). */
+export function lockedLessonsForTrack(mod: MatchModule, track: Track): Lesson[] {
+  return mod.lessons.filter((lesson) => lesson.track !== undefined && lesson.track !== track);
+}
+
+export function allLessonsForTrack(track: Track): Lesson[] {
+  return MATCH_MODULES.flatMap((mod) => lessonsForTrack(mod, track));
+}
 
 export function getModule(id: string): MatchModule | undefined {
   return MATCH_MODULES.find((m) => m.id === id);
