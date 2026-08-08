@@ -7,6 +7,7 @@ import { C, alpha } from '@/lib/colors';
 export default function TabLayout() {
   return (
     <>
+      {/* eslint-disable-next-line react/style-prop-object -- expo-status-bar's `style` prop is a string enum, not an RN style object */}
       <StatusBar style="light" />
       <Tabs
         screenOptions={{

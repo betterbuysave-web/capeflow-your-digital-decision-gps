@@ -164,6 +164,7 @@ export default function RootLayout() {
           <Stack.Screen name="module/[id]" options={{ title: 'Module' }} />
           <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
           <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
+          <Stack.Screen name="tools/ghost-vault" options={{ title: 'Digital Ghost Vault' }} />
           <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
           <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
           <Stack.Screen name="badges" options={{ title: 'Badges' }} />

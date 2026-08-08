@@ -9,7 +9,14 @@ import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { BADGES } from '@/lib/data/badges';
 import { PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
-import { TOTALS, lessonTotal, saferScore, useCapeStore } from '@/lib/store/useCapeStore';
+import {
+  TOTALS,
+  VAULT_TARGET,
+  disarmedCount,
+  lessonTotal,
+  saferScore,
+  useCapeStore,
+} from '@/lib/store/useCapeStore';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 
 export default function Me() {
@@ -22,9 +29,18 @@ export default function Me() {
   const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
+  const ghosts = useCapeStore((s) => s.ghosts);
   const resetAll = useCapeStore((s) => s.resetAll);
 
-  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults, gradeBand });
+  const score = saferScore({
+    completedLessons,
+    boundaries,
+    circle,
+    scenarioResults,
+    ghosts,
+    gradeBand,
+  });
+  const disarmedGhosts = disarmedCount(ghosts);
 
   const confirmReset = () => {
     const wipe = () => {
@@ -77,30 +93,37 @@ export default function Me() {
             <ScoreRow
               label="MODULE LESSONS"
               detail={`${completedLessons.length} of ${lessonTotal(gradeBand)}`}
-              weight="45 pts"
+              weight="40 pts"
               value={(completedLessons.length / lessonTotal(gradeBand)) * 100}
               tint={C.modM}
             />
             <ScoreRow
               label="MIDNIGHT SIMS"
               detail={`${Object.keys(scenarioResults).length} of ${TOTALS.scenarios}`}
-              weight="25 pts"
+              weight="22 pts"
               value={(Object.keys(scenarioResults).length / TOTALS.scenarios) * 100}
               tint={C.violet}
             />
             <ScoreRow
               label="BOUNDARY MENU"
               detail={`${Object.keys(boundaries).length} of ${TOTALS.boundaries}`}
-              weight="15 pts"
+              weight="14 pts"
               value={(Object.keys(boundaries).length / TOTALS.boundaries) * 100}
               tint={C.amber}
             />
             <ScoreRow
               label="SAFETY CIRCLE"
               detail={`${circle.length} of 3`}
-              weight="15 pts"
+              weight="14 pts"
               value={(Math.min(circle.length, 3) / 3) * 100}
               tint={C.azure}
+            />
+            <ScoreRow
+              label="GHOSTS DISARMED"
+              detail={`${disarmedGhosts} of ${VAULT_TARGET}`}
+              weight="10 pts"
+              value={(Math.min(disarmedGhosts, VAULT_TARGET) / VAULT_TARGET) * 100}
+              tint={C.gold}
             />
           </View>
         </View>

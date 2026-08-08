@@ -6,6 +6,7 @@ import {
   Award,
   Coffee,
   Flame,
+  Ghost,
   LifeBuoy,
   Moon,
   Timer,
@@ -23,6 +24,8 @@ import { SCENARIOS } from '@/lib/data/scenarios';
 import { pepUnlocked, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
+  disarmedCount,
+  ghostTotal,
   lessonTotal,
   moduleProgress,
   saferScore,
@@ -40,16 +43,28 @@ export default function Compass() {
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
+  const ghosts = useCapeStore((s) => s.ghosts);
+  const customGhosts = useCapeStore((s) => s.customGhosts);
   const registerVisit = useCapeStore((s) => s.registerVisit);
 
   useEffect(() => {
     registerVisit();
   }, [registerVisit]);
 
-  const score = saferScore({ completedLessons, boundaries, circle, scenarioResults, gradeBand });
+  const score = saferScore({
+    completedLessons,
+    boundaries,
+    circle,
+    scenarioResults,
+    ghosts,
+    gradeBand,
+  });
   const track = trackFor(gradeBand);
   const playedSims = Object.keys(scenarioResults).length;
   const nextSim = SCENARIOS.find((s) => !scenarioResults[s.id]) ?? SCENARIOS[0];
+  const namedGhosts = Object.keys(ghosts).length;
+  const disarmedGhosts = disarmedCount(ghosts);
+  const ghostRange = ghostTotal(gradeBand) + customGhosts.length;
 
   return (
     <View className="bg-ink flex-1">
@@ -87,6 +102,7 @@ export default function Compass() {
               tint={C.amber}
             />
             <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
+            <Chip label={`${disarmedGhosts}/${ghostRange} GHOSTS`} tint={C.gold} />
           </View>
         </Panel>
 
@@ -150,6 +166,30 @@ export default function Compass() {
             </View>
           </TintedRow>
         ) : null}
+
+        {/* GHOST VAULT */}
+        <TintedRow
+          tint={C.violet}
+          fill={0.07}
+          stroke={0.22}
+          className="mt-4"
+          onPress={() => router.push('/tools/ghost-vault')}
+        >
+          <View className="flex-row items-center gap-3">
+            <Ghost size={18} color={C.violet} />
+            <View className="flex-1">
+              <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
+                DIGITAL GHOST VAULT
+              </Mono>
+              <Mono className="mt-0.5 text-[9px]">
+                {namedGhosts === 0
+                  ? 'Name the ghosts — turn anxiety into a shield'
+                  : `${namedGhosts} named · ${disarmedGhosts} shields online`}
+              </Mono>
+            </View>
+            <ArrowRight size={14} color={C.violet} />
+          </View>
+        </TintedRow>
 
         {/* MATCH COMPASS */}
         <View className="mt-8">

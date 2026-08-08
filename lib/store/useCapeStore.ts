@@ -12,6 +12,7 @@ import {
 import { BOUNDARY_MENU, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { SCENARIOS, type Verdict } from '@/lib/data/scenarios';
 import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
+import { type FearState, ghostsForTrack } from '@/lib/data/ghosts';
 
 export interface CircleContact {
   id: string;
@@ -24,6 +25,22 @@ export interface ScenarioResult {
   choiceId: string;
   verdict: Verdict;
   at: number;
+}
+
+/** A ghost that has been pulled into the light — named, then disarmed with a plan. */
+export type GhostStatus = 'named' | 'disarmed';
+
+export interface GhostRecord {
+  status: GhostStatus;
+  plan: string;
+  at: number;
+}
+
+/** A fear the user typed themselves, mapped to a M.A.T.C.H. node by hand. */
+export interface CustomGhost {
+  id: string;
+  name: string;
+  node: ModuleId;
 }
 
 interface CapeState {
@@ -40,6 +57,9 @@ interface CapeState {
   streak: number;
   lastVisitDay: string | null;
   privacyAcknowledged: boolean;
+  ghosts: Record<string, GhostRecord>;
+  customGhosts: CustomGhost[];
+  fearState: FearState | null;
 
   startJourney: (band: GradeBand, codename: string) => void;
   completeLesson: (lessonId: string, xp: number) => void;
@@ -51,12 +71,22 @@ interface CapeState {
   clearPep: () => void;
   registerVisit: () => void;
   acknowledgePrivacy: () => void;
+  nameGhost: (ghostId: string) => void;
+  disarmGhost: (ghostId: string, plan: string) => void;
+  setGhostPlan: (ghostId: string, plan: string) => void;
+  releaseGhost: (ghostId: string) => void;
+  addCustomGhost: (name: string, node: ModuleId) => void;
+  removeCustomGhost: (ghostId: string) => void;
+  setFearState: (state: FearState) => void;
   resetAll: () => void;
 }
 
 const TOTAL_LESSONS = ALL_LESSONS.length;
 const TOTAL_SCENARIOS = SCENARIOS.length;
 const TOTAL_BOUNDARIES = BOUNDARY_MENU.length;
+
+/** Disarmed ghosts needed for full vault credit on the SafER Score. */
+export const VAULT_TARGET = 6;
 
 function dayKey(date = new Date()): string {
   return date.toISOString().slice(0, 10);
@@ -73,22 +103,35 @@ export function lessonTotal(band: GradeBand | null): number {
   return allLessonsForTrack(trackFor(band)).length;
 }
 
-/** SafER Score: 0–100 readiness across knowledge, boundaries, team, and practice. */
+/** Ghosts available on the reader's track. */
+export function ghostTotal(band: GradeBand | null): number {
+  return ghostsForTrack(trackFor(band)).length;
+}
+
+/** Ghosts pulled into the light and turned into a shield with a plan. */
+export function disarmedCount(ghosts: Record<string, GhostRecord>): number {
+  return Object.values(ghosts).filter((g) => g.status === 'disarmed').length;
+}
+
+/** SafER Score: 0–100 readiness across knowledge, boundaries, team, practice, and the vault. */
 export function saferScore(state: {
   completedLessons: string[];
   boundaries: Record<string, BoundaryAnswer>;
   circle: CircleContact[];
   scenarioResults: Record<string, ScenarioResult>;
+  ghosts?: Record<string, GhostRecord>;
   gradeBand?: GradeBand | null;
 }): number {
   const total = lessonTotal(state.gradeBand ?? null);
-  const lessons = (Math.min(state.completedLessons.length, total) / total) * 45;
+  const lessons = (Math.min(state.completedLessons.length, total) / total) * 40;
   const answered = Object.keys(state.boundaries).length;
-  const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 15;
-  const team = (Math.min(state.circle.length, 3) / 3) * 15;
+  const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 14;
+  const team = (Math.min(state.circle.length, 3) / 3) * 14;
   const played = Object.keys(state.scenarioResults).length;
-  const sims = (Math.min(played, TOTAL_SCENARIOS) / TOTAL_SCENARIOS) * 25;
-  return Math.round(lessons + menu + team + sims);
+  const sims = (Math.min(played, TOTAL_SCENARIOS) / TOTAL_SCENARIOS) * 22;
+  const disarmed = disarmedCount(state.ghosts ?? {});
+  const vault = (Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 10;
+  return Math.round(lessons + menu + team + sims + vault);
 }
 
 export function moduleProgress(
@@ -128,6 +171,8 @@ function earnedBadges(state: CapeState): string[] {
   if (results.length >= 3) earned.add('night-shift');
   if (results.filter((r) => r.verdict === 'best').length >= 3) earned.add('clean-run');
   if (state.streak >= 3) earned.add('streak-3');
+  if (Object.keys(state.ghosts).length > 0) earned.add('ghost-named');
+  if (disarmedCount(state.ghosts) >= VAULT_TARGET) earned.add('vault-armed');
   if (saferScore(state) >= 100) earned.add('compass-complete');
 
   return [...earned];
@@ -147,6 +192,9 @@ const initial = {
   streak: 0,
   lastVisitDay: null,
   privacyAcknowledged: false,
+  ghosts: {} as Record<string, GhostRecord>,
+  customGhosts: [] as CustomGhost[],
+  fearState: null,
 };
 
 export const useCapeStore = create<CapeState>()(
@@ -206,6 +254,67 @@ export const useCapeStore = create<CapeState>()(
       },
 
       acknowledgePrivacy: () => set({ privacyAcknowledged: true }),
+
+      nameGhost: (ghostId) => {
+        if (get().ghosts[ghostId]) return;
+        set((s) => ({
+          ghosts: { ...s.ghosts, [ghostId]: { status: 'named', plan: '', at: Date.now() } },
+          xp: s.xp + 5,
+        }));
+        set({ badges: earnedBadges(get()) });
+      },
+
+      disarmGhost: (ghostId, plan) => {
+        const current = get().ghosts[ghostId];
+        const alreadyDisarmed = current?.status === 'disarmed';
+        set((s) => ({
+          ghosts: {
+            ...s.ghosts,
+            [ghostId]: { status: 'disarmed', plan: plan.trim(), at: Date.now() },
+          },
+          xp: alreadyDisarmed ? s.xp : s.xp + 15,
+        }));
+        set({ badges: earnedBadges(get()) });
+      },
+
+      setGhostPlan: (ghostId, plan) => {
+        const current = get().ghosts[ghostId];
+        if (!current) return;
+        set((s) => ({ ghosts: { ...s.ghosts, [ghostId]: { ...current, plan } } }));
+      },
+
+      releaseGhost: (ghostId) => {
+        set((s) => {
+          const next = { ...s.ghosts };
+          delete next[ghostId];
+          return { ghosts: next };
+        });
+      },
+
+      addCustomGhost: (name, node) => {
+        const label = name.trim();
+        if (label.length === 0) return;
+        const id = `custom-${Date.now()}`;
+        set((s) => ({
+          customGhosts: [...s.customGhosts, { id, name: label, node }],
+          ghosts: { ...s.ghosts, [id]: { status: 'named', plan: '', at: Date.now() } },
+          xp: s.xp + 5,
+        }));
+        set({ badges: earnedBadges(get()) });
+      },
+
+      removeCustomGhost: (ghostId) => {
+        set((s) => {
+          const nextGhosts = { ...s.ghosts };
+          delete nextGhosts[ghostId];
+          return {
+            customGhosts: s.customGhosts.filter((g) => g.id !== ghostId),
+            ghosts: nextGhosts,
+          };
+        });
+      },
+
+      setFearState: (state) => set({ fearState: state }),
 
       resetAll: () => set({ ...initial }),
     }),

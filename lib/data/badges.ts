@@ -87,6 +87,20 @@ export const BADGES: BadgeDef[] = [
     tint: C.flame,
   },
   {
+    id: 'ghost-named',
+    emoji: '👻',
+    name: 'Ghost Named',
+    requirement: 'Pull your first ghost into the Vault',
+    tint: C.violet,
+  },
+  {
+    id: 'vault-armed',
+    emoji: '🛡',
+    name: 'Vault Armed',
+    requirement: 'Disarm 6 ghosts with a plan',
+    tint: C.teal,
+  },
+  {
     id: 'compass-complete',
     emoji: '🏅',
     name: 'Full Compass',
