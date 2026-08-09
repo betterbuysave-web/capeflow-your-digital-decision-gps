@@ -66,6 +66,20 @@ export const BADGES: BadgeDef[] = [
     tint: C.amber,
   },
   {
+    id: 'fries-detective',
+    emoji: '🔍',
+    name: 'F.R.I.E.S. Detective',
+    requirement: 'Call every Café quiz scenario correctly',
+    tint: C.modC,
+  },
+  {
+    id: 'cafe-regular',
+    emoji: '✍️',
+    name: 'Café Regular',
+    requirement: 'Finish a Consent Café exit card',
+    tint: C.amber,
+  },
+  {
     id: 'night-shift',
     emoji: '🌙',
     name: 'Night Shift',

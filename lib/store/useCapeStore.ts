@@ -13,6 +13,13 @@ import { BOUNDARY_MENU, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { SCENARIOS, type Verdict } from '@/lib/data/scenarios';
 import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
 import { type FearState, ghostsForTrack } from '@/lib/data/ghosts';
+import {
+  CAFE_QUIZ,
+  DEFAULT_CAFE_MENU,
+  EXIT_QUESTIONS,
+  type CafeCourse,
+  type CafeMenu,
+} from '@/lib/data/cafe';
 
 export interface CircleContact {
   id: string;
@@ -43,6 +50,25 @@ export interface CustomGhost {
   node: ModuleId;
 }
 
+/** The Consent Café exit card — four written reflections plus a confidence read. */
+export interface CafeExitCard {
+  answers: string[];
+  confidence: number | null;
+  completedAt: number | null;
+}
+
+function freshCafeMenu(): CafeMenu {
+  return {
+    appetizers: [...DEFAULT_CAFE_MENU.appetizers],
+    mains: [...DEFAULT_CAFE_MENU.mains],
+    notserved: [...DEFAULT_CAFE_MENU.notserved],
+  };
+}
+
+function freshExitCard(): CafeExitCard {
+  return { answers: EXIT_QUESTIONS.map(() => ''), confidence: null, completedAt: null };
+}
+
 interface CapeState {
   onboarded: boolean;
   gradeBand: GradeBand | null;
@@ -60,6 +86,10 @@ interface CapeState {
   ghosts: Record<string, GhostRecord>;
   customGhosts: CustomGhost[];
   fearState: FearState | null;
+  cafeMenu: CafeMenu;
+  cafeQuiz: Record<string, boolean>;
+  cafeExit: CafeExitCard;
+  facilitatorNotes: string;
 
   startJourney: (band: GradeBand, codename: string) => void;
   completeLesson: (lessonId: string, xp: number) => void;
@@ -78,6 +108,16 @@ interface CapeState {
   addCustomGhost: (name: string, node: ModuleId) => void;
   removeCustomGhost: (ghostId: string) => void;
   setFearState: (state: FearState) => void;
+  addCafeItem: (course: CafeCourse, text: string) => void;
+  setCafeItem: (course: CafeCourse, index: number, text: string) => void;
+  removeCafeItem: (course: CafeCourse, index: number) => void;
+  resetCafeMenu: () => void;
+  answerCafeQuiz: (questionId: string, correct: boolean) => void;
+  setCafeExitAnswer: (index: number, text: string) => void;
+  setCafeConfidence: (value: number) => void;
+  completeCafeExit: () => void;
+  clearCafeExit: () => void;
+  setFacilitatorNotes: (notes: string) => void;
   resetAll: () => void;
 }
 
@@ -171,6 +211,9 @@ function earnedBadges(state: CapeState): string[] {
   if (results.length >= 3) earned.add('night-shift');
   if (results.filter((r) => r.verdict === 'best').length >= 3) earned.add('clean-run');
   if (state.streak >= 3) earned.add('streak-3');
+  const quizCorrect = Object.values(state.cafeQuiz).filter(Boolean).length;
+  if (quizCorrect >= CAFE_QUIZ.length) earned.add('fries-detective');
+  if (state.cafeExit.completedAt !== null) earned.add('cafe-regular');
   if (Object.keys(state.ghosts).length > 0) earned.add('ghost-named');
   if (disarmedCount(state.ghosts) >= VAULT_TARGET) earned.add('vault-armed');
   if (saferScore(state) >= 100) earned.add('compass-complete');
@@ -195,6 +238,10 @@ const initial = {
   ghosts: {} as Record<string, GhostRecord>,
   customGhosts: [] as CustomGhost[],
   fearState: null,
+  cafeMenu: freshCafeMenu(),
+  cafeQuiz: {} as Record<string, boolean>,
+  cafeExit: freshExitCard(),
+  facilitatorNotes: '',
 };
 
 export const useCapeStore = create<CapeState>()(
@@ -316,7 +363,66 @@ export const useCapeStore = create<CapeState>()(
 
       setFearState: (state) => set({ fearState: state }),
 
-      resetAll: () => set({ ...initial }),
+      addCafeItem: (course, text) => {
+        const id = `${course}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        set((s) => ({
+          cafeMenu: { ...s.cafeMenu, [course]: [...s.cafeMenu[course], { id, text }] },
+        }));
+      },
+
+      setCafeItem: (course, index, text) => {
+        set((s) => ({
+          cafeMenu: {
+            ...s.cafeMenu,
+            [course]: s.cafeMenu[course].map((item, i) => (i === index ? { ...item, text } : item)),
+          },
+        }));
+      },
+
+      removeCafeItem: (course, index) => {
+        set((s) => ({
+          cafeMenu: { ...s.cafeMenu, [course]: s.cafeMenu[course].filter((_, i) => i !== index) },
+        }));
+      },
+
+      resetCafeMenu: () => set({ cafeMenu: { appetizers: [], mains: [], notserved: [] } }),
+
+      answerCafeQuiz: (questionId, correct) => {
+        if (get().cafeQuiz[questionId]) return;
+        set((s) => ({
+          cafeQuiz: { ...s.cafeQuiz, [questionId]: correct },
+          xp: correct ? s.xp + 3 : s.xp,
+        }));
+        set({ badges: earnedBadges(get()) });
+      },
+
+      setCafeExitAnswer: (index, text) => {
+        set((s) => ({
+          cafeExit: {
+            ...s.cafeExit,
+            answers: s.cafeExit.answers.map((a, i) => (i === index ? text : a)),
+          },
+        }));
+      },
+
+      setCafeConfidence: (value) => {
+        set((s) => ({ cafeExit: { ...s.cafeExit, confidence: value } }));
+      },
+
+      completeCafeExit: () => {
+        const already = get().cafeExit.completedAt !== null;
+        set((s) => ({
+          cafeExit: { ...s.cafeExit, completedAt: Date.now() },
+          xp: already ? s.xp : s.xp + 10,
+        }));
+        set({ badges: earnedBadges(get()) });
+      },
+
+      clearCafeExit: () => set({ cafeExit: freshExitCard() }),
+
+      setFacilitatorNotes: (notes) => set({ facilitatorNotes: notes }),
+
+      resetAll: () => set({ ...initial, cafeMenu: freshCafeMenu(), cafeExit: freshExitCard() }),
     }),
     {
       name: 'cape-flow-v1',

@@ -73,7 +73,8 @@ export default function ToolsTab() {
                   THE CONSENT CAFÉ
                 </Mono>
                 <Mono className="mt-1 text-[10px]">
-                  Order from a menu of boundaries — {Object.keys(boundaries).length} answered
+                  F.R.I.E.S. drills, your menu, exit card — {Object.keys(boundaries).length}{' '}
+                  boundaries answered
                 </Mono>
               </View>
               <ArrowRight size={14} color={C.amber} />
