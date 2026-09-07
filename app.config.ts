@@ -12,7 +12,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ...config,
     name: 'CapeFlow',
     slug: 'capeflow',
-    newArchEnabled: true,
     version: process.env.BILT_APP_VERSION ?? '1.0.0',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
