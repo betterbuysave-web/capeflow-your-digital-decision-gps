@@ -1,6 +1,15 @@
 import { Linking, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { CircleAlert, MessageSquare, Phone, Timer, Users } from 'lucide-react-native';
+import {
+  ArrowRight,
+  CircleAlert,
+  MapPin,
+  MessageSquare,
+  Phone,
+  ShieldAlert,
+  Timer,
+  Users,
+} from 'lucide-react-native';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
@@ -33,6 +42,28 @@ export default function Crisis() {
         <Body className="mt-3">
           Direct-dial and text lines, staffed 24/7. If you are in immediate danger, call 911 first.
         </Body>
+
+        <View className="mt-5 gap-3">
+          <TintedRow
+            tint={C.flame}
+            fill={0.14}
+            stroke={0.34}
+            onPress={() => router.push('/emergency-directory')}
+          >
+            <View className="flex-row items-center gap-3">
+              <ShieldAlert size={20} color={C.flame} />
+              <View className="flex-1">
+                <Mono bold color={C.flame} className="text-[12px]" tracking={1}>
+                  EMERGENCY DIRECTORY
+                </Mono>
+                <Mono className="mt-1 text-[10px]">
+                  3-Second Rule circuit breaker + one-tap lines, grouped by what is happening
+                </Mono>
+              </View>
+              <ArrowRight size={14} color={C.flame} />
+            </View>
+          </TintedRow>
+        </View>
 
         <View className="mt-6 gap-2.5">
           {CRISIS_LINES.map((line) => (
@@ -130,6 +161,25 @@ export default function Crisis() {
                   {circle.length === 0
                     ? 'No contacts yet — add them before you need them'
                     : `${circle.length} people saved on this device`}
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
+
+          <TintedRow
+            tint={C.modM}
+            fill={0.07}
+            stroke={0.22}
+            onPress={() => router.push('/clinic-finder')}
+          >
+            <View className="flex-row items-center gap-3">
+              <MapPin size={18} color={C.modM} />
+              <View className="flex-1">
+                <Mono bold color={C.modM} className="text-[11px]" tracking={1}>
+                  FIND CARE NEAR YOU
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  Free and confidential locators, plus what to say at the front desk
                 </Mono>
               </View>
             </View>

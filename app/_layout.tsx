@@ -168,6 +168,12 @@ export default function RootLayout() {
           <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
           <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
           <Stack.Screen name="badges" options={{ title: 'Badges' }} />
+          <Stack.Screen name="clinic-finder" options={{ title: 'Clinic Finder' }} />
+          <Stack.Screen name="adherence-settings" options={{ title: 'Adherence Settings' }} />
+          <Stack.Screen name="about-cape" options={{ title: 'About CAPE Flow' }} />
+          <Stack.Screen name="protection-blueprint" options={{ title: 'Protection Blueprint' }} />
+          <Stack.Screen name="educational-library" options={{ title: 'Educational Library' }} />
+          <Stack.Screen name="emergency-directory" options={{ title: 'Emergency Directory' }} />
         </Stack>
         <InstallPrompt />
       </HeroUINativeProvider>

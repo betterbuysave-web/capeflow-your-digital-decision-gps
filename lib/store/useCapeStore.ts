@@ -20,6 +20,8 @@ import {
   type CafeCourse,
   type CafeMenu,
 } from '@/lib/data/cafe';
+import { type ReminderTone, logDayKey } from '@/lib/data/adherence';
+import { cancelAllReminders, cancelReminder, scheduleReminder } from '@/lib/notifications';
 
 export interface CircleContact {
   id: string;
@@ -69,6 +71,26 @@ function freshExitCard(): CafeExitCard {
   return { answers: EXIT_QUESTIONS.map(() => ''), confidence: null, completedAt: null };
 }
 
+/** A locally scheduled adherence reminder. Notification ids come from the device. */
+export interface Reminder {
+  id: string;
+  label: string;
+  body: string;
+  /** Template id it was created from, or 'custom'. */
+  templateId: string;
+  tint: string;
+  /** 'HH:MM' in device local time. */
+  time: string;
+  /** 0 = Sunday … 6 = Saturday. */
+  days: number[];
+  tone: ReminderTone;
+  enabled: boolean;
+  notificationIds: string[];
+  createdAt: number;
+}
+
+export type NewReminder = Omit<Reminder, 'id' | 'notificationIds' | 'createdAt' | 'enabled'>;
+
 interface CapeState {
   onboarded: boolean;
   gradeBand: GradeBand | null;
@@ -90,6 +112,9 @@ interface CapeState {
   cafeQuiz: Record<string, boolean>;
   cafeExit: CafeExitCard;
   facilitatorNotes: string;
+  reminders: Reminder[];
+  /** reminderId → local day keys the dose/check-in was logged. */
+  adherenceLog: Record<string, string[]>;
 
   startJourney: (band: GradeBand, codename: string) => void;
   completeLesson: (lessonId: string, xp: number) => void;
@@ -118,6 +143,11 @@ interface CapeState {
   completeCafeExit: () => void;
   clearCafeExit: () => void;
   setFacilitatorNotes: (notes: string) => void;
+  addReminder: (input: NewReminder) => Promise<void>;
+  updateReminder: (id: string, patch: Partial<NewReminder>) => Promise<void>;
+  toggleReminder: (id: string) => Promise<void>;
+  removeReminder: (id: string) => Promise<void>;
+  logDose: (reminderId: string) => void;
   resetAll: () => void;
 }
 
@@ -242,6 +272,8 @@ const initial = {
   cafeQuiz: {} as Record<string, boolean>,
   cafeExit: freshExitCard(),
   facilitatorNotes: '',
+  reminders: [] as Reminder[],
+  adherenceLog: {} as Record<string, string[]>,
 };
 
 export const useCapeStore = create<CapeState>()(
@@ -422,7 +454,70 @@ export const useCapeStore = create<CapeState>()(
 
       setFacilitatorNotes: (notes) => set({ facilitatorNotes: notes }),
 
-      resetAll: () => set({ ...initial, cafeMenu: freshCafeMenu(), cafeExit: freshExitCard() }),
+      addReminder: async (input) => {
+        const id = `${Date.now()}-${get().reminders.length}`;
+        const notificationIds = await scheduleReminder(input);
+        set((s) => ({
+          reminders: [
+            ...s.reminders,
+            { ...input, id, enabled: true, notificationIds, createdAt: Date.now() },
+          ],
+        }));
+      },
+
+      updateReminder: async (id, patch) => {
+        const current = get().reminders.find((r) => r.id === id);
+        if (!current) return;
+        const next = { ...current, ...patch };
+        await cancelReminder(current.notificationIds);
+        const notificationIds = next.enabled ? await scheduleReminder(next) : [];
+        set((s) => ({
+          reminders: s.reminders.map((r) => (r.id === id ? { ...next, notificationIds } : r)),
+        }));
+      },
+
+      toggleReminder: async (id) => {
+        const current = get().reminders.find((r) => r.id === id);
+        if (!current) return;
+        await cancelReminder(current.notificationIds);
+        const enabled = !current.enabled;
+        const notificationIds = enabled ? await scheduleReminder(current) : [];
+        set((s) => ({
+          reminders: s.reminders.map((r) => (r.id === id ? { ...r, enabled, notificationIds } : r)),
+        }));
+      },
+
+      removeReminder: async (id) => {
+        const current = get().reminders.find((r) => r.id === id);
+        if (current) await cancelReminder(current.notificationIds);
+        set((s) => {
+          const { [id]: _dropped, ...rest } = s.adherenceLog;
+          return { reminders: s.reminders.filter((r) => r.id !== id), adherenceLog: rest };
+        });
+      },
+
+      logDose: (reminderId) => {
+        const today = logDayKey();
+        const logged = get().adherenceLog[reminderId] ?? [];
+        if (logged.includes(today)) {
+          set((s) => ({
+            adherenceLog: {
+              ...s.adherenceLog,
+              [reminderId]: (s.adherenceLog[reminderId] ?? []).filter((d) => d !== today),
+            },
+          }));
+          return;
+        }
+        set((s) => ({
+          adherenceLog: { ...s.adherenceLog, [reminderId]: [...logged, today] },
+          xp: s.xp + 2,
+        }));
+      },
+
+      resetAll: () => {
+        void cancelAllReminders();
+        set({ ...initial, cafeMenu: freshCafeMenu(), cafeExit: freshExitCard() });
+      },
     }),
     {
       name: 'cape-flow-v1',

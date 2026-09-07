@@ -1,0 +1,649 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import {
+  BellOff,
+  BellRing,
+  Check,
+  ChevronDown,
+  Lock,
+  Minus,
+  Plus,
+  ShieldCheck,
+  Trash2,
+} from 'lucide-react-native';
+
+import { StackHeader } from '@/components/cape/Screen';
+import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
+import { Chip } from '@/components/cape/Buttons';
+import { BrandFooter } from '@/components/cape/BrandFooter';
+import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { Telemetry } from '@/components/cape/Telemetry';
+import { C, alpha } from '@/lib/colors';
+import { trackFor } from '@/lib/data/content';
+import {
+  ADHERENCE_LOCK_NOTE,
+  ADHERENCE_NOTE,
+  ADHERENCE_PERMISSION_NOTE,
+  ADHERENCE_WEB_NOTE,
+  REMINDER_TONES,
+  WEEKDAYS,
+  describeDays,
+  formatTime,
+  logDayKey,
+  lockedTemplateCount,
+  recentDayKeys,
+  shiftTime,
+  templatesForTrack,
+  toneInfo,
+} from '@/lib/data/adherence';
+import type { ReminderTone } from '@/lib/data/adherence';
+import { notificationsSupported, permissionGranted, requestPermission } from '@/lib/notifications';
+import { type Reminder, useCapeStore } from '@/lib/store/useCapeStore';
+
+const INPUT_FONT = 'JetBrainsMono_400Regular';
+const HISTORY_DAYS = 14;
+
+export default function AdherenceSettings() {
+  const { width, height } = useWindowDimensions();
+  const gradeBand = useCapeStore((s) => s.gradeBand);
+  const reminders = useCapeStore((s) => s.reminders);
+  const adherenceLog = useCapeStore((s) => s.adherenceLog);
+  const addReminder = useCapeStore((s) => s.addReminder);
+  const track = trackFor(gradeBand);
+
+  const [granted, setGranted] = useState(true);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [customLabel, setCustomLabel] = useState('');
+
+  const refreshPermission = useCallback(() => {
+    if (!notificationsSupported) return;
+    void permissionGranted().then(setGranted);
+  }, []);
+
+  useEffect(refreshPermission, [refreshPermission]);
+
+  const templates = templatesForTrack(track);
+  const lockedCount = lockedTemplateCount(track);
+  const usedTemplates = useMemo(() => new Set(reminders.map((r) => r.templateId)), [reminders]);
+
+  const today = logDayKey();
+  const armed = reminders.filter((r) => r.enabled).length;
+  const loggedToday = reminders.filter((r) => (adherenceLog[r.id] ?? []).includes(today)).length;
+
+  const addFromTemplate = (templateId: string) => {
+    const template = templates.find((t) => t.id === templateId);
+    if (!template) return;
+    void addReminder({
+      label: template.label,
+      body: template.body,
+      templateId: template.id,
+      tint: template.tint,
+      time: template.defaultTime,
+      days: [...template.defaultDays],
+      tone: template.defaultTone,
+    }).then(refreshPermission);
+  };
+
+  const addCustom = () => {
+    const label = customLabel.trim();
+    if (label.length === 0) return;
+    setCustomLabel('');
+    void addReminder({
+      label: label.toUpperCase(),
+      body: `${label} — time to take it and log it.`,
+      templateId: 'custom',
+      tint: C.gold,
+      time: '20:00',
+      days: [0, 1, 2, 3, 4, 5, 6],
+      tone: 'pulse',
+    }).then(refreshPermission);
+  };
+
+  return (
+    <View className="bg-ink flex-1">
+      <TacticalBackdrop width={width} height={height} tint={C.modM} />
+      <StackHeader title="Adherence Settings" tint={C.modM} fallback="/(tabs)/tools" />
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="px-5 pt-6 pb-16"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Eyebrow color={C.modM}>REMINDER CONTROL DECK</Eyebrow>
+          <Display className="mt-2 text-4xl">A plan you don&apos;t have to remember.</Display>
+          <Body className="mt-3">
+            Adherence is not willpower — it is scheduling. Arm the reminders you actually need, name
+            them however you like, and log each one as you go.
+          </Body>
+
+          <View className="mt-4 flex-row flex-wrap gap-2">
+            <Chip label={`${armed} ARMED`} tint={C.teal} />
+            <Chip label={`${loggedToday}/${reminders.length || 0} LOGGED TODAY`} tint={C.gold} />
+            <Chip label="DEVICE ONLY" tint={C.violet} />
+          </View>
+
+          <View className="mt-5">
+            <Telemetry tint={C.modM} height={30} active={armed > 0} />
+          </View>
+
+          {!notificationsSupported ? (
+            <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-5">
+              <View className="flex-row items-start gap-3">
+                <BellOff size={16} color={C.lemon} />
+                <Mono className="flex-1 text-[10px]">{ADHERENCE_WEB_NOTE}</Mono>
+              </View>
+            </Panel>
+          ) : null}
+
+          {notificationsSupported && !granted ? (
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => void requestPermission().then(setGranted)}
+              className="mt-5 rounded-2xl p-4 active:opacity-70"
+              style={{
+                backgroundColor: alpha(C.flame, 0.06),
+                borderWidth: 1,
+                borderColor: alpha(C.flame, 0.24),
+              }}
+            >
+              <View className="flex-row items-start gap-3">
+                <BellRing size={16} color={C.flame} />
+                <View className="flex-1">
+                  <Mono bold color={C.flame} className="text-[10px]" tracking={1.5}>
+                    NOTIFICATIONS ARE OFF — TAP TO ALLOW
+                  </Mono>
+                  <Mono className="mt-1 text-[10px]">{ADHERENCE_PERMISSION_NOTE}</Mono>
+                </View>
+              </View>
+            </Pressable>
+          ) : null}
+
+          {/* ARMED REMINDERS */}
+          {reminders.length > 0 ? (
+            <View className="mt-9">
+              <Eyebrow color={C.teal}>YOUR SCHEDULE</Eyebrow>
+              <View className="mt-3 gap-2.5">
+                {reminders.map((reminder) => (
+                  <ReminderCard
+                    key={reminder.id}
+                    reminder={reminder}
+                    logged={adherenceLog[reminder.id] ?? []}
+                    open={openId === reminder.id}
+                    onToggleOpen={() => setOpenId(openId === reminder.id ? null : reminder.id)}
+                  />
+                ))}
+              </View>
+            </View>
+          ) : (
+            <Panel tint={C.slateFaint} fill={0.03} stroke={0.1} className="mt-9">
+              <Mono className="text-[10px]">
+                Nothing scheduled yet. Pick one from the bank below — start with the dose you miss
+                most, not the easiest one.
+              </Mono>
+            </Panel>
+          )}
+
+          {/* TEMPLATE BANK */}
+          <View className="mt-10">
+            <Eyebrow color={C.gold}>REMINDER BANK</Eyebrow>
+            <Display className="mt-2 text-3xl">Add what you actually take.</Display>
+            <Mono className="mt-2 text-[10px]">
+              Each one arrives with a sensible default time and cadence. Tap to add, then adjust.
+            </Mono>
+            <View className="mt-4 gap-2">
+              {templates.map((template) => {
+                const added = usedTemplates.has(template.id);
+                return (
+                  <Pressable
+                    key={template.id}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Add ${template.label}`}
+                    onPress={() => addFromTemplate(template.id)}
+                    disabled={added}
+                    className="flex-row items-center gap-3 rounded-2xl p-3.5 active:opacity-70"
+                    style={{
+                      backgroundColor: alpha(template.tint, added ? 0.03 : 0.06),
+                      borderWidth: 1,
+                      borderColor: alpha(template.tint, added ? 0.1 : 0.2),
+                      opacity: added ? 0.55 : 1,
+                    }}
+                  >
+                    <Mono className="text-base">{template.emoji}</Mono>
+                    <View className="flex-1">
+                      <Mono bold color={template.tint} className="text-[10px]" tracking={1.5}>
+                        {template.label}
+                      </Mono>
+                      <Mono className="mt-0.5 text-[10px]">{template.detail}</Mono>
+                      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                        {formatTime(template.defaultTime)} · {describeDays(template.defaultDays)} ·{' '}
+                        {toneInfo(template.defaultTone).label}
+                      </Mono>
+                    </View>
+                    {added ? (
+                      <Check size={15} color={alpha(template.tint, 0.8)} />
+                    ) : (
+                      <Plus size={15} color={alpha(template.tint, 0.8)} />
+                    )}
+                  </Pressable>
+                );
+              })}
+            </View>
+
+            {lockedCount > 0 ? (
+              <View
+                className="mt-3 rounded-2xl p-4"
+                style={{
+                  backgroundColor: alpha(C.lemon, 0.04),
+                  borderWidth: 1,
+                  borderColor: alpha(C.lemon, 0.16),
+                }}
+              >
+                <View className="flex-row items-start gap-3">
+                  <Lock size={16} color={C.lemon} />
+                  <View className="flex-1">
+                    <Mono bold color={C.lemon} className="text-[10px]" tracking={1.5}>
+                      {lockedCount} REMINDERS ON THE 9–12 TRACK
+                    </Mono>
+                    <Mono className="mt-1 text-[10px]">{ADHERENCE_LOCK_NOTE}</Mono>
+                  </View>
+                </View>
+              </View>
+            ) : null}
+          </View>
+
+          {/* CUSTOM */}
+          <View className="mt-10">
+            <Eyebrow color={C.violet}>YOUR OWN LABEL</Eyebrow>
+            <Mono className="mt-2 text-[10px]">
+              Name it whatever makes sense to you. Vague is fine — the point is that only you know
+              what it means.
+            </Mono>
+            <View className="mt-3 flex-row items-center gap-2">
+              <TextInput
+                value={customLabel}
+                onChangeText={setCustomLabel}
+                placeholder="e.g. evening routine"
+                placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                onSubmitEditing={addCustom}
+                returnKeyType="done"
+                className="flex-1 rounded-xl px-3 py-3 text-[11px]"
+                style={{
+                  color: C.slateSoft,
+                  fontFamily: INPUT_FONT,
+                  backgroundColor: alpha('#ffffff', 0.04),
+                  borderWidth: 1,
+                  borderColor: alpha('#ffffff', 0.1),
+                }}
+              />
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Add custom reminder"
+                onPress={addCustom}
+                className="rounded-xl p-3 active:opacity-70"
+                style={{
+                  backgroundColor: alpha(C.violet, 0.14),
+                  borderWidth: 1,
+                  borderColor: alpha(C.violet, 0.3),
+                }}
+              >
+                <Plus size={16} color={C.violet} />
+              </Pressable>
+            </View>
+          </View>
+
+          <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">
+            <View className="flex-row items-start gap-3">
+              <ShieldCheck size={16} color={C.teal} />
+              <View className="flex-1">
+                <Eyebrow color={C.teal} className="mb-1.5">
+                  PRIVACY
+                </Eyebrow>
+                <Mono className="text-[10px]">{ADHERENCE_NOTE}</Mono>
+              </View>
+            </View>
+          </Panel>
+
+          <BrandFooter className="mt-8" />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
+  );
+}
+
+function ReminderCard({
+  reminder,
+  logged,
+  open,
+  onToggleOpen,
+}: {
+  reminder: Reminder;
+  logged: string[];
+  open: boolean;
+  onToggleOpen: () => void;
+}) {
+  const updateReminder = useCapeStore((s) => s.updateReminder);
+  const toggleReminder = useCapeStore((s) => s.toggleReminder);
+  const removeReminder = useCapeStore((s) => s.removeReminder);
+  const logDose = useCapeStore((s) => s.logDose);
+
+  const tint = reminder.tint;
+  const today = logDayKey();
+  const doneToday = logged.includes(today);
+  const history = recentDayKeys(HISTORY_DAYS);
+  const hits = history.filter((day) => logged.includes(day)).length;
+  const rate = Math.round((hits / HISTORY_DAYS) * 100);
+
+  const setDay = (index: number) => {
+    const days = reminder.days.includes(index)
+      ? reminder.days.filter((d) => d !== index)
+      : [...reminder.days, index].sort((a, b) => a - b);
+    void updateReminder(reminder.id, { days });
+  };
+
+  const setTone = (tone: ReminderTone) => void updateReminder(reminder.id, { tone });
+  const nudgeTime = (minutes: number) =>
+    void updateReminder(reminder.id, { time: shiftTime(reminder.time, minutes) });
+
+  return (
+    <View
+      className="rounded-2xl p-4"
+      style={{
+        backgroundColor: alpha(tint, reminder.enabled ? 0.07 : 0.03),
+        borderWidth: 1,
+        borderColor: alpha(tint, reminder.enabled ? 0.24 : 0.1),
+      }}
+    >
+      <View className="flex-row items-start gap-3">
+        <Pressable
+          accessibilityRole="switch"
+          accessibilityState={{ checked: reminder.enabled }}
+          accessibilityLabel={`${reminder.enabled ? 'Disarm' : 'Arm'} ${reminder.label}`}
+          onPress={() => void toggleReminder(reminder.id)}
+          className="h-9 w-9 items-center justify-center rounded-xl active:opacity-70"
+          style={{
+            backgroundColor: alpha(reminder.enabled ? tint : C.slateFaint, 0.14),
+            borderWidth: 1,
+            borderColor: alpha(reminder.enabled ? tint : C.slateFaint, 0.35),
+          }}
+        >
+          {reminder.enabled ? (
+            <BellRing size={15} color={tint} />
+          ) : (
+            <BellOff size={15} color={alpha(C.slateFaint, 0.8)} />
+          )}
+        </Pressable>
+
+        <Pressable
+          accessibilityRole="button"
+          onPress={onToggleOpen}
+          className="flex-1 active:opacity-70"
+        >
+          <Mono
+            bold
+            color={reminder.enabled ? tint : alpha(C.slateFaint, 0.8)}
+            className="text-[11px]"
+            tracking={1.2}
+          >
+            {reminder.label}
+          </Mono>
+          <Mono className="mt-0.5 text-[10px]">
+            {formatTime(reminder.time)} · {describeDays(reminder.days)}
+          </Mono>
+          <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            {toneInfo(reminder.tone).label} · {reminder.enabled ? 'ARMED' : 'PAUSED'}
+          </Mono>
+        </Pressable>
+
+        <View style={{ transform: [{ rotate: open ? '180deg' : '0deg' }] }}>
+          <ChevronDown size={15} color={alpha(tint, 0.8)} />
+        </View>
+      </View>
+
+      {/* HISTORY STRIP */}
+      <View className="mt-3">
+        <View className="flex-row items-center justify-between">
+          <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            LAST {HISTORY_DAYS} DAYS
+          </Mono>
+          <Mono bold className="text-[9px]" color={alpha(tint, 0.85)}>
+            {hits}/{HISTORY_DAYS} · {rate}%
+          </Mono>
+        </View>
+        <View className="mt-2 flex-row gap-1">
+          {history.map((day) => {
+            const hit = logged.includes(day);
+            return (
+              <View
+                key={day}
+                className="h-4 flex-1 rounded-sm"
+                style={{
+                  backgroundColor: hit ? alpha(tint, 0.75) : alpha('#ffffff', 0.05),
+                  borderWidth: 1,
+                  borderColor: hit ? alpha(tint, 0.9) : alpha('#ffffff', 0.07),
+                }}
+              />
+            );
+          })}
+        </View>
+        <View className="mt-2">
+          <Rail value={rate} color={tint} />
+        </View>
+      </View>
+
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => logDose(reminder.id)}
+        className="mt-3 flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
+        style={{
+          backgroundColor: alpha(doneToday ? C.yes : tint, doneToday ? 0.16 : 0.1),
+          borderWidth: 1,
+          borderColor: alpha(doneToday ? C.yes : tint, doneToday ? 0.4 : 0.24),
+        }}
+      >
+        {doneToday ? <Check size={14} color={C.yes} /> : null}
+        <Mono bold color={doneToday ? C.yes : tint} className="text-[10px]" tracking={1.5}>
+          {doneToday ? 'LOGGED TODAY · TAP TO UNDO' : 'LOG TODAY'}
+        </Mono>
+      </Pressable>
+
+      {open ? (
+        <View className="mt-4 gap-4">
+          {/* TIME */}
+          <View>
+            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+              ALERT TIME
+            </Mono>
+            <View className="mt-2 flex-row items-center gap-2">
+              <StepButton
+                label="−15 minutes"
+                tint={tint}
+                onPress={() => nudgeTime(-15)}
+                icon={<Minus size={14} color={tint} />}
+              />
+              <View
+                className="flex-1 items-center rounded-xl py-2.5"
+                style={{
+                  backgroundColor: alpha('#ffffff', 0.04),
+                  borderWidth: 1,
+                  borderColor: alpha('#ffffff', 0.1),
+                }}
+              >
+                <Mono bold color={alpha(C.slateSoft, 0.95)} className="text-[13px]" tracking={1}>
+                  {formatTime(reminder.time)}
+                </Mono>
+              </View>
+              <StepButton
+                label="+15 minutes"
+                tint={tint}
+                onPress={() => nudgeTime(15)}
+                icon={<Plus size={14} color={tint} />}
+              />
+            </View>
+            <View className="mt-2 flex-row gap-2">
+              <StepChip label="−1 HR" tint={tint} onPress={() => nudgeTime(-60)} />
+              <StepChip label="−5 MIN" tint={tint} onPress={() => nudgeTime(-5)} />
+              <StepChip label="+5 MIN" tint={tint} onPress={() => nudgeTime(5)} />
+              <StepChip label="+1 HR" tint={tint} onPress={() => nudgeTime(60)} />
+            </View>
+          </View>
+
+          {/* DAYS */}
+          <View>
+            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+              DAYS
+            </Mono>
+            <View className="mt-2 flex-row gap-1.5">
+              {WEEKDAYS.map((day) => {
+                const active = reminder.days.includes(day.index);
+                return (
+                  <Pressable
+                    key={day.index}
+                    accessibilityRole="button"
+                    accessibilityLabel={day.label}
+                    accessibilityState={{ selected: active }}
+                    onPress={() => setDay(day.index)}
+                    className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
+                    style={{
+                      backgroundColor: alpha(active ? tint : '#ffffff', active ? 0.2 : 0.04),
+                      borderWidth: 1,
+                      borderColor: alpha(active ? tint : '#ffffff', active ? 0.45 : 0.1),
+                    }}
+                  >
+                    <Mono
+                      bold={active}
+                      color={active ? tint : alpha(C.slateFaint, 0.7)}
+                      className="text-[10px]"
+                    >
+                      {day.letter}
+                    </Mono>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
+          {/* TONE */}
+          <View>
+            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+              ALERT TONE
+            </Mono>
+            <View className="mt-2 gap-2">
+              {REMINDER_TONES.map((tone) => {
+                const active = reminder.tone === tone.id;
+                return (
+                  <Pressable
+                    key={tone.id}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: active }}
+                    onPress={() => setTone(tone.id)}
+                    className="flex-row items-center gap-3 rounded-xl p-3 active:opacity-70"
+                    style={{
+                      backgroundColor: alpha(tone.tint, active ? 0.16 : 0.04),
+                      borderWidth: 1,
+                      borderColor: alpha(tone.tint, active ? 0.4 : 0.12),
+                    }}
+                  >
+                    <View
+                      className="h-4 w-4 items-center justify-center rounded-full"
+                      style={{
+                        borderWidth: 1.5,
+                        borderColor: alpha(tone.tint, active ? 0.9 : 0.35),
+                        backgroundColor: active ? tone.tint : 'transparent',
+                      }}
+                    />
+                    <View className="flex-1">
+                      <Mono
+                        bold={active}
+                        color={active ? tone.tint : alpha(C.slateSoft, 0.8)}
+                        className="text-[10px]"
+                        tracking={1.2}
+                      >
+                        {tone.label}
+                      </Mono>
+                      <Mono className="mt-0.5 text-[9px]">{tone.detail}</Mono>
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => void removeReminder(reminder.id)}
+            className="flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
+            style={{
+              backgroundColor: alpha(C.no, 0.08),
+              borderWidth: 1,
+              borderColor: alpha(C.no, 0.22),
+            }}
+          >
+            <Trash2 size={13} color={C.no} />
+            <Mono bold color={C.no} className="text-[10px]" tracking={1.5}>
+              DELETE REMINDER
+            </Mono>
+          </Pressable>
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+function StepButton({
+  label,
+  tint,
+  onPress,
+  icon,
+}: {
+  label: string;
+  tint: string;
+  onPress: () => void;
+  icon: React.ReactNode;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      onPress={onPress}
+      className="rounded-xl p-3 active:opacity-70"
+      style={{
+        backgroundColor: alpha(tint, 0.12),
+        borderWidth: 1,
+        borderColor: alpha(tint, 0.28),
+      }}
+    >
+      {icon}
+    </Pressable>
+  );
+}
+
+function StepChip({ label, tint, onPress }: { label: string; tint: string; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      className="flex-1 items-center rounded-lg py-2 active:opacity-70"
+      style={{
+        backgroundColor: alpha('#ffffff', 0.04),
+        borderWidth: 1,
+        borderColor: alpha('#ffffff', 0.09),
+      }}
+    >
+      <Mono color={alpha(tint, 0.85)} className="text-[9px]" tracking={1}>
+        {label}
+      </Mono>
+    </Pressable>
+  );
+}

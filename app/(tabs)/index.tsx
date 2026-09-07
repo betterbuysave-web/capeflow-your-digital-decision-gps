@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Award,
   Coffee,
+  FileText,
   Flame,
   Ghost,
   LifeBuoy,
@@ -106,7 +107,28 @@ export default function Compass() {
           </View>
         </Panel>
 
-        {/* PILOT */}
+        {/* PROTECTION BLUEPRINT */}
+        <TintedRow
+          tint={C.gold}
+          fill={0.06}
+          stroke={0.2}
+          className="mt-3"
+          onPress={() => router.push('/protection-blueprint')}
+        >
+          <View className="flex-row items-center gap-3">
+            <FileText size={18} color={C.gold} />
+            <View className="flex-1">
+              <Mono bold color={C.gold} className="text-[11px]" tracking={1}>
+                PROTECTION BLUEPRINT
+              </Mono>
+              <Mono className="mt-0.5 text-[9px]">
+                Full readout of your shield, plans, and adherence history
+              </Mono>
+            </View>
+            <ArrowRight size={14} color={C.gold} />
+          </View>
+        </TintedRow>
+
         <View className="mt-4 flex-row items-center justify-between">
           <View>
             <Eyebrow color={C.teal}>WEAR YOUR CAPE</Eyebrow>

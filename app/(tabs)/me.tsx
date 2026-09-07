@@ -1,6 +1,17 @@
 import { Alert, Platform, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { Award, BookOpen, Lock, RotateCcw, Trash2, Users } from 'lucide-react-native';
+import {
+  Award,
+  BellRing,
+  BookOpen,
+  FileText,
+  Info,
+  Library,
+  Lock,
+  RotateCcw,
+  Trash2,
+  Users,
+} from 'lucide-react-native';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
@@ -30,6 +41,7 @@ export default function Me() {
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const ghosts = useCapeStore((s) => s.ghosts);
+  const reminders = useCapeStore((s) => s.reminders);
   const resetAll = useCapeStore((s) => s.resetAll);
 
   const score = saferScore({
@@ -41,6 +53,7 @@ export default function Me() {
     gradeBand,
   });
   const disarmedGhosts = disarmedCount(ghosts);
+  const armedReminders = reminders.filter((r) => r.enabled).length;
 
   const confirmReset = () => {
     const wipe = () => {
@@ -129,6 +142,84 @@ export default function Me() {
         </View>
 
         <View className="mt-8 gap-3">
+          <TintedRow
+            tint={C.gold}
+            fill={0.07}
+            stroke={0.22}
+            onPress={() => router.push('/protection-blueprint')}
+          >
+            <View className="flex-row items-center gap-3">
+              <FileText size={18} color={C.gold} />
+              <View className="flex-1">
+                <Mono bold color={C.gold} className="text-[11px]" tracking={1}>
+                  PROTECTION BLUEPRINT
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  Signature Shield readout, active plans, adherence history
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
+
+          <TintedRow
+            tint={C.modM}
+            fill={0.06}
+            stroke={0.2}
+            onPress={() => router.push('/adherence-settings')}
+          >
+            <View className="flex-row items-center gap-3">
+              <BellRing size={18} color={C.modM} />
+              <View className="flex-1">
+                <Mono bold color={C.modM} className="text-[11px]" tracking={1}>
+                  ADHERENCE SETTINGS
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  {reminders.length > 0
+                    ? `${armedReminders} of ${reminders.length} reminders armed`
+                    : 'Set reminders, tones, and weekly schedules'}
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
+
+          <TintedRow
+            tint={C.azure}
+            fill={0.06}
+            stroke={0.2}
+            onPress={() => router.push('/educational-library')}
+          >
+            <View className="flex-row items-center gap-3">
+              <Library size={18} color={C.azure} />
+              <View className="flex-1">
+                <Mono bold color={C.azure} className="text-[11px]" tracking={1}>
+                  EDUCATIONAL LIBRARY
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  Glossary and topics, searchable by category
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
+
+          <TintedRow
+            tint={C.teal}
+            fill={0.06}
+            stroke={0.2}
+            onPress={() => router.push('/about-cape')}
+          >
+            <View className="flex-row items-center gap-3">
+              <Info size={18} color={C.teal} />
+              <View className="flex-1">
+                <Mono bold color={C.teal} className="text-[11px]" tracking={1}>
+                  ABOUT CAPE FLOW
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  Mission, medical disclaimer, privacy-first design
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
+
           <TintedRow tint={C.gold} fill={0.06} stroke={0.2} onPress={() => router.push('/badges')}>
             <View className="flex-row items-center gap-3">
               <Award size={18} color={C.gold} />
