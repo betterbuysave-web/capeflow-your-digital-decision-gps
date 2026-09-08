@@ -3,13 +3,10 @@ import type { ModuleId } from '@/lib/data/match';
 import type { Track } from '@/lib/data/content';
 
 /**
- * The five M.A.T.C.H. nodes as drawn on the compass artwork.
- * `hotspot` values are percentages of the artwork so taps land on the
- * printed callout box at any width.
+ * The five M.A.T.C.H. nodes as drafted on the compass rose.
+ * `bearing` is degrees clockwise from north, so each node marker lands on the
+ * rose ring at any size.
  */
-/** Percentage offsets within the artwork, so hotspots scale with any width. */
-type Percent = `${number}%`;
-
 export interface CompassNode {
   id: ModuleId;
   letter: string;
@@ -17,7 +14,8 @@ export interface CompassNode {
   callsign: string;
   hint: string;
   color: string;
-  hotspot: { left: Percent; top: Percent; width: Percent; height: Percent };
+  /** Degrees clockwise from north. */
+  bearing: number;
   green: string[];
   blue: string[];
   lockNote?: string;
@@ -31,7 +29,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Health Armor',
     hint: 'Baseline knowledge, vaccines',
     color: C.modM,
-    hotspot: { left: '71.5%', top: '21.9%', width: '22.1%', height: '11.5%' },
+    bearing: 36,
     green: [
       'Your body is the asset. Check-ups, sleep, and dental visits are armor maintenance, not punishment.',
       'Know your baseline: allergies, medications, and the last time you saw a clinician.',
@@ -54,7 +52,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Built-In Radar',
     hint: 'Trusting your gut, early warning signs',
     color: C.modA,
-    hotspot: { left: '6.4%', top: '21.9%', width: '22.1%', height: '11.5%' },
+    bearing: 324,
     green: [
       'Your body reads risk before your words do — tight chest, dry mouth, stalling stomach.',
       'Rushing you is a flag. Real care can wait until tomorrow.',
@@ -75,7 +73,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Safety Kit',
     hint: 'Charged phone, ride plan, safety buddy',
     color: C.modT,
-    hotspot: { left: '72.7%', top: '64.8%', width: '20.9%', height: '11.5%' },
+    bearing: 108,
     green: [
       'Three to five people who answer without a lecture. Tell them in advance they are on your list.',
       'Agree on a code word that means "call me and get me out" with no follow-up questions.',
@@ -96,7 +94,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Strongest Voice',
     hint: 'FRIES model, boundary scripts',
     color: C.modC,
-    hotspot: { left: '6.4%', top: '64.8%', width: '22.1%', height: '11.5%' },
+    bearing: 252,
     green: [
       'Consent is Freely given, Reversible, Informed, Enthusiastic, and Specific.',
       'Ask before touching — hugs included. "Is this okay?" is the entire script.',
@@ -117,7 +115,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Daily Superpower',
     hint: 'Pacing, sleep, digital legacy',
     color: C.modH,
-    hotspot: { left: '40.7%', top: '81.6%', width: '18.6%', height: '11.5%' },
+    bearing: 180,
     green: [
       'Sleep, water, movement. The boring reps are the actual superpower.',
       'Your digital legacy is everything a screenshot could keep.',

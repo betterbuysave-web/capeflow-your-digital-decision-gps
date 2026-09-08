@@ -40,7 +40,7 @@ export default function PepClock() {
 
   if (!pepUnlocked(gradeBand)) {
     return (
-      <View className="bg-ink flex-1">
+      <View className="bg-paper flex-1">
         <StackHeader title="PEP Clock" tint={C.lemon} fallback="/(tabs)/tools" />
         <ScrollView
           className="flex-1"
@@ -82,7 +82,7 @@ export default function PepClock() {
   }
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="PEP Clock" tint={C.flame} fallback="/(tabs)/crisis" />
       <ScrollView
         className="flex-1"
@@ -108,7 +108,7 @@ export default function PepClock() {
           <Display color={expired ? C.no : C.flame} className="mt-3 text-6xl">
             {pepStartedAt ? format(left) : '72:00:00'}
           </Display>
-          <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.8)} tracking={2}>
+          <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.8)} tracking={2}>
             HOURS : MINUTES : SECONDS
           </Mono>
           <View className="mt-5 w-full">
@@ -123,13 +123,13 @@ export default function PepClock() {
               onPress={clearPep}
               className="flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
               style={{
-                backgroundColor: alpha('#ffffff', 0.04),
+                backgroundColor: C.card,
                 borderWidth: 1,
-                borderColor: alpha('#ffffff', 0.12),
+                borderColor: alpha(C.ink, 0.16),
               }}
             >
-              <Square size={14} color={alpha(C.slateFaint, 0.8)} />
-              <Mono bold color={alpha(C.slateFaint, 0.85)} tracking={2} className="text-[11px]">
+              <Square size={14} color={alpha(C.inkFaint, 0.8)} />
+              <Mono bold color={alpha(C.inkFaint, 0.85)} tracking={2} className="text-[11px]">
                 RESET CLOCK
               </Mono>
             </Pressable>

@@ -8,14 +8,14 @@ export default function TabLayout() {
   return (
     <>
       {/* eslint-disable-next-line react/style-prop-object -- expo-status-bar's `style` prop is a string enum, not an RN style object */}
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <Tabs
         screenOptions={{
           headerShown: false,
-          sceneStyle: { backgroundColor: C.ink },
+          sceneStyle: { backgroundColor: C.paper },
           tabBarStyle: {
-            backgroundColor: C.ink2,
-            borderTopColor: alpha('#ffffff', 0.07),
+            backgroundColor: C.paper2,
+            borderTopColor: alpha(C.tealBright, 0.35),
             borderTopWidth: 1,
             elevation: 0,
             shadowColor: 'transparent',
@@ -23,7 +23,7 @@ export default function TabLayout() {
             shadowRadius: 0,
           },
           tabBarActiveTintColor: C.teal,
-          tabBarInactiveTintColor: alpha(C.slateFaint, 0.6),
+          tabBarInactiveTintColor: alpha(C.inkFaint, 0.8),
           tabBarLabelStyle: {
             fontFamily: 'JetBrainsMono_700Bold',
             fontSize: 9,

@@ -18,8 +18,8 @@ export default function Learn() {
   const track = trackFor(gradeBand);
 
   return (
-    <View className="bg-ink flex-1">
-      <SafeAreaView edges={['top']} className="bg-ink" />
+    <View className="bg-paper flex-1">
+      <SafeAreaView edges={['top']} className="bg-paper" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -77,7 +77,7 @@ export default function Learn() {
                       <Rail value={progress} color={mod.color} />
                     </View>
                     <View className="mt-1.5 flex-row items-center justify-between">
-                      <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {done}/{available.length} lessons
                       </Mono>
                       <ArrowRight size={13} color={alpha(mod.color, 0.8)} />

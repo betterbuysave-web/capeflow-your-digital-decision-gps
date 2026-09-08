@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
 import { Mono } from '@/components/cape/Type';
-import { alpha } from '@/lib/colors';
+import { alpha, wash } from '@/lib/colors';
 import { verdictColor, verdictShort } from '@/lib/verdict';
 import type { Verdict } from '@/lib/data/scenarios';
 
@@ -12,9 +12,9 @@ export function VerdictBadge({ verdict }: { verdict: Verdict }) {
     <View
       className="rounded-full px-2 py-0.5"
       style={{
-        backgroundColor: alpha(tint, 0.15),
+        backgroundColor: wash(tint, 0.15),
         borderWidth: 1,
-        borderColor: alpha(tint, 0.3),
+        borderColor: alpha(tint, 0.45),
       }}
     >
       <Mono bold color={tint} className="text-[8px]" tracking={1}>

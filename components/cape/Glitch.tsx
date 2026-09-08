@@ -28,8 +28,8 @@ export function useGlitchClock(): SharedValue<number> {
 }
 
 /**
- * An un-processed fear: low-opacity text with magenta / cyan chromatic split
- * that jitters on a short burst. Once named, render solid type instead.
+ * An un-processed fear: misregistered type with a P-Magenta / CAPE Teal
+ * chromatic split, like a mis-printed plate. Once named, render solid ink.
  */
 export function GlitchLabel({
   text,
@@ -46,16 +46,16 @@ export function GlitchLabel({
     const p = (clock.value + phase) % 1;
     const burst = p > 0.9;
     return {
-      opacity: burst ? 0.9 : 0.22,
+      opacity: burst ? 0.85 : 0.32,
       transform: [{ translateX: burst ? -2 : -0.7 }],
     };
   });
 
-  const cyan = useAnimatedStyle(() => {
+  const teal = useAnimatedStyle(() => {
     const p = (clock.value + phase + 0.04) % 1;
     const burst = p > 0.9;
     return {
-      opacity: burst ? 0.85 : 0.18,
+      opacity: burst ? 0.8 : 0.28,
       transform: [{ translateX: burst ? 2.2 : 0.7 }],
     };
   });
@@ -68,12 +68,12 @@ export function GlitchLabel({
 
   return (
     <View>
-      <Text style={[baseStyle, { color: alpha(C.slateFaint, 0.55) }]}>{text}</Text>
+      <Text style={[baseStyle, { color: alpha(C.inkFaint, 0.8) }]}>{text}</Text>
       <AnimatedView className="absolute top-0 left-0" style={magenta} pointerEvents="none">
-        <Text style={[baseStyle, { color: C.violet }]}>{text}</Text>
+        <Text style={[baseStyle, { color: C.magenta }]}>{text}</Text>
       </AnimatedView>
-      <AnimatedView className="absolute top-0 left-0" style={cyan} pointerEvents="none">
-        <Text style={[baseStyle, { color: C.teal }]}>{text}</Text>
+      <AnimatedView className="absolute top-0 left-0" style={teal} pointerEvents="none">
+        <Text style={[baseStyle, { color: C.tealBright }]}>{text}</Text>
       </AnimatedView>
     </View>
   );

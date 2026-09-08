@@ -75,8 +75,8 @@ export default function Me() {
   };
 
   return (
-    <View className="bg-ink flex-1">
-      <SafeAreaView edges={['top']} className="bg-ink" />
+    <View className="bg-paper flex-1">
+      <SafeAreaView edges={['top']} className="bg-paper" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -266,8 +266,8 @@ export default function Me() {
 
         <View className="mt-8">
           <View className="flex-row items-center gap-2">
-            <BookOpen size={15} color={alpha(C.slateFaint, 0.7)} />
-            <Eyebrow color={alpha(C.slateFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
+            <BookOpen size={15} color={alpha(C.inkFaint, 0.7)} />
+            <Eyebrow color={alpha(C.inkFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
           </View>
           <View className="mt-3 gap-2">
             {SOURCES.map((src) => (
@@ -275,15 +275,15 @@ export default function Me() {
                 key={src.name}
                 className="rounded-xl p-3"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.02),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.06),
+                  borderColor: alpha(C.ink, 0.1),
                 }}
               >
-                <Mono bold className="text-[10px]" color={alpha(C.slateSoft, 0.85)}>
+                <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
                   {src.name}
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
                   {src.detail}
                 </Mono>
               </View>
@@ -297,13 +297,13 @@ export default function Me() {
             onPress={() => router.push('/')}
             className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5 active:opacity-70"
             style={{
-              backgroundColor: alpha('#ffffff', 0.04),
+              backgroundColor: C.card,
               borderWidth: 1,
-              borderColor: alpha('#ffffff', 0.1),
+              borderColor: alpha(C.ink, 0.14),
             }}
           >
-            <RotateCcw size={14} color={alpha(C.slateFaint, 0.8)} />
-            <Mono bold color={alpha(C.slateFaint, 0.8)} tracking={2} className="text-[11px]">
+            <RotateCcw size={14} color={alpha(C.inkFaint, 0.8)} />
+            <Mono bold color={alpha(C.inkFaint, 0.8)} tracking={2} className="text-[11px]">
               REVISIT THE INTRO
             </Mono>
           </Pressable>
@@ -324,7 +324,7 @@ export default function Me() {
             </Mono>
           </Pressable>
 
-          <Body className="text-center text-[11px]" color={alpha(C.slateFaint, 0.6)}>
+          <Body className="text-center text-[11px]" color={alpha(C.inkFaint, 0.6)}>
             Nothing you do in CAPE FLOW is uploaded. Deleting here removes it permanently.
           </Body>
         </View>
@@ -354,7 +354,7 @@ function ScoreRow({
         <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
           {label}
         </Mono>
-        <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
           {detail} · {weight}
         </Mono>
       </View>

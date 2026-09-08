@@ -68,8 +68,8 @@ export default function Compass() {
   const ghostRange = ghostTotal(gradeBand) + customGhosts.length;
 
   return (
-    <View className="bg-ink flex-1">
-      <SafeAreaView edges={['top']} className="bg-ink" />
+    <View className="bg-paper flex-1">
+      <SafeAreaView edges={['top']} className="bg-paper" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -256,7 +256,7 @@ export default function Compass() {
                       <View className="mt-2">
                         <Rail value={progress} color={mod.color} />
                       </View>
-                      <Mono className="mt-1.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="mt-1.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {done}/{available.length} lessons · {progress}%
                       </Mono>
                     </View>
@@ -337,7 +337,7 @@ export default function Compass() {
             <View className="flex-row items-center justify-between">
               <View className="flex-1">
                 <Eyebrow color={C.gold}>BADGES</Eyebrow>
-                <Body className="mt-1.5" color={alpha(C.slateSoft, 0.7)}>
+                <Body className="mt-1.5" color={alpha(C.inkSoft, 0.7)}>
                   {badges.length === 0
                     ? 'Finish one lesson to earn your first badge.'
                     : `${badges.length} earned. Keep stacking.`}
@@ -380,7 +380,7 @@ function QuickTile({
       <Mono bold color={tint} className="mt-2.5 text-[10px]" tracking={1}>
         {label}
       </Mono>
-      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
         {detail}
       </Mono>
     </Pressable>

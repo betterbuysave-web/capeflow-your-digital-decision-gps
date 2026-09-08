@@ -4,7 +4,7 @@ import { Lock, RotateCcw } from 'lucide-react-native';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { GhostButton, MetallicButton } from '@/components/cape/Buttons';
 import { CONFIDENCE_LEVELS, EXIT_QUESTIONS } from '@/lib/data/cafe';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const INPUT_FONT = 'JetBrainsMono_400Regular';
@@ -36,7 +36,7 @@ export function ExitCardSection() {
           </Mono>
         </View>
 
-        <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-7">
+        <Panel tint={C.tealBright} fill={0.08} stroke={0.35} className="mt-7">
           <View className="flex-row items-start gap-2.5">
             <Lock size={15} color={C.teal} />
             <Mono className="flex-1 text-[10px]">
@@ -49,9 +49,9 @@ export function ExitCardSection() {
         <View className="mt-6">
           <GhostButton
             label="FILL IT OUT AGAIN"
-            tint={C.white}
+            tint={C.ink}
             onPress={clearCafeExit}
-            icon={<RotateCcw size={14} color={alpha(C.slateSoft, 0.85)} />}
+            icon={<RotateCcw size={14} color={C.inkSoft} />}
           />
         </View>
       </View>
@@ -83,13 +83,13 @@ export function ExitCardSection() {
             <View className="flex-row items-start gap-2.5">
               <View
                 className="rounded-md px-1.5 py-0.5"
-                style={{ backgroundColor: alpha(C.teal, 0.16) }}
+                style={{ backgroundColor: wash(C.tealBright, 0.2) }}
               >
                 <Mono bold color={C.teal} className="text-[9px]">
                   {String(index + 1).padStart(2, '0')}
                 </Mono>
               </View>
-              <Mono bold color={alpha(C.slateSoft, 0.95)} className="flex-1 text-[11px]">
+              <Mono bold color={C.ink} className="flex-1 text-[11px]">
                 {question}
               </Mono>
             </View>
@@ -97,18 +97,18 @@ export function ExitCardSection() {
               value={exitCard.answers[index] ?? ''}
               onChangeText={(text) => setCafeExitAnswer(index, text)}
               placeholder="Write here…"
-              placeholderTextColor={alpha(C.slateFaint, 0.4)}
+              placeholderTextColor={alpha(C.inkFaint, 0.55)}
               multiline
               className="mt-2 rounded-xl px-3 py-2.5"
               style={{
-                color: C.white,
+                color: C.ink,
                 fontFamily: INPUT_FONT,
                 fontSize: 11,
                 minHeight: 68,
                 textAlignVertical: 'top',
-                backgroundColor: alpha(C.white, 0.04),
+                backgroundColor: C.card,
                 borderWidth: 1,
-                borderColor: alpha(C.teal, 0.16),
+                borderColor: alpha(C.tealBright, 0.35),
               }}
             />
           </View>
@@ -118,13 +118,13 @@ export function ExitCardSection() {
           <View className="flex-row items-start gap-2.5">
             <View
               className="rounded-md px-1.5 py-0.5"
-              style={{ backgroundColor: alpha(C.teal, 0.16) }}
+              style={{ backgroundColor: wash(C.tealBright, 0.2) }}
             >
               <Mono bold color={C.teal} className="text-[9px]">
                 05
               </Mono>
             </View>
-            <Mono bold color={alpha(C.slateSoft, 0.95)} className="flex-1 text-[11px]">
+            <Mono bold color={C.ink} className="flex-1 text-[11px]">
               How confident do I feel right now about understanding consent?
             </Mono>
           </View>
@@ -139,18 +139,15 @@ export function ExitCardSection() {
                   onPress={() => setCafeConfidence(level.value)}
                   className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
                   style={{
-                    backgroundColor: alpha(C.teal, active ? 0.2 : 0.04),
+                    backgroundColor: active ? wash(C.tealBright, 0.2) : C.card,
                     borderWidth: 1,
-                    borderColor: alpha(C.teal, active ? 0.55 : 0.12),
+                    borderColor: alpha(active ? C.tealBright : C.ink, active ? 0.6 : 0.14),
                   }}
                 >
-                  <Mono bold color={active ? C.teal : alpha(C.slateSoft, 0.8)} className="text-sm">
+                  <Mono bold color={active ? C.teal : C.inkSoft} className="text-sm">
                     {level.value}
                   </Mono>
-                  <Mono
-                    color={active ? alpha(C.teal, 0.8) : alpha(C.slateFaint, 0.6)}
-                    className="mt-0.5 text-[8px]"
-                  >
+                  <Mono color={active ? C.teal : C.inkFaint} className="mt-0.5 text-[8px]">
                     {level.label}
                   </Mono>
                 </Pressable>
@@ -170,9 +167,9 @@ export function ExitCardSection() {
         <MetallicButton label="COMPLETE MY EXIT CARD" onPress={submit} showArrow={false} />
         <GhostButton
           label="CLEAR THE CARD"
-          tint={C.white}
+          tint={C.no}
           onPress={clearCafeExit}
-          icon={<RotateCcw size={14} color={alpha(C.slateSoft, 0.85)} />}
+          icon={<RotateCcw size={14} color={C.inkSoft} />}
         />
       </View>
     </View>

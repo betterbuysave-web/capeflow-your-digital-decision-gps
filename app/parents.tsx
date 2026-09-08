@@ -12,7 +12,7 @@ export default function Parents() {
   const [openBand, setOpenBand] = useState<string | null>(CURRICULUM[0].band);
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Parents & Schools" tint={C.gold} fallback="/" />
       <ScrollView
         className="flex-1"
@@ -23,7 +23,7 @@ export default function Parents() {
           <Users size={22} color={C.teal} />
           <View className="flex-1">
             <Eyebrow color={C.teal}>FOR PARENTS, GUARDIANS &amp; EDUCATORS</Eyebrow>
-            <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+            <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
               Full curriculum transparency — no surprises
             </Mono>
           </View>
@@ -61,7 +61,7 @@ export default function Parents() {
                     </Mono>
                     <ChevronDown
                       size={15}
-                      color={alpha(C.slateFaint, 0.7)}
+                      color={alpha(C.inkFaint, 0.7)}
                       style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
                     />
                   </Pressable>
@@ -110,13 +110,13 @@ export default function Parents() {
                       <Mono bold color={card.tint} className="text-[11px]">
                         {card.title}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {card.detail}
                       </Mono>
                     </View>
                     <ChevronDown
                       size={15}
-                      color={alpha(C.slateFaint, 0.7)}
+                      color={alpha(C.inkFaint, 0.7)}
                       style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
                     />
                   </Pressable>

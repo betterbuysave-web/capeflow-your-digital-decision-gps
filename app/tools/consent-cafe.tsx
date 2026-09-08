@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { ExitCardSection } from '@/components/cape/cafe/ExitCardSection';
@@ -16,12 +10,11 @@ import { MenuSection } from '@/components/cape/cafe/MenuSection';
 import { PracticeSection } from '@/components/cape/cafe/PracticeSection';
 import { RightsSection } from '@/components/cape/cafe/RightsSection';
 import { StackHeader } from '@/components/cape/Screen';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C } from '@/lib/colors';
 import type { CafeStation } from '@/lib/data/cafe';
 
 export default function ConsentCafe() {
-  const { width, height } = useWindowDimensions();
   const [station, setStation] = useState<CafeStation>('fries');
   const [visited, setVisited] = useState<string[]>(['fries']);
   const [facilitator, setFacilitator] = useState(false);
@@ -32,8 +25,8 @@ export default function ConsentCafe() {
   };
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.amber} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.amber} />
       <StackHeader
         title="The Consent Café"
         tint={C.amber}

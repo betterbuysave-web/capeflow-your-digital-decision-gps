@@ -3,11 +3,11 @@ import { Pressable, View } from 'react-native';
 import { ArrowRight } from 'lucide-react-native';
 
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
-import { C, METALLIC, METALLIC_LOCATIONS, alpha } from '@/lib/colors';
+import { C, METALLIC, METALLIC_LOCATIONS, alpha, wash } from '@/lib/colors';
 import { Mono } from '@/components/cape/Type';
 import { cn } from '@/lib/utils';
 
-/** Primary action: metallic teal→gold gradient pill with dark label. */
+/** Primary action: forged teal→gold pill with a gold edge and a cream label. */
 export function MetallicButton({
   label,
   onPress,
@@ -24,7 +24,14 @@ export function MetallicButton({
       accessibilityRole="button"
       onPress={onPress}
       className={cn('overflow-hidden rounded-full active:opacity-80', className)}
-      style={{ shadowColor: C.teal, shadowOpacity: 0.4, shadowRadius: 18 }}
+      style={{
+        borderWidth: 1,
+        borderColor: alpha(C.goldBright, 0.55),
+        shadowColor: C.ink,
+        shadowOpacity: 0.16,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 3 },
+      }}
     >
       <LinearGradient
         colors={METALLIC}
@@ -40,21 +47,21 @@ export function MetallicButton({
           paddingVertical: 14,
         }}
       >
-        <Mono bold color={C.ink} tracking={2} className="text-[12px]">
+        <Mono bold color={C.paper2} tracking={2} className="text-[12px]">
           {label}
         </Mono>
-        {showArrow ? <ArrowRight size={16} color={C.ink} /> : null}
+        {showArrow ? <ArrowRight size={16} color={C.paper2} /> : null}
       </LinearGradient>
     </Pressable>
   );
 }
 
-/** Secondary action: hairline outlined pill. */
+/** Secondary action: index-card pill with a drafted border. */
 export function GhostButton({
   label,
   onPress,
   className,
-  tint = '#ffffff',
+  tint = C.ink,
   icon,
 }: {
   label: string;
@@ -72,20 +79,20 @@ export function GhostButton({
         className,
       )}
       style={{
-        backgroundColor: alpha(tint, 0.05),
+        backgroundColor: C.card,
         borderWidth: 1,
-        borderColor: alpha(tint, 0.16),
+        borderColor: alpha(tint, 0.32),
       }}
     >
       {icon}
-      <Mono bold color={alpha(C.slateSoft, 0.85)} tracking={2} className="text-[12px]">
+      <Mono bold color={C.inkSoft} tracking={2} className="text-[12px]">
         {label}
       </Mono>
     </Pressable>
   );
 }
 
-/** Tinted row/tile that navigates somewhere. */
+/** Tinted card/row that navigates somewhere. */
 export function TintedRow({
   tint,
   onPress,
@@ -107,9 +114,13 @@ export function TintedRow({
       onPress={onPress}
       className={cn('rounded-2xl p-4 active:opacity-70', className)}
       style={{
-        backgroundColor: alpha(tint, fill),
+        backgroundColor: wash(tint, Math.min(fill * 1.9, 0.32)),
         borderWidth: 1,
-        borderColor: alpha(tint, stroke),
+        borderColor: alpha(tint, Math.min(stroke * 2.1, 0.6)),
+        shadowColor: C.ink,
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 2 },
       }}
     >
       {children}
@@ -123,9 +134,9 @@ export function Chip({ label, tint }: { label: string; tint: string }) {
     <View
       className="rounded-full px-2.5 py-0.5"
       style={{
-        backgroundColor: alpha(tint, 0.14),
+        backgroundColor: wash(tint, 0.14),
         borderWidth: 1,
-        borderColor: alpha(tint, 0.28),
+        borderColor: alpha(tint, 0.45),
       }}
     >
       <Mono bold color={tint} className="text-[9px]" tracking={1}>

@@ -4,7 +4,7 @@ import { Eye, Plus, RotateCcw, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { GhostButton } from '@/components/cape/Buttons';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { BOUNDARY_MENU, BOUNDARY_SECTIONS, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { MENU_COURSES, type CafeCourse, type CafeMenuItem } from '@/lib/data/cafe';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -39,7 +39,7 @@ export function MenuSection() {
         build the three courses in your own words.
       </Body>
 
-      <Panel tint={C.amber} fill={0.06} stroke={0.2} className="mt-5">
+      <Panel tint={C.amber} fill={0.09} stroke={0.4} className="mt-5">
         <View className="flex-row items-center justify-between">
           <Eyebrow color={C.amber}>YOUR STANDING ORDER</Eyebrow>
           <Mono bold color={C.amber} className="text-[11px]">
@@ -53,7 +53,7 @@ export function MenuSection() {
 
       {BOUNDARY_SECTIONS.map((section) => (
         <View key={section} className="mt-7">
-          <Eyebrow color={alpha(C.slateFaint, 0.8)}>{section}</Eyebrow>
+          <Eyebrow color={C.inkFaint}>{section}</Eyebrow>
           <View className="mt-3 gap-2.5">
             {BOUNDARY_MENU.filter((item) => item.section === section).map((item) => {
               const current = boundaries[item.id];
@@ -62,14 +62,14 @@ export function MenuSection() {
                   key={item.id}
                   className="rounded-2xl p-3.5"
                   style={{
-                    backgroundColor: alpha(C.amber, 0.05),
+                    backgroundColor: wash(C.amber, 0.06),
                     borderWidth: 1,
-                    borderColor: alpha(C.amber, 0.16),
+                    borderColor: alpha(C.amber, 0.26),
                   }}
                 >
                   <View className="flex-row items-center gap-2">
                     <Mono className="text-base">{item.emoji}</Mono>
-                    <Mono bold color={alpha(C.slateSoft, 0.95)} className="flex-1 text-[11px]">
+                    <Mono bold color={C.ink} className="flex-1 text-[11px]">
                       {item.label}
                     </Mono>
                   </View>
@@ -84,14 +84,14 @@ export function MenuSection() {
                           onPress={() => setBoundary(item.id, answer.id)}
                           className="flex-1 items-center rounded-xl py-2 active:opacity-70"
                           style={{
-                            backgroundColor: alpha(answer.tint, active ? 0.2 : 0.05),
+                            backgroundColor: active ? wash(answer.tint, 0.18) : C.card,
                             borderWidth: 1,
-                            borderColor: alpha(answer.tint, active ? 0.55 : 0.15),
+                            borderColor: alpha(answer.tint, active ? 0.6 : 0.2),
                           }}
                         >
                           <Mono
                             bold
-                            color={active ? answer.tint : alpha(answer.tint, 0.7)}
+                            color={active ? answer.tint : C.inkFaint}
                             className="text-[10px]"
                             tracking={1.5}
                           >
@@ -119,11 +119,11 @@ export function MenuSection() {
         <View
           key={course.id}
           className="mt-5 overflow-hidden rounded-2xl"
-          style={{ borderWidth: 1, borderColor: alpha(course.tint, 0.2) }}
+          style={{ borderWidth: 1, borderColor: alpha(course.tint, 0.35) }}
         >
           <View
             className="flex-row items-center gap-3 p-3.5"
-            style={{ backgroundColor: alpha(course.tint, 0.1) }}
+            style={{ backgroundColor: wash(course.tint, 0.14) }}
           >
             <Mono className="text-lg">{course.emoji}</Mono>
             <View className="flex-1">
@@ -134,9 +134,9 @@ export function MenuSection() {
             </View>
           </View>
 
-          <View className="gap-2 p-3.5" style={{ backgroundColor: alpha(course.tint, 0.03) }}>
+          <View className="gap-2 p-3.5" style={{ backgroundColor: C.card }}>
             {cafeMenu[course.id].length === 0 ? (
-              <Mono color={alpha(C.slateFaint, 0.45)} className="text-[10px]">
+              <Mono color={C.inkFaint} className="text-[10px]">
                 Nothing on this course yet.
               </Mono>
             ) : null}
@@ -144,15 +144,19 @@ export function MenuSection() {
               <View
                 key={item.id}
                 className="flex-row items-center gap-2 rounded-xl px-2.5 py-1"
-                style={{ backgroundColor: alpha(C.white, 0.04) }}
+                style={{
+                  backgroundColor: C.paper2,
+                  borderWidth: 1,
+                  borderColor: alpha(C.ink, 0.1),
+                }}
               >
                 <TextInput
                   value={item.text}
                   onChangeText={(text) => setCafeItem(course.id, index, text)}
                   placeholder={course.placeholder}
-                  placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                  placeholderTextColor={alpha(C.inkFaint, 0.55)}
                   className="flex-1 py-2"
-                  style={{ color: C.white, fontFamily: INPUT_FONT, fontSize: 11 }}
+                  style={{ color: C.ink, fontFamily: INPUT_FONT, fontSize: 11 }}
                 />
                 <Pressable
                   accessibilityRole="button"
@@ -160,7 +164,7 @@ export function MenuSection() {
                   onPress={() => removeCafeItem(course.id, index)}
                   className="h-7 w-7 items-center justify-center rounded-full active:opacity-60"
                 >
-                  <X size={13} color={alpha(C.slateFaint, 0.7)} />
+                  <X size={13} color={C.inkFaint} />
                 </Pressable>
               </View>
             ))}
@@ -172,11 +176,11 @@ export function MenuSection() {
               style={{
                 borderWidth: 1,
                 borderStyle: 'dashed',
-                borderColor: alpha(course.tint, 0.35),
+                borderColor: alpha(course.tint, 0.5),
               }}
             >
-              <Plus size={13} color={alpha(course.tint, 0.9)} />
-              <Mono bold color={alpha(course.tint, 0.9)} tracking={1.5} className="text-[9px]">
+              <Plus size={13} color={course.tint} />
+              <Mono bold color={course.tint} tracking={1.5} className="text-[9px]">
                 {course.addLabel}
               </Mono>
             </Pressable>
@@ -189,17 +193,17 @@ export function MenuSection() {
           label="PREVIEW MY MENU"
           tint={C.teal}
           onPress={() => setPreview(true)}
-          icon={<Eye size={15} color={alpha(C.slateSoft, 0.85)} />}
+          icon={<Eye size={15} color={C.inkSoft} />}
         />
         <GhostButton
           label="CLEAR ALL COURSES"
           tint={C.no}
           onPress={resetCafeMenu}
-          icon={<RotateCcw size={14} color={alpha(C.slateSoft, 0.85)} />}
+          icon={<RotateCcw size={14} color={C.inkSoft} />}
         />
       </View>
 
-      <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-6">
+      <Panel tint={C.tealBright} fill={0.08} stroke={0.35} className="mt-6">
         <View className="flex-row items-start gap-2.5">
           <RotateCcw size={15} color={C.teal} />
           <Mono className="flex-1 text-[10px]">
@@ -235,16 +239,15 @@ function MenuPreview({
         accessibilityLabel="Close preview"
         onPress={onClose}
         className="flex-1 justify-end"
-        style={{ backgroundColor: alpha('#000000', 0.75) }}
+        style={{ backgroundColor: alpha(C.ink, 0.45) }}
       >
         <Pressable
           accessibilityRole="none"
-          onPress={() => {}}
-          className="max-h-[80%] rounded-t-3xl p-5"
+          onPress={() => undefined}
+          className="bg-paper-2 max-h-[80%] rounded-t-3xl p-5"
           style={{
-            backgroundColor: C.card,
-            borderTopWidth: 1,
-            borderTopColor: alpha(C.teal, 0.25),
+            borderTopWidth: 2,
+            borderTopColor: alpha(C.tealBright, 0.6),
           }}
         >
           <View className="flex-row items-start justify-between">
@@ -257,9 +260,13 @@ function MenuPreview({
               accessibilityLabel="Close"
               onPress={onClose}
               className="h-8 w-8 items-center justify-center rounded-full active:opacity-60"
-              style={{ backgroundColor: alpha(C.white, 0.06) }}
+              style={{
+                backgroundColor: C.card,
+                borderWidth: 1,
+                borderColor: alpha(C.ink, 0.16),
+              }}
             >
-              <X size={15} color={alpha(C.slateSoft, 0.9)} />
+              <X size={15} color={C.inkSoft} />
             </Pressable>
           </View>
 
@@ -273,16 +280,16 @@ function MenuPreview({
                   </Mono>
                   <View className="mt-2 gap-1.5">
                     {items.length === 0 ? (
-                      <Mono color={alpha(C.slateFaint, 0.45)} className="text-[10px]">
+                      <Mono color={C.inkFaint} className="text-[10px]">
                         Nothing added yet.
                       </Mono>
                     ) : (
                       items.map((item) => (
                         <View key={item.id} className="flex-row gap-2">
-                          <Mono color={alpha(course.tint, 0.8)} className="text-[10px]">
+                          <Mono color={course.tint} className="text-[10px]">
                             —
                           </Mono>
-                          <Mono color={alpha(C.slateSoft, 0.85)} className="flex-1 text-[10px]">
+                          <Mono color={C.inkSoft} className="flex-1 text-[10px]">
                             {item.text.trim()}
                           </Mono>
                         </View>
@@ -292,7 +299,7 @@ function MenuPreview({
                 </View>
               );
             })}
-            <Mono color={alpha(C.slateFaint, 0.55)} className="pb-4 text-[9px]">
+            <Mono color={C.inkFaint} className="pb-4 text-[9px]">
               Screenshot this if you want to share it with someone you trust. It is stored only on
               this device.
             </Mono>

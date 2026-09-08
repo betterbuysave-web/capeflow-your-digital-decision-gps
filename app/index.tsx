@@ -19,13 +19,13 @@ import { GhostButton, MetallicButton, TintedRow } from '@/components/cape/Button
 import { BrandBanner } from '@/components/cape/BrandBanner';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { MatchCompass } from '@/components/cape/MatchCompass';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { MATCH_MODULES } from '@/lib/data/match';
 import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, PROBLEM_STATS, SOURCES } from '@/lib/data/content';
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const HERO = require('@/assets/images/hero-bg.png');
+const HERO = require('@/assets/images/hero-blueprint.png');
 
 export default function Landing() {
   const onboarded = useCapeStore((s) => s.onboarded);
@@ -44,7 +44,7 @@ export default function Landing() {
   const heroHeight = 620;
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <ScrollView
         className="flex-1"
         contentContainerClassName="pb-24"
@@ -64,12 +64,12 @@ export default function Landing() {
               left: 0,
               width,
               height: heroHeight,
-              opacity: 0.45,
+              opacity: 0.4,
             }}
           />
           <LinearGradient
-            colors={[alpha(C.ink, 0.6), alpha(C.ink, 0.9), C.ink]}
-            locations={[0, 0.7, 1]}
+            colors={[alpha(C.paper, 0.3), alpha(C.paper, 0.86), C.paper]}
+            locations={[0, 0.55, 1]}
             style={{ position: 'absolute', top: 0, left: 0, width, height: heroHeight }}
           />
 
@@ -77,9 +77,9 @@ export default function Landing() {
             <View
               className="mb-6 flex-row items-center gap-2 rounded-full px-4 py-1.5"
               style={{
-                backgroundColor: alpha(C.teal, 0.08),
+                backgroundColor: wash(C.tealBright, 0.12),
                 borderWidth: 1,
-                borderColor: alpha(C.teal, 0.25),
+                borderColor: alpha(C.tealBright, 0.5),
               }}
             >
               <Shield size={13} color={C.teal} />
@@ -88,7 +88,7 @@ export default function Landing() {
 
             <BrandBanner className="w-full" />
 
-            <Body className="mt-6 text-center" color={alpha(C.slateSoft, 0.8)}>
+            <Body className="mt-6 text-center" color={C.inkSoft}>
               A gamified health &amp; safety compass for youth. Turn anxiety into agency with the{' '}
               <Body color={C.teal}>M.A.T.C.H. framework</Body> — five modules that build real-world
               readiness, one decision at a time.
@@ -99,7 +99,7 @@ export default function Landing() {
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
             </View>
 
-            <Mono className="mt-6 text-[9px]" color={alpha(C.slateFaint, 0.5)} tracking={2}>
+            <Mono className="mt-6 text-[9px]" color={C.inkFaint} tracking={2}>
               FREE · NO SIGN-UP NEEDED · GRADES 4–12
             </Mono>
           </View>
@@ -128,7 +128,7 @@ export default function Landing() {
                   {stat.value}
                 </Display>
                 <Mono className="mt-1.5 text-[10px]">{stat.detail}</Mono>
-                <Mono className="mt-1.5 text-[8px]" color={alpha(C.slateFaint, 0.5)}>
+                <Mono className="mt-1.5 text-[8px]" color={alpha(C.inkFaint, 0.5)}>
                   {stat.source}
                 </Mono>
               </Panel>
@@ -204,7 +204,7 @@ export default function Landing() {
                 <MenuLine label="🤗 Hugs" verdict="MAYBE" tint={C.amber} chip={C.maybe} />
                 <MenuLine label="📍 Share Location" verdict="NO" tint={C.amber} chip={C.no} />
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.slateSoft, 0.55)}>
+              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
                 Order from a menu of boundaries. YES, MAYBE, or NO — your choice, always reversible.
               </Mono>
             </PreviewCard>
@@ -242,7 +242,7 @@ export default function Landing() {
                   </Mono>
                 </View>
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.slateSoft, 0.55)}>
+              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
                 24/7 direct-dial and text lines for the moments that can&apos;t wait. PEP clock
                 included.
               </Mono>
@@ -284,7 +284,7 @@ export default function Landing() {
                   <Rail value={67} color={C.teal} />
                 </View>
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.slateSoft, 0.55)}>
+              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
                 Five modules. XP, badges, and a SafER score that grows with every visit.
               </Mono>
             </PreviewCard>
@@ -323,7 +323,7 @@ export default function Landing() {
                 <Mono className="text-base">{SAMPLE_SCENARIO.emoji}</Mono>
                 <Eyebrow color={C.teal}>SAMPLE SCENARIO · MIDNIGHT SIM</Eyebrow>
               </View>
-              <Mono className="text-[10px]" color={alpha(C.slateFaint, 0.7)}>
+              <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.7)}>
                 {SAMPLE_SCENARIO.setup}
               </Mono>
             </View>
@@ -337,16 +337,16 @@ export default function Landing() {
                   borderBottomLeftRadius: 4,
                 }}
               >
-                <Mono className="text-[12px]" color={alpha(C.slateSoft, 0.9)}>
+                <Mono className="text-[12px]" color={alpha(C.inkSoft, 0.9)}>
                   {SAMPLE_SCENARIO.message}
                 </Mono>
-                <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.slateFaint, 0.5)}>
+                <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.inkFaint, 0.5)}>
                   {SAMPLE_SCENARIO.bubbleTime}
                 </Mono>
               </View>
             </View>
             <View className="flex-row items-center justify-between px-5 pb-5">
-              <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)} tracking={2}>
+              <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)} tracking={2}>
                 {SAMPLE_SCENARIO.prompt}
               </Mono>
               <ArrowRight size={14} color={C.teal} />
@@ -375,7 +375,7 @@ export default function Landing() {
               <Users size={20} color={C.teal} />
               <View className="flex-1">
                 <Eyebrow color={C.teal}>FOR PARENTS, GUARDIANS &amp; EDUCATORS</Eyebrow>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
                   Full curriculum transparency — no surprises
                 </Mono>
               </View>
@@ -400,7 +400,7 @@ export default function Landing() {
                     <Mono bold color={card.tint} className="text-[10px]">
                       {card.title}
                     </Mono>
-                    <Mono className="mt-0.5 text-[8px]" color={alpha(C.slateFaint, 0.6)}>
+                    <Mono className="mt-0.5 text-[8px]" color={alpha(C.inkFaint, 0.6)}>
                       {card.detail}
                     </Mono>
                   </Panel>
@@ -444,10 +444,10 @@ export default function Landing() {
         <View className="px-5 pt-12">
           <View className="items-center">
             <View className="mb-3 flex-row items-center gap-2">
-              <BookOpen size={16} color={alpha(C.slateFaint, 0.7)} />
-              <Eyebrow color={alpha(C.slateFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
+              <BookOpen size={16} color={alpha(C.inkFaint, 0.7)} />
+              <Eyebrow color={alpha(C.inkFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
             </View>
-            <Mono className="text-center text-[10px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="text-center text-[10px]" color={alpha(C.inkFaint, 0.6)}>
               All recommendations are grounded in peer-reviewed research and public health
               guidelines.
             </Mono>
@@ -458,17 +458,17 @@ export default function Landing() {
                 key={src.name}
                 className="flex-row items-start gap-2.5 rounded-xl p-3"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.02),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.06),
+                  borderColor: alpha(C.ink, 0.1),
                 }}
               >
                 <CircleCheck size={14} color={alpha(C.teal, 0.6)} />
                 <View className="flex-1">
-                  <Mono bold className="text-[10px]" color={alpha(C.slateSoft, 0.85)}>
+                  <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
                     {src.name}
                   </Mono>
-                  <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                  <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
                     {src.detail}
                   </Mono>
                 </View>
@@ -502,7 +502,7 @@ export default function Landing() {
 
       {!privacyAcknowledged && showPrivacy ? (
         <View className="pb-safe-offset-4 absolute right-0 bottom-0 left-0 px-4">
-          <Panel tint={C.teal} fill={0.08} stroke={0.25} className="bg-ink-2">
+          <Panel tint={C.teal} fill={0.08} stroke={0.25} className="bg-paper-2">
             <View className="flex-row items-start justify-between gap-3">
               <View className="flex-1">
                 <Eyebrow color={C.teal} className="mb-1.5">
@@ -516,7 +516,7 @@ export default function Landing() {
                 onPress={() => setShowPrivacy(false)}
                 className="active:opacity-60"
               >
-                <X size={16} color={alpha(C.slateFaint, 0.7)} />
+                <X size={16} color={alpha(C.inkFaint, 0.7)} />
               </Pressable>
             </View>
             <Pressable

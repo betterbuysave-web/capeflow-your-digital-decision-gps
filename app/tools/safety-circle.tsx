@@ -30,7 +30,7 @@ export default function SafetyCircle() {
   };
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Safety Circle" tint={C.azure} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -73,10 +73,10 @@ export default function SafetyCircle() {
                 >
                   <View className="flex-row items-start justify-between gap-3">
                     <View className="flex-1">
-                      <Mono bold color={alpha(C.slateSoft, 0.95)} className="text-[12px]">
+                      <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[12px]">
                         {contact.name}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.8)}>
+                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.8)}>
                         {contact.role} · {contact.phone}
                       </Mono>
                     </View>
@@ -157,7 +157,7 @@ export default function SafetyCircle() {
               </TextField>
 
               <View>
-                <Mono bold className="mb-2 text-[10px]" color={alpha(C.slateFaint, 0.8)}>
+                <Mono bold className="mb-2 text-[10px]" color={alpha(C.inkFaint, 0.8)}>
                   ROLE
                 </Mono>
                 <View className="flex-row flex-wrap gap-2">
@@ -178,7 +178,7 @@ export default function SafetyCircle() {
                       >
                         <Mono
                           bold
-                          color={active ? C.azure : alpha(C.slateFaint, 0.8)}
+                          color={active ? C.azure : alpha(C.inkFaint, 0.8)}
                           className="text-[10px]"
                           tracking={1}
                         >
@@ -201,10 +201,10 @@ export default function SafetyCircle() {
                   borderColor: alpha(C.azure, canAdd ? 0.5 : 0.15),
                 }}
               >
-                <Plus size={15} color={canAdd ? C.azure : alpha(C.slateFaint, 0.6)} />
+                <Plus size={15} color={canAdd ? C.azure : alpha(C.inkFaint, 0.6)} />
                 <Mono
                   bold
-                  color={canAdd ? C.azure : alpha(C.slateFaint, 0.6)}
+                  color={canAdd ? C.azure : alpha(C.inkFaint, 0.6)}
                   tracking={2}
                   className="text-[11px]"
                 >

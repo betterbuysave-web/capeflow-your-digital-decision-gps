@@ -30,8 +30,8 @@ export default function Crisis() {
   const pepAvailable = pepUnlocked(gradeBand);
 
   return (
-    <View className="bg-ink flex-1">
-      <SafeAreaView edges={['top']} className="bg-ink" />
+    <View className="bg-paper flex-1">
+      <SafeAreaView edges={['top']} className="bg-paper" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -82,7 +82,7 @@ export default function Crisis() {
                   <Mono bold color={line.tint} className="text-[11px]" tracking={1}>
                     {line.name}
                   </Mono>
-                  <Mono className="mt-1 text-[9px]" color={alpha(C.slateSoft, 0.7)}>
+                  <Mono className="mt-1 text-[9px]" color={alpha(C.inkSoft, 0.7)}>
                     {line.detail}
                   </Mono>
                 </View>

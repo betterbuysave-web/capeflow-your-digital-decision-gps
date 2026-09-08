@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ScrollView, View, useWindowDimensions } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { type Href, router } from 'expo-router';
 import {
   Activity,
@@ -21,7 +21,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip, GhostButton, MetallicButton } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { VaultCore } from '@/components/cape/VaultCore';
 import { C, alpha } from '@/lib/colors';
@@ -74,7 +74,6 @@ function readiness(score: number): { label: string; tint: string; line: string }
 }
 
 export default function ProtectionBlueprint() {
-  const { width, height } = useWindowDimensions();
   const codename = useCapeStore((s) => s.codename);
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const xp = useCapeStore((s) => s.xp);
@@ -227,8 +226,8 @@ export default function ProtectionBlueprint() {
   });
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.gold} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.goldBright} />
       <StackHeader title="Protection Blueprint" tint={C.gold} fallback="/(tabs)/me" />
       <ScrollView
         className="flex-1"
@@ -249,7 +248,7 @@ export default function ProtectionBlueprint() {
               tint={C.teal}
             />
             <Chip label={trackInfo.label} tint={trackInfo.tint} />
-            <Chip label={generated} tint={alpha(C.slateFaint, 0.9)} />
+            <Chip label={generated} tint={alpha(C.inkFaint, 0.9)} />
           </View>
         </View>
 
@@ -359,7 +358,7 @@ export default function ProtectionBlueprint() {
                       <Mono bold color={mod.color} className="text-[10px]" tracking={1.5}>
                         {mod.name.toUpperCase()}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {done} of {available.length} lessons · {pct}%
                       </Mono>
                     </View>
@@ -403,7 +402,7 @@ export default function ProtectionBlueprint() {
                   REMINDERS
                 </Mono>
               </View>
-              <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+              <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                 {armed.length} armed · {loggedToday} logged today
               </Mono>
             </View>
@@ -429,7 +428,7 @@ export default function ProtectionBlueprint() {
                       <View className="flex-row items-center justify-between gap-2">
                         <Mono
                           bold
-                          color={reminder.enabled ? reminder.tint : alpha(C.slateFaint, 0.7)}
+                          color={reminder.enabled ? reminder.tint : alpha(C.inkFaint, 0.7)}
                           className="flex-1 text-[10px]"
                           tracking={1}
                         >
@@ -437,10 +436,10 @@ export default function ProtectionBlueprint() {
                         </Mono>
                         <Chip
                           label={reminder.enabled ? 'ARMED' : 'PAUSED'}
-                          tint={reminder.enabled ? reminder.tint : alpha(C.slateFaint, 0.8)}
+                          tint={reminder.enabled ? reminder.tint : alpha(C.inkFaint, 0.8)}
                         />
                       </View>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {formatTime(reminder.time)} · {describeDays(reminder.days)} ·{' '}
                         {toneInfo(reminder.tone).label}
                       </Mono>
@@ -448,7 +447,7 @@ export default function ProtectionBlueprint() {
                         <View className="flex-1">
                           <Rail value={(hits / HISTORY_DAYS) * 100} color={reminder.tint} />
                         </View>
-                        <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                           {hits}/{HISTORY_DAYS}d
                         </Mono>
                       </View>
@@ -496,7 +495,7 @@ export default function ProtectionBlueprint() {
             </View>
             {hardLimits.length > 0 ? (
               <View className="mt-3">
-                <Mono bold className="text-[9px]" color={alpha(C.slateFaint, 0.8)} tracking={1.5}>
+                <Mono bold className="text-[9px]" color={alpha(C.inkFaint, 0.8)} tracking={1.5}>
                   NOT ON THE MENU
                 </Mono>
                 <View className="mt-1.5 gap-1">
@@ -509,7 +508,7 @@ export default function ProtectionBlueprint() {
               </View>
             ) : null}
             {cafeExit.completedAt !== null ? (
-              <Mono className="mt-3 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+              <Mono className="mt-3 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                 Consent Café exit card completed
                 {cafeExit.confidence ? ` · confidence ${cafeExit.confidence}/5` : ''}
               </Mono>
@@ -539,7 +538,7 @@ export default function ProtectionBlueprint() {
             <View className="mt-3">
               <Rail value={adherence.rate} color={C.modM} height={6} />
             </View>
-            <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+            <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
               {adherence.expected === 0
                 ? 'Nothing scheduled in this window yet.'
                 : `${adherence.hits} of ${adherence.expected} scheduled check-ins logged`}
@@ -552,12 +551,12 @@ export default function ProtectionBlueprint() {
                     <View
                       className="h-7 w-3.5 rounded-full"
                       style={{
-                        backgroundColor: anyLogged ? alpha(C.modM, 0.75) : alpha('#ffffff', 0.05),
+                        backgroundColor: anyLogged ? alpha(C.modM, 0.75) : alpha(C.ink, 0.08),
                         borderWidth: 1,
-                        borderColor: anyLogged ? alpha(C.modM, 0.9) : alpha('#ffffff', 0.1),
+                        borderColor: anyLogged ? alpha(C.modM, 0.9) : alpha(C.ink, 0.14),
                       }}
                     />
-                    <Mono className="text-[7px]" color={alpha(C.slateFaint, 0.55)}>
+                    <Mono className="text-[7px]" color={alpha(C.inkFaint, 0.55)}>
                       {day.slice(8)}
                     </Mono>
                   </View>
@@ -622,7 +621,7 @@ export default function ProtectionBlueprint() {
                         <Mono bold color={meta.color} className="text-[10px]" tracking={1}>
                           {shield.shield.toUpperCase()}
                         </Mono>
-                        <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                        <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                           Answers: {shield.name} · {meta.callsign}
                         </Mono>
                       </View>
@@ -673,7 +672,7 @@ export default function ProtectionBlueprint() {
                     }}
                   >
                     <Eye size={14} color={tint} />
-                    <Mono bold className="flex-1 text-[10px]" color={alpha(C.slateSoft, 0.9)}>
+                    <Mono bold className="flex-1 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
                       {scenario?.title ?? 'Scenario'}
                     </Mono>
                     <Chip label={verdictLabel(result.verdict).toUpperCase()} tint={tint} />
@@ -844,7 +843,7 @@ function LayerRow({
         <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
           {label}
         </Mono>
-        <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
           {detail} · {weight}
         </Mono>
       </View>

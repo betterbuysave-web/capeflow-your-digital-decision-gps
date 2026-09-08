@@ -2,31 +2,31 @@ import { View } from 'react-native';
 
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
 import { Display, Mono } from '@/components/cape/Type';
-import { C, alpha } from '@/lib/colors';
+import { C, FORGED_RULE } from '@/lib/colors';
 
-/** CAPE FLOW wordmark: condensed display type over a metallic rule. */
+/** CAPE FLOW wordmark: condensed display ink over a forged teal→gold rule. */
 export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <View className="items-center">
-      <Display className={compact ? 'text-4xl' : 'text-6xl'} color={C.white}>
+      <Display className={compact ? 'text-4xl' : 'text-6xl'} color={C.ink}>
         CAPE FLOW
       </Display>
       <LinearGradient
-        colors={['#8ffff0', '#00ffcc', '#d4af37', '#b8860b']}
+        colors={FORGED_RULE}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={{ height: 3, width: compact ? 110 : 190, borderRadius: 2, marginTop: 2 }}
       />
       <Mono
         bold
-        color={alpha(C.slateSoft, 0.8)}
+        color={C.inkSoft}
         tracking={compact ? 2 : 4}
         className={compact ? 'mt-2 text-[8px]' : 'mt-3 text-[10px]'}
       >
         ANXIETY TO AGENCY
       </Mono>
       {compact ? null : (
-        <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.6)} tracking={3}>
+        <Mono className="mt-1 text-[9px]" color={C.inkFaint} tracking={3}>
           YOUR DIGITAL DECISION GPS
         </Mono>
       )}

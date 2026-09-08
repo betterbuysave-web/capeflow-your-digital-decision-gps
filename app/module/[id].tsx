@@ -21,7 +21,7 @@ export default function ModuleDetail() {
 
   if (!mod) {
     return (
-      <View className="bg-ink flex-1">
+      <View className="bg-paper flex-1">
         <StackHeader title="Module" fallback="/(tabs)/learn" />
         <View className="flex-1 items-center justify-center px-6">
           <Display className="text-3xl">Module not found</Display>
@@ -39,7 +39,7 @@ export default function ModuleDetail() {
   const done = lessons.filter((l) => completedLessons.includes(l.id)).length;
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title={mod.name} tint={mod.color} fallback="/(tabs)/learn" />
       <ScrollView
         className="flex-1"
@@ -77,7 +77,7 @@ export default function ModuleDetail() {
           <View className="mt-2.5">
             <Rail value={progress} color={mod.color} height={5} />
           </View>
-          <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+          <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
             {done} of {lessons.length} lessons complete
           </Mono>
         </Panel>
@@ -119,13 +119,13 @@ export default function ModuleDetail() {
                     )}
                   </View>
                   <View className="flex-1">
-                    <Mono bold className="text-[12px]" color={alpha(C.slateSoft, 0.95)}>
+                    <Mono bold className="text-[12px]" color={alpha(C.inkSoft, 0.95)}>
                       {lesson.title}
                     </Mono>
                     <View className="mt-1 flex-row items-center gap-3">
                       <View className="flex-row items-center gap-1">
-                        <Clock size={10} color={alpha(C.slateFaint, 0.7)} />
-                        <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                        <Clock size={10} color={alpha(C.inkFaint, 0.7)} />
+                        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                           {lesson.minutes} min
                         </Mono>
                       </View>
@@ -136,7 +136,7 @@ export default function ModuleDetail() {
                   </View>
                   <ChevronDown
                     size={16}
-                    color={alpha(C.slateFaint, 0.7)}
+                    color={alpha(C.inkFaint, 0.7)}
                     style={{ transform: [{ rotate: isOpen ? '180deg' : '0deg' }] }}
                   />
                 </Pressable>
@@ -206,7 +206,7 @@ export default function ModuleDetail() {
               >
                 <Lock size={15} color={C.lemon} />
                 <View className="flex-1">
-                  <Mono bold className="text-[11px]" color={alpha(C.slateSoft, 0.85)}>
+                  <Mono bold className="text-[11px]" color={alpha(C.inkSoft, 0.85)}>
                     {lesson.title}
                   </Mono>
                   <Mono className="mt-1 text-[10px]">

@@ -50,8 +50,8 @@ function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 
 export { ErrorBoundary };
 
-// CAPE FLOW is a dark-only experience.
-Uniwind.setTheme('dark');
+// CAPE FLOW Youth Edition is a daylight, paper-first experience.
+Uniwind.setTheme('light');
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -141,12 +141,12 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: C.ink }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: C.paper }}>
       <HeroUINativeProvider>
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: C.ink },
+            contentStyle: { backgroundColor: C.paper },
           }}
         >
           <Stack.Screen name="index" options={{ title: 'CAPE Flow' }} />
@@ -157,7 +157,7 @@ export default function RootLayout() {
             options={{
               title: 'Sample Scenario',
               presentation: 'modal',
-              contentStyle: { backgroundColor: C.ink },
+              contentStyle: { backgroundColor: C.paper },
             }}
           />
           <Stack.Screen name="parents" options={{ title: 'Parents & Schools' }} />

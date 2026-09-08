@@ -24,7 +24,7 @@ export default function Onboarding() {
   };
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Get Started" fallback="/" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -66,7 +66,7 @@ export default function Onboarding() {
                     <Eyebrow color={option.tint}>{option.label}</Eyebrow>
                     {selected ? <Check size={16} color={option.tint} /> : null}
                   </View>
-                  <Mono bold className="mt-2 text-[12px]" color={C.white}>
+                  <Mono bold className="mt-2 text-[12px]" color={C.ink}>
                     {option.tier}
                   </Mono>
                   <Mono className="mt-1 text-[10px]">{option.detail}</Mono>
@@ -113,12 +113,12 @@ export default function Onboarding() {
               <View
                 className="items-center rounded-full px-6 py-3.5"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.04),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.1),
+                  borderColor: alpha(C.ink, 0.14),
                 }}
               >
-                <Mono bold color={alpha(C.slateFaint, 0.6)} tracking={2} className="text-[12px]">
+                <Mono bold color={alpha(C.inkFaint, 0.6)} tracking={2} className="text-[12px]">
                   SELECT A TRACK TO CONTINUE
                 </Mono>
               </View>

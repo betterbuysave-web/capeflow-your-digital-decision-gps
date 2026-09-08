@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import {
   BellOff,
@@ -24,7 +23,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
@@ -52,7 +51,6 @@ const INPUT_FONT = 'JetBrainsMono_400Regular';
 const HISTORY_DAYS = 14;
 
 export default function AdherenceSettings() {
-  const { width, height } = useWindowDimensions();
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const reminders = useCapeStore((s) => s.reminders);
   const adherenceLog = useCapeStore((s) => s.adherenceLog);
@@ -108,8 +106,8 @@ export default function AdherenceSettings() {
   };
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.modM} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.modM} />
       <StackHeader title="Adherence Settings" tint={C.modM} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         className="flex-1"
@@ -187,7 +185,7 @@ export default function AdherenceSettings() {
               </View>
             </View>
           ) : (
-            <Panel tint={C.slateFaint} fill={0.03} stroke={0.1} className="mt-9">
+            <Panel tint={C.inkFaint} fill={0.03} stroke={0.1} className="mt-9">
               <Mono className="text-[10px]">
                 Nothing scheduled yet. Pick one from the bank below — start with the dose you miss
                 most, not the easiest one.
@@ -226,7 +224,7 @@ export default function AdherenceSettings() {
                         {template.label}
                       </Mono>
                       <Mono className="mt-0.5 text-[10px]">{template.detail}</Mono>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
                         {formatTime(template.defaultTime)} · {describeDays(template.defaultDays)} ·{' '}
                         {toneInfo(template.defaultTone).label}
                       </Mono>
@@ -275,16 +273,16 @@ export default function AdherenceSettings() {
                 value={customLabel}
                 onChangeText={setCustomLabel}
                 placeholder="e.g. evening routine"
-                placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                placeholderTextColor={alpha(C.inkFaint, 0.4)}
                 onSubmitEditing={addCustom}
                 returnKeyType="done"
                 className="flex-1 rounded-xl px-3 py-3 text-[11px]"
                 style={{
-                  color: C.slateSoft,
+                  color: C.inkSoft,
                   fontFamily: INPUT_FONT,
-                  backgroundColor: alpha('#ffffff', 0.04),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.1),
+                  borderColor: alpha(C.ink, 0.14),
                 }}
               />
               <Pressable
@@ -373,15 +371,15 @@ function ReminderCard({
           onPress={() => void toggleReminder(reminder.id)}
           className="h-9 w-9 items-center justify-center rounded-xl active:opacity-70"
           style={{
-            backgroundColor: alpha(reminder.enabled ? tint : C.slateFaint, 0.14),
+            backgroundColor: alpha(reminder.enabled ? tint : C.inkFaint, 0.14),
             borderWidth: 1,
-            borderColor: alpha(reminder.enabled ? tint : C.slateFaint, 0.35),
+            borderColor: alpha(reminder.enabled ? tint : C.inkFaint, 0.35),
           }}
         >
           {reminder.enabled ? (
             <BellRing size={15} color={tint} />
           ) : (
-            <BellOff size={15} color={alpha(C.slateFaint, 0.8)} />
+            <BellOff size={15} color={alpha(C.inkFaint, 0.8)} />
           )}
         </Pressable>
 
@@ -392,7 +390,7 @@ function ReminderCard({
         >
           <Mono
             bold
-            color={reminder.enabled ? tint : alpha(C.slateFaint, 0.8)}
+            color={reminder.enabled ? tint : alpha(C.inkFaint, 0.8)}
             className="text-[11px]"
             tracking={1.2}
           >
@@ -401,7 +399,7 @@ function ReminderCard({
           <Mono className="mt-0.5 text-[10px]">
             {formatTime(reminder.time)} · {describeDays(reminder.days)}
           </Mono>
-          <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+          <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
             {toneInfo(reminder.tone).label} · {reminder.enabled ? 'ARMED' : 'PAUSED'}
           </Mono>
         </Pressable>
@@ -414,7 +412,7 @@ function ReminderCard({
       {/* HISTORY STRIP */}
       <View className="mt-3">
         <View className="flex-row items-center justify-between">
-          <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+          <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
             LAST {HISTORY_DAYS} DAYS
           </Mono>
           <Mono bold className="text-[9px]" color={alpha(tint, 0.85)}>
@@ -429,9 +427,9 @@ function ReminderCard({
                 key={day}
                 className="h-4 flex-1 rounded-sm"
                 style={{
-                  backgroundColor: hit ? alpha(tint, 0.75) : alpha('#ffffff', 0.05),
+                  backgroundColor: hit ? alpha(tint, 0.75) : alpha(C.ink, 0.07),
                   borderWidth: 1,
-                  borderColor: hit ? alpha(tint, 0.9) : alpha('#ffffff', 0.07),
+                  borderColor: hit ? alpha(tint, 0.9) : alpha(C.ink, 0.12),
                 }}
               />
             );
@@ -462,7 +460,7 @@ function ReminderCard({
         <View className="mt-4 gap-4">
           {/* TIME */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
               ALERT TIME
             </Mono>
             <View className="mt-2 flex-row items-center gap-2">
@@ -475,12 +473,12 @@ function ReminderCard({
               <View
                 className="flex-1 items-center rounded-xl py-2.5"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.04),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.1),
+                  borderColor: alpha(C.ink, 0.14),
                 }}
               >
-                <Mono bold color={alpha(C.slateSoft, 0.95)} className="text-[13px]" tracking={1}>
+                <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[13px]" tracking={1}>
                   {formatTime(reminder.time)}
                 </Mono>
               </View>
@@ -501,7 +499,7 @@ function ReminderCard({
 
           {/* DAYS */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
               DAYS
             </Mono>
             <View className="mt-2 flex-row gap-1.5">
@@ -516,14 +514,14 @@ function ReminderCard({
                     onPress={() => setDay(day.index)}
                     className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
                     style={{
-                      backgroundColor: alpha(active ? tint : '#ffffff', active ? 0.2 : 0.04),
+                      backgroundColor: active ? alpha(tint, 0.2) : C.card,
                       borderWidth: 1,
-                      borderColor: alpha(active ? tint : '#ffffff', active ? 0.45 : 0.1),
+                      borderColor: alpha(active ? tint : C.ink, active ? 0.5 : 0.14),
                     }}
                   >
                     <Mono
                       bold={active}
-                      color={active ? tint : alpha(C.slateFaint, 0.7)}
+                      color={active ? tint : alpha(C.inkFaint, 0.7)}
                       className="text-[10px]"
                     >
                       {day.letter}
@@ -536,7 +534,7 @@ function ReminderCard({
 
           {/* TONE */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
               ALERT TONE
             </Mono>
             <View className="mt-2 gap-2">
@@ -566,7 +564,7 @@ function ReminderCard({
                     <View className="flex-1">
                       <Mono
                         bold={active}
-                        color={active ? tone.tint : alpha(C.slateSoft, 0.8)}
+                        color={active ? tone.tint : alpha(C.inkSoft, 0.8)}
                         className="text-[10px]"
                         tracking={1.2}
                       >
@@ -636,9 +634,9 @@ function StepChip({ label, tint, onPress }: { label: string; tint: string; onPre
       onPress={onPress}
       className="flex-1 items-center rounded-lg py-2 active:opacity-70"
       style={{
-        backgroundColor: alpha('#ffffff', 0.04),
+        backgroundColor: C.card,
         borderWidth: 1,
-        borderColor: alpha('#ffffff', 0.09),
+        borderColor: alpha(C.ink, 0.13),
       }}
     >
       <Mono color={alpha(tint, 0.85)} className="text-[9px]" tracking={1}>

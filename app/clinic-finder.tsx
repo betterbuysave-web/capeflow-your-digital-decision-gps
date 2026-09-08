@@ -7,7 +7,6 @@ import {
   ScrollView,
   TextInput,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import { ExternalLink, Lock, MapPin, Phone, Search, ShieldCheck, X } from 'lucide-react-native';
 
@@ -15,7 +14,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
@@ -40,7 +39,6 @@ const open = (url: string) => {
 };
 
 export default function ClinicFinder() {
-  const { width, height } = useWindowDimensions();
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const track = trackFor(gradeBand);
 
@@ -55,8 +53,8 @@ export default function ClinicFinder() {
   const activeCategory = categories.find((c) => c.id === category) ?? null;
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.teal} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.tealBright} />
       <StackHeader title="Clinic Finder" tint={C.teal} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         className="flex-1"
@@ -88,19 +86,19 @@ export default function ClinicFinder() {
             <View
               className="mt-3 flex-row items-center gap-2 rounded-xl px-3"
               style={{
-                backgroundColor: alpha('#ffffff', 0.04),
+                backgroundColor: C.card,
                 borderWidth: 1,
-                borderColor: alpha('#ffffff', 0.1),
+                borderColor: alpha(C.ink, 0.14),
               }}
             >
-              <Search size={14} color={alpha(C.slateFaint, 0.7)} />
+              <Search size={14} color={alpha(C.inkFaint, 0.7)} />
               <TextInput
                 value={query}
                 onChangeText={setQuery}
                 placeholder="free clinic, vaccine, therapy, testing…"
-                placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                placeholderTextColor={alpha(C.inkFaint, 0.4)}
                 className="flex-1 py-3 text-[11px]"
-                style={{ color: C.slateSoft, fontFamily: INPUT_FONT }}
+                style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
               />
               {query.length > 0 ? (
                 <Pressable
@@ -109,7 +107,7 @@ export default function ClinicFinder() {
                   onPress={() => setQuery('')}
                   className="p-1 active:opacity-60"
                 >
-                  <X size={14} color={alpha(C.slateFaint, 0.7)} />
+                  <X size={14} color={alpha(C.inkFaint, 0.7)} />
                 </Pressable>
               ) : null}
             </View>
@@ -119,24 +117,24 @@ export default function ClinicFinder() {
               <View
                 className="flex-1 rounded-xl px-3"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.04),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.1),
+                  borderColor: alpha(C.ink, 0.14),
                 }}
               >
                 <TextInput
                   value={zip}
                   onChangeText={(text) => setZip(text.replace(/\D/g, '').slice(0, 5))}
                   placeholder="ZIP code (optional)"
-                  placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                  placeholderTextColor={alpha(C.inkFaint, 0.4)}
                   keyboardType="number-pad"
                   maxLength={5}
                   className="py-3 text-[11px]"
-                  style={{ color: C.slateSoft, fontFamily: INPUT_FONT }}
+                  style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
                 />
               </View>
             </View>
-            <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
               A ZIP is only passed to finders that accept one in their link. It is never saved.
             </Mono>
           </Panel>
@@ -162,7 +160,7 @@ export default function ClinicFinder() {
                     <Mono className="text-[10px]">{cat.emoji}</Mono>
                     <Mono
                       bold={active}
-                      color={active ? cat.tint : alpha(C.slateSoft, 0.75)}
+                      color={active ? cat.tint : alpha(C.inkSoft, 0.75)}
                       className="text-[9px]"
                       tracking={1}
                     >
@@ -193,7 +191,7 @@ export default function ClinicFinder() {
                 }}
                 className="active:opacity-60"
               >
-                <Mono bold color={alpha(C.slateFaint, 0.8)} className="text-[9px]" tracking={1.5}>
+                <Mono bold color={alpha(C.inkFaint, 0.8)} className="text-[9px]" tracking={1.5}>
                   RESET
                 </Mono>
               </Pressable>
@@ -202,7 +200,7 @@ export default function ClinicFinder() {
 
           <View className="mt-3 gap-3">
             {results.length === 0 ? (
-              <Panel tint={C.slateFaint} fill={0.03} stroke={0.1}>
+              <Panel tint={C.inkFaint} fill={0.03} stroke={0.1}>
                 <Mono className="text-[10px]">
                   Nothing matched that. Try a plainer word — &quot;free clinic&quot;,
                   &quot;vaccine&quot;, &quot;therapy&quot; — or clear the filters.
@@ -249,10 +247,10 @@ export default function ClinicFinder() {
                   <Mono bold color={C.modC} className="text-[10px]" tracking={1.5}>
                     {script.label}
                   </Mono>
-                  <Mono bold className="mt-2 text-[11px]" color={alpha(C.slateSoft, 0.92)}>
+                  <Mono bold className="mt-2 text-[11px]" color={alpha(C.inkSoft, 0.92)}>
                     {script.line}
                   </Mono>
-                  <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                  <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                     {script.when}
                   </Mono>
                 </Panel>
@@ -307,7 +305,7 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
       <Mono bold color={tint} className="text-[11px]" tracking={1}>
         {network.name}
       </Mono>
-      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
         {network.operator}
       </Mono>
       <Mono className="mt-2 text-[10px]">{network.detail}</Mono>

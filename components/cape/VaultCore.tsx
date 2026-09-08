@@ -41,7 +41,7 @@ function Pulse({ color, delay, active }: { color: string; delay: number; active:
 
   const style = useAnimatedStyle(() => ({
     transform: [{ scale: 0.52 + p.value * 0.82 }],
-    opacity: (1 - p.value) * (active ? 0.55 : 0.2),
+    opacity: (1 - p.value) * (active ? 0.6 : 0.22),
   }));
 
   return (
@@ -53,8 +53,8 @@ function Pulse({ color, delay, active }: { color: string; delay: number; active:
 }
 
 /**
- * The vault core: a matte-metal geodesic shield that solidifies as ghosts are
- * disarmed, ringed by magenta / gold / cyan signal pulses.
+ * The vault core: a drafted geodesic shield that inks in solid as ghosts are
+ * disarmed, ringed by P-Magenta / CAPE Gold / CAPE Teal signal pulses.
  */
 export function VaultCore({
   named,
@@ -80,23 +80,28 @@ export function VaultCore({
   return (
     <View className="items-center">
       <View style={{ width: SIZE, height: SIZE }} className="items-center justify-center">
-        <Pulse color={C.modT} delay={0} active={named > 0} />
-        <Pulse color={C.gold} delay={900} active={named > 0} />
-        <Pulse color={C.teal} delay={1800} active={named > 0} />
+        <Pulse color={C.magenta} delay={0} active={named > 0} />
+        <Pulse color={C.goldBright} delay={900} active={named > 0} />
+        <Pulse color={C.tealBright} delay={1800} active={named > 0} />
 
         <Svg width={SIZE} height={SIZE} style={{ position: 'absolute' }}>
           <Path
             d={polygon(outer)}
-            stroke={alpha(C.teal, 0.35 + ratio * 0.45)}
+            stroke={alpha(C.teal, 0.45 + ratio * 0.5)}
             strokeWidth={1.6}
-            fill={alpha(C.teal, 0.03 + ratio * 0.1)}
+            fill={alpha(C.tealBright, 0.06 + ratio * 0.18)}
           />
-          <Path d={facets} stroke={alpha(C.teal, 0.1 + ratio * 0.25)} strokeWidth={1} fill="none" />
+          <Path
+            d={facets}
+            stroke={alpha(C.teal, 0.18 + ratio * 0.32)}
+            strokeWidth={1}
+            fill="none"
+          />
           <Path
             d={polygon(inner)}
-            stroke={alpha(C.gold, 0.2 + ratio * 0.4)}
+            stroke={alpha(C.gold, 0.35 + ratio * 0.45)}
             strokeWidth={1.2}
-            fill={alpha(C.gold, 0.02 + ratio * 0.07)}
+            fill={alpha(C.goldBright, 0.05 + ratio * 0.14)}
           />
         </Svg>
 
@@ -104,8 +109,8 @@ export function VaultCore({
           <Display color={C.teal} className="text-5xl">
             {disarmed}
           </Display>
-          <Eyebrow color={alpha(C.slateFaint, 0.75)}>DISARMED</Eyebrow>
-          <Mono className="mt-1.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+          <Eyebrow color={C.inkFaint}>DISARMED</Eyebrow>
+          <Mono className="mt-1.5 text-[9px]" color={C.inkFaint}>
             {named} named · {total} in range
           </Mono>
         </View>

@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Eye, Search, Users } from 'lucide-react-nati
 
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { DETECTIVE_SCENES, PRACTICE_CARDS } from '@/lib/data/cafe';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 
 type Drill = 'detective' | 'roleplay';
 
@@ -24,17 +24,13 @@ export function PracticeSection() {
       <View className="mt-5 flex-row gap-2">
         <DrillTab
           label="CASE FILES"
-          icon={
-            <Search size={13} color={drill === 'detective' ? C.violet : alpha(C.slateFaint, 0.7)} />
-          }
+          icon={<Search size={13} color={drill === 'detective' ? C.violet : C.inkFaint} />}
           active={drill === 'detective'}
           onPress={() => setDrill('detective')}
         />
         <DrillTab
           label="ROLE-PLAY"
-          icon={
-            <Users size={13} color={drill === 'roleplay' ? C.violet : alpha(C.slateFaint, 0.7)} />
-          }
+          icon={<Users size={13} color={drill === 'roleplay' ? C.violet : C.inkFaint} />}
           active={drill === 'roleplay'}
           onPress={() => setDrill('roleplay')}
         />
@@ -63,18 +59,13 @@ function DrillTab({
       onPress={onPress}
       className="flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5 active:opacity-70"
       style={{
-        backgroundColor: alpha(C.violet, active ? 0.16 : 0.04),
+        backgroundColor: active ? wash(C.violet, 0.16) : C.card,
         borderWidth: 1,
-        borderColor: alpha(C.violet, active ? 0.45 : 0.12),
+        borderColor: alpha(active ? C.violet : C.ink, active ? 0.5 : 0.14),
       }}
     >
       {icon}
-      <Mono
-        bold
-        tracking={1.5}
-        color={active ? C.violet : alpha(C.slateFaint, 0.7)}
-        className="text-[9px]"
-      >
+      <Mono bold tracking={1.5} color={active ? C.violet : C.inkFaint} className="text-[9px]">
         {label}
       </Mono>
     </Pressable>
@@ -96,16 +87,16 @@ function DeckNav({
         label="PREVIOUS"
         disabled={index === 0}
         onPress={() => onChange(index - 1)}
-        icon={<ChevronLeft size={14} color={alpha(C.slateSoft, 0.85)} />}
+        icon={<ChevronLeft size={14} color={C.inkSoft} />}
       />
-      <Mono bold color={alpha(C.slateFaint, 0.6)} className="text-[10px]">
+      <Mono bold color={C.inkFaint} className="text-[10px]">
         {index + 1} / {total}
       </Mono>
       <NavButton
         label="NEXT"
         disabled={index === total - 1}
         onPress={() => onChange(index + 1)}
-        icon={<ChevronRight size={14} color={alpha(C.slateSoft, 0.85)} />}
+        icon={<ChevronRight size={14} color={C.inkSoft} />}
         trailing
       />
     </View>
@@ -133,14 +124,14 @@ function NavButton({
       onPress={onPress}
       className="flex-row items-center gap-1.5 rounded-full px-3.5 py-2 active:opacity-70"
       style={{
-        backgroundColor: alpha(C.white, 0.05),
+        backgroundColor: C.card,
         borderWidth: 1,
-        borderColor: alpha(C.white, 0.1),
-        opacity: disabled ? 0.35 : 1,
+        borderColor: alpha(C.ink, 0.16),
+        opacity: disabled ? 0.4 : 1,
       }}
     >
       {trailing ? null : icon}
-      <Mono bold color={alpha(C.slateSoft, 0.85)} tracking={1.5} className="text-[9px]">
+      <Mono bold color={C.inkSoft} tracking={1.5} className="text-[9px]">
         {label}
       </Mono>
       {trailing ? icon : null}
@@ -166,11 +157,15 @@ function DetectiveDeck() {
       <View
         className="mt-5 rounded-2xl p-4"
         style={{
-          backgroundColor: alpha(C.ink2, 0.9),
+          backgroundColor: C.card,
           borderWidth: 1,
-          borderColor: alpha(C.violet, 0.22),
+          borderColor: alpha(C.violet, 0.3),
           borderTopWidth: 3,
           borderTopColor: C.violet,
+          shadowColor: C.ink,
+          shadowOpacity: 0.05,
+          shadowRadius: 10,
+          shadowOffset: { width: 0, height: 2 },
         }}
       >
         <Eyebrow color={C.violet}>CASE FILE {String(index + 1).padStart(2, '0')}</Eyebrow>
@@ -179,17 +174,17 @@ function DetectiveDeck() {
         <View
           className="mt-3 rounded-xl p-3"
           style={{
-            backgroundColor: alpha(C.white, 0.04),
+            backgroundColor: wash(C.violet, 0.07),
             borderLeftWidth: 2,
-            borderLeftColor: alpha(C.violet, 0.7),
+            borderLeftColor: C.violet,
           }}
         >
-          <Mono color={alpha(C.slateSoft, 0.85)} className="text-[11px]">
+          <Mono color={C.inkSoft} className="text-[11px]">
             {scene.setup}
           </Mono>
         </View>
 
-        <Mono bold color={alpha(C.slateFaint, 0.75)} className="mt-4 text-[10px]">
+        <Mono bold color={C.inkFaint} className="mt-4 text-[10px]">
           {scene.prompt}
         </Mono>
 
@@ -204,25 +199,25 @@ function DetectiveDeck() {
                 onPress={() => toggleClue(clue.letter)}
                 className="flex-row items-center gap-3 rounded-xl p-3 active:opacity-70"
                 style={{
-                  backgroundColor: alpha(on ? C.teal : C.white, on ? 0.1 : 0.03),
+                  backgroundColor: on ? wash(C.tealBright, 0.13) : C.paper2,
                   borderWidth: 1,
-                  borderColor: alpha(on ? C.teal : C.white, on ? 0.4 : 0.08),
+                  borderColor: alpha(on ? C.tealBright : C.ink, on ? 0.5 : 0.12),
                 }}
               >
                 <View
                   className="h-6 w-6 items-center justify-center rounded-lg"
                   style={{
-                    backgroundColor: alpha(on ? C.teal : C.white, on ? 0.25 : 0.05),
+                    backgroundColor: on ? wash(C.tealBright, 0.24) : C.card,
                     borderWidth: 1,
-                    borderColor: alpha(on ? C.teal : C.white, on ? 0.6 : 0.14),
+                    borderColor: alpha(on ? C.tealBright : C.ink, on ? 0.65 : 0.18),
                   }}
                 >
-                  <Mono bold color={on ? C.teal : alpha(C.slateFaint, 0.7)} className="text-[11px]">
+                  <Mono bold color={on ? C.teal : C.inkFaint} className="text-[11px]">
                     {clue.letter}
                   </Mono>
                 </View>
                 <View className="flex-1">
-                  <Mono bold color={alpha(C.slateSoft, 0.9)} className="text-[10px]">
+                  <Mono bold color={C.ink} className="text-[10px]">
                     {clue.label}
                   </Mono>
                   <Mono className="mt-0.5 text-[10px]">{clue.text}</Mono>
@@ -236,13 +231,13 @@ function DetectiveDeck() {
           <View
             className="mt-4 rounded-xl p-3.5"
             style={{
-              backgroundColor: alpha(C.gold, 0.08),
+              backgroundColor: wash(C.goldBright, 0.12),
               borderLeftWidth: 2,
-              borderLeftColor: C.gold,
+              borderLeftColor: C.goldBright,
             }}
           >
             <Eyebrow color={C.gold}>DETECTIVE&apos;S VERDICT</Eyebrow>
-            <Mono color={alpha(C.slateSoft, 0.9)} className="mt-1.5 text-[10px]">
+            <Mono color={C.inkSoft} className="mt-1.5 text-[10px]">
               {scene.verdict}
             </Mono>
           </View>
@@ -252,9 +247,9 @@ function DetectiveDeck() {
             onPress={() => setRevealed((prev) => [...prev, scene.id])}
             className="mt-4 flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
             style={{
-              backgroundColor: alpha(C.gold, 0.14),
+              backgroundColor: wash(C.goldBright, 0.16),
               borderWidth: 1,
-              borderColor: alpha(C.gold, 0.4),
+              borderColor: alpha(C.goldBright, 0.55),
             }}
           >
             <Eye size={14} color={C.gold} />
@@ -280,11 +275,15 @@ function RolePlayDeck() {
       <View
         className="mt-5 rounded-2xl p-4"
         style={{
-          backgroundColor: alpha(C.ink2, 0.9),
+          backgroundColor: C.card,
           borderWidth: 1,
-          borderColor: alpha(C.modT, 0.22),
+          borderColor: alpha(C.modT, 0.3),
           borderTopWidth: 3,
           borderTopColor: C.modT,
+          shadowColor: C.ink,
+          shadowOpacity: 0.05,
+          shadowRadius: 10,
+          shadowOffset: { width: 0, height: 2 },
         }}
       >
         <Eyebrow color={C.modT}>SCRIPT {String(index + 1).padStart(2, '0')}</Eyebrow>
@@ -303,16 +302,16 @@ function RolePlayDeck() {
                 key={`${card.id}-${line.speaker}`}
                 className="rounded-xl p-3"
                 style={{
-                  backgroundColor: alpha(tint, line.flag ? 0.1 : 0.06),
+                  backgroundColor: wash(tint, line.flag ? 0.1 : 0.06),
                   borderLeftWidth: 2,
                   borderLeftColor: tint,
                 }}
               >
-                <Mono bold color={alpha(tint, 0.9)} tracking={1.2} className="text-[9px]">
+                <Mono bold color={tint} tracking={1.2} className="text-[9px]">
                   {line.speaker.toUpperCase()}
                   {line.flag ? ' · PRESSURE' : ''}
                 </Mono>
-                <Mono color={alpha(C.slateSoft, 0.9)} className="mt-1 text-[11px]">
+                <Mono color={C.inkSoft} className="mt-1 text-[11px]">
                   {line.text}
                 </Mono>
               </View>
@@ -320,8 +319,15 @@ function RolePlayDeck() {
           })}
         </View>
 
-        <View className="mt-4 rounded-xl p-3.5" style={{ backgroundColor: alpha(C.white, 0.04) }}>
-          <Eyebrow color={alpha(C.slateFaint, 0.8)}>REFLECT</Eyebrow>
+        <View
+          className="mt-4 rounded-xl p-3.5"
+          style={{
+            backgroundColor: C.paper2,
+            borderWidth: 1,
+            borderColor: alpha(C.ink, 0.1),
+          }}
+        >
+          <Eyebrow color={C.inkFaint}>REFLECT</Eyebrow>
           <Mono className="mt-1.5 text-[10px]">{card.reflection}</Mono>
         </View>
       </View>
@@ -336,9 +342,9 @@ function RoleChip({ label, tint }: { label: string; tint: string }) {
     <View
       className="rounded-full px-3 py-1"
       style={{
-        backgroundColor: alpha(tint, 0.12),
+        backgroundColor: wash(tint, 0.13),
         borderWidth: 1,
-        borderColor: alpha(tint, 0.3),
+        borderColor: alpha(tint, 0.4),
       }}
     >
       <Mono bold color={tint} className="text-[9px]">

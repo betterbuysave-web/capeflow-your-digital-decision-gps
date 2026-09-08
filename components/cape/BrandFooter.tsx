@@ -10,21 +10,21 @@ export function BrandFooter({ className }: { className?: string }) {
     <View
       className={cn('items-center gap-1.5 rounded-2xl px-4 py-5', className)}
       style={{
-        backgroundColor: alpha('#ffffff', 0.02),
+        backgroundColor: C.paper2,
         borderWidth: 1,
-        borderColor: alpha('#ffffff', 0.06),
+        borderColor: alpha(C.ink, 0.12),
       }}
     >
-      <Mono bold className="text-center text-[10px]" color={alpha(C.slateSoft, 0.8)} tracking={1.5}>
+      <Mono bold className="text-center text-[10px]" color={C.inkSoft} tracking={1.5}>
         THE HARNESS PROJECT LLC
       </Mono>
-      <Mono className="text-center text-[9px]" color={alpha(C.teal, 0.75)}>
+      <Mono className="text-center text-[9px]" color={C.teal}>
         theharnessproject.org
       </Mono>
-      <Mono className="mt-1 text-center text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+      <Mono className="mt-1 text-center text-[9px]" color={C.inkFaint}>
         For educational purposes only. Not medical advice.
       </Mono>
-      <Mono className="text-center text-[9px]" color={alpha(C.slateFaint, 0.5)}>
+      <Mono className="text-center text-[9px]" color={C.inkFaint}>
         © 2026 Christopher Zacharie.
       </Mono>
     </View>

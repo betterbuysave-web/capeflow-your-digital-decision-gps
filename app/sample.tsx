@@ -19,7 +19,7 @@ export default function SampleScenario() {
   const mod = picked ? getModule(picked.matchTag) : undefined;
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Sample Scenario" fallback="/" />
       <ScrollView
         className="flex-1"
@@ -53,7 +53,7 @@ export default function SampleScenario() {
               <Mono className="text-base">{scenario.emoji}</Mono>
               <Eyebrow color={C.teal}>SAMPLE SCENARIO · MIDNIGHT SIM</Eyebrow>
             </View>
-            <Mono className="text-[10px]" color={alpha(C.slateFaint, 0.7)}>
+            <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.7)}>
               {scenario.setup}
             </Mono>
           </View>
@@ -68,17 +68,17 @@ export default function SampleScenario() {
                 borderBottomLeftRadius: 4,
               }}
             >
-              <Mono className="text-[12px]" color={alpha(C.slateSoft, 0.9)}>
+              <Mono className="text-[12px]" color={alpha(C.inkSoft, 0.9)}>
                 {scenario.message}
               </Mono>
-              <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.slateFaint, 0.5)}>
+              <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.inkFaint, 0.5)}>
                 {scenario.bubbleTime}
               </Mono>
             </View>
           </View>
 
           <View className="gap-2 px-5 pb-5">
-            <Mono className="mb-1 text-[9px]" color={alpha(C.slateFaint, 0.6)} tracking={2}>
+            <Mono className="mb-1 text-[9px]" color={alpha(C.inkFaint, 0.6)} tracking={2}>
               {scenario.prompt}
             </Mono>
             {scenario.choices.map((choice) => {
@@ -90,22 +90,20 @@ export default function SampleScenario() {
                   onPress={() => setPickedId(choice.id)}
                   className="flex-row items-center justify-between gap-3 rounded-xl px-4 py-3 active:opacity-70"
                   style={{
-                    backgroundColor: isPicked
-                      ? alpha(verdictColor(choice.verdict), 0.12)
-                      : alpha('#ffffff', 0.03),
+                    backgroundColor: isPicked ? alpha(verdictColor(choice.verdict), 0.12) : C.card,
                     borderWidth: 1,
                     borderColor: isPicked
                       ? alpha(verdictColor(choice.verdict), 0.45)
-                      : alpha('#ffffff', 0.08),
+                      : alpha(C.ink, 0.13),
                   }}
                 >
-                  <Mono className="flex-1 text-[11px]" color={alpha(C.slateSoft, 0.85)}>
+                  <Mono className="flex-1 text-[11px]" color={alpha(C.inkSoft, 0.85)}>
                     {choice.label}
                   </Mono>
                   {isPicked ? (
                     <VerdictBadge verdict={choice.verdict} />
                   ) : (
-                    <ArrowRight size={14} color={alpha(C.slateFaint, 0.5)} />
+                    <ArrowRight size={14} color={alpha(C.inkFaint, 0.5)} />
                   )}
                 </Pressable>
               );
@@ -142,13 +140,13 @@ export default function SampleScenario() {
               onPress={() => setPickedId(null)}
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3 active:opacity-70"
               style={{
-                backgroundColor: alpha('#ffffff', 0.04),
+                backgroundColor: C.card,
                 borderWidth: 1,
-                borderColor: alpha('#ffffff', 0.1),
+                borderColor: alpha(C.ink, 0.14),
               }}
             >
-              <RotateCcw size={13} color={alpha(C.slateFaint, 0.8)} />
-              <Mono bold color={alpha(C.slateFaint, 0.8)} tracking={2} className="text-[10px]">
+              <RotateCcw size={13} color={alpha(C.inkFaint, 0.8)} />
+              <Mono bold color={alpha(C.inkFaint, 0.8)} tracking={2} className="text-[10px]">
                 TRY ANOTHER ANSWER
               </Mono>
             </Pressable>
@@ -160,11 +158,7 @@ export default function SampleScenario() {
             label="UNLOCK THE FULL COMPASS"
             onPress={() => router.replace('/onboarding')}
           />
-          <Mono
-            className="mt-4 text-center text-[9px]"
-            color={alpha(C.slateFaint, 0.5)}
-            tracking={2}
-          >
+          <Mono className="mt-4 text-center text-[9px]" color={alpha(C.inkFaint, 0.5)} tracking={2}>
             FREE · NO SIGN-UP NEEDED · GRADES 4–12
           </Mono>
         </View>

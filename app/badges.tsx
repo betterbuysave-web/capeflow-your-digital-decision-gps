@@ -3,7 +3,7 @@ import { Lock } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { BADGES } from '@/lib/data/badges';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -12,7 +12,7 @@ export default function BadgeCabinet() {
   const earned = badges.length;
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Badge Cabinet" tint={C.gold} fallback="/(tabs)/me" />
       <ScrollView
         className="flex-1"
@@ -31,7 +31,7 @@ export default function BadgeCabinet() {
             <Mono bold color={C.gold} className="text-[10px]" tracking={1.5}>
               {earned} OF {BADGES.length} EARNED
             </Mono>
-            <Mono className="text-[10px]" color={alpha(C.slateFaint, 0.7)}>
+            <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.7)}>
               {Math.round((earned / BADGES.length) * 100)}%
             </Mono>
           </View>
@@ -46,25 +46,25 @@ export default function BadgeCabinet() {
                 key={badge.id}
                 className="flex-1 basis-[45%] rounded-2xl p-4"
                 style={{
-                  backgroundColor: alpha(has ? badge.tint : '#ffffff', has ? 0.08 : 0.02),
+                  backgroundColor: has ? wash(badge.tint, 0.12) : C.card,
                   borderWidth: 1,
-                  borderColor: alpha(has ? badge.tint : '#ffffff', has ? 0.3 : 0.07),
+                  borderColor: alpha(has ? badge.tint : C.ink, has ? 0.45 : 0.12),
                 }}
               >
                 <View className="flex-row items-center justify-between">
-                  <Mono className="text-2xl" color={C.white}>
+                  <Mono className="text-2xl" color={C.ink}>
                     {has ? badge.emoji : '🔒'}
                   </Mono>
-                  {has ? null : <Lock size={12} color={alpha(C.slateFaint, 0.5)} />}
+                  {has ? null : <Lock size={12} color={alpha(C.inkFaint, 0.5)} />}
                 </View>
                 <Mono
                   bold
-                  color={has ? badge.tint : alpha(C.slateFaint, 0.7)}
+                  color={has ? badge.tint : alpha(C.inkFaint, 0.7)}
                   className="mt-2.5 text-[11px]"
                 >
                   {badge.name}
                 </Mono>
-                <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, has ? 0.75 : 0.55)}>
+                <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, has ? 0.75 : 0.55)}>
                   {badge.requirement}
                 </Mono>
               </View>

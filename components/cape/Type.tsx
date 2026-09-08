@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native';
 
-import { alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
 /** Uppercase monospace eyebrow label used above every section title. */
@@ -25,11 +25,11 @@ export function Eyebrow({
   );
 }
 
-/** Large condensed display heading. */
+/** Large condensed display heading, set in ink. */
 export function Display({
   children,
   className,
-  color = '#ffffff',
+  color = C.ink,
 }: {
   children: ReactNode;
   className?: string;
@@ -49,7 +49,7 @@ export function Display({
 export function Body({
   children,
   className,
-  color = alpha('#cbd5e1', 0.75),
+  color = C.inkSoft,
 }: {
   children: ReactNode;
   className?: string;
@@ -69,7 +69,7 @@ export function Body({
 export function Mono({
   children,
   className,
-  color = alpha('#cbd5e1', 0.65),
+  color = C.inkFaint,
   bold = false,
   tracking,
 }: {
@@ -93,7 +93,11 @@ export function Mono({
   );
 }
 
-/** Tinted rounded panel: translucent fill + 1px matching border. */
+/**
+ * Tinted index card. Opaque on purpose: cards must sit *on* the engineering
+ * grid, not let it bleed through. `fill` and `stroke` stay on their old 0–1
+ * scale so every existing call site keeps its relative weight.
+ */
 export function Panel({
   tint,
   children,
@@ -111,9 +115,13 @@ export function Panel({
     <View
       className={cn('rounded-2xl p-4', className)}
       style={{
-        backgroundColor: alpha(tint, fill),
+        backgroundColor: wash(tint, Math.min(fill * 1.9, 0.32)),
         borderWidth: 1,
-        borderColor: alpha(tint, stroke),
+        borderColor: alpha(tint, Math.min(stroke * 2.1, 0.6)),
+        shadowColor: C.ink,
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 2 },
       }}
     >
       {children}
@@ -121,7 +129,7 @@ export function Panel({
   );
 }
 
-/** Thin progress rail. */
+/** Thin progress rail, drawn as an ink channel on paper. */
 export function Rail({
   value,
   color,
@@ -135,7 +143,7 @@ export function Rail({
   return (
     <View
       className="w-full overflow-hidden rounded-full"
-      style={{ height, backgroundColor: alpha('#ffffff', 0.07) }}
+      style={{ height, backgroundColor: alpha(C.ink, 0.1) }}
     >
       <View className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
     </View>

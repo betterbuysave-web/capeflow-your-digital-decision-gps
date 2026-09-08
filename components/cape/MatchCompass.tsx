@@ -1,21 +1,19 @@
 import { useState } from 'react';
-import { Image, Modal, Pressable, ScrollView, View } from 'react-native';
+import { Modal, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { ArrowRight, Lock, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { Chip, MetallicButton } from '@/components/cape/Buttons';
-import { C, alpha } from '@/lib/colors';
+import { CompassRose } from '@/components/cape/CompassRose';
+import { C, alpha, wash } from '@/lib/colors';
 import { COMPASS_NODES, type CompassNode, nodeBullets } from '@/lib/data/compass';
 import { TRACKS, type GradeBand, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
-const COMPASS_ART = require('@/assets/images/match-compass.png');
-const ART_ASPECT = 1376 / 784;
-
 /**
- * The M.A.T.C.H. Compass: the calibration artwork with every printed letter
- * box tappable. Briefing content follows the reader's track.
+ * The M.A.T.C.H. Compass: a drafted blueprint dial with every node marker
+ * tappable. Briefing content follows the reader's track.
  */
 export function MatchCompass({
   band,
@@ -30,11 +28,8 @@ export function MatchCompass({
   const track = trackFor(activeBand);
   const trackInfo = TRACKS[track];
 
-  const [artWidth, setArtWidth] = useState(0);
   const [openId, setOpenId] = useState<string | null>(null);
   const active = COMPASS_NODES.find((n) => n.id === openId) ?? null;
-
-  const artHeight = artWidth > 0 ? Math.round(artWidth / ART_ASPECT) : 0;
 
   return (
     <View>
@@ -48,54 +43,37 @@ export function MatchCompass({
             <Chip label={trackInfo.label} tint={trackInfo.tint} />
             {activeBand ? <Chip label={`GRADES ${activeBand}`} tint={C.gold} /> : null}
           </View>
-          <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
-            {trackInfo.scope}
-          </Mono>
+          <Mono className="mt-2 text-[9px]">{trackInfo.scope}</Mono>
         </View>
       )}
 
+      {/* Figure plate: the rose sits on its own sheet of card stock. */}
       <View
         className="mt-3 overflow-hidden rounded-2xl"
         style={{
+          backgroundColor: C.card,
           borderWidth: 1,
-          borderColor: alpha(C.teal, 0.22),
-          backgroundColor: alpha(C.teal, 0.04),
-          shadowColor: C.teal,
-          shadowOpacity: 0.25,
-          shadowRadius: 20,
+          borderColor: alpha(C.tealBright, 0.4),
+          shadowColor: C.ink,
+          shadowOpacity: 0.06,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 3 },
         }}
-        onLayout={(e) => setArtWidth(e.nativeEvent.layout.width)}
       >
-        {artHeight > 0 ? (
-          <View style={{ width: artWidth, height: artHeight }}>
-            <Image
-              source={COMPASS_ART}
-              resizeMode="contain"
-              style={{ width: artWidth, height: artHeight }}
-            />
-            {COMPASS_NODES.map((node) => (
-              <Pressable
-                key={node.id}
-                accessibilityRole="button"
-                accessibilityLabel={`${node.letter} — ${node.title}`}
-                onPress={() => setOpenId(node.id)}
-                className="absolute rounded-lg active:opacity-100"
-                style={{
-                  left: node.hotspot.left,
-                  top: node.hotspot.top,
-                  width: node.hotspot.width,
-                  height: node.hotspot.height,
-                  borderWidth: 1,
-                  borderColor: alpha(node.color, 0.45),
-                  backgroundColor: alpha(node.color, 0.06),
-                }}
-              />
-            ))}
-          </View>
-        ) : null}
+        <View
+          className="px-4 py-2"
+          style={{ borderBottomWidth: 1, borderBottomColor: alpha(C.tealBright, 0.22) }}
+        >
+          <Mono bold className="text-[8px]" color={C.inkFaint} tracking={2}>
+            FIG. 01 — CALIBRATING THE YOUTH M.A.T.C.H. COMPASS
+          </Mono>
+        </View>
+        <View className="px-3 py-2">
+          <CompassRose nodes={COMPASS_NODES} onSelect={setOpenId} />
+        </View>
       </View>
 
-      <Mono className="mt-2.5 text-[9px]" color={alpha(C.slateFaint, 0.7)} tracking={2}>
+      <Mono className="mt-2.5 text-[9px]" tracking={2}>
         TAP ANY NODE FOR THE BRIEFING
       </Mono>
 
@@ -110,9 +88,9 @@ export function MatchCompass({
               onPress={() => setOpenId(node.id)}
               className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
               style={{
-                backgroundColor: alpha(node.color, 0.1),
+                backgroundColor: wash(node.color, 0.13),
                 borderWidth: 1,
-                borderColor: alpha(node.color, 0.3),
+                borderColor: alpha(node.color, 0.45),
               }}
             >
               <Display color={node.color} className="text-xl">
@@ -165,29 +143,29 @@ function NodeBriefing({
         accessibilityLabel="Close briefing"
         onPress={onClose}
         className="flex-1 justify-end"
-        style={{ backgroundColor: alpha('#000000', 0.78) }}
+        style={{ backgroundColor: alpha(C.ink, 0.45) }}
       >
         {node ? (
           <Pressable
             accessibilityRole="none"
             onPress={() => undefined}
-            className="bg-ink-2 max-h-[86%] overflow-hidden rounded-t-3xl"
-            style={{ borderTopWidth: 1, borderTopColor: alpha(node.color, 0.4) }}
+            className="bg-paper-2 max-h-[86%] overflow-hidden rounded-t-3xl"
+            style={{ borderTopWidth: 2, borderTopColor: alpha(node.color, 0.7) }}
           >
             <View
               className="flex-row items-start gap-3 px-5 pt-5 pb-4"
               style={{
-                backgroundColor: alpha(node.color, 0.09),
+                backgroundColor: wash(node.color, 0.12, C.paper2),
                 borderBottomWidth: 1,
-                borderBottomColor: alpha(node.color, 0.2),
+                borderBottomColor: alpha(node.color, 0.35),
               }}
             >
               <View
                 className="h-12 w-12 items-center justify-center rounded-xl"
                 style={{
-                  backgroundColor: alpha(node.color, 0.14),
+                  backgroundColor: wash(node.color, 0.18),
                   borderWidth: 1,
-                  borderColor: alpha(node.color, 0.35),
+                  borderColor: alpha(node.color, 0.5),
                 }}
               >
                 <Display color={node.color} className="text-2xl">
@@ -204,7 +182,7 @@ function NodeBriefing({
                 onPress={onClose}
                 className="active:opacity-60"
               >
-                <X size={18} color={alpha(C.slateFaint, 0.8)} />
+                <X size={18} color={C.inkFaint} />
               </Pressable>
             </View>
 
@@ -212,9 +190,7 @@ function NodeBriefing({
               contentContainerClassName="px-5 pt-4 pb-8"
               showsVerticalScrollIndicator={false}
             >
-              <Mono className="text-[10px]" color={alpha(C.slateFaint, 0.8)}>
-                {node.hint}
-              </Mono>
+              <Mono className="text-[10px]">{node.hint}</Mono>
 
               <View className="mt-4 gap-2.5">
                 {nodeBullets(node, track).map((point) => (
@@ -232,9 +208,9 @@ function NodeBriefing({
                 <View
                   className="mt-5 flex-row items-start gap-2.5 rounded-2xl p-3.5"
                   style={{
-                    backgroundColor: alpha(C.lemon, 0.06),
+                    backgroundColor: wash(C.lemon, 0.12),
                     borderWidth: 1,
-                    borderColor: alpha(C.lemon, 0.22),
+                    borderColor: alpha(C.lemon, 0.45),
                   }}
                 >
                   <Lock size={14} color={C.lemon} />
@@ -248,7 +224,7 @@ function NodeBriefing({
                     <Mono bold color={node.color} className="text-[10px]" tracking={1.5}>
                       MODULE PROGRESS
                     </Mono>
-                    <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                    <Mono className="text-[9px]">
                       {moduleProgress(node.id, completedLessons, track)}%
                     </Mono>
                   </View>
@@ -277,10 +253,10 @@ function NodeBriefing({
                 onPress={onClose}
                 className="mt-3 flex-row items-center justify-center gap-2 py-3 active:opacity-60"
               >
-                <Mono bold color={alpha(C.slateFaint, 0.8)} tracking={2} className="text-[11px]">
+                <Mono bold color={C.inkSoft} tracking={2} className="text-[11px]">
                   BACK TO THE COMPASS
                 </Mono>
-                <ArrowRight size={14} color={alpha(C.slateFaint, 0.8)} />
+                <ArrowRight size={14} color={C.inkSoft} />
               </Pressable>
             </ScrollView>
           </Pressable>

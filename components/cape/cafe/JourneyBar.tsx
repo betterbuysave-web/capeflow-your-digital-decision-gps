@@ -2,7 +2,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 
 import { Mono } from '@/components/cape/Type';
 import { CAFE_STATIONS, type CafeStation } from '@/lib/data/cafe';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 
 /**
  * Station switcher plus the "your journey" progress rail: a tappable chip per
@@ -20,7 +20,10 @@ export function JourneyBar({
   const activeIndex = CAFE_STATIONS.findIndex((s) => s.id === active);
 
   return (
-    <View style={{ borderBottomWidth: 1, borderBottomColor: alpha(C.white, 0.06) }}>
+    <View
+      className="bg-paper-2"
+      style={{ borderBottomWidth: 1, borderBottomColor: alpha(C.ink, 0.1) }}
+    >
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -36,16 +39,16 @@ export function JourneyBar({
               onPress={() => onSelect(station.id)}
               className="flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
               style={{
-                backgroundColor: alpha(station.tint, isActive ? 0.16 : 0.04),
+                backgroundColor: wash(station.tint, isActive ? 0.16 : 0.05, C.paper2),
                 borderWidth: 1,
-                borderColor: alpha(station.tint, isActive ? 0.5 : 0.12),
+                borderColor: alpha(station.tint, isActive ? 0.6 : 0.22),
               }}
             >
               <Mono className="text-[11px]">{station.emoji}</Mono>
               <Mono
                 bold
                 tracking={1.5}
-                color={isActive ? station.tint : alpha(C.slateFaint, 0.65)}
+                color={isActive ? station.tint : C.inkFaint}
                 className="text-[9px]"
               >
                 {station.label}
@@ -56,28 +59,31 @@ export function JourneyBar({
       </ScrollView>
 
       <View className="flex-row items-center gap-2 px-5 pb-3">
-        <Mono bold tracking={2} color={alpha(C.slateFaint, 0.5)} className="text-[8px]">
+        <Mono bold tracking={2} color={C.inkFaint} className="text-[8px]">
           JOURNEY
         </Mono>
         <View className="flex-1 flex-row items-center">
           {CAFE_STATIONS.map((station, index) => {
             const done = visited.includes(station.id);
             const isActive = index === activeIndex;
-            const tint = isActive || done ? station.tint : C.slateFaint;
+            const tint = isActive || done ? station.tint : C.inkFaint;
             return (
               <View key={station.id} className="flex-1 flex-row items-center">
                 <View
                   className="h-2.5 w-2.5 rounded-full"
                   style={{
-                    backgroundColor: alpha(tint, isActive ? 1 : done ? 0.45 : 0.12),
+                    backgroundColor: isActive ? tint : done ? wash(tint, 0.5, C.paper2) : C.paper2,
                     borderWidth: 1,
-                    borderColor: alpha(tint, isActive ? 1 : 0.3),
+                    borderColor: alpha(tint, isActive ? 1 : 0.4),
                   }}
                 />
                 {index < CAFE_STATIONS.length - 1 ? (
                   <View
                     className="h-px flex-1"
-                    style={{ backgroundColor: alpha(index < activeIndex ? C.teal : C.white, 0.14) }}
+                    style={{
+                      backgroundColor:
+                        index < activeIndex ? alpha(C.tealBright, 0.55) : alpha(C.ink, 0.14),
+                    }}
                   />
                 ) : null}
               </View>

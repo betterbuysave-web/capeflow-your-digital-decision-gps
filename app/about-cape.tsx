@@ -1,4 +1,4 @@
-import { ScrollView, View, useWindowDimensions } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ban, Compass, HeartPulse, Lock, ShieldAlert, Sparkles, Trash2 } from 'lucide-react-native';
 
@@ -6,7 +6,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, MetallicButton } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
@@ -54,13 +54,12 @@ const PRIVACY_POINTS = [
 ];
 
 export default function AboutCape() {
-  const { width, height } = useWindowDimensions();
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const track = trackFor(gradeBand);
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.teal} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.tealBright} />
       <StackHeader title="About CAPE Flow" tint={C.teal} fallback="/(tabs)/me" />
       <ScrollView
         className="flex-1"
@@ -200,7 +199,7 @@ export default function AboutCape() {
                     </Mono>
                     {active ? <Chip label="YOUR TRACK" tint={info.tint} /> : null}
                   </View>
-                  <Mono bold className="mt-1.5 text-[10px]" color={alpha(C.slateSoft, 0.9)}>
+                  <Mono bold className="mt-1.5 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
                     {info.name} · {id === 'green' ? 'Grades 4–8' : 'Grades 9–12'}
                   </Mono>
                   <Mono className="mt-1 text-[10px]">{info.scope}</Mono>
@@ -267,8 +266,8 @@ export default function AboutCape() {
         {/* SOURCES */}
         <View className="mt-8">
           <View className="flex-row items-center gap-2">
-            <Sparkles size={15} color={alpha(C.slateFaint, 0.7)} />
-            <Eyebrow color={alpha(C.slateFaint, 0.7)}>WHERE THE FACTS COME FROM</Eyebrow>
+            <Sparkles size={15} color={alpha(C.inkFaint, 0.7)} />
+            <Eyebrow color={alpha(C.inkFaint, 0.7)}>WHERE THE FACTS COME FROM</Eyebrow>
           </View>
           <View className="mt-3 gap-2">
             {SOURCES.map((src) => (
@@ -276,15 +275,15 @@ export default function AboutCape() {
                 key={src.name}
                 className="rounded-xl p-3"
                 style={{
-                  backgroundColor: alpha('#ffffff', 0.02),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.06),
+                  borderColor: alpha(C.ink, 0.1),
                 }}
               >
-                <Mono bold className="text-[10px]" color={alpha(C.slateSoft, 0.85)}>
+                <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
                   {src.name}
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
                   {src.detail}
                 </Mono>
               </View>
@@ -299,8 +298,8 @@ export default function AboutCape() {
             className="w-full"
           />
           <View className="mt-4 flex-row items-center gap-2">
-            <Compass size={13} color={alpha(C.slateFaint, 0.7)} />
-            <Mono className="text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+            <Compass size={13} color={alpha(C.inkFaint, 0.7)} />
+            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
               Built by The Harness Project · CAPE Youth Edition
             </Mono>
           </View>

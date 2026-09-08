@@ -11,7 +11,7 @@ import {
 import { AnimatedView } from '@/components/ui/primitives/AnimatedView';
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
 import { Path, Svg } from '@/components/ui/primitives/Svg';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 
 /** ECG-style trace: flat line punctuated by a beat every `period` px. */
 function beatPath(width: number, height: number): string {
@@ -30,11 +30,11 @@ function beatPath(width: number, height: number): string {
 }
 
 /**
- * Cyan medical telemetry trail. A steady heartbeat trace with a sweeping
- * highlight that runs faster and brighter while the vault is active.
+ * Medical telemetry trace, printed on paper: a steady heartbeat in CAPE Teal
+ * with a sweeping highlight that runs faster and stronger while active.
  */
 export function Telemetry({
-  tint = C.teal,
+  tint = C.tealBright,
   height = 30,
   active = true,
 }: {
@@ -61,7 +61,12 @@ export function Telemetry({
   return (
     <View
       className="w-full overflow-hidden rounded-lg"
-      style={{ height, backgroundColor: alpha(tint, 0.04) }}
+      style={{
+        height,
+        backgroundColor: wash(tint, 0.07),
+        borderWidth: 1,
+        borderColor: alpha(tint, 0.22),
+      }}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
     >
       {width > 0 ? (
@@ -69,14 +74,14 @@ export function Telemetry({
           <Svg width={width} height={height}>
             <Path
               d={beatPath(width, height)}
-              stroke={alpha(tint, active ? 0.55 : 0.25)}
+              stroke={alpha(tint, active ? 0.95 : 0.45)}
               strokeWidth={1.4}
               fill="none"
             />
           </Svg>
           <AnimatedView className="absolute top-0 bottom-0 w-[120px]" style={sweepStyle}>
             <LinearGradient
-              colors={[alpha(tint, 0), alpha(tint, active ? 0.3 : 0.12), alpha(tint, 0)]}
+              colors={[alpha(tint, 0), alpha(tint, active ? 0.24 : 0.1), alpha(tint, 0)]}
               start={{ x: 0, y: 0.5 }}
               end={{ x: 1, y: 0.5 }}
               style={{ flex: 1 }}

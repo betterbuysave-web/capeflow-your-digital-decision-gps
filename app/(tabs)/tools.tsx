@@ -40,8 +40,8 @@ export default function ToolsTab() {
   const activeReminders = reminders.filter((r) => r.enabled).length;
 
   return (
-    <View className="bg-ink flex-1">
-      <SafeAreaView edges={['top']} className="bg-ink" />
+    <View className="bg-paper flex-1">
+      <SafeAreaView edges={['top']} className="bg-paper" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -264,10 +264,10 @@ export default function ToolsTab() {
                         </Mono>
                         {result ? <VerdictBadge verdict={result.verdict} /> : null}
                       </View>
-                      <Mono bold className="mt-1 text-[11px]" color={alpha(C.slateSoft, 0.9)}>
+                      <Mono bold className="mt-1 text-[11px]" color={alpha(C.inkSoft, 0.9)}>
                         {scenario.title}
                       </Mono>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
                         {scenario.choices.length} responses · {scenario.xp} XP
                       </Mono>
                     </View>

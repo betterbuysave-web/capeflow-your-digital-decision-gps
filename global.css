@@ -7,86 +7,102 @@
 @import 'heroui-native/styles';
 
 /*
- * CAPE FLOW theme — dark, high contrast, teal + gold accents.
- * HeroUI semantic tokens are overridden inside Uniwind theme variants so both
- * web and native resolve the same values.
+ * CAPE FLOW — TACTICAL NOTEBOOK theme.
+ * Warm cream engineering-paper canvas, ink foreground, CAPE Teal structure and
+ * CAPE Gold accents. HeroUI semantic tokens are overridden inside Uniwind theme
+ * variants so web and native resolve identical values; both variants carry the
+ * same light values because this app ships a single light skin.
  */
 @layer theme {
   :root {
     @variant light {
-      --background: oklch(0.13 0.014 280);
-      --foreground: oklch(1 0 0);
-      --panel: oklch(0.18 0.018 280);
-      --surface: oklch(0.18 0.018 280);
-      --surface-foreground: oklch(1 0 0);
-      --default: oklch(0.24 0.018 280);
-      --default-foreground: oklch(0.96 0 0);
-      --muted: oklch(0.72 0.03 250);
-      --muted-foreground: oklch(0.72 0.03 250);
-      --border: oklch(0.28 0.02 280);
-      --accent: oklch(0.88 0.19 172);
-      --accent-foreground: oklch(0.13 0.014 280);
-      --accent-soft: oklch(0.28 0.06 172);
-      --accent-soft-foreground: oklch(0.88 0.19 172);
-      --success: oklch(0.75 0.18 160);
-      --warning: oklch(0.85 0.17 90);
-      --danger: oklch(0.62 0.24 25);
-      --focus: oklch(0.88 0.19 172);
-      --link: oklch(0.88 0.19 172);
+      --background: oklch(0.954 0.017 89);
+      --foreground: oklch(0.263 0.023 240);
+      --panel: oklch(0.99 0.011 95);
+      --surface: oklch(0.99 0.011 95);
+      --surface-foreground: oklch(0.263 0.023 240);
+      --default: oklch(0.925 0.018 89);
+      --default-foreground: oklch(0.3 0.021 240);
+      --muted: oklch(0.512 0.026 236);
+      --muted-foreground: oklch(0.512 0.026 236);
+      --border: oklch(0.878 0.018 89);
+      --accent: oklch(0.617 0.088 175);
+      --accent-foreground: oklch(0.98 0.01 92);
+      --accent-soft: oklch(0.925 0.038 175);
+      --accent-soft-foreground: oklch(0.463 0.078 175);
+      --success: oklch(0.478 0.108 162);
+      --warning: oklch(0.523 0.094 76);
+      --danger: oklch(0.472 0.187 18);
+      --focus: oklch(0.506 0.084 175);
+      --link: oklch(0.506 0.084 175);
     }
 
     @variant dark {
-      --background: oklch(0.13 0.014 280);
-      --foreground: oklch(1 0 0);
-      --panel: oklch(0.18 0.018 280);
-      --surface: oklch(0.18 0.018 280);
-      --surface-foreground: oklch(1 0 0);
-      --default: oklch(0.24 0.018 280);
-      --default-foreground: oklch(0.96 0 0);
-      --muted: oklch(0.72 0.03 250);
-      --muted-foreground: oklch(0.72 0.03 250);
-      --border: oklch(0.28 0.02 280);
-      --accent: oklch(0.88 0.19 172);
-      --accent-foreground: oklch(0.13 0.014 280);
-      --accent-soft: oklch(0.28 0.06 172);
-      --accent-soft-foreground: oklch(0.88 0.19 172);
-      --success: oklch(0.75 0.18 160);
-      --warning: oklch(0.85 0.17 90);
-      --danger: oklch(0.62 0.24 25);
-      --focus: oklch(0.88 0.19 172);
-      --link: oklch(0.88 0.19 172);
+      --background: oklch(0.954 0.017 89);
+      --foreground: oklch(0.263 0.023 240);
+      --panel: oklch(0.99 0.011 95);
+      --surface: oklch(0.99 0.011 95);
+      --surface-foreground: oklch(0.263 0.023 240);
+      --default: oklch(0.925 0.018 89);
+      --default-foreground: oklch(0.3 0.021 240);
+      --muted: oklch(0.512 0.026 236);
+      --muted-foreground: oklch(0.512 0.026 236);
+      --border: oklch(0.878 0.018 89);
+      --accent: oklch(0.617 0.088 175);
+      --accent-foreground: oklch(0.98 0.01 92);
+      --accent-soft: oklch(0.925 0.038 175);
+      --accent-soft-foreground: oklch(0.463 0.078 175);
+      --success: oklch(0.478 0.108 162);
+      --warning: oklch(0.523 0.094 76);
+      --danger: oklch(0.472 0.187 18);
+      --focus: oklch(0.506 0.084 175);
+      --link: oklch(0.506 0.084 175);
     }
   }
 }
 
 @theme {
-  --color-ink: #050508;
-  --color-ink-2: #0b0b14;
-  --color-card: #0f0f1a;
-  --color-hairline: #1c1c2b;
+  /* 70% — paper */
+  --color-paper: #f6f1e3;
+  --color-paper-2: #fbf7ec;
+  --color-card: #fffdf6;
+  --color-grid: #dbd2bc;
+  --color-grid-bold: #c7ba97;
+  --color-hairline: #ded6c4;
 
-  --color-teal: #00ffcc;
-  --color-teal-dim: #00c4a8;
-  --color-gold: #d4af37;
-  --color-gold-light: #f7e9a0;
-  --color-flame: #ff4d00;
-  --color-azure: #0088ff;
-  --color-amber: #f59e0b;
-  --color-violet: #cc44ff;
-  --color-lemon: #ffcc00;
+  /* ink */
+  --color-ink: #16232e;
+  --color-ink-soft: #33434f;
+  --color-ink-faint: #5e6b77;
 
-  --color-yes: #00d084;
-  --color-maybe: #ffd500;
-  --color-no: #e8003d;
+  /* 20% CAPE Teal / 10% CAPE Gold */
+  --color-teal: #1f7a6e;
+  --color-teal-bright: #2a9d8f;
+  --color-gold: #806419;
+  --color-gold-light: #9c7c1e;
+  --color-gold-bright: #c29b38;
 
-  --color-mod-m: #90b14b;
-  --color-mod-a: #6e99a3;
+  /* sparing accents */
+  --color-magenta: #a6387e;
+  --color-purple: #533b77;
+
+  /* semantics */
+  --color-flame: #c2410c;
+  --color-azure: #1d5fa8;
+  --color-amber: #996515;
+  --color-violet: #6d3ba8;
+  --color-lemon: #7e6318;
+
+  --color-yes: #0f7a52;
+  --color-maybe: #8a6a0b;
+  --color-no: #b01030;
+
+  /* M.A.T.C.H. nodes */
+  --color-mod-m: #5f7a21;
+  --color-mod-a: #3f6874;
   --color-mod-t: #a8005d;
-  --color-mod-c: #dfc401;
-  --color-mod-h: #ff751f;
-
-  --color-slate-soft: #cbd5e1;
-  --color-slate-faint: #94a3b8;
+  --color-mod-c: #7f6f0a;
+  --color-mod-h: #c2540a;
 
   --font-display: 'BebasNeue_400Regular', 'Bebas Neue', 'Inter_700Bold', sans-serif;
   --font-mono: 'JetBrainsMono_400Regular', 'JetBrains Mono', monospace;

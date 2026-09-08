@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Linking, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { Linking, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   CircleAlert,
@@ -15,7 +15,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
@@ -36,7 +36,6 @@ const open = (url: string) => {
 };
 
 export default function EmergencyDirectory() {
-  const { width, height } = useWindowDimensions();
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const circle = useCapeStore((s) => s.circle);
   const track = trackFor(gradeBand);
@@ -44,8 +43,8 @@ export default function EmergencyDirectory() {
   const lockedCount = lockedGroupCount(track);
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.flame} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.flame} />
       <StackHeader title="Emergency Directory" tint={C.flame} fallback="/(tabs)/crisis" />
       <ScrollView
         className="flex-1"
@@ -116,7 +115,7 @@ export default function EmergencyDirectory() {
               <Mono className="text-base">{group.emoji}</Mono>
               <Eyebrow color={group.tint}>{group.label}</Eyebrow>
             </View>
-            <Mono className="mt-2 text-[10px]" color={alpha(C.slateFaint, 0.75)}>
+            <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.75)}>
               {group.blurb}
             </Mono>
             <View className="mt-3 gap-2.5">
@@ -247,15 +246,15 @@ function CircuitBreaker() {
               key={step}
               className="rounded-xl px-3 py-2.5"
               style={{
-                backgroundColor: alpha(reached ? C.flame : '#ffffff', reached ? 0.12 : 0.03),
+                backgroundColor: reached ? alpha(C.flame, 0.14) : C.card,
                 borderWidth: 1,
-                borderColor: alpha(reached ? C.flame : '#ffffff', reached ? 0.3 : 0.07),
+                borderColor: alpha(reached ? C.flame : C.ink, reached ? 0.45 : 0.12),
               }}
             >
               <Mono
                 bold={reached}
                 className="text-[10px]"
-                color={reached ? C.flame : alpha(C.slateFaint, 0.55)}
+                color={reached ? C.flame : alpha(C.inkFaint, 0.55)}
               >
                 {step}
               </Mono>
@@ -302,7 +301,7 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
         {contact.name}
       </Mono>
       <Mono className="mt-1 text-[10px]">{contact.detail}</Mono>
-      <Mono className="mt-1.5 text-[9px]" color={alpha(C.slateFaint, 0.65)}>
+      <Mono className="mt-1.5 text-[9px]" color={alpha(C.inkFaint, 0.65)}>
         {contact.hours}
       </Mono>
       <View className="mt-3 flex-row gap-2">

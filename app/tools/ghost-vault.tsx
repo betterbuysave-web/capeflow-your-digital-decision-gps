@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import {
@@ -26,7 +25,7 @@ import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Typ
 import { Chip } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { GlitchLabel, useGlitchClock } from '@/components/cape/Glitch';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { VaultCore } from '@/components/cape/VaultCore';
 import { C, alpha } from '@/lib/colors';
@@ -50,7 +49,6 @@ import { type GhostRecord, VAULT_TARGET, useCapeStore } from '@/lib/store/useCap
 const INPUT_FONT = 'JetBrainsMono_400Regular';
 
 export default function GhostVault() {
-  const { width, height } = useWindowDimensions();
   const clock = useGlitchClock();
 
   const gradeBand = useCapeStore((s) => s.gradeBand);
@@ -85,8 +83,8 @@ export default function GhostVault() {
   };
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.magenta} />
       <StackHeader title="Digital Ghost Vault" tint={C.violet} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         className="flex-1"
@@ -206,12 +204,12 @@ export default function GhostVault() {
                   }
                   color={state.tint}
                 />
-                <Mono className="mt-2.5 text-[10px]" color={alpha(C.slateSoft, 0.8)}>
+                <Mono className="mt-2.5 text-[10px]" color={alpha(C.inkSoft, 0.8)}>
                   {state.detail}
                 </Mono>
               </View>
             ) : (
-              <Mono className="mt-3 text-[10px]" color={alpha(C.slateFaint, 0.6)}>
+              <Mono className="mt-3 text-[10px]" color={alpha(C.inkFaint, 0.6)}>
                 Nothing selected yet. Pick the honest one, not the impressive one.
               </Mono>
             )}
@@ -224,7 +222,7 @@ export default function GhostVault() {
             return (
               <View key={category.id} className="mt-9">
                 <Eyebrow color={category.tint}>{category.label}</Eyebrow>
-                <Mono className="mt-2 text-[10px]" color={alpha(C.slateFaint, 0.7)}>
+                <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.7)}>
                   {category.blurb}
                 </Mono>
                 <View className="mt-4 gap-3">
@@ -287,15 +285,15 @@ export default function GhostVault() {
                 value={draftName}
                 onChangeText={setDraftName}
                 placeholder="e.g. Nobody in my house can know I went"
-                placeholderTextColor={alpha(C.slateFaint, 0.4)}
+                placeholderTextColor={alpha(C.inkFaint, 0.4)}
                 className="mt-2.5 rounded-xl px-3 py-2.5"
                 style={{
-                  color: C.white,
+                  color: C.ink,
                   fontFamily: INPUT_FONT,
                   fontSize: 11,
-                  backgroundColor: alpha('#ffffff', 0.04),
+                  backgroundColor: C.card,
                   borderWidth: 1,
-                  borderColor: alpha('#ffffff', 0.1),
+                  borderColor: alpha(C.ink, 0.14),
                 }}
               />
 
@@ -329,7 +327,7 @@ export default function GhostVault() {
                   );
                 })}
               </View>
-              <Mono className="mt-2 text-[9px]" color={alpha(C.slateFaint, 0.65)}>
+              <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.65)}>
                 {nodeMeta(draftNode).letter} · {nodeMeta(draftNode).callsign}
               </Mono>
 
@@ -390,7 +388,7 @@ export default function GhostVault() {
 
           <View className="mt-5 flex-row items-start gap-2.5">
             <Lock size={13} color={alpha(C.teal, 0.8)} />
-            <Mono className="flex-1 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+            <Mono className="flex-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
               Zero stigma tax: every ghost, plan, and word you typed here lives only in this app on
               this device. Delete the app and it is permanently gone.
             </Mono>
@@ -436,19 +434,19 @@ function GhostCard({
         onPress={onName}
         className="rounded-2xl p-4 active:opacity-80"
         style={{
-          backgroundColor: alpha('#ffffff', 0.02),
+          backgroundColor: C.card,
           borderWidth: 1,
           borderStyle: 'dashed',
           borderColor: alpha(C.violet, 0.22),
         }}
       >
         <View className="flex-row items-start gap-3">
-          <Mono className="text-base" color={alpha(C.slateFaint, 0.4)}>
+          <Mono className="text-base" color={alpha(C.inkFaint, 0.4)}>
             {ghost.glyph}
           </Mono>
           <View className="flex-1">
             <GlitchLabel text={ghost.name.toUpperCase()} clock={clock} phase={phase} />
-            <Mono className="mt-2 text-[10px]" color={alpha(C.slateFaint, 0.55)}>
+            <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.55)}>
               &ldquo;{ghost.whisper}&rdquo;
             </Mono>
           </View>
@@ -489,7 +487,7 @@ function GhostCard({
           <Mono bold color={node.color} className="text-[11px]" tracking={1}>
             {ghost.name.toUpperCase()}
           </Mono>
-          <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.7)}>
+          <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
             {node.callsign} · {ghost.shield}
           </Mono>
         </View>
@@ -504,7 +502,7 @@ function GhostCard({
           {onRemove ? (
             <Trash2 size={14} color={alpha(C.no, 0.75)} />
           ) : (
-            <X size={14} color={alpha(C.slateFaint, 0.6)} />
+            <X size={14} color={alpha(C.inkFaint, 0.6)} />
           )}
         </Pressable>
       </View>
@@ -520,7 +518,7 @@ function GhostCard({
         ))}
       </View>
 
-      <Eyebrow color={alpha(C.slateFaint, 0.75)} className="mt-4">
+      <Eyebrow color={alpha(C.inkFaint, 0.75)} className="mt-4">
         YOUR ONE-LINE PLAN
       </Eyebrow>
       <TextInput
@@ -528,17 +526,17 @@ function GhostCard({
         onChangeText={setPlan}
         onBlur={() => onSavePlan(plan)}
         placeholder="The one move you will actually make…"
-        placeholderTextColor={alpha(C.slateFaint, 0.4)}
+        placeholderTextColor={alpha(C.inkFaint, 0.4)}
         multiline
         className="mt-2 rounded-xl px-3 py-2.5"
         style={{
-          color: C.white,
+          color: C.ink,
           fontFamily: INPUT_FONT,
           fontSize: 11,
           minHeight: 46,
-          backgroundColor: alpha('#ffffff', 0.04),
+          backgroundColor: C.card,
           borderWidth: 1,
-          borderColor: alpha('#ffffff', 0.1),
+          borderColor: alpha(C.ink, 0.14),
         }}
       />
 

@@ -23,7 +23,7 @@ export default function SimDetail() {
 
   if (!scenario) {
     return (
-      <View className="bg-ink flex-1">
+      <View className="bg-paper flex-1">
         <StackHeader title="Midnight Sim" fallback="/(tabs)/tools" />
         <View className="flex-1 items-center justify-center px-6">
           <Display className="text-3xl">Scenario not found</Display>
@@ -45,7 +45,7 @@ export default function SimDetail() {
   };
 
   return (
-    <View className="bg-ink flex-1">
+    <View className="bg-paper flex-1">
       <StackHeader title="Midnight Sim" tint={C.violet} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"
@@ -75,7 +75,7 @@ export default function SimDetail() {
               <Mono className="text-base">{scenario.emoji}</Mono>
               <Eyebrow color={C.violet}>SCENARIO</Eyebrow>
             </View>
-            <Mono className="text-[10px]" color={alpha(C.slateFaint, 0.75)}>
+            <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.75)}>
               {scenario.setup}
             </Mono>
           </View>
@@ -90,17 +90,17 @@ export default function SimDetail() {
                 borderBottomLeftRadius: 4,
               }}
             >
-              <Mono className="text-[12px]" color={alpha(C.slateSoft, 0.9)}>
+              <Mono className="text-[12px]" color={alpha(C.inkSoft, 0.9)}>
                 {scenario.message}
               </Mono>
-              <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.slateFaint, 0.5)}>
+              <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.inkFaint, 0.5)}>
                 {scenario.bubbleTime}
               </Mono>
             </View>
           </View>
 
           <View className="gap-2 px-5 pb-5">
-            <Mono className="mb-1 text-[9px]" color={alpha(C.slateFaint, 0.6)} tracking={2}>
+            <Mono className="mb-1 text-[9px]" color={alpha(C.inkFaint, 0.6)} tracking={2}>
               {scenario.prompt}
             </Mono>
             {scenario.choices.map((choice) => {
@@ -112,22 +112,20 @@ export default function SimDetail() {
                   onPress={() => choose(choice.id)}
                   className="flex-row items-center justify-between gap-3 rounded-xl px-4 py-3 active:opacity-70"
                   style={{
-                    backgroundColor: isPicked
-                      ? alpha(verdictColor(choice.verdict), 0.12)
-                      : alpha('#ffffff', 0.03),
+                    backgroundColor: isPicked ? alpha(verdictColor(choice.verdict), 0.12) : C.card,
                     borderWidth: 1,
                     borderColor: isPicked
                       ? alpha(verdictColor(choice.verdict), 0.45)
-                      : alpha('#ffffff', 0.08),
+                      : alpha(C.ink, 0.13),
                   }}
                 >
-                  <Mono className="flex-1 text-[11px]" color={alpha(C.slateSoft, 0.85)}>
+                  <Mono className="flex-1 text-[11px]" color={alpha(C.inkSoft, 0.85)}>
                     {choice.label}
                   </Mono>
                   {isPicked ? (
                     <VerdictBadge verdict={choice.verdict} />
                   ) : (
-                    <ArrowRight size={14} color={alpha(C.slateFaint, 0.5)} />
+                    <ArrowRight size={14} color={alpha(C.inkFaint, 0.5)} />
                   )}
                 </Pressable>
               );
@@ -164,13 +162,13 @@ export default function SimDetail() {
               onPress={() => setPickedId(null)}
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3 active:opacity-70"
               style={{
-                backgroundColor: alpha('#ffffff', 0.04),
+                backgroundColor: C.card,
                 borderWidth: 1,
-                borderColor: alpha('#ffffff', 0.1),
+                borderColor: alpha(C.ink, 0.14),
               }}
             >
-              <RotateCcw size={13} color={alpha(C.slateFaint, 0.8)} />
-              <Mono bold color={alpha(C.slateFaint, 0.8)} tracking={2} className="text-[10px]">
+              <RotateCcw size={13} color={alpha(C.inkFaint, 0.8)} />
+              <Mono bold color={alpha(C.inkFaint, 0.8)} tracking={2} className="text-[10px]">
                 EXPLORE ANOTHER ANSWER
               </Mono>
             </Pressable>

@@ -8,7 +8,7 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen options={{ title: 'Off the map' }} />
-      <View className="bg-ink flex-1 items-center justify-center gap-3 px-8">
+      <View className="bg-paper flex-1 items-center justify-center gap-3 px-8">
         <Eyebrow color={C.flame}>OFF THE MAP</Eyebrow>
         <Display className="text-center text-4xl">This screen doesn&apos;t exist.</Display>
         <Body className="text-center">

@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   View,
-  useWindowDimensions,
 } from 'react-native';
 import { BookOpen, ChevronDown, Lock, Search, X } from 'lucide-react-native';
 
@@ -14,7 +13,7 @@ import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { TacticalBackdrop } from '@/components/cape/TacticalBackdrop';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
@@ -32,7 +31,6 @@ import { useCapeStore } from '@/lib/store/useCapeStore';
 const INPUT_FONT = 'JetBrainsMono_400Regular';
 
 export default function EducationalLibrary() {
-  const { width, height } = useWindowDimensions();
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const track = trackFor(gradeBand);
 
@@ -51,8 +49,8 @@ export default function EducationalLibrary() {
   }, [categories, results]);
 
   return (
-    <View className="bg-ink flex-1">
-      <TacticalBackdrop width={width} height={height} tint={C.gold} />
+    <View className="bg-paper flex-1">
+      <NotebookBackdrop tint={C.goldBright} />
       <StackHeader title="Educational Library" tint={C.gold} fallback="/(tabs)/learn" />
       <KeyboardAvoidingView
         className="flex-1"
@@ -77,19 +75,19 @@ export default function EducationalLibrary() {
           <View
             className="mt-6 flex-row items-center gap-2 rounded-xl px-3"
             style={{
-              backgroundColor: alpha('#ffffff', 0.04),
+              backgroundColor: C.card,
               borderWidth: 1,
-              borderColor: alpha('#ffffff', 0.1),
+              borderColor: alpha(C.ink, 0.14),
             }}
           >
-            <Search size={14} color={alpha(C.slateFaint, 0.7)} />
+            <Search size={14} color={alpha(C.inkFaint, 0.7)} />
             <TextInput
               value={query}
               onChangeText={setQuery}
               placeholder="search a word or a worry…"
-              placeholderTextColor={alpha(C.slateFaint, 0.4)}
+              placeholderTextColor={alpha(C.inkFaint, 0.4)}
               className="flex-1 py-3 text-[11px]"
-              style={{ color: C.slateSoft, fontFamily: INPUT_FONT }}
+              style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
             />
             {query.length > 0 ? (
               <Pressable
@@ -98,7 +96,7 @@ export default function EducationalLibrary() {
                 onPress={() => setQuery('')}
                 className="p-1 active:opacity-60"
               >
-                <X size={14} color={alpha(C.slateFaint, 0.7)} />
+                <X size={14} color={alpha(C.inkFaint, 0.7)} />
               </Pressable>
             ) : null}
           </View>
@@ -121,7 +119,7 @@ export default function EducationalLibrary() {
                   <Mono className="text-[10px]">{cat.emoji}</Mono>
                   <Mono
                     bold={active}
-                    color={active ? cat.tint : alpha(C.slateSoft, 0.75)}
+                    color={active ? cat.tint : alpha(C.inkSoft, 0.75)}
                     className="text-[9px]"
                     tracking={1}
                   >
@@ -133,7 +131,7 @@ export default function EducationalLibrary() {
           </View>
 
           {grouped.length === 0 ? (
-            <Panel tint={C.slateFaint} fill={0.03} stroke={0.1} className="mt-6">
+            <Panel tint={C.inkFaint} fill={0.03} stroke={0.1} className="mt-6">
               <Mono className="text-[10px]">
                 No entry matched that. Try a shorter word, or clear the category filter.
               </Mono>
@@ -146,7 +144,7 @@ export default function EducationalLibrary() {
                 <Mono className="text-base">{group.cat.emoji}</Mono>
                 <Eyebrow color={group.cat.tint}>{group.cat.label}</Eyebrow>
               </View>
-              <Mono className="mt-2 text-[10px]" color={alpha(C.slateFaint, 0.75)}>
+              <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.75)}>
                 {group.cat.blurb}
               </Mono>
               <View className="mt-3 gap-2.5">
@@ -261,12 +259,12 @@ function EntryCard({
             <Mono bold color={alpha(C.teal, 0.9)} className="text-[9px]" tracking={1.5}>
               REAL TALK
             </Mono>
-            <Mono className="mt-1 text-[10px]" color={alpha(C.slateSoft, 0.9)}>
+            <Mono className="mt-1 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
               {entry.realTalk}
             </Mono>
           </View>
 
-          <Mono className="mt-1 text-[9px]" color={alpha(C.slateFaint, 0.6)}>
+          <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
             SOURCE · {entry.source}
           </Mono>
         </View>
