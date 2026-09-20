@@ -30,8 +30,14 @@ import { BOUNDARY_MENU } from '@/lib/data/boundaries';
 import { DISCLAIMER, TRACKS, pepUnlocked, trackFor } from '@/lib/data/content';
 import { PEP_WINDOW_MS } from '@/lib/data/crisis';
 import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
-import { SCENARIOS, getScenario } from '@/lib/data/scenarios';
-import { GHOSTS, SAFETY_EXCEPTION, fearStateInfo, getGhost, nodeMeta } from '@/lib/data/ghosts';
+import { getScenario, scenariosForTrack } from '@/lib/data/scenarios';
+import {
+  SAFETY_EXCEPTION,
+  fearStateInfo,
+  getGhost,
+  ghostsForTrack,
+  nodeMeta,
+} from '@/lib/data/ghosts';
 import { describeDays, formatTime, logDayKey, recentDayKeys, toneInfo } from '@/lib/data/adherence';
 import { verdictLabel } from '@/lib/verdict';
 import {
@@ -94,6 +100,8 @@ export default function ProtectionBlueprint() {
 
   const track = trackFor(gradeBand);
   const trackInfo = TRACKS[track];
+  const availableScenarios = scenariosForTrack(track);
+  const availableScenarioIds = new Set(availableScenarios.map((scenario) => scenario.id));
   const score = saferScore({
     completedLessons,
     boundaries,
@@ -134,7 +142,7 @@ export default function ProtectionBlueprint() {
   const noCount = Object.values(boundaries).filter((a) => a === 'no').length;
   const hardLimits = cafeMenu.notserved.filter((item) => item.text.trim().length > 0);
 
-  const sims = Object.entries(scenarioResults);
+  const sims = Object.entries(scenarioResults).filter(([id]) => availableScenarioIds.has(id));
   const bestRuns = sims.filter(([, r]) => r.verdict === 'best').length;
 
   const shields = useMemo(
@@ -185,10 +193,10 @@ export default function ProtectionBlueprint() {
         tint: C.modT,
         href: '/tools/ghost-vault',
       });
-    if (sims.length < SCENARIOS.length)
+    if (sims.length < availableScenarios.length)
       moves.push({
         label: 'RUN A MIDNIGHT SIM',
-        detail: `${sims.length} of ${SCENARIOS.length} drills played. Practice the pivot before it is real.`,
+        detail: `${sims.length} of ${availableScenarios.length} drills played. Practice the pivot before it is real.`,
         tint: C.violet,
         href: '/(tabs)/tools',
       });
@@ -214,6 +222,7 @@ export default function ProtectionBlueprint() {
     sims.length,
     completedLessons.length,
     lessonsAvailable,
+    availableScenarios.length,
     reminders.length,
   ]);
 
@@ -293,9 +302,9 @@ export default function ProtectionBlueprint() {
             />
             <LayerRow
               label="MIDNIGHT SIMS"
-              detail={`${sims.length} of ${TOTALS.scenarios}`}
+              detail={`${sims.length} of ${availableScenarios.length}`}
               weight="22 pts"
-              value={(sims.length / TOTALS.scenarios) * 100}
+              value={(sims.length / availableScenarios.length) * 100}
               tint={C.violet}
             />
             <LayerRow
@@ -571,7 +580,7 @@ export default function ProtectionBlueprint() {
           <Eyebrow color={C.modT}>SHIELD INVENTORY</Eyebrow>
           <Display className="mt-2 text-3xl">Fears turned into gear.</Display>
           <View className="mt-4 items-center">
-            <VaultCore named={named} disarmed={disarmed} total={GHOSTS.length} />
+            <VaultCore named={named} disarmed={disarmed} total={ghostsForTrack(track).length} />
           </View>
           <View className="mt-4 flex-row flex-wrap justify-center gap-2">
             <Chip label={`${named} NAMED`} tint={C.modT} />
@@ -654,7 +663,7 @@ export default function ProtectionBlueprint() {
           ) : (
             <View className="mt-4 gap-2">
               <View className="flex-row flex-wrap gap-2">
-                <Chip label={`${sims.length}/${SCENARIOS.length} RUN`} tint={C.violet} />
+                <Chip label={`${sims.length}/${availableScenarios.length} RUN`} tint={C.violet} />
                 <Chip label={`${bestRuns} BEST CALLS`} tint={C.yes} />
               </View>
               {sims.map(([id, result]) => {

@@ -11,10 +11,12 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { C, alpha } from '@/lib/colors';
+import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { CRISIS_LINES, CRISIS_STEPS } from '@/lib/data/crisis';
 import { DISCLAIMER, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -40,7 +42,9 @@ export default function Crisis() {
         <Eyebrow color={C.flame}>CRISIS PROTOCOL</Eyebrow>
         <Display className="mt-2 text-4xl">For the moments that can&apos;t wait.</Display>
         <Body className="mt-3">
-          Direct-dial and text lines, staffed 24/7. If you are in immediate danger, call 911 first.
+          Direct-dial and text lines, staffed 24/7. This is the 1 a.m. version: direct next moves,
+          real people, and no need for perfect words. If you are in immediate danger, call 911
+          first.
         </Body>
 
         <View className="mt-5 gap-3">
@@ -64,6 +68,11 @@ export default function Crisis() {
             </View>
           </TintedRow>
         </View>
+
+        <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-5">
+          <Eyebrow color={C.gold}>SAFETY EXCEPTION</Eyebrow>
+          <Mono className="mt-2 text-[10px]">{SAFETY_EXCEPTION}</Mono>
+        </Panel>
 
         <View className="mt-6 gap-2.5">
           {CRISIS_LINES.map((line) => (
@@ -197,6 +206,8 @@ export default function Crisis() {
             </View>
           </View>
         </Panel>
+
+        <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
   );

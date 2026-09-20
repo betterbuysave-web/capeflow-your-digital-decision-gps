@@ -10,7 +10,7 @@ import {
   lessonsForTrack,
 } from '@/lib/data/match';
 import { BOUNDARY_MENU, type BoundaryAnswer } from '@/lib/data/boundaries';
-import { SCENARIOS, type Verdict } from '@/lib/data/scenarios';
+import { SCENARIOS, scenariosForTrack, type Verdict } from '@/lib/data/scenarios';
 import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
 import { type FearState, ghostsForTrack } from '@/lib/data/ghosts';
 import {
@@ -32,6 +32,7 @@ export interface CircleContact {
 
 export interface ScenarioResult {
   choiceId: string;
+  pivotChoiceId?: string;
   verdict: Verdict;
   at: number;
 }
@@ -98,6 +99,7 @@ interface CapeState {
   xp: number;
   completedLessons: string[];
   scenarioResults: Record<string, ScenarioResult>;
+  strongestVoiceScripts: string[];
   boundaries: Record<string, BoundaryAnswer>;
   circle: CircleContact[];
   badges: string[];
@@ -118,7 +120,15 @@ interface CapeState {
 
   startJourney: (band: GradeBand, codename: string) => void;
   completeLesson: (lessonId: string, xp: number) => void;
-  recordScenario: (scenarioId: string, choiceId: string, verdict: Verdict, xp: number) => void;
+  recordScenario: (
+    scenarioId: string,
+    choiceId: string,
+    pivotChoiceId: string,
+    verdict: Verdict,
+    xp: number,
+  ) => void;
+  saveStrongestVoiceScript: (script: string) => void;
+  removeStrongestVoiceScript: (script: string) => void;
   setBoundary: (itemId: string, answer: BoundaryAnswer) => void;
   addContact: (contact: Omit<CircleContact, 'id'>) => void;
   removeContact: (id: string) => void;
@@ -148,7 +158,7 @@ interface CapeState {
   toggleReminder: (id: string) => Promise<void>;
   removeReminder: (id: string) => Promise<void>;
   logDose: (reminderId: string) => void;
-  resetAll: () => void;
+  resetAll: () => Promise<void>;
 }
 
 const TOTAL_LESSONS = ALL_LESSONS.length;
@@ -197,8 +207,12 @@ export function saferScore(state: {
   const answered = Object.keys(state.boundaries).length;
   const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 14;
   const team = (Math.min(state.circle.length, 3) / 3) * 14;
-  const played = Object.keys(state.scenarioResults).length;
-  const sims = (Math.min(played, TOTAL_SCENARIOS) / TOTAL_SCENARIOS) * 22;
+  const availableScenarios = scenariosForTrack(trackFor(state.gradeBand ?? null));
+  const availableScenarioIds = new Set(availableScenarios.map((scenario) => scenario.id));
+  const played = Object.keys(state.scenarioResults).filter((id) =>
+    availableScenarioIds.has(id),
+  ).length;
+  const sims = (Math.min(played, availableScenarios.length) / availableScenarios.length) * 22;
   const disarmed = disarmedCount(state.ghosts ?? {});
   const vault = (Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 10;
   return Math.round(lessons + menu + team + sims + vault);
@@ -258,6 +272,7 @@ const initial = {
   xp: 0,
   completedLessons: [] as string[],
   scenarioResults: {} as Record<string, ScenarioResult>,
+  strongestVoiceScripts: [] as string[],
   boundaries: {} as Record<string, BoundaryAnswer>,
   circle: [] as CircleContact[],
   badges: [] as string[],
@@ -292,16 +307,28 @@ export const useCapeStore = create<CapeState>()(
         set({ badges: earnedBadges(get()) });
       },
 
-      recordScenario: (scenarioId, choiceId, verdict, xp) => {
+      recordScenario: (scenarioId, choiceId, pivotChoiceId, verdict, xp) => {
         const already = get().scenarioResults[scenarioId];
         set((s) => ({
           scenarioResults: {
             ...s.scenarioResults,
-            [scenarioId]: { choiceId, verdict, at: Date.now() },
+            [scenarioId]: { choiceId, pivotChoiceId, verdict, at: Date.now() },
           },
           xp: already ? s.xp : s.xp + xp,
         }));
         set({ badges: earnedBadges(get()) });
+      },
+
+      saveStrongestVoiceScript: (script) => {
+        const value = script.trim();
+        if (!value || get().strongestVoiceScripts.includes(value)) return;
+        set((s) => ({ strongestVoiceScripts: [value, ...s.strongestVoiceScripts].slice(0, 12) }));
+      },
+
+      removeStrongestVoiceScript: (script) => {
+        set((s) => ({
+          strongestVoiceScripts: s.strongestVoiceScripts.filter((item) => item !== script),
+        }));
       },
 
       setBoundary: (itemId, answer) => {
@@ -514,8 +541,9 @@ export const useCapeStore = create<CapeState>()(
         }));
       },
 
-      resetAll: () => {
-        void cancelAllReminders();
+      resetAll: async () => {
+        await cancelAllReminders();
+        await AsyncStorage.removeItem('cape-flow-v1');
         set({ ...initial, cafeMenu: freshCafeMenu(), cafeExit: freshExitCard() });
       },
     }),

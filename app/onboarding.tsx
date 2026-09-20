@@ -4,11 +4,13 @@ import { router } from 'expo-router';
 import { Check, Lock } from 'lucide-react-native';
 import { Input, TextField } from 'heroui-native';
 
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { MetallicButton } from '@/components/cape/Buttons';
 import { StackHeader } from '@/components/cape/Screen';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
+import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { GRADE_BANDS, PRIVACY_NOTE, type GradeBand } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -102,6 +104,9 @@ export default function Onboarding() {
                   ZERO STIGMA TAX — NO TRACKING
                 </Eyebrow>
                 <Mono className="text-[10px]">{PRIVACY_NOTE}</Mono>
+                <Mono className="mt-2 text-[9px]" color={C.inkFaint}>
+                  {SAFETY_EXCEPTION}
+                </Mono>
               </View>
             </View>
           </Panel>
@@ -124,6 +129,8 @@ export default function Onboarding() {
               </View>
             )}
           </View>
+
+          <BrandFooter className="mt-10" />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

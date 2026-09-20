@@ -54,6 +54,9 @@ export function BrandBanner({ className }: { className?: string }) {
         <View className="mt-4">
           <Telemetry tint={C.tealBright} height={26} />
         </View>
+        <Mono bold className="mt-3 text-center text-[9px]" color={C.inkSoft} tracking={0.7}>
+          Your CAPE is yours to wear—every single day.
+        </Mono>
       </View>
 
       <View

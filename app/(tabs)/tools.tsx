@@ -8,16 +8,18 @@ import {
   Ghost,
   Lock,
   MapPin,
+  MessageSquareText,
   Timer,
   Users,
 } from 'lucide-react-native';
 
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { VerdictBadge } from '@/components/cape/VerdictBadge';
 import { C, alpha } from '@/lib/colors';
-import { SCENARIOS } from '@/lib/data/scenarios';
+import { scenariosForTrack } from '@/lib/data/scenarios';
 import { PEP_LOCK_NOTE, pepUnlocked, trackFor } from '@/lib/data/content';
 import { networksForTrack } from '@/lib/data/clinics';
 import { entriesForTrack } from '@/lib/data/library';
@@ -35,6 +37,7 @@ export default function ToolsTab() {
   const namedGhosts = Object.keys(ghosts).length;
   const disarmedGhosts = disarmedCount(ghosts);
   const track = trackFor(gradeBand);
+  const scenarios = scenariosForTrack(track);
   const networkCount = networksForTrack(track).length;
   const libraryCount = entriesForTrack(track).length;
   const activeReminders = reminders.filter((r) => r.enabled).length;
@@ -95,6 +98,26 @@ export default function ToolsTab() {
                 </Mono>
               </View>
               <ArrowRight size={14} color={C.amber} />
+            </View>
+          </TintedRow>
+
+          <TintedRow
+            tint={C.modC}
+            fill={0.07}
+            stroke={0.2}
+            onPress={() => router.push('/tools/strongest-voice')}
+          >
+            <View className="flex-row items-center gap-3">
+              <MessageSquareText size={20} color={C.modC} />
+              <View className="flex-1">
+                <Mono bold color={C.modC} className="text-[12px]" tracking={1}>
+                  STRONGEST VOICE SCRIPT LAB
+                </Mono>
+                <Mono className="mt-1 text-[10px]">
+                  Build and rehearse the line before pressure arrives
+                </Mono>
+              </View>
+              <ArrowRight size={14} color={C.modC} />
             </View>
           </TintedRow>
 
@@ -243,7 +266,7 @@ export default function ToolsTab() {
           </Body>
 
           <View className="mt-4 gap-3">
-            {SCENARIOS.map((scenario) => {
+            {scenarios.map((scenario) => {
               const result = scenarioResults[scenario.id];
               return (
                 <TintedRow
@@ -278,6 +301,8 @@ export default function ToolsTab() {
             })}
           </View>
         </View>
+
+        <BrandFooter className="mt-10" />
       </ScrollView>
     </View>
   );

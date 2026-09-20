@@ -28,7 +28,6 @@ import {
   Stack,
 } from 'expo-router';
 
-import { initPostHog } from '@/lib/posthog';
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
@@ -92,23 +91,6 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (Platform.OS === 'web') {
-      const href =
-        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap';
-      const existingLink = document.querySelector('link[data-cape-fonts="1"]');
-
-      if (!existingLink) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        link.crossOrigin = 'anonymous';
-        link.dataset.capeFonts = '1';
-        document.head.appendChild(link);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
     if (__DEV__ && Platform.OS !== 'web' && !isExpoGo) {
       const timer = setTimeout(() => {
@@ -118,12 +100,6 @@ export default function RootLayout() {
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, []);
-
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      initPostHog();
-    }
   }, []);
 
   useEffect(() => {
@@ -165,6 +141,7 @@ export default function RootLayout() {
           <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
           <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
           <Stack.Screen name="tools/ghost-vault" options={{ title: 'Digital Ghost Vault' }} />
+          <Stack.Screen name="tools/strongest-voice" options={{ title: 'Strongest Voice' }} />
           <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
           <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
           <Stack.Screen name="badges" options={{ title: 'Badges' }} />

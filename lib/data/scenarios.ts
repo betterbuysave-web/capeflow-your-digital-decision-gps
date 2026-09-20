@@ -1,3 +1,4 @@
+import type { Track } from '@/lib/data/content';
 import type { ModuleId } from '@/lib/data/match';
 
 export type Verdict = 'best' | 'ok' | 'risky';
@@ -22,6 +23,7 @@ export interface Scenario {
   choices: Choice[];
   debrief: string;
   xp: number;
+  track?: 'blue';
   sample?: boolean;
 }
 
@@ -178,6 +180,7 @@ export const SCENARIOS: Scenario[] = [
     bubbleTime: '6:30 AM',
     prompt: 'WHAT IS THE FIRST MOVE?',
     xp: 50,
+    track: 'blue',
     choices: [
       {
         id: 'wait',
@@ -313,6 +316,53 @@ export const SCENARIOS: Scenario[] = [
 
 export function getScenario(id: string): Scenario | undefined {
   return SCENARIOS.find((s) => s.id === id);
+}
+
+export function scenariosForTrack(track: Track): Scenario[] {
+  return SCENARIOS.filter((scenario) => scenario.track !== 'blue' || track === 'blue');
+}
+
+export interface PivotChallenge {
+  trigger: string;
+  choices: readonly [
+    { id: string; label: string; verdict: Verdict },
+    { id: string; label: string; verdict: Verdict },
+    { id: string; label: string; verdict: Verdict },
+  ];
+}
+
+const PIVOT_CHOICES: PivotChallenge['choices'] = [
+  {
+    id: 'backup-person',
+    label: 'Contact a backup person and share the changed plan',
+    verdict: 'best',
+  },
+  {
+    id: 'safer-place',
+    label: 'Move to a staffed or public place while you reset',
+    verdict: 'best',
+  },
+  {
+    id: 'push-through',
+    label: 'Keep the original plan and hope the problem clears',
+    verdict: 'risky',
+  },
+];
+
+const PIVOT_TRIGGERS: Record<string, string> = {
+  'owe-me': 'CHAOS EVENT: They call twice and say they are already outside.',
+  'party-drink': 'CHAOS EVENT: Your ride cancels and your phone battery drops to 2%.',
+  'photo-push': 'CHAOS EVENT: They threaten to post the conversation in a group chat.',
+  'pep-window': 'CHAOS EVENT: The first clinic says it cannot see you today.',
+  'friend-crisis': 'CHAOS EVENT: Your friend stops replying after the last message.',
+  'location-share': 'CHAOS EVENT: They get angry when you choose time-limited sharing.',
+};
+
+export function getPivotChallenge(scenarioId: string): PivotChallenge {
+  return {
+    trigger: PIVOT_TRIGGERS[scenarioId] ?? 'CHAOS EVENT: The first plan is no longer available.',
+    choices: PIVOT_CHOICES,
+  };
 }
 
 export const SAMPLE_SCENARIO = SCENARIOS[0];

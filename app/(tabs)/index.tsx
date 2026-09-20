@@ -17,11 +17,12 @@ import {
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { BrandBanner } from '@/components/cape/BrandBanner';
 import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
-import { SCENARIOS } from '@/lib/data/scenarios';
+import { scenariosForTrack } from '@/lib/data/scenarios';
 import { pepUnlocked, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
@@ -61,8 +62,9 @@ export default function Compass() {
     gradeBand,
   });
   const track = trackFor(gradeBand);
-  const playedSims = Object.keys(scenarioResults).length;
-  const nextSim = SCENARIOS.find((s) => !scenarioResults[s.id]) ?? SCENARIOS[0];
+  const scenarios = scenariosForTrack(track);
+  const playedSims = scenarios.filter((scenario) => scenarioResults[scenario.id]).length;
+  const nextSim = scenarios.find((scenario) => !scenarioResults[scenario.id]) ?? scenarios[0];
   const namedGhosts = Object.keys(ghosts).length;
   const disarmedGhosts = disarmedCount(ghosts);
   const ghostRange = ghostTotal(gradeBand) + customGhosts.length;
@@ -97,7 +99,7 @@ export default function Compass() {
               label={`${completedLessons.length}/${lessonTotal(gradeBand)} LESSONS`}
               tint={C.modM}
             />
-            <Chip label={`${playedSims}/${TOTALS.scenarios} SIMS`} tint={C.violet} />
+            <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.violet} />
             <Chip
               label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
               tint={C.amber}
@@ -165,6 +167,9 @@ export default function Compass() {
             </View>
           </View>
         </View>
+        <Mono className="mt-2 text-[10px]">
+          Leadership is the next safe move—for you and the people around you.
+        </Mono>
 
         {pepStartedAt && pepUnlocked(gradeBand) ? (
           <TintedRow
@@ -321,7 +326,7 @@ export default function Compass() {
               tint={C.violet}
               icon={<Moon size={18} color={C.violet} />}
               label="ALL SCENARIOS"
-              detail={`${playedSims}/${TOTALS.scenarios} played`}
+              detail={`${playedSims}/${scenarios.length} played`}
               onPress={() => router.push('/(tabs)/tools')}
             />
           </View>
@@ -347,6 +352,8 @@ export default function Compass() {
             </View>
           </Panel>
         </Pressable>
+
+        <BrandFooter className="mt-10" />
       </ScrollView>
     </View>
   );

@@ -3,9 +3,11 @@ import { KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, View } 
 import { MessageSquare, Phone, Plus, Trash2, UserPlus } from 'lucide-react-native';
 import { Input, Label, TextField } from 'heroui-native';
 
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
+import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const ROLES = ['Peer', 'Adult', 'Family', 'Coach', 'Backup'];
@@ -219,7 +221,12 @@ export default function SafetyCircle() {
               Contacts live only in this app on this device. CAPE FLOW never reads your phone
               contacts and never uploads anything you type here.
             </Mono>
+            <Mono className="mt-2 text-[9px]" color={C.inkFaint}>
+              {SAFETY_EXCEPTION}
+            </Mono>
           </Panel>
+
+          <BrandFooter className="mt-8" />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

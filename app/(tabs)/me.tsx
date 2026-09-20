@@ -56,12 +56,12 @@ export default function Me() {
   const armedReminders = reminders.filter((r) => r.enabled).length;
 
   const confirmReset = () => {
-    const wipe = () => {
-      resetAll();
+    const wipe = async () => {
+      await resetAll();
       router.replace('/');
     };
     if (Platform.OS === 'web') {
-      wipe();
+      void wipe();
       return;
     }
     Alert.alert(
@@ -69,7 +69,7 @@ export default function Me() {
       'Your progress, badges, boundary menu, and Safety Circle are stored only on this device. This cannot be undone.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete everything', style: 'destructive', onPress: wipe },
+        { text: 'Delete everything', style: 'destructive', onPress: () => void wipe() },
       ],
     );
   };
