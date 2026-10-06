@@ -1,35 +1,24 @@
-import { View } from 'react-native';
+import { useState } from 'react';
+import { Image, View } from 'react-native';
 
-import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
-import { Display, Mono } from '@/components/cape/Type';
-import { C, FORGED_RULE } from '@/lib/colors';
+const BRAND_IMAGE = require('@/assets/images/cape-flow-brand.png');
 
-/** CAPE FLOW wordmark: condensed display ink over a forged teal→gold rule. */
+/** Shared CAPE Flow logo, preserving the complete supplied brand artwork. */
 export function Wordmark({ compact = false }: { compact?: boolean }) {
+  const [width, setWidth] = useState(0);
+
   return (
-    <View className="items-center">
-      <Display className={compact ? 'text-4xl' : 'text-6xl'} color={C.ink}>
-        CAPE FLOW
-      </Display>
-      <LinearGradient
-        colors={FORGED_RULE}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{ height: 3, width: compact ? 110 : 190, borderRadius: 2, marginTop: 2 }}
+    <View
+      style={{ width: '100%', maxWidth: compact ? 240 : 760, alignSelf: 'center' }}
+      onLayout={(event) => setWidth(event.nativeEvent.layout.width)}
+    >
+      <Image
+        source={BRAND_IMAGE}
+        accessibilityLabel="CAPE Flow. The Digital Decision GPS. Moving from Anxiety to Agency. System Active. Wear Your CAPE."
+        accessible
+        resizeMode="contain"
+        style={{ width: '100%', height: (width * 1024) / 1834 }}
       />
-      <Mono
-        bold
-        color={C.inkSoft}
-        tracking={compact ? 2 : 4}
-        className={compact ? 'mt-2 text-[8px]' : 'mt-3 text-[10px]'}
-      >
-        ANXIETY TO AGENCY
-      </Mono>
-      {compact ? null : (
-        <Mono className="mt-1 text-[9px]" color={C.inkFaint} tracking={3}>
-          YOUR DIGITAL DECISION GPS
-        </Mono>
-      )}
     </View>
   );
 }

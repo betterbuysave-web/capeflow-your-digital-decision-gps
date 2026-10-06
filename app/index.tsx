@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Image, Pressable, ScrollView, useWindowDimensions, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import {
   ArrowRight,
@@ -13,7 +13,7 @@ import {
   X,
 } from 'lucide-react-native';
 
-import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { GhostButton, MetallicButton, TintedRow } from '@/components/cape/Buttons';
 import { BrandBanner } from '@/components/cape/BrandBanner';
@@ -25,14 +25,11 @@ import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, PROBLEM_STATS, SOURCES } from '
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const HERO = require('@/assets/images/hero-blueprint.png');
-
 export default function Landing() {
   const onboarded = useCapeStore((s) => s.onboarded);
   const privacyAcknowledged = useCapeStore((s) => s.privacyAcknowledged);
   const acknowledgePrivacy = useCapeStore((s) => s.acknowledgePrivacy);
   const registerVisit = useCapeStore((s) => s.registerVisit);
-  const { width } = useWindowDimensions();
   const [showPrivacy, setShowPrivacy] = useState(true);
 
   useEffect(() => {
@@ -40,8 +37,6 @@ export default function Landing() {
   }, [onboarded, registerVisit]);
 
   if (onboarded) return <Redirect href="/(tabs)" />;
-
-  const heroHeight = 620;
 
   return (
     <View className="bg-paper flex-1">
@@ -51,29 +46,9 @@ export default function Landing() {
         showsVerticalScrollIndicator={false}
       >
         {/* HERO */}
-        <View
-          style={{ height: heroHeight }}
-          className="items-center justify-center overflow-hidden"
-        >
-          <Image
-            source={HERO}
-            resizeMode="cover"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width,
-              height: heroHeight,
-              opacity: 0.4,
-            }}
-          />
-          <LinearGradient
-            colors={[alpha(C.paper, 0.3), alpha(C.paper, 0.86), C.paper]}
-            locations={[0, 0.55, 1]}
-            style={{ position: 'absolute', top: 0, left: 0, width, height: heroHeight }}
-          />
-
-          <View className="w-full items-center px-6">
+        <View className="items-center justify-center overflow-hidden py-8">
+          <NotebookBackdrop />
+          <View className="w-full max-w-3xl items-center px-5">
             <View
               className="mb-6 flex-row items-center gap-2 rounded-full px-4 py-1.5"
               style={{

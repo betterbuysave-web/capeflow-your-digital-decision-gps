@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 
 import { Mono } from '@/components/cape/Type';
-import { Telemetry } from '@/components/cape/Telemetry';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { cn } from '@/lib/utils';
@@ -15,12 +14,12 @@ const BLOCK_FIELDS = [
 
 /**
  * CAPE FLOW brand plate, drawn as an engineering drawing title block: the
- * wordmark over a telemetry trace, with a drafted field row beneath.
+ * supplied brand artwork with a drafted field row beneath.
  */
 export function BrandBanner({ className }: { className?: string }) {
   return (
     <View
-      className={cn('overflow-hidden rounded-2xl', className)}
+      className={cn('rounded-2xl', className)}
       style={{
         backgroundColor: C.card,
         borderWidth: 1,
@@ -49,12 +48,11 @@ export function BrandBanner({ className }: { className?: string }) {
         }}
       />
 
-      <View className="px-5 pt-7 pb-5">
-        <Wordmark />
-        <View className="mt-4">
-          <Telemetry tint={C.tealBright} height={26} />
+      <View className="px-2 pt-2 pb-4">
+        <View className="overflow-hidden rounded-xl">
+          <Wordmark />
         </View>
-        <Mono bold className="mt-3 text-center text-[9px]" color={C.inkSoft} tracking={0.7}>
+        <Mono bold className="mt-3 px-3 text-center text-[9px]" color={C.inkSoft} tracking={0.7}>
           Your CAPE is yours to wear—every single day.
         </Mono>
       </View>
