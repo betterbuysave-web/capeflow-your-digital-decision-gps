@@ -12,8 +12,8 @@ import { TRACKS, type GradeBand, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 /**
- * The M.A.T.C.H. Compass: a drafted blueprint dial with every node marker
- * tappable. Briefing content follows the reader's track.
+ * The M.A.T.C.H. Compass: supplied compass artwork with tappable node markers.
+ * Briefing content follows the reader's track.
  */
 export function MatchCompass({
   band,
