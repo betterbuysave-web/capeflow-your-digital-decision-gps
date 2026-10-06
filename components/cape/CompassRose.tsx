@@ -5,7 +5,7 @@ import { Display } from '@/components/cape/Type';
 import { C, alpha, wash } from '@/lib/colors';
 import type { CompassNode } from '@/lib/data/compass';
 
-const MARKER = 44;
+const MARKER = 48;
 const ARTWORK_RATIO = 1275 / 1169;
 
 function polar(cx: number, cy: number, radius: number, bearing: number) {
@@ -17,9 +17,13 @@ function polar(cx: number, cy: number, radius: number, bearing: number) {
 export function CompassRose({
   nodes,
   onSelect,
+  selectedId,
+  briefingHint,
 }: {
   nodes: CompassNode[];
   onSelect: (id: CompassNode['id']) => void;
+  selectedId: string | null;
+  briefingHint: string;
 }) {
   const [width, setWidth] = useState(0);
   const height = width / ARTWORK_RATIO;
@@ -32,7 +36,9 @@ export function CompassRose({
     >
       <Image
         source={require('@/assets/images/match-compass.png')}
-        accessibilityLabel="Gold compass with a red and silver needle"
+        accessible
+        accessibilityRole="image"
+        accessibilityLabel="M.A.T.C.H. compass: five module buttons surround a gold compass. M is Health Armor, A is Built-In Radar, T is Safety Kit, C is Strongest Voice, and H is Daily Superpower."
         resizeMode="contain"
         style={{ width: '100%', height: '100%' }}
       />
@@ -43,7 +49,9 @@ export function CompassRose({
               <Pressable
                 key={node.id}
                 accessibilityRole="button"
-                accessibilityLabel={`${node.letter} — ${node.callsign}`}
+                accessibilityLabel={`${node.letter}, ${node.callsign}. ${node.title}`}
+                accessibilityHint={briefingHint}
+                accessibilityState={{ selected: selectedId === node.id }}
                 onPress={() => onSelect(node.id)}
                 className="absolute items-center justify-center rounded-full active:opacity-70"
                 style={{
@@ -56,7 +64,7 @@ export function CompassRose({
                   borderColor: alpha(node.color, 0.85),
                 }}
               >
-                <Display color={node.color} className="text-xl">
+                <Display color={C.ink} className="text-xl">
                   {node.letter}
                 </Display>
               </Pressable>

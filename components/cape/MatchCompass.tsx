@@ -1,5 +1,15 @@
-import { useState } from 'react';
-import { Modal, Pressable, ScrollView, View } from 'react-native';
+import { useRef, useState } from 'react';
+import {
+  AccessibilityInfo,
+  findNodeHandle,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { ArrowRight, Lock, X } from 'lucide-react-native';
 
@@ -30,6 +40,13 @@ export function MatchCompass({
 
   const [openId, setOpenId] = useState<string | null>(null);
   const active = COMPASS_NODES.find((n) => n.id === openId) ?? null;
+  const briefingHint = preview
+    ? 'Opens the module briefing. Choose your track to start learning.'
+    : `Opens the ${track === 'green' ? 'Green' : 'Blue'} track module briefing.`;
+  const selectNode = (id: CompassNode['id']) => {
+    if (id !== openId) void Haptics.selectionAsync();
+    setOpenId(id);
+  };
 
   return (
     <View>
@@ -69,7 +86,12 @@ export function MatchCompass({
           </Mono>
         </View>
         <View className="px-3 py-2">
-          <CompassRose nodes={COMPASS_NODES} onSelect={setOpenId} />
+          <CompassRose
+            nodes={COMPASS_NODES}
+            onSelect={selectNode}
+            selectedId={openId}
+            briefingHint={briefingHint}
+          />
         </View>
       </View>
 
@@ -84,16 +106,20 @@ export function MatchCompass({
             <Pressable
               key={node.id}
               accessibilityRole="button"
-              accessibilityLabel={`${node.letter} — ${node.callsign}`}
-              onPress={() => setOpenId(node.id)}
+              accessibilityLabel={`${node.letter}, ${node.callsign}. ${node.title}${preview ? '' : `. ${progress} percent complete`}`}
+              accessibilityHint={briefingHint}
+              accessibilityState={{ selected: openId === node.id }}
+              onPress={() => selectNode(node.id)}
               className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
               style={{
+                minWidth: 44,
+                minHeight: 48,
                 backgroundColor: wash(node.color, 0.13),
                 borderWidth: 1,
-                borderColor: alpha(node.color, 0.45),
+                borderColor: node.color,
               }}
             >
-              <Display color={node.color} className="text-xl">
+              <Display color={C.ink} className="text-xl">
                 {node.letter}
               </Display>
               {preview ? null : (
@@ -130,27 +156,41 @@ function NodeBriefing({
   completedLessons: string[];
   onClose: () => void;
 }) {
+  const { height } = useWindowDimensions();
+  const headingRef = useRef<View>(null);
+
   return (
     <Modal
       visible={node !== null}
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      onShow={() => {
+        if (Platform.OS !== 'web' && headingRef.current) {
+          const heading = findNodeHandle(headingRef.current);
+          if (heading !== null) AccessibilityInfo.setAccessibilityFocus(heading);
+        }
+      }}
       statusBarTranslucent
     >
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Close briefing"
-        onPress={onClose}
-        className="flex-1 justify-end"
-        style={{ backgroundColor: alpha(C.ink, 0.45) }}
-      >
+      <View className="flex-1 justify-end">
+        <Pressable
+          accessible={false}
+          focusable={false}
+          importantForAccessibility="no"
+          onPress={onClose}
+          className="absolute inset-0"
+          style={{ backgroundColor: alpha(C.ink, 0.45) }}
+        />
         {node ? (
-          <Pressable
-            accessibilityRole="none"
-            onPress={() => undefined}
-            className="bg-paper-2 max-h-[86%] overflow-hidden rounded-t-3xl"
-            style={{ borderTopWidth: 2, borderTopColor: alpha(node.color, 0.7) }}
+          <View
+            accessibilityViewIsModal
+            className="bg-paper-2 overflow-hidden rounded-t-3xl"
+            style={{
+              maxHeight: height * 0.9,
+              borderTopWidth: 2,
+              borderTopColor: alpha(node.color, 0.7),
+            }}
           >
             <View
               className="flex-row items-start gap-3 px-5 pt-5 pb-4"
@@ -168,26 +208,33 @@ function NodeBriefing({
                   borderColor: alpha(node.color, 0.5),
                 }}
               >
-                <Display color={node.color} className="text-2xl">
+                <Display color={C.ink} className="text-2xl">
                   {node.letter}
                 </Display>
               </View>
-              <View className="flex-1">
-                <Eyebrow color={node.color}>{node.callsign.toUpperCase()}</Eyebrow>
+              <View
+                ref={headingRef}
+                accessible
+                accessibilityRole="header"
+                accessibilityLabel={`${node.callsign}. ${node.title}`}
+                className="flex-1"
+              >
+                <Eyebrow color={C.inkSoft}>{node.callsign.toUpperCase()}</Eyebrow>
                 <Display className="mt-1 text-2xl">{node.title}</Display>
               </View>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="Close"
+                accessibilityLabel="Close briefing"
                 onPress={onClose}
-                className="active:opacity-60"
+                className="h-12 w-12 items-center justify-center active:opacity-60"
               >
                 <X size={18} color={C.inkFaint} />
               </Pressable>
             </View>
 
             <ScrollView
-              contentContainerClassName="px-5 pt-4 pb-8"
+              style={{ maxHeight: height * 0.45, flexShrink: 1 }}
+              contentContainerClassName="px-5 pt-4 pb-5"
               showsVerticalScrollIndicator={false}
             >
               <Mono className="text-[10px]">{node.hint}</Mono>
@@ -221,7 +268,7 @@ function NodeBriefing({
               {preview ? null : (
                 <View className="mt-6">
                   <View className="mb-2 flex-row items-center justify-between">
-                    <Mono bold color={node.color} className="text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.inkSoft} className="text-[10px]" tracking={1.5}>
                       MODULE PROGRESS
                     </Mono>
                     <Mono className="text-[9px]">
@@ -234,10 +281,11 @@ function NodeBriefing({
                   />
                 </View>
               )}
+            </ScrollView>
 
+            <View className="pb-safe-or-5 px-5 pt-3">
               <MetallicButton
                 label={preview ? 'PICK YOUR TRACK' : 'OPEN THIS MODULE'}
-                className="mt-6"
                 onPress={() => {
                   onClose();
                   if (preview) {
@@ -250,18 +298,19 @@ function NodeBriefing({
 
               <Pressable
                 accessibilityRole="button"
+                accessibilityLabel="Back to the compass"
                 onPress={onClose}
-                className="mt-3 flex-row items-center justify-center gap-2 py-3 active:opacity-60"
+                className="mt-3 min-h-12 flex-row items-center justify-center gap-2 py-3 active:opacity-60"
               >
                 <Mono bold color={C.inkSoft} tracking={2} className="text-[11px]">
                   BACK TO THE COMPASS
                 </Mono>
                 <ArrowRight size={14} color={C.inkSoft} />
               </Pressable>
-            </ScrollView>
-          </Pressable>
+            </View>
+          </View>
         ) : null}
-      </Pressable>
+      </View>
     </Modal>
   );
 }
