@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   findNodeHandle,
+  Image,
   Modal,
   Platform,
   Pressable,
@@ -39,6 +40,7 @@ export function MatchCompass({
   const trackInfo = TRACKS[track];
 
   const [openId, setOpenId] = useState<string | null>(null);
+  const [titleWidth, setTitleWidth] = useState(0);
   const active = COMPASS_NODES.find((n) => n.id === openId) ?? null;
   const briefingHint = preview
     ? 'Opens the module briefing. Choose your track to start learning.'
@@ -49,7 +51,15 @@ export function MatchCompass({
   };
 
   return (
-    <View>
+    <View onLayout={({ nativeEvent }) => setTitleWidth(nativeEvent.layout.width)}>
+      <Image
+        source={require('@/assets/images/match-compass-title.png')}
+        accessible
+        accessibilityRole="image"
+        accessibilityLabel="M.A.T.C.H. Compass title logo, with five colored letter badges and a gold compass on a red cape"
+        resizeMode="contain"
+        style={{ width: '100%', height: (titleWidth * 9) / 16, marginBottom: 12 }}
+      />
       {preview ? (
         <View className="flex-row flex-wrap items-center gap-2">
           <Chip label="TIERED TRACKS · GRADES 4–12" tint={C.teal} />
