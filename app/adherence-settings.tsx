@@ -270,10 +270,11 @@ export default function AdherenceSettings() {
             </Mono>
             <View className="mt-3 flex-row items-center gap-2">
               <TextInput
+                accessibilityLabel="Custom reminder label"
                 value={customLabel}
                 onChangeText={setCustomLabel}
                 placeholder="e.g. evening routine"
-                placeholderTextColor={alpha(C.inkFaint, 0.4)}
+                placeholderTextColor={C.inkFaint}
                 onSubmitEditing={addCustom}
                 returnKeyType="done"
                 className="flex-1 rounded-xl px-3 py-3 text-[11px]"

@@ -162,7 +162,15 @@ export function NotebookBackdrop({ tint = C.tealBright }: { tint?: string }) {
   const fibreColor = mix(C.grid, C.ink, 0.4);
 
   return (
-    <View pointerEvents="none" className="absolute inset-0" style={{ backgroundColor: C.paper }}>
+    <View
+      pointerEvents="none"
+      accessible={false}
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+      aria-hidden
+      className="absolute inset-0"
+      style={{ backgroundColor: C.paper }}
+    >
       <Svg width={width} height={height}>
         {/* Engineering grid: fine cells with a heavier line every fifth. */}
         <Path d={art.grid.minor} stroke={alpha(C.grid, 0.85)} strokeWidth={0.5} fill="none" />

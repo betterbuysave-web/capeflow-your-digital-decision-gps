@@ -79,7 +79,7 @@ export const C = {
  * cream label clears AA across the whole pill.
  */
 export const METALLIC: readonly [string, string, ...string[]] = [
-  '#27897C',
+  '#1F7A6E',
   '#1B6E63',
   '#155A51',
   '#4E3F10',

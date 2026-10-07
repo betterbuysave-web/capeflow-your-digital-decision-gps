@@ -22,8 +22,9 @@ export function MetallicButton({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={label}
       onPress={onPress}
-      className={cn('overflow-hidden rounded-full active:opacity-80', className)}
+      className={cn('min-h-11 overflow-hidden rounded-full active:opacity-80', className)}
       style={{
         borderWidth: 1,
         borderColor: alpha(C.goldBright, 0.55),
@@ -73,9 +74,10 @@ export function GhostButton({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={label}
       onPress={onPress}
       className={cn(
-        'flex-row items-center justify-center gap-2 rounded-full px-6 py-3.5 active:opacity-70',
+        'min-h-11 flex-row items-center justify-center gap-2 rounded-full px-6 py-3.5 active:opacity-70',
         className,
       )}
       style={{

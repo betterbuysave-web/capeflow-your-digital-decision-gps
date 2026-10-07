@@ -85,6 +85,7 @@ export default function Onboarding() {
           <View className="mt-4">
             <TextField>
               <Input
+                accessibilityLabel="Codename (optional)"
                 placeholder="e.g. Nightwatch"
                 value={codename}
                 onChangeText={setCodename}

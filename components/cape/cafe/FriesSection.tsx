@@ -173,7 +173,12 @@ function DetectiveQuiz() {
             <Pressable
               key={option}
               accessibilityRole="radio"
-              accessibilityState={{ selected: picked === i, disabled: revealed }}
+              accessibilityState={{
+                checked: picked === i,
+                selected: picked === i,
+                disabled: revealed,
+              }}
+              disabled={revealed}
               onPress={() => pick(i)}
               className="rounded-xl px-3.5 py-3 active:opacity-70"
               style={{

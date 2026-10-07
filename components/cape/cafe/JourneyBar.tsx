@@ -34,10 +34,10 @@ export function JourneyBar({
           return (
             <Pressable
               key={station.id}
-              accessibilityRole="tab"
+              accessibilityRole="button"
               accessibilityState={{ selected: isActive }}
               onPress={() => onSelect(station.id)}
-              className="flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
+              className="min-h-11 flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
               style={{
                 backgroundColor: wash(station.tint, isActive ? 0.16 : 0.05, C.paper2),
                 borderWidth: 1,

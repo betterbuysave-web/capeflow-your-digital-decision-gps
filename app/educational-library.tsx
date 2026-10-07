@@ -82,10 +82,11 @@ export default function EducationalLibrary() {
           >
             <Search size={14} color={alpha(C.inkFaint, 0.7)} />
             <TextInput
+              accessibilityLabel="Search educational library"
               value={query}
               onChangeText={setQuery}
               placeholder="search a word or a worry…"
-              placeholderTextColor={alpha(C.inkFaint, 0.4)}
+              placeholderTextColor={C.inkFaint}
               className="flex-1 py-3 text-[11px]"
               style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
             />
@@ -94,7 +95,7 @@ export default function EducationalLibrary() {
                 accessibilityRole="button"
                 accessibilityLabel="Clear search"
                 onPress={() => setQuery('')}
-                className="p-1 active:opacity-60"
+                className="h-11 w-11 items-center justify-center active:opacity-60"
               >
                 <X size={14} color={alpha(C.inkFaint, 0.7)} />
               </Pressable>
@@ -108,8 +109,10 @@ export default function EducationalLibrary() {
                 <Pressable
                   key={cat.id}
                   accessibilityRole="button"
+                  accessibilityLabel={cat.label}
+                  accessibilityState={{ selected: active }}
                   onPress={() => setCategory(active ? null : cat.id)}
-                  className="flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
+                  className="min-h-11 flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
                   style={{
                     backgroundColor: alpha(cat.tint, active ? 0.2 : 0.06),
                     borderWidth: 1,
@@ -119,7 +122,7 @@ export default function EducationalLibrary() {
                   <Mono className="text-[10px]">{cat.emoji}</Mono>
                   <Mono
                     bold={active}
-                    color={active ? cat.tint : alpha(C.inkSoft, 0.75)}
+                    color={active ? cat.tint : C.inkSoft}
                     className="text-[9px]"
                     tracking={1}
                   >

@@ -94,10 +94,11 @@ export function ExitCardSection() {
               </Mono>
             </View>
             <TextInput
+              accessibilityLabel={question}
               value={exitCard.answers[index] ?? ''}
               onChangeText={(text) => setCafeExitAnswer(index, text)}
               placeholder="Write here…"
-              placeholderTextColor={alpha(C.inkFaint, 0.55)}
+              placeholderTextColor={C.inkFaint}
               multiline
               className="mt-2 rounded-xl px-3 py-2.5"
               style={{

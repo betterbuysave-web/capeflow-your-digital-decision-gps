@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
+import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
 import { GraduationCap, NotebookPen, Pause, Play, RotateCcw, Timer, X } from 'lucide-react-native';
 
 import { Display, Eyebrow, Mono } from '@/components/cape/Type';
@@ -17,7 +18,7 @@ export function FacilitatorToggle({ active, onPress }: { active: boolean; onPres
       accessibilityState={{ checked: active }}
       accessibilityLabel="Facilitator mode"
       onPress={onPress}
-      className="h-9 flex-row items-center gap-1.5 rounded-full px-3 active:opacity-70"
+      className="min-h-11 flex-row items-center gap-1.5 rounded-full px-3 active:opacity-70"
       style={{
         backgroundColor: active ? wash(C.goldBright, 0.2, C.paper2) : C.card,
         borderWidth: 1,
@@ -38,7 +39,7 @@ export function FacilitatorBar({ onExit }: { onExit: () => void }) {
 
   return (
     <View
-      className="flex-row items-center gap-2 px-5 py-2.5"
+      className="flex-wrap items-center gap-2 px-5 py-2.5"
       style={{
         backgroundColor: wash(C.goldBright, 0.14, C.paper2),
         borderBottomWidth: 1,
@@ -46,7 +47,7 @@ export function FacilitatorBar({ onExit }: { onExit: () => void }) {
       }}
     >
       <Eyebrow color={C.gold}>SESSION TOOLS</Eyebrow>
-      <View className="flex-1 flex-row justify-end gap-2">
+      <View className="flex-row flex-wrap justify-center gap-2">
         <BarButton
           label="TIMER"
           icon={<Timer size={13} color={C.inkSoft} />}
@@ -81,7 +82,7 @@ function BarButton({
     <Pressable
       accessibilityRole="button"
       onPress={onPress}
-      className="flex-row items-center gap-1.5 rounded-lg px-2.5 py-1.5 active:opacity-70"
+      className="min-h-11 min-w-11 flex-row items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 active:opacity-70"
       style={{
         backgroundColor: C.card,
         borderWidth: 1,
@@ -93,46 +94,6 @@ function BarButton({
         {label}
       </Mono>
     </Pressable>
-  );
-}
-
-function Sheet({
-  visible,
-  onClose,
-  children,
-}: {
-  visible: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-      statusBarTranslucent
-    >
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Close"
-        onPress={onClose}
-        className="flex-1 justify-end"
-        style={{ backgroundColor: alpha(C.ink, 0.45) }}
-      >
-        <Pressable
-          accessibilityRole="none"
-          onPress={() => undefined}
-          className="bg-paper-2 rounded-t-3xl p-5"
-          style={{
-            borderTopWidth: 2,
-            borderTopColor: alpha(C.goldBright, 0.6),
-          }}
-        >
-          {children}
-        </Pressable>
-      </Pressable>
-    </Modal>
   );
 }
 
@@ -170,8 +131,7 @@ function DiscussionTimer({ visible, onClose }: { visible: boolean; onClose: () =
   const tint = seconds === 0 ? C.no : seconds <= 30 ? C.amber : running ? C.teal : C.ink;
 
   return (
-    <Sheet visible={visible} onClose={onClose}>
-      <Eyebrow color={C.gold}>DISCUSSION TIMER</Eyebrow>
+    <AccessibleSheet visible={visible} onClose={onClose} title="Discussion timer" tint={C.gold}>
       <Mono className="mt-2 text-[10px]">
         Set a countdown for group discussion or silent journaling time.
       </Mono>
@@ -187,9 +147,10 @@ function DiscussionTimer({ visible, onClose }: { visible: boolean; onClose: () =
             <Pressable
               key={minutes}
               accessibilityRole="radio"
-              accessibilityState={{ selected: active }}
+              accessibilityLabel={`${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`}
+              accessibilityState={{ checked: active, selected: active }}
               onPress={() => choose(minutes)}
-              className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
+              className="min-h-11 flex-1 items-center justify-center rounded-xl py-2.5 active:opacity-70"
               style={{
                 backgroundColor: active ? wash(C.tealBright, 0.18) : C.card,
                 borderWidth: 1,
@@ -236,7 +197,7 @@ function DiscussionTimer({ visible, onClose }: { visible: boolean; onClose: () =
           </Mono>
         </Pressable>
       </View>
-    </Sheet>
+    </AccessibleSheet>
   );
 }
 
@@ -245,16 +206,37 @@ function SessionNotes({ visible, onClose }: { visible: boolean; onClose: () => v
   const setFacilitatorNotes = useCapeStore((s) => s.setFacilitatorNotes);
 
   return (
-    <Sheet visible={visible} onClose={onClose}>
-      <Eyebrow color={C.gold}>SESSION NOTES</Eyebrow>
+    <AccessibleSheet
+      visible={visible}
+      onClose={onClose}
+      title="Session notes"
+      tint={C.gold}
+      footer={
+        <Pressable
+          accessibilityRole="button"
+          onPress={onClose}
+          className="min-h-11 items-center justify-center rounded-xl py-3 active:opacity-70"
+          style={{
+            backgroundColor: wash(C.goldBright, 0.16),
+            borderWidth: 1,
+            borderColor: alpha(C.goldBright, 0.55),
+          }}
+        >
+          <Mono bold color={C.gold} tracking={2} className="text-[10px]">
+            DONE
+          </Mono>
+        </Pressable>
+      }
+    >
       <Mono className="mt-2 text-[10px]">
         Observations, participant comments, follow-ups. Saved on this device only.
       </Mono>
       <TextInput
+        accessibilityLabel="Session notes"
         value={notes}
         onChangeText={setFacilitatorNotes}
         placeholder="Type session notes here…"
-        placeholderTextColor={alpha(C.inkFaint, 0.55)}
+        placeholderTextColor={C.inkFaint}
         multiline
         className="mt-3 rounded-xl px-3 py-2.5"
         style={{
@@ -268,20 +250,6 @@ function SessionNotes({ visible, onClose }: { visible: boolean; onClose: () => v
           borderColor: alpha(C.goldBright, 0.4),
         }}
       />
-      <Pressable
-        accessibilityRole="button"
-        onPress={onClose}
-        className="mt-4 items-center rounded-xl py-3 active:opacity-70"
-        style={{
-          backgroundColor: wash(C.goldBright, 0.16),
-          borderWidth: 1,
-          borderColor: alpha(C.goldBright, 0.55),
-        }}
-      >
-        <Mono bold color={C.gold} tracking={2} className="text-[10px]">
-          DONE
-        </Mono>
-      </Pressable>
-    </Sheet>
+    </AccessibleSheet>
   );
 }

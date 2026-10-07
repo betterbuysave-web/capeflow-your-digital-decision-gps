@@ -37,6 +37,7 @@ export function Display({
 }) {
   return (
     <Text
+      accessibilityRole="header"
       className={cn('text-3xl', className)}
       style={{ color, fontFamily: 'BebasNeue_400Regular', letterSpacing: 1 }}
     >
@@ -142,6 +143,14 @@ export function Rail({
   const pct = Math.max(0, Math.min(100, value));
   return (
     <View
+      accessibilityRole="progressbar"
+      accessibilityLabel="Progress"
+      accessibilityValue={{
+        min: 0,
+        max: 100,
+        now: Math.round(pct),
+        text: `${Math.round(pct)} percent`,
+      }}
       className="w-full overflow-hidden rounded-full"
       style={{ height, backgroundColor: alpha(C.ink, 0.1) }}
     >

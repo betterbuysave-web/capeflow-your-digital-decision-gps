@@ -93,10 +93,11 @@ export default function ClinicFinder() {
             >
               <Search size={14} color={alpha(C.inkFaint, 0.7)} />
               <TextInput
+                accessibilityLabel="Search care finders"
                 value={query}
                 onChangeText={setQuery}
                 placeholder="free clinic, vaccine, therapy, testing…"
-                placeholderTextColor={alpha(C.inkFaint, 0.4)}
+                placeholderTextColor={C.inkFaint}
                 className="flex-1 py-3 text-[11px]"
                 style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
               />
@@ -105,7 +106,7 @@ export default function ClinicFinder() {
                   accessibilityRole="button"
                   accessibilityLabel="Clear search"
                   onPress={() => setQuery('')}
-                  className="p-1 active:opacity-60"
+                  className="h-11 w-11 items-center justify-center active:opacity-60"
                 >
                   <X size={14} color={alpha(C.inkFaint, 0.7)} />
                 </Pressable>
@@ -123,10 +124,11 @@ export default function ClinicFinder() {
                 }}
               >
                 <TextInput
+                  accessibilityLabel="ZIP code (optional)"
                   value={zip}
                   onChangeText={(text) => setZip(text.replace(/\D/g, '').slice(0, 5))}
                   placeholder="ZIP code (optional)"
-                  placeholderTextColor={alpha(C.inkFaint, 0.4)}
+                  placeholderTextColor={C.inkFaint}
                   keyboardType="number-pad"
                   maxLength={5}
                   className="py-3 text-[11px]"
@@ -134,7 +136,7 @@ export default function ClinicFinder() {
                 />
               </View>
             </View>
-            <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+            <Mono className="mt-2 text-[10px]" color={C.inkFaint}>
               A ZIP is only passed to finders that accept one in their link. It is never saved.
             </Mono>
           </Panel>
@@ -149,8 +151,10 @@ export default function ClinicFinder() {
                   <Pressable
                     key={cat.id}
                     accessibilityRole="button"
+                    accessibilityLabel={cat.label}
+                    accessibilityState={{ selected: active }}
                     onPress={() => setCategory(active ? null : cat.id)}
-                    className="flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
+                    className="min-h-11 flex-row items-center gap-1.5 rounded-full px-3 py-2 active:opacity-70"
                     style={{
                       backgroundColor: alpha(cat.tint, active ? 0.2 : 0.06),
                       borderWidth: 1,
@@ -160,7 +164,7 @@ export default function ClinicFinder() {
                     <Mono className="text-[10px]">{cat.emoji}</Mono>
                     <Mono
                       bold={active}
-                      color={active ? cat.tint : alpha(C.inkSoft, 0.75)}
+                      color={active ? cat.tint : C.inkSoft}
                       className="text-[9px]"
                       tracking={1}
                     >
@@ -189,7 +193,7 @@ export default function ClinicFinder() {
                   setQuery('');
                   setCategory(null);
                 }}
-                className="active:opacity-60"
+                className="min-h-11 min-w-11 items-center justify-center active:opacity-60"
               >
                 <Mono bold color={alpha(C.inkFaint, 0.8)} className="text-[9px]" tracking={1.5}>
                   RESET

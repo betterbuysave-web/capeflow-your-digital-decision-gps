@@ -70,7 +70,7 @@ export function StackHeader({
           accessibilityRole="button"
           accessibilityLabel="Go back"
           onPress={() => goBackOrReplace(fallback)}
-          className="h-9 w-9 items-center justify-center rounded-full active:opacity-60"
+          className="h-11 w-11 items-center justify-center rounded-full active:opacity-60"
           style={{
             backgroundColor: C.card,
             borderWidth: 1,

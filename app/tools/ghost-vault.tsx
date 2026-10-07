@@ -282,10 +282,11 @@ export default function GhostVault() {
             >
               <Eyebrow color={C.modT}>THE GHOST</Eyebrow>
               <TextInput
+                accessibilityLabel="Name your worry"
                 value={draftName}
                 onChangeText={setDraftName}
                 placeholder="e.g. Nobody in my house can know I went"
-                placeholderTextColor={alpha(C.inkFaint, 0.4)}
+                placeholderTextColor={C.inkFaint}
                 className="mt-2.5 rounded-xl px-3 py-2.5"
                 style={{
                   color: C.ink,
@@ -333,6 +334,8 @@ export default function GhostVault() {
 
               <Pressable
                 accessibilityRole="button"
+                disabled={draftName.trim().length === 0}
+                accessibilityState={{ disabled: draftName.trim().length === 0 }}
                 onPress={submitCustom}
                 className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
                 style={{
@@ -497,7 +500,7 @@ function GhostCard({
             onRemove ? `Delete ${ghost.name}` : `Return ${ghost.name} to the dark`
           }
           onPress={onRemove ?? onRelease}
-          className="p-1 active:opacity-60"
+          className="h-11 w-11 items-center justify-center active:opacity-60"
         >
           {onRemove ? (
             <Trash2 size={14} color={alpha(C.no, 0.75)} />
@@ -522,11 +525,12 @@ function GhostCard({
         YOUR ONE-LINE PLAN
       </Eyebrow>
       <TextInput
+        accessibilityLabel={`One-line plan for ${ghost.name}`}
         value={plan}
         onChangeText={setPlan}
         onBlur={() => onSavePlan(plan)}
         placeholder="The one move you will actually make…"
-        placeholderTextColor={alpha(C.inkFaint, 0.4)}
+        placeholderTextColor={C.inkFaint}
         multiline
         className="mt-2 rounded-xl px-3 py-2.5"
         style={{

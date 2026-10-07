@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Modal, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
+import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
 import { Eye, Plus, RotateCcw, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
@@ -80,9 +81,10 @@ export function MenuSection() {
                         <Pressable
                           key={answer.id}
                           accessibilityRole="radio"
-                          accessibilityState={{ selected: active }}
+                          accessibilityLabel={`${item.label}: ${answer.label}`}
+                          accessibilityState={{ checked: active, selected: active }}
                           onPress={() => setBoundary(item.id, answer.id)}
-                          className="flex-1 items-center rounded-xl py-2 active:opacity-70"
+                          className="min-h-11 flex-1 items-center justify-center rounded-xl py-2 active:opacity-70"
                           style={{
                             backgroundColor: active ? wash(answer.tint, 0.18) : C.card,
                             borderWidth: 1,
@@ -151,10 +153,11 @@ export function MenuSection() {
                 }}
               >
                 <TextInput
+                  accessibilityLabel={`${course.title}, item ${index + 1}`}
                   value={item.text}
                   onChangeText={(text) => setCafeItem(course.id, index, text)}
                   placeholder={course.placeholder}
-                  placeholderTextColor={alpha(C.inkFaint, 0.55)}
+                  placeholderTextColor={C.inkFaint}
                   className="flex-1 py-2"
                   style={{ color: C.ink, fontFamily: INPUT_FONT, fontSize: 11 }}
                 />
@@ -162,7 +165,7 @@ export function MenuSection() {
                   accessibilityRole="button"
                   accessibilityLabel={`Remove ${item.text || 'item'}`}
                   onPress={() => removeCafeItem(course.id, index)}
-                  className="h-7 w-7 items-center justify-center rounded-full active:opacity-60"
+                  className="h-11 w-11 items-center justify-center rounded-full active:opacity-60"
                 >
                   <X size={13} color={C.inkFaint} />
                 </Pressable>
@@ -172,7 +175,7 @@ export function MenuSection() {
             <Pressable
               accessibilityRole="button"
               onPress={() => addCafeItem(course.id, '')}
-              className="mt-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
+              className="mt-1 min-h-11 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
               style={{
                 borderWidth: 1,
                 borderStyle: 'dashed',
@@ -227,85 +230,47 @@ function MenuPreview({
   onClose: () => void;
 }) {
   return (
-    <Modal
+    <AccessibleSheet
       visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-      statusBarTranslucent
+      onClose={onClose}
+      title="My Consent Café menu"
+      eyebrow="PRIVATE PREVIEW"
+      tint={C.amber}
     >
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Close preview"
-        onPress={onClose}
-        className="flex-1 justify-end"
-        style={{ backgroundColor: alpha(C.ink, 0.45) }}
-      >
-        <Pressable
-          accessibilityRole="none"
-          onPress={() => undefined}
-          className="bg-paper-2 max-h-[80%] rounded-t-3xl p-5"
-          style={{
-            borderTopWidth: 2,
-            borderTopColor: alpha(C.tealBright, 0.6),
-          }}
-        >
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1">
-              <Eyebrow color={C.amber}>PRIVATE PREVIEW</Eyebrow>
-              <Display className="mt-1.5 text-3xl">My Consent Café menu</Display>
-            </View>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Close"
-              onPress={onClose}
-              className="h-8 w-8 items-center justify-center rounded-full active:opacity-60"
-              style={{
-                backgroundColor: C.card,
-                borderWidth: 1,
-                borderColor: alpha(C.ink, 0.16),
-              }}
-            >
-              <X size={15} color={C.inkSoft} />
-            </Pressable>
-          </View>
-
-          <ScrollView className="mt-4" showsVerticalScrollIndicator={false}>
-            {MENU_COURSES.map((course) => {
-              const items = menu[course.id].filter((i) => i.text.trim().length > 0);
-              return (
-                <View key={course.id} className="mb-5">
-                  <Mono bold color={course.tint} className="text-[11px]">
-                    {course.emoji} {course.title.toUpperCase()}
+      <View className="mt-4">
+        {MENU_COURSES.map((course) => {
+          const items = menu[course.id].filter((i) => i.text.trim().length > 0);
+          return (
+            <View key={course.id} className="mb-5">
+              <Mono bold color={course.tint} className="text-[11px]">
+                {course.emoji} {course.title.toUpperCase()}
+              </Mono>
+              <View className="mt-2 gap-1.5">
+                {items.length === 0 ? (
+                  <Mono color={C.inkFaint} className="text-[10px]">
+                    Nothing added yet.
                   </Mono>
-                  <View className="mt-2 gap-1.5">
-                    {items.length === 0 ? (
-                      <Mono color={C.inkFaint} className="text-[10px]">
-                        Nothing added yet.
+                ) : (
+                  items.map((item) => (
+                    <View key={item.id} className="flex-row gap-2">
+                      <Mono color={course.tint} className="text-[10px]">
+                        —
                       </Mono>
-                    ) : (
-                      items.map((item) => (
-                        <View key={item.id} className="flex-row gap-2">
-                          <Mono color={course.tint} className="text-[10px]">
-                            —
-                          </Mono>
-                          <Mono color={C.inkSoft} className="flex-1 text-[10px]">
-                            {item.text.trim()}
-                          </Mono>
-                        </View>
-                      ))
-                    )}
-                  </View>
-                </View>
-              );
-            })}
-            <Mono color={C.inkFaint} className="pb-4 text-[9px]">
-              Screenshot this if you want to share it with someone you trust. It is stored only on
-              this device.
-            </Mono>
-          </ScrollView>
-        </Pressable>
-      </Pressable>
-    </Modal>
+                      <Mono color={C.inkSoft} className="flex-1 text-[10px]">
+                        {item.text.trim()}
+                      </Mono>
+                    </View>
+                  ))
+                )}
+              </View>
+            </View>
+          );
+        })}
+        <Mono color={C.inkFaint} className="pb-4 text-[9px]">
+          Screenshot this if you want to share it with someone you trust. It is stored only on this
+          device.
+        </Mono>
+      </View>
+    </AccessibleSheet>
   );
 }

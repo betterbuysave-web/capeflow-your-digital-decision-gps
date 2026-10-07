@@ -489,7 +489,7 @@ export default function Landing() {
                 accessibilityRole="button"
                 accessibilityLabel="Dismiss privacy notice"
                 onPress={() => setShowPrivacy(false)}
-                className="active:opacity-60"
+                className="h-11 w-11 items-center justify-center active:opacity-60"
               >
                 <X size={16} color={alpha(C.inkFaint, 0.7)} />
               </Pressable>

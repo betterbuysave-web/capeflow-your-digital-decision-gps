@@ -62,8 +62,11 @@ export default function StrongestVoice() {
               <Pressable
                 key={starter}
                 accessibilityRole="button"
+                accessibilityLabel={starter}
+                accessibilityState={{ selected: starter === script }}
                 onPress={() => {
                   setScript(starter);
+                  void Haptics.selectionAsync();
                   setRehearsals(0);
                 }}
                 className="rounded-2xl p-4 active:opacity-70"
@@ -141,7 +144,8 @@ export default function StrongestVoice() {
                   <Mono className="flex-1 text-[10px]">{item}</Mono>
                   <Pressable
                     accessibilityRole="button"
-                    accessibilityLabel="Delete script"
+                    accessibilityLabel={`Delete script: ${item}`}
+                    className="h-11 w-11 items-center justify-center"
                     onPress={() => removeScript(item)}
                   >
                     <Trash2 size={15} color={C.no} />

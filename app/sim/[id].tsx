@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { AccessibilityInfo, Platform, Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowRight, Lock, RotateCcw, Zap } from 'lucide-react-native';
@@ -77,6 +77,11 @@ export default function SimDetail() {
   const choosePivot = (choiceId: string, verdict: Verdict) => {
     if (!picked) return;
     setPivotId(choiceId);
+    if (Platform.OS !== 'web') {
+      AccessibilityInfo.announceForAccessibility(
+        `Pivot complete. ${verdictLabel(verdict)}. ${scenario.debrief}`,
+      );
+    }
     const combinedVerdict: Verdict =
       picked.verdict === 'risky' || verdict === 'risky'
         ? 'risky'
@@ -122,9 +127,17 @@ export default function SimDetail() {
               return (
                 <Pressable
                   key={choice.id}
-                  accessibilityRole="button"
+                  accessibilityRole="radio"
+                  accessibilityLabel={choice.label}
+                  accessibilityState={{ checked: selected, selected }}
                   onPress={() => {
                     setPickedId(choice.id);
+                    void Haptics.selectionAsync();
+                    if (Platform.OS !== 'web') {
+                      AccessibilityInfo.announceForAccessibility(
+                        `${verdictLabel(choice.verdict)}. ${choice.feedback} The Pivot: ${pivot.trigger}`,
+                      );
+                    }
                     setPivotId(null);
                   }}
                   className="flex-row items-center gap-3 rounded-xl px-4 py-3 active:opacity-70"
@@ -149,7 +162,7 @@ export default function SimDetail() {
         </Panel>
 
         {picked ? (
-          <View className="mt-5 gap-3">
+          <View className="mt-5 gap-3" accessibilityLiveRegion="polite">
             <Panel tint={verdictColor(picked.verdict)} fill={0.06} stroke={0.22}>
               <Eyebrow color={verdictColor(picked.verdict)}>{verdictLabel(picked.verdict)}</Eyebrow>
               <Mono className="mt-2 text-[11px]">{picked.feedback}</Mono>
@@ -174,7 +187,12 @@ export default function SimDetail() {
                 {pivot.choices.map((choice) => (
                   <Pressable
                     key={choice.id}
-                    accessibilityRole="button"
+                    accessibilityRole="radio"
+                    accessibilityLabel={choice.label}
+                    accessibilityState={{
+                      checked: pivotId === choice.id,
+                      selected: pivotId === choice.id,
+                    }}
                     onPress={() => choosePivot(choice.id, choice.verdict)}
                     className="rounded-xl px-4 py-3 active:opacity-70"
                     style={{
@@ -196,7 +214,7 @@ export default function SimDetail() {
         ) : null}
 
         {picked && pivotChoice ? (
-          <View className="mt-5 gap-3">
+          <View className="mt-5 gap-3" accessibilityLiveRegion="polite">
             <MissionComplete detail="You practiced the Pivot: when one layer fails, deploy another instead of freezing." />
             <Panel tint={C.teal} fill={0.05} stroke={0.18}>
               <Eyebrow color={C.teal}>DEBRIEF</Eyebrow>

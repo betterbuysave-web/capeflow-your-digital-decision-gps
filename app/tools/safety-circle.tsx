@@ -86,7 +86,7 @@ export default function SafetyCircle() {
                       accessibilityRole="button"
                       accessibilityLabel={`Remove ${contact.name}`}
                       onPress={() => removeContact(contact.id)}
-                      className="active:opacity-60"
+                      className="h-11 w-11 items-center justify-center active:opacity-60"
                     >
                       <Trash2 size={15} color={alpha(C.no, 0.8)} />
                     </Pressable>
@@ -94,8 +94,9 @@ export default function SafetyCircle() {
                   <View className="mt-3 flex-row gap-2">
                     <Pressable
                       accessibilityRole="button"
+                      accessibilityLabel={`Call ${contact.name}`}
                       onPress={() => void Linking.openURL(`tel:${contact.phone}`)}
-                      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
+                      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
                       style={{
                         backgroundColor: alpha(C.azure, 0.14),
                         borderWidth: 1,
@@ -109,12 +110,13 @@ export default function SafetyCircle() {
                     </Pressable>
                     <Pressable
                       accessibilityRole="button"
+                      accessibilityLabel={`Text code word to ${contact.name}`}
                       onPress={() =>
                         void Linking.openURL(
                           `sms:${contact.phone}?body=Code word. I need help getting out of here.`,
                         )
                       }
-                      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
+                      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
                       style={{
                         backgroundColor: alpha(C.teal, 0.12),
                         borderWidth: 1,

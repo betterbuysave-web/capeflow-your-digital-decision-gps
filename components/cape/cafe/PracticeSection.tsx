@@ -54,10 +54,10 @@ function DrillTab({
 }) {
   return (
     <Pressable
-      accessibilityRole="tab"
+      accessibilityRole="button"
       accessibilityState={{ selected: active }}
       onPress={onPress}
-      className="flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5 active:opacity-70"
+      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5 active:opacity-70"
       style={{
         backgroundColor: active ? wash(C.violet, 0.16) : C.card,
         borderWidth: 1,
