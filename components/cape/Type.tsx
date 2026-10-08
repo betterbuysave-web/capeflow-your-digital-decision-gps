@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native';
+import { Text, type TextProps } from 'react-native';
 
 import { C, alpha, wash } from '@/lib/colors';
 import { cn } from '@/lib/utils';
@@ -51,13 +51,16 @@ export function Body({
   children,
   className,
   color = C.inkSoft,
+  accessibilityRole,
 }: {
   children: ReactNode;
   className?: string;
   color?: string;
+  accessibilityRole?: TextProps['accessibilityRole'];
 }) {
   return (
     <Text
+      accessibilityRole={accessibilityRole}
       className={cn('text-sm leading-relaxed', className)}
       style={{ color, fontFamily: 'Inter_400Regular' }}
     >
@@ -73,15 +76,18 @@ export function Mono({
   color = C.inkFaint,
   bold = false,
   tracking,
+  accessibilityLiveRegion,
 }: {
   children: ReactNode;
   className?: string;
   color?: string;
   bold?: boolean;
   tracking?: number;
+  accessibilityLiveRegion?: TextProps['accessibilityLiveRegion'];
 }) {
   return (
     <Text
+      accessibilityLiveRegion={accessibilityLiveRegion}
       className={cn('text-[11px] leading-relaxed', className)}
       style={{
         color,

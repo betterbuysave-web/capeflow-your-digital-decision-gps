@@ -166,8 +166,8 @@ export const PARENT_CARDS: ParentCard[] = [
     body: [
       'Progress is stored only on the device using local storage. Nothing is uploaded.',
       'No accounts, no email collection, no advertising identifiers, no tracking pixels.',
-      'Because no education records are created or shared, there is nothing to disclose under FERPA.',
-      'Deleting the app deletes the data permanently.',
+      'CAPE Flow does not send student progress to a school. Schools must assess their own recordkeeping and privacy obligations.',
+      'Use Delete all my data in Me to clear saved CAPE data. Device backups and browser storage have separate settings.',
     ],
   },
   {
@@ -231,4 +231,4 @@ export const DISCLAIMER =
   'CAPE FLOW is an educational tool, not a substitute for professional medical advice, diagnosis, or treatment. Always seek the guidance of a qualified health provider with any questions about a medical condition. In an emergency, call 911 or your local emergency number immediately. Crisis resources listed within the app connect you to trained professionals — this app does not provide counseling directly.';
 
 export const PRIVACY_NOTE =
-  'We use local storage only to remember your progress. No cookies, no tracking pixels, no ads. Your data never leaves this device. Delete the app and your data is gone forever.';
+  'CAPE Flow saves your progress and private entries on this device. No accounts, app analytics, ads, or CAPE cloud backup. Use Delete all my data in Me to clear saved CAPE data. Uninstalling may not clear browser storage or existing device backups; those have separate settings. Copying, sharing, calling, or opening a website sends information outside CAPE Flow.';

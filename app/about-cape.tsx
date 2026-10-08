@@ -47,9 +47,9 @@ const PRIVACY_POINTS = [
   },
   {
     icon: Trash2,
-    title: 'ABSOLUTE ERASURE',
+    title: 'CLEAR YOUR SAVED DATA',
     detail:
-      'Delete all data in the Me tab, or delete the app, and it is gone permanently. There is no backup copy anywhere.',
+      'Use Delete all my data in Me to clear saved entries and reminders. CAPE Flow has no cloud backup. Existing device backups and browser storage must be managed separately.',
   },
 ];
 

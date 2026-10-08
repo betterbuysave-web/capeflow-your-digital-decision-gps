@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Platform, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IOS_HINT_DISMISSED_KEY } from '@/lib/localStorage';
 
 import { Text } from 'heroui-native';
 
@@ -27,8 +28,6 @@ declare global {
     beforeinstallprompt: BeforeInstallPromptEvent;
   }
 }
-
-const IOS_HINT_DISMISSED_KEY = 'pwa-ios-install-hint-dismissed';
 
 function isEligibleBrowserContext(): boolean {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return false;

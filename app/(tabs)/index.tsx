@@ -21,7 +21,7 @@ import { BrandFooter } from '@/components/cape/BrandFooter';
 import { BrandBanner } from '@/components/cape/BrandBanner';
 import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
-import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
+import { MATCH_MODULES, lessonsForTrack, allLessonsForTrack } from '@/lib/data/match';
 import { scenariosForTrack } from '@/lib/data/scenarios';
 import { pepUnlocked, trackFor } from '@/lib/data/content';
 import {
@@ -62,6 +62,9 @@ export default function Compass() {
     gradeBand,
   });
   const track = trackFor(gradeBand);
+  const doneLessons = allLessonsForTrack(track).filter((lesson) =>
+    completedLessons.includes(lesson.id),
+  ).length;
   const scenarios = scenariosForTrack(track);
   const playedSims = scenarios.filter((scenario) => scenarioResults[scenario.id]).length;
   const nextSim = scenarios.find((scenario) => !scenarioResults[scenario.id]) ?? scenarios[0];
@@ -95,10 +98,7 @@ export default function Compass() {
             <Rail value={score} color={C.teal} height={6} />
           </View>
           <View className="mt-4 flex-row flex-wrap gap-2">
-            <Chip
-              label={`${completedLessons.length}/${lessonTotal(gradeBand)} LESSONS`}
-              tint={C.modM}
-            />
+            <Chip label={`${doneLessons}/${lessonTotal(gradeBand)} LESSONS`} tint={C.modM} />
             <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.violet} />
             <Chip
               label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}

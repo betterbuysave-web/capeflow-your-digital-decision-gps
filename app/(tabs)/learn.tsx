@@ -6,8 +6,9 @@ import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { MatchCompass } from '@/components/cape/MatchCompass';
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { C, alpha } from '@/lib/colors';
-import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
+import { MATCH_MODULES, lessonsForTrack, moduleTagline } from '@/lib/data/match';
 import { FRIES } from '@/lib/data/boundaries';
 import { trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
@@ -72,7 +73,7 @@ export default function Learn() {
                       </View>
                       {progress === 100 ? <CircleCheck size={15} color={mod.color} /> : null}
                     </View>
-                    <Mono className="text-[10px]">{mod.tagline}</Mono>
+                    <Mono className="text-[10px]">{moduleTagline(mod, track)}</Mono>
                     <View className="mt-2.5">
                       <Rail value={progress} color={mod.color} />
                     </View>
@@ -110,6 +111,7 @@ export default function Learn() {
             ))}
           </View>
         </View>
+        <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
   );

@@ -443,11 +443,11 @@ export function fearStateInfo(state: FearState | null): FearStateInfo | null {
 export const NORMALIZATION: string[] = [
   'Fear is a biological alarm, not a personality defect. Your body is trying to keep you alive with old software.',
   'Vague fear is heavy because it has no edges. A named fear has edges, and edges can be engineered around.',
-  'Nothing you type here leaves this device. No account, no upload, no record anywhere else.',
+  'CAPE Flow saves your words on this device, not to a CAPE account or cloud backup. Use Delete all my data in Me to clear them.',
 ];
 
 export const SAFETY_EXCEPTION =
-  'The only exception to privacy is danger: if you tell a trusted adult or facilitator something that says someone may be in immediate harm, they are required to act. This vault reports nothing — but a person who cares about you might have to.';
+  'CAPE Flow cannot monitor danger, alert anyone, or make a report. If you tell a teacher, clinician, or facilitator about immediate danger or abuse, they may be required to act under local reporting rules. Ask what they must share before you talk. In immediate danger, contact emergency services or a trusted adult now.';
 
 /** Letter, callsign, and color for the M.A.T.C.H. node a ghost maps to. */
 export function nodeMeta(id: ModuleId): { letter: string; callsign: string; color: string } {

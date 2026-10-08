@@ -115,4 +115,5 @@ export async function cancelReminder(ids: string[]): Promise<void> {
 export async function cancelAllReminders(): Promise<void> {
   if (!notificationsSupported) return;
   await Notifications.cancelAllScheduledNotificationsAsync();
+  await Notifications.dismissAllNotificationsAsync();
 }

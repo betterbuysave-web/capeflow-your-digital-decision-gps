@@ -5,8 +5,9 @@ import { Check, ChevronDown, Clock, Lock, Sparkles } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
+import { BrandFooter } from '@/components/cape/BrandFooter';
 import { C, alpha } from '@/lib/colors';
-import { getModule, lessonsForTrack, lockedLessonsForTrack } from '@/lib/data/match';
+import { getModule, lessonsForTrack, lockedLessonsForTrack, moduleTagline } from '@/lib/data/match';
 import { TRACKS, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -65,7 +66,7 @@ export default function ModuleDetail() {
           </View>
         </View>
 
-        <Body className="mt-4">{mod.tagline}</Body>
+        <Body className="mt-4">{moduleTagline(mod, track)}</Body>
 
         <Panel tint={mod.color} fill={0.05} stroke={0.18} className="mt-5">
           <View className="flex-row items-center justify-between">
@@ -218,6 +219,7 @@ export default function ModuleDetail() {
             ))}
           </View>
         ) : null}
+        <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
   );

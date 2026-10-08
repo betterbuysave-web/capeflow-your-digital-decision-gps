@@ -260,16 +260,16 @@ export function lockedGroupCount(track: Track): number {
 export const EMERGENCY_LOCK_NOTE =
   'Sexual health information lines are part of the Grades 9–12 track. Every crisis, abuse, identity, and digital-harm line above is available on every track.';
 
-/** The Circuit Breaker: three seconds to get the thinking brain back online. */
+/** A brief grounding pause, not a guaranteed physiological reset. */
 export const THREE_SECOND_RULE = {
   title: 'THE 3-SECOND RULE',
-  lead: 'Cortisol hands the wheel to your survival brain. Three counted seconds is usually enough for the thinking part to catch up.',
+  lead: 'If it is safe to pause, three counted seconds may help make room for your next choice. You do not have to feel calm to ask for help.',
   steps: [
     'ONE — feet on the floor. Notice where you actually are.',
     'TWO — one slow breath out, longer than the breath in.',
     'THREE — name the next single action. Only the next one.',
   ],
-  close: 'Nothing that truly matters gets worse because you took three seconds.',
+  close: 'Do not delay urgent help or moving away from danger to finish this exercise.',
 } as const;
 
 export const EMERGENCY_FIRST_MOVES = [

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Linking, Pressable, ScrollView, View } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import {
   CircleAlert,
@@ -64,8 +65,6 @@ export default function EmergencyDirectory() {
           <Chip label="NO CALL LOG KEPT HERE" tint={C.gold} />
         </View>
 
-        <CircuitBreaker />
-
         <View className="mt-8 gap-2.5">
           <TintedRow
             tint={C.no}
@@ -108,6 +107,8 @@ export default function EmergencyDirectory() {
             </View>
           </TintedRow>
         </View>
+
+        <CircuitBreaker />
 
         {groups.map((group) => (
           <View key={group.id} className="mt-8">
@@ -198,7 +199,7 @@ export default function EmergencyDirectory() {
   );
 }
 
-/** The 3-Second Rule: a counted pause that hands the wheel back to the thinking brain. */
+/** The 3-Second Rule: a counted pause before choosing a next step. */
 function CircuitBreaker() {
   const [count, setCount] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -210,17 +211,22 @@ function CircuitBreaker() {
   }, []);
 
   const run = () => {
-    if (timer.current) clearInterval(timer.current);
+    if (timer.current) return;
+    const startedAt = Date.now();
     setCount(1);
     timer.current = setInterval(() => {
-      setCount((current) => {
-        if (current >= 3) {
-          if (timer.current) clearInterval(timer.current);
-          return 4;
-        }
-        return current + 1;
-      });
-    }, 1000);
+      const elapsed = Date.now() - startedAt;
+      if (elapsed >= 3000) {
+        if (timer.current) clearInterval(timer.current);
+        timer.current = null;
+        setCount(4);
+        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
+          () => undefined,
+        );
+        return;
+      }
+      setCount(Math.min(3, Math.floor(elapsed / 1000) + 1));
+    }, 100);
   };
 
   const running = count > 0 && count < 4;
@@ -228,9 +234,9 @@ function CircuitBreaker() {
 
   return (
     <Panel tint={C.flame} fill={running ? 0.1 : 0.05} stroke={0.24} className="mt-6">
-      <View className="flex-row items-center justify-between">
+      <View className="flex-row flex-wrap items-center justify-between gap-2">
         <Eyebrow color={C.flame}>{THREE_SECOND_RULE.title}</Eyebrow>
-        {done ? <Chip label="BRAIN BACK ONLINE" tint={C.teal} /> : null}
+        {done ? <Chip label="PAUSE COMPLETE" tint={C.teal} /> : null}
       </View>
       <Mono className="mt-2 text-[10px]">{THREE_SECOND_RULE.lead}</Mono>
 
@@ -251,11 +257,7 @@ function CircuitBreaker() {
                 borderColor: alpha(reached ? C.flame : C.ink, reached ? 0.45 : 0.12),
               }}
             >
-              <Mono
-                bold={reached}
-                className="text-[10px]"
-                color={reached ? C.flame : alpha(C.inkFaint, 0.55)}
-              >
+              <Mono bold={reached} className="text-[10px]" color={reached ? C.flame : C.inkSoft}>
                 {step}
               </Mono>
             </View>
@@ -265,24 +267,23 @@ function CircuitBreaker() {
 
       <Pressable
         accessibilityRole="button"
+        accessibilityLabel={
+          running ? `Pause in progress, step ${count} of 3` : 'Take a three-second pause'
+        }
+        accessibilityState={{ disabled: running, busy: running }}
+        disabled={running}
         onPress={run}
-        className="mt-4 items-center justify-center rounded-full py-3.5 active:opacity-70"
-        style={{
-          backgroundColor: alpha(C.flame, running ? 0.24 : 0.14),
-          borderWidth: 1,
-          borderColor: alpha(C.flame, 0.4),
-        }}
+        className="mt-4 min-h-11 items-center justify-center rounded-full px-4 py-3.5 active:opacity-70"
+        style={{ backgroundColor: C.flame }}
       >
-        <Mono bold color={C.flame} tracking={2.5} className="text-[12px]">
-          {running ? `HOLD — ${count}` : done ? 'RUN IT AGAIN' : 'PULL THE CIRCUIT BREAKER'}
+        <Mono accessibilityLiveRegion="polite" bold color={C.paper2} className="text-[12px]">
+          {running ? `Hold — ${count}` : done ? 'Pause again' : 'Pause for 3 seconds'}
         </Mono>
       </Pressable>
 
-      {done ? (
-        <Mono className="mt-3 text-[10px]" color={alpha(C.teal, 0.85)}>
-          {THREE_SECOND_RULE.close}
-        </Mono>
-      ) : null}
+      <Mono className="mt-3 text-[10px]" color={C.inkSoft}>
+        {THREE_SECOND_RULE.close}
+      </Mono>
     </Panel>
   );
 }

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { capeStorage, CAPE_STORAGE_KEY, IOS_HINT_DISMISSED_KEY } from '@/lib/localStorage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -202,8 +202,12 @@ export function saferScore(state: {
   ghosts?: Record<string, GhostRecord>;
   gradeBand?: GradeBand | null;
 }): number {
-  const total = lessonTotal(state.gradeBand ?? null);
-  const lessons = (Math.min(state.completedLessons.length, total) / total) * 40;
+  const availableLessons = allLessonsForTrack(trackFor(state.gradeBand ?? null));
+  const total = availableLessons.length;
+  const done = availableLessons.filter((lesson) =>
+    state.completedLessons.includes(lesson.id),
+  ).length;
+  const lessons = (done / total) * 40;
   const answered = Object.keys(state.boundaries).length;
   const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 14;
   const team = (Math.min(state.circle.length, 3) / 3) * 14;
@@ -543,13 +547,15 @@ export const useCapeStore = create<CapeState>()(
 
       resetAll: async () => {
         await cancelAllReminders();
-        await AsyncStorage.removeItem('cape-flow-v1');
+        await capeStorage.removeItem(IOS_HINT_DISMISSED_KEY);
+        await capeStorage.removeItem(CAPE_STORAGE_KEY);
         set({ ...initial, cafeMenu: freshCafeMenu(), cafeExit: freshExitCard() });
+        await capeStorage.removeItem(CAPE_STORAGE_KEY);
       },
     }),
     {
-      name: 'cape-flow-v1',
-      storage: createJSONStorage(() => AsyncStorage),
+      name: CAPE_STORAGE_KEY,
+      storage: createJSONStorage(() => capeStorage),
     },
   ),
 );

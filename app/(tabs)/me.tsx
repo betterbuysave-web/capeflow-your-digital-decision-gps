@@ -1,4 +1,6 @@
-import { Alert, Platform, Pressable, ScrollView, View } from 'react-native';
+import { useState } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, View } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import {
   Award,
@@ -24,11 +26,14 @@ import {
   TOTALS,
   VAULT_TARGET,
   disarmedCount,
-  lessonTotal,
   saferScore,
   useCapeStore,
 } from '@/lib/store/useCapeStore';
 import { BrandFooter } from '@/components/cape/BrandFooter';
+import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
+import { allLessonsForTrack } from '@/lib/data/match';
+import { scenariosForTrack } from '@/lib/data/scenarios';
+import { trackFor } from '@/lib/data/content';
 
 export default function Me() {
   const codename = useCapeStore((s) => s.codename);
@@ -43,6 +48,18 @@ export default function Me() {
   const ghosts = useCapeStore((s) => s.ghosts);
   const reminders = useCapeStore((s) => s.reminders);
   const resetAll = useCapeStore((s) => s.resetAll);
+  const [resetOpen, setResetOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [resetError, setResetError] = useState<string | null>(null);
+  const track = trackFor(gradeBand);
+  const availableLessons = allLessonsForTrack(track);
+  const doneLessons = availableLessons.filter((lesson) =>
+    completedLessons.includes(lesson.id),
+  ).length;
+  const availableScenarios = scenariosForTrack(track);
+  const doneScenarios = availableScenarios.filter(
+    (scenario) => scenarioResults[scenario.id],
+  ).length;
 
   const score = saferScore({
     completedLessons,
@@ -56,22 +73,26 @@ export default function Me() {
   const armedReminders = reminders.filter((r) => r.enabled).length;
 
   const confirmReset = () => {
-    const wipe = async () => {
+    setResetError(null);
+    setResetOpen(true);
+  };
+  const wipe = async () => {
+    if (deleting) return;
+    setDeleting(true);
+    setResetError(null);
+    try {
       await resetAll();
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
+        () => undefined,
+      );
+      setResetOpen(false);
       router.replace('/');
-    };
-    if (Platform.OS === 'web') {
-      void wipe();
-      return;
+    } catch {
+      setResetError('We could not finish clearing your data and reminders. Please try again.');
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error).catch(() => undefined);
+    } finally {
+      setDeleting(false);
     }
-    Alert.alert(
-      'Delete all local data?',
-      'Your progress, badges, boundary menu, and Safety Circle are stored only on this device. This cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete everything', style: 'destructive', onPress: () => void wipe() },
-      ],
-    );
   };
 
   return (
@@ -105,16 +126,16 @@ export default function Me() {
           <View className="mt-4 gap-4">
             <ScoreRow
               label="MODULE LESSONS"
-              detail={`${completedLessons.length} of ${lessonTotal(gradeBand)}`}
+              detail={`${doneLessons} of ${availableLessons.length}`}
               weight="40 pts"
-              value={(completedLessons.length / lessonTotal(gradeBand)) * 100}
+              value={(doneLessons / availableLessons.length) * 100}
               tint={C.modM}
             />
             <ScoreRow
               label="MIDNIGHT SIMS"
-              detail={`${Object.keys(scenarioResults).length} of ${TOTALS.scenarios}`}
+              detail={`${doneScenarios} of ${availableScenarios.length}`}
               weight="22 pts"
-              value={(Object.keys(scenarioResults).length / TOTALS.scenarios) * 100}
+              value={(doneScenarios / availableScenarios.length) * 100}
               tint={C.violet}
             />
             <ScoreRow
@@ -324,13 +345,65 @@ export default function Me() {
             </Mono>
           </Pressable>
 
-          <Body className="text-center text-[11px]" color={alpha(C.inkFaint, 0.6)}>
-            Nothing you do in CAPE FLOW is uploaded. Deleting here removes it permanently.
+          <Body className="text-center text-[11px]" color={C.inkFaint}>
+            Clears saved CAPE entries and reminders on this device. Shared copies and existing
+            device backups are not erased.
           </Body>
         </View>
 
         <BrandFooter className="mt-8" />
       </ScrollView>
+      <AccessibleSheet
+        visible={resetOpen}
+        onClose={() => {
+          if (!deleting) setResetOpen(false);
+        }}
+        title="Delete all saved data?"
+        tint={C.no}
+        footer={
+          <View className="gap-3">
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: deleting, busy: deleting }}
+              disabled={deleting}
+              onPress={() => void wipe()}
+              className="min-h-11 flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
+              style={{ backgroundColor: C.no, opacity: deleting ? 0.65 : 1 }}
+            >
+              {deleting ? <ActivityIndicator size="small" color={C.paper2} /> : null}
+              <Mono bold color={C.paper2} className="text-[12px]">
+                {deleting ? 'Deleting…' : resetError ? 'Retry deletion' : 'Delete everything'}
+              </Mono>
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: deleting }}
+              disabled={deleting}
+              onPress={() => setResetOpen(false)}
+              className="min-h-11 items-center justify-center rounded-full px-5 py-3"
+              style={{ backgroundColor: C.card, opacity: deleting ? 0.65 : 1 }}
+            >
+              <Mono bold className="text-[12px]">
+                Cancel
+              </Mono>
+            </Pressable>
+          </View>
+        }
+      >
+        <Body>
+          This clears your Ghost Vault, scripts, plans, Safety Circle, progress, preferences, and
+          reminders saved in CAPE Flow on this device. It cannot be undone.
+        </Body>
+        <Body className="mt-3 text-[12px]">
+          Shared or copied text, call history, and existing device backups are outside CAPE Flow and
+          are not erased.
+        </Body>
+        {resetError ? (
+          <Body accessibilityRole="alert" color={C.no} className="mt-3">
+            {resetError}
+          </Body>
+        ) : null}
+      </AccessibleSheet>
     </View>
   );
 }

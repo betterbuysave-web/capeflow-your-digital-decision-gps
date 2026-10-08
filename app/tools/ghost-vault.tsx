@@ -392,8 +392,9 @@ export default function GhostVault() {
           <View className="mt-5 flex-row items-start gap-2.5">
             <Lock size={13} color={alpha(C.teal, 0.8)} />
             <Mono className="flex-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
-              Zero stigma tax: every ghost, plan, and word you typed here lives only in this app on
-              this device. Delete the app and it is permanently gone.
+              Your ghosts and plans are saved on this device, not in a CAPE cloud account. Use
+              Delete all my data in Me to clear them. Device backups and browser storage have
+              separate settings.
             </Mono>
           </View>
 

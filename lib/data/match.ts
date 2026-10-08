@@ -70,10 +70,11 @@ export const MATCH_MODULES: MatchModule[] = [
         title: 'Screening without shame',
         minutes: 5,
         xp: 30,
+        track: 'blue',
         intro:
           'Testing is maintenance, not punishment. Most STIs have no symptoms at all, which is exactly why screening exists.',
         points: [
-          'Routine screening is recommended for anyone who is sexually active — annually at minimum.',
+          'Ask a clinician which STI tests fit your age, body, sexual history, and possible exposures, and when to repeat them. You can ask one question at a time.',
           'Many clinics offer confidential and low-cost or free testing for minors.',
           'A test result is data, not a verdict about who you are.',
           'Ask what you were tested for. "Full panel" means different things at different clinics.',
@@ -404,6 +405,13 @@ export const MATCH_MODULES: MatchModule[] = [
 ];
 
 export const ALL_LESSONS: Lesson[] = MATCH_MODULES.flatMap((m) => m.lessons);
+
+export function moduleTagline(mod: MatchModule, track: Track): string {
+  if (mod.id === 'medical' && track === 'green') {
+    return 'Check-ups, everyday health, and asking for support — your body is your most important asset.';
+  }
+  return mod.tagline;
+}
 
 /** Lessons a given track can actually open. */
 export function lessonsForTrack(mod: MatchModule, track: Track): Lesson[] {
