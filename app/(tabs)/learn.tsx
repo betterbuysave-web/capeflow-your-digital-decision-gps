@@ -29,8 +29,8 @@ export default function Learn() {
         <Eyebrow color={C.teal}>THE FRAMEWORK</Eyebrow>
         <Display className="mt-2 text-4xl">What does M.A.T.C.H. stand for?</Display>
         <Body className="mt-3">
-          Five modules. One compass. Each builds a layer of real-world readiness — from medical
-          knowledge to communication skills to daily habits.
+          Five MATCH letters. One compass. Health choices, awareness, trusted support, consent, and
+          choosing your pace.
         </Body>
 
         <View className="mt-5">
@@ -65,9 +65,9 @@ export default function Learn() {
                   </View>
                   <View className="flex-1">
                     <View className="mb-1 flex-row items-center justify-between">
-                      <View className="flex-row items-center gap-2">
+                      <View className="flex-1 flex-row items-start gap-2">
                         <Mono className="text-sm">{mod.emoji}</Mono>
-                        <Mono bold color={mod.color} className="text-[12px]">
+                        <Mono bold color={mod.color} className="flex-1 text-[12px]">
                           {mod.name}
                         </Mono>
                       </View>
@@ -88,6 +88,22 @@ export default function Learn() {
               </TintedRow>
             );
           })}
+        </View>
+
+        <View className="mt-8 gap-3">
+          <Eyebrow color={C.azure}>CAPE Youth Edition · Gated parts</Eyebrow>
+          {(['3', '5'] as const).map((part) => (
+            <TintedRow
+              key={part}
+              tint={C.azure}
+              accessibilityLabel={`Part ${part}, ${track === 'green' ? 'locked on Green Track' : 'Blue Track companion topics'}`}
+              onPress={() => router.push({ pathname: '/book-part/[part]', params: { part } })}
+            >
+              <Mono bold className="text-[12px]" color={C.azure}>
+                Part {part} · {track === 'green' ? 'Locked on Green' : 'Blue Track'}
+              </Mono>
+            </TintedRow>
+          ))}
         </View>
 
         <View className="mt-10">

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import * as Haptics from 'expo-haptics';
+import { CanonGate } from '@/components/cape/CanonGate';
+import { BLUE_GATE_COPY } from '@/lib/data/canon';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { Check, Lock } from 'lucide-react-native';
@@ -18,12 +21,30 @@ export default function Onboarding() {
   const startJourney = useCapeStore((s) => s.startJourney);
   const [band, setBand] = useState<GradeBand | null>(null);
   const [codename, setCodename] = useState('');
+  const [showBlueGate, setShowBlueGate] = useState(false);
 
-  const begin = () => {
+  const enter = () => {
     if (!band) return;
     startJourney(band, codename.length > 0 ? codename : 'Anonymous');
+    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     router.replace('/(tabs)');
   };
+  const begin = () => {
+    if (band === '9-12') setShowBlueGate(true);
+    else enter();
+  };
+
+  if (showBlueGate) {
+    return (
+      <CanonGate
+        title="Blue Track · Grades 9–12"
+        copy={BLUE_GATE_COPY}
+        actionLabel="Enter Blue Track"
+        onContinue={enter}
+        onReturn={() => setShowBlueGate(false)}
+      />
+    );
+  }
 
   return (
     <View className="bg-paper flex-1">
@@ -44,8 +65,7 @@ export default function Onboarding() {
 
           <Display className="mt-8 text-3xl">Pick your track.</Display>
           <Body className="mt-2">
-            Content is tiered by grade band. Nothing from a higher track ever shows up in a lower
-            one.
+            Green Track is grades 6–8. Blue Track is grades 9–12. Parts 3 and 5 stay gated on Green.
           </Body>
 
           <View className="mt-6 gap-3">
@@ -56,7 +76,10 @@ export default function Onboarding() {
                   key={option.id}
                   accessibilityRole="radio"
                   accessibilityState={{ selected }}
-                  onPress={() => setBand(option.id)}
+                  onPress={() => {
+                    if (band !== option.id) void Haptics.selectionAsync();
+                    setBand(option.id);
+                  }}
                   className="rounded-2xl p-4 active:opacity-70"
                   style={{
                     backgroundColor: alpha(option.tint, selected ? 0.12 : 0.04),

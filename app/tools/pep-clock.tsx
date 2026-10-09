@@ -177,8 +177,8 @@ export default function PepClock() {
                   WHERE TO GO
                 </Mono>
                 <Mono className="mt-1 text-[10px]">
-                  An emergency department or urgent care can start PEP today. You do not need an
-                  existing doctor, and many clinics serve minors confidentially.
+                  Inside 72 hours, go to an emergency department with a trusted adult and ask to be
+                  evaluated for PEP. This app does not provide medication.
                 </Mono>
               </View>
             </View>

@@ -29,7 +29,7 @@ export const MATCH_MODULES: MatchModule[] = [
   {
     id: 'medical',
     letter: 'M',
-    name: 'My Medical',
+    name: 'My Medical / Health Choices',
     emoji: '🛡️',
     color: C.modM,
     tagline:
@@ -91,7 +91,7 @@ export const MATCH_MODULES: MatchModule[] = [
           'PrEP is taken before a possible exposure. PEP is taken after one, and it is time-limited.',
         points: [
           'PEP must be started as soon as possible and within 72 hours of exposure.',
-          'Emergency departments and urgent care can start PEP; you do not need a regular doctor.',
+          'Inside 72 hours, go to an emergency department with a trusted adult and ask to be evaluated for PEP. This app does not provide medication.',
           'PrEP is a daily or scheduled medication that dramatically lowers HIV risk.',
           'Both are prescription medications — a clinician decides what fits your situation.',
         ],
@@ -186,7 +186,7 @@ export const MATCH_MODULES: MatchModule[] = [
   {
     id: 'tools',
     letter: 'T',
-    name: 'Tools',
+    name: 'Tools & Trusted Support',
     emoji: '🧰',
     color: C.modT,
     tagline:
@@ -254,7 +254,7 @@ export const MATCH_MODULES: MatchModule[] = [
   {
     id: 'comms',
     letter: 'C',
-    name: 'Clear Comms',
+    name: 'Clear Communication & Consent',
     emoji: '📣',
     color: C.modC,
     tagline:
@@ -323,7 +323,7 @@ export const MATCH_MODULES: MatchModule[] = [
   {
     id: 'habits',
     letter: 'H',
-    name: 'Healthy Habits',
+    name: 'Healthy Habits / Choosing Your Pace',
     emoji: '❤️‍🔥',
     color: C.modH,
     tagline:
@@ -388,11 +388,12 @@ export const MATCH_MODULES: MatchModule[] = [
       },
       {
         id: 'habits-boundary-hygiene',
-        title: 'Boundary hygiene',
+        title: 'Boundary hygiene and Choosing Your Pace',
         minutes: 3,
         xp: 25,
         intro: 'Boundaries decay if you never revisit them. Hygiene means a quick, regular check.',
         points: [
+          'Choosing Your Pace means you can wait, slow down, or stop. Your timeline is not a loyalty test.',
           'Review your Consent Café menu monthly.',
           'Update your Safety Circle when friendships change.',
           'Notice which boundaries you keep apologizing for — those need reinforcing.',
@@ -408,7 +409,7 @@ export const ALL_LESSONS: Lesson[] = MATCH_MODULES.flatMap((m) => m.lessons);
 
 export function moduleTagline(mod: MatchModule, track: Track): string {
   if (mod.id === 'medical' && track === 'green') {
-    return 'Check-ups, everyday health, and asking for support — your body is your most important asset.';
+    return 'My Medical — checkups, the vaccines named in your track, and a trusted adult. PrEP, PEP, and the PEP clock open only after the Blue Track gate.';
   }
   return mod.tagline;
 }

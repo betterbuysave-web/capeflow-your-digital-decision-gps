@@ -88,7 +88,7 @@ export default function Compass() {
           <View className="flex-row items-end justify-between">
             <View>
               <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
-              <Mono className="mt-1.5 text-[10px]">Readiness across all five modules</Mono>
+              <Mono className="mt-1.5 text-[10px]">Readiness across five MATCH letters</Mono>
             </View>
             <Display color={C.teal} className="text-5xl">
               {score}
@@ -221,7 +221,7 @@ export default function Compass() {
         {/* MATCH COMPASS */}
         <View className="mt-8">
           <Eyebrow color={C.teal}>MATCH COMPASS</Eyebrow>
-          <Display className="mt-2 text-3xl">Five modules. One compass.</Display>
+          <Display className="mt-2 text-3xl">Five MATCH letters. One compass.</Display>
           <View className="mt-4">
             <MatchCompass />
           </View>
@@ -254,7 +254,7 @@ export default function Compass() {
                     <View className="flex-1">
                       <View className="flex-row items-center gap-2">
                         <Mono className="text-sm">{mod.emoji}</Mono>
-                        <Mono bold color={mod.color} className="text-[12px]">
+                        <Mono bold color={mod.color} className="flex-1 text-[12px]">
                           {mod.name}
                         </Mono>
                       </View>

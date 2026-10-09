@@ -170,7 +170,7 @@ export default function SampleScenario() {
             onPress={() => router.replace('/onboarding')}
           />
           <Mono className="mt-4 text-center text-[9px]" color={C.inkFaint} tracking={2}>
-            FREE · NO SIGN-UP NEEDED · GRADES 4–12
+            FREE · NO SIGN-UP NEEDED · GRADES 6–12
           </Mono>
         </View>
       </ScrollView>

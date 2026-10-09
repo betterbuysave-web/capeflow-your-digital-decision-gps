@@ -12,6 +12,12 @@ import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { DISCLAIMER, PRIVACY_NOTE, SOURCES, TRACKS, trackFor } from '@/lib/data/content';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
+import {
+  PIPELINE_COPY,
+  CAPE_APP_COPY,
+  MATCH_APP_COPY,
+  MATCH_APP_GATE_COPY,
+} from '@/lib/data/canon';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const MISSION = [
@@ -73,11 +79,7 @@ export default function AboutCape() {
         <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">
           <Eyebrow color={C.teal}>THE MISSION</Eyebrow>
           <Display className="mt-2 text-3xl">A Decision GPS, not a lecture.</Display>
-          <Body className="mt-3">
-            CAPE Flow is the interactive half of the CAPE curriculum by The Harness Project. It
-            turns classroom theory into muscle memory: short modules, real scripts, and drills you
-            can run before the night that needs them.
-          </Body>
+          <Body className="mt-3">{CAPE_APP_COPY}</Body>
           <View className="mt-4">
             <Telemetry tint={C.teal} height={30} />
           </View>
@@ -97,6 +99,16 @@ export default function AboutCape() {
           ))}
         </View>
 
+        <Panel tint={C.teal} className="mt-8">
+          <Eyebrow color={C.teal}>The HARNESS Project</Eyebrow>
+          <Mono className="mt-3 text-[11px]">{PIPELINE_COPY}</Mono>
+        </Panel>
+        <Panel tint={C.gold} className="mt-3">
+          <Eyebrow color={C.gold}>MATCH Flow · Adult app · 18+</Eyebrow>
+          <Mono className="mt-3 text-[11px]">{MATCH_APP_COPY}</Mono>
+          <Mono className="mt-3 text-[11px]">{MATCH_APP_GATE_COPY}</Mono>
+        </Panel>
+
         {/* WHAT M.A.T.C.H. IS */}
         <View className="mt-10">
           <Eyebrow color={C.gold}>THE FRAMEWORK</Eyebrow>
@@ -109,7 +121,7 @@ export default function AboutCape() {
             {[
               {
                 letter: 'M',
-                name: 'HEALTH ARMOR',
+                name: 'My Medical / Health Choices',
                 detail: 'Self-worth, check-ups, vaccines, medical choices.',
                 color: C.modM,
               },
@@ -121,19 +133,19 @@ export default function AboutCape() {
               },
               {
                 letter: 'T',
-                name: 'SAFETY KIT',
+                name: 'Tools & Trusted Support',
                 detail: 'Practical tools, access, and trusted support.',
                 color: C.modT,
               },
               {
                 letter: 'C',
-                name: 'STRONGEST VOICE',
+                name: 'Clear Communication & Consent',
                 detail: 'F.R.I.E.S. consent and the words that hold a line.',
                 color: C.modC,
               },
               {
                 letter: 'H',
-                name: 'DAILY SUPERPOWER',
+                name: 'Healthy Habits / Choosing Your Pace',
                 detail: 'Sleep, movement, habits, digital legacy.',
                 color: C.modH,
               },
@@ -200,7 +212,7 @@ export default function AboutCape() {
                     {active ? <Chip label="YOUR TRACK" tint={info.tint} /> : null}
                   </View>
                   <Mono bold className="mt-1.5 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
-                    {info.name} · {id === 'green' ? 'Grades 4–8' : 'Grades 9–12'}
+                    {info.name} · {id === 'green' ? 'Grades 6–8' : 'Grades 9–12'}
                   </Mono>
                   <Mono className="mt-1 text-[10px]">{info.scope}</Mono>
                 </View>

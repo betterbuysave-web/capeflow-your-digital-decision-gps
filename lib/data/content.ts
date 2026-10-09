@@ -8,33 +8,28 @@ export interface GradeBandInfo {
   tint: string;
 }
 
-export type GradeBand = '4-5' | '6-8' | '9-12';
+export type GradeBand = '6-8' | '9-12';
 
 export const GRADE_BANDS: GradeBandInfo[] = [
   {
-    id: '4-5',
-    label: 'GRADES 4–5',
-    tier: 'FOUNDATION TRACK',
-    detail: 'Body basics, personal space, trusted adults, asking before touching.',
-    tint: C.modM,
-  },
-  {
     id: '6-8',
     label: 'GRADES 6–8',
-    tier: 'READINESS TRACK',
-    detail: 'Puberty, boundaries, digital footprint, pressure math, refusal scripts.',
+    tier: 'GREEN TRACK',
+    detail:
+      'Mindset, communication, consent, boundaries, decision-making, recovery, and leadership.',
     tint: C.teal,
   },
   {
     id: '9-12',
     label: 'GRADES 9–12',
-    tier: 'AGENCY TRACK',
-    detail: 'Screening, PrEP/PEP, crisis protocol, consent under pressure, exit plans.',
+    tier: 'BLUE TRACK',
+    detail:
+      'Full CAPE scope: barrier methods, vaccines, testing, PrEP, PEP, and clinical self-advocacy.',
     tint: C.gold,
   },
 ];
 
-/** Tiered track architecture: Green = grades 4–8, Blue = grades 9–12. */
+/** Tiered track architecture: Green = grades 6–8, Blue = grades 9–12. */
 export type Track = 'green' | 'blue';
 
 export interface TrackInfo {
@@ -51,14 +46,16 @@ export const TRACKS: Record<Track, TrackInfo> = {
     label: 'GREEN TRACK',
     name: 'Internal CAPE',
     tint: C.modM,
-    scope: 'Mindset, consent, digital safety. Protection shields stay locked.',
+    scope:
+      'Mindset, communication, consent, boundaries, the 3-Second Rule, decision-making, recovery, and leadership. Parts 3 and 5 stay gated.',
   },
   blue: {
     id: 'blue',
     label: 'BLUE TRACK',
     name: 'Full CAPE Scope',
     tint: C.azure,
-    scope: 'Frontline gear, medical shields (PrEP/PEP/vaccines), clinical intake drills.',
+    scope:
+      'The full book scope, including barrier methods, vaccines, testing, PrEP, PEP, and clinical self-advocacy.',
   },
 };
 
@@ -73,7 +70,7 @@ export function pepUnlocked(band: GradeBand | null): boolean {
 }
 
 export const PEP_LOCK_NOTE =
-  'The PEP Clock is part of the Grades 9–12 medical shields. On the Grades 4–8 track it stays locked — the tools here focus on mindset, consent, and digital safety.';
+  'The PEP Clock opens only on Blue Track, grades 9–12. It stays locked on Green Track, grades 6–8. If something happened and you need care, ask a trusted adult to help you reach an emergency department.';
 
 export interface CurriculumRow {
   band: string;
@@ -82,17 +79,7 @@ export interface CurriculumRow {
 
 export const CURRICULUM: CurriculumRow[] = [
   {
-    band: 'GRADES 4–5 · FOUNDATION',
-    topics: [
-      'Bodies change and that is normal',
-      'Personal space and asking first',
-      'Naming trusted adults',
-      'Hygiene, sleep, and movement basics',
-      'What an emergency is and who to call',
-    ],
-  },
-  {
-    band: 'GRADES 6–8 · READINESS',
+    band: 'GREEN TRACK · GRADES 6–8',
     topics: [
       'Puberty and routine check-ups',
       'Consent language and the F.R.I.E.S. check',
@@ -103,7 +90,7 @@ export const CURRICULUM: CurriculumRow[] = [
     ],
   },
   {
-    band: 'GRADES 9–12 · AGENCY',
+    band: 'BLUE TRACK · GRADES 9–12',
     topics: [
       'STI screening and confidential care',
       'PrEP, PEP, and the 72-hour window',
@@ -130,7 +117,9 @@ export const PARENT_CARDS: ParentCard[] = [
     detail: 'Every topic, by grade band — no fine print',
     tint: C.teal,
     body: [
-      'Content is organized in three tracks and nothing from a higher track appears in a lower one.',
+      'CAPE Youth Edition Curriculum v3.0: 18 lessons, Green Track grades 6–8, Blue Track grades 9–12, two gated parts.',
+      'CAPE Youth Edition is supplemental and TEKS-aligned. It is not a district-adopted human sexuality curriculum. Follow local board policy.',
+      'Parts 3 and 5 are full-page gates for Green Track, not footnotes.',
       'Every lesson lists its takeaways up front, so you can read what a student reads in under a minute.',
       'Sources are published in-app: CDC, Guttmacher Institute, JAMA Pediatrics, and Planned Parenthood consent education.',
     ],
@@ -149,12 +138,13 @@ export const PARENT_CARDS: ParentCard[] = [
   {
     emoji: '⚖️',
     title: 'Parent Rights',
-    detail: 'Opt-out, preview rights, Texas law compliance',
+    detail: 'Preview rights, district policy, and written consent',
     tint: C.violet,
     body: [
       'You may preview all content before it is used with your student.',
-      'Opt-out is available for any module and does not require a reason.',
-      'Human sexuality instruction follows state notice-and-consent requirements, including Texas Education Code opt-in rules.',
+      'House Bill 1525 added the statutory opt-in language in Texas Education Code §28.004(i-2), with expiration in §28.004(i-3). The statutory opt-in expired August 1, 2024.',
+      'Districts may still require consent under local authority, TEC §11.151. Confirm the current district policy and form before the first session.',
+      'TEC §28.004(q-6) still requires written consent before instruction on child abuse, family violence, dating violence, and sex trafficking.',
       'No parental notification is triggered by app usage because no usage data is transmitted.',
     ],
   },
@@ -179,7 +169,7 @@ export const PARENT_CARDS: ParentCard[] = [
       'FRIES dinner game: name a everyday situation and check it against all five letters together.',
       'MATCH role-play cards: one person reads a scenario, the other answers out loud in one sentence.',
       'Safety Circle night: everyone in the house names their three people and swaps code words.',
-      'Clock drill: practice saying "72 hours" and where the nearest urgent care is.',
+      'Green: practice asking a trusted adult for help. Blue: practice asking an emergency department to evaluate you for PEP inside 72 hours.',
     ],
   },
 ];
@@ -196,35 +186,6 @@ export const SOURCES: SourceRef[] = [
   { name: 'JAMA Pediatrics', detail: 'Youth healthcare avoidance & anxiety studies' },
   { name: 'F.R.I.E.S. Framework', detail: 'Planned Parenthood consent education model' },
   { name: 'Texas TEKS Standards', detail: 'Health education curriculum compliance' },
-];
-
-export interface ProblemStat {
-  value: string;
-  detail: string;
-  source: string;
-}
-
-export const PROBLEM_STATS: ProblemStat[] = [
-  {
-    value: '1 in 4',
-    detail: 'sexually active youth contract an STI annually',
-    source: 'CDC, 2023',
-  },
-  {
-    value: '60%',
-    detail: "of teens report feeling pressure to do things they aren't ready for",
-    source: 'Guttmacher Institute',
-  },
-  {
-    value: '72 hrs',
-    detail: "the PEP window — most youth don't know it exists",
-    source: 'CDC PEP Guidelines',
-  },
-  {
-    value: '43%',
-    detail: 'of high schoolers avoid seeking care due to anxiety',
-    source: 'JAMA Pediatrics',
-  },
 ];
 
 export const DISCLAIMER =

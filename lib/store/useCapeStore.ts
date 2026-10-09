@@ -94,6 +94,7 @@ export type NewReminder = Omit<Reminder, 'id' | 'notificationIds' | 'createdAt' 
 
 interface CapeState {
   onboarded: boolean;
+  canonBlueGateAccepted: boolean;
   gradeBand: GradeBand | null;
   codename: string;
   xp: number;
@@ -271,6 +272,7 @@ function earnedBadges(state: CapeState): string[] {
 
 const initial = {
   onboarded: false,
+  canonBlueGateAccepted: false,
   gradeBand: null,
   codename: '',
   xp: 0,
@@ -301,7 +303,12 @@ export const useCapeStore = create<CapeState>()(
       ...initial,
 
       startJourney: (band, codename) => {
-        set({ onboarded: true, gradeBand: band, codename: codename.trim() });
+        set({
+          onboarded: true,
+          gradeBand: band,
+          codename: codename.trim(),
+          canonBlueGateAccepted: band === '9-12',
+        });
         get().registerVisit();
       },
 
@@ -556,6 +563,22 @@ export const useCapeStore = create<CapeState>()(
     {
       name: CAPE_STORAGE_KEY,
       storage: createJSONStorage(() => capeStorage),
+      merge: (persisted, current) => {
+        const saved = persisted !== null && typeof persisted === 'object' ? persisted : {};
+        const band = 'gradeBand' in saved ? saved.gradeBand : undefined;
+        const blueGateAccepted =
+          'canonBlueGateAccepted' in saved && saved.canonBlueGateAccepted === true;
+        if (band === '4-5' || (band === '9-12' && !blueGateAccepted)) {
+          return {
+            ...current,
+            ...saved,
+            gradeBand: null,
+            onboarded: false,
+            canonBlueGateAccepted: false,
+          };
+        }
+        return { ...current, ...saved };
+      },
     },
   ),
 );

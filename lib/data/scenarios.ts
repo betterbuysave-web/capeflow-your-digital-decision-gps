@@ -73,7 +73,7 @@ export const SCENARIOS: Scenario[] = [
       },
     ],
     debrief:
-      'Urgency plus guilt is the signature of coercion. The M.A.T.C.H. move is Awareness to name the tactic, then Clear Comms to answer in one line.',
+      'Urgency plus guilt is the signature of coercion. The M.A.T.C.H. move is Awareness to name the tactic, then Clear Communication & Consent to answer in one line.',
     sample: true,
   },
   {
@@ -168,7 +168,7 @@ export const SCENARIOS: Scenario[] = [
       },
     ],
     debrief:
-      'The "if you trusted me" line converts a boundary into a loyalty test. Clear Comms answers it without taking the test.',
+      'The "if you trusted me" line converts a boundary into a loyalty test. Clear Communication & Consent answers it without taking the test.',
   },
   {
     id: 'pep-window',
@@ -192,11 +192,11 @@ export const SCENARIOS: Scenario[] = [
       },
       {
         id: 'clock',
-        label: 'Start the PEP clock and go to urgent care or an ED today',
+        label: 'Go to an emergency department and ask for PEP evaluation',
         verdict: 'best',
         matchTag: 'medical',
         feedback:
-          'This is the time-critical path. Emergency departments and urgent care can start PEP — you do not need an existing doctor.',
+          'Inside 72 hours, go to an emergency department with a trusted adult and ask to be evaluated for PEP. Do not wait for the app clock. This app does not provide medication.',
       },
       {
         id: 'call-circle',

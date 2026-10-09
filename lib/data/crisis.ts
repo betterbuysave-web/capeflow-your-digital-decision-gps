@@ -86,8 +86,9 @@ export const CRISIS_STEPS: CrisisStep[] = [
     detail: 'Safety Circle contact, any adult, or a 24/7 line. Do not carry it alone.',
   },
   {
-    title: '3 · CHECK THE CLOCK',
-    detail: 'If there was a possible exposure, PEP has a 72-hour window. Start the clock.',
+    title: '3 · DO NOT WAIT FOR CARE',
+    detail:
+      'If something happened and you may need medical care, ask a trusted adult to help you reach an emergency department now.',
   },
   {
     title: '4 · WRITE IT DOWN',

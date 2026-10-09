@@ -20,7 +20,7 @@ export const BADGES: BadgeDef[] = [
     id: 'medic',
     emoji: '🛡️',
     name: 'Body Literate',
-    requirement: 'Complete every My Medical lesson',
+    requirement: 'Complete every My Medical / Health Choices lesson',
     tint: C.modM,
   },
   {
@@ -34,21 +34,21 @@ export const BADGES: BadgeDef[] = [
     id: 'toolkit',
     emoji: '🧰',
     name: 'Kit Packed',
-    requirement: 'Complete every Tools lesson',
+    requirement: 'Complete every Tools & Trusted Support lesson',
     tint: C.modT,
   },
   {
     id: 'orator',
     emoji: '📣',
     name: 'Clear Signal',
-    requirement: 'Complete every Clear Comms lesson',
+    requirement: 'Complete every Clear Communication & Consent lesson',
     tint: C.modC,
   },
   {
     id: 'daily',
     emoji: '❤️‍🔥',
     name: 'Daily Driver',
-    requirement: 'Complete every Healthy Habits lesson',
+    requirement: 'Complete every Healthy Habits / Choosing Your Pace lesson',
     tint: C.modH,
   },
   {

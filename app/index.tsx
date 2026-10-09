@@ -20,8 +20,9 @@ import { BrandBanner } from '@/components/cape/BrandBanner';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha, wash } from '@/lib/colors';
-import { MATCH_MODULES } from '@/lib/data/match';
-import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, PROBLEM_STATS, SOURCES } from '@/lib/data/content';
+import { MATCH_MODULES, moduleTagline } from '@/lib/data/match';
+import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
+import { PIPELINE_COPY, CAPE_CARD_COPY, ADULT_CARD_COPY } from '@/lib/data/canon';
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -64,9 +65,7 @@ export default function Landing() {
             <BrandBanner className="w-full" />
 
             <Body className="mt-6 text-center" color={C.inkSoft}>
-              A gamified health &amp; safety compass for youth. Turn anxiety into agency with the{' '}
-              <Body color={C.teal}>M.A.T.C.H. framework</Body> — five modules that build real-world
-              readiness, one decision at a time.
+              A decision compass for youth. Five MATCH letters, two tracks, no account.
             </Body>
 
             <View className="mt-8 w-full gap-3">
@@ -74,41 +73,23 @@ export default function Landing() {
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
             </View>
 
-            <Mono className="mt-6 text-[9px]" color={C.inkFaint} tracking={2}>
-              FREE · NO SIGN-UP NEEDED · GRADES 4–12
+            <Mono className="mt-6 text-center text-[9px]" color={C.inkFaint}>
+              GRADES 6–12 · GREEN 6–8 · BLUE 9–12
             </Mono>
           </View>
         </View>
 
-        {/* THE PROBLEM */}
-        <View className="px-5 pt-14">
-          <View className="items-center">
-            <Eyebrow color={C.flame} className="mb-3">
-              THE PROBLEM
-            </Eyebrow>
-            <Display className="text-center text-4xl">
-              Youth face high-stakes health decisions with no compass.
-            </Display>
-            <Body className="mt-4 text-center">
-              Anxiety, pressure, and misinformation fill the gap where preparation should be. Most
-              young people learn about consent, STIs, and crisis response after they needed to. CAPE
-              FLOW flips that script.
-            </Body>
-          </View>
-
-          <View className="mt-8 flex-row flex-wrap gap-3">
-            {PROBLEM_STATS.map((stat) => (
-              <Panel key={stat.value} tint={C.flame} className="flex-1 basis-[45%]">
-                <Display color={C.flame} className="text-3xl">
-                  {stat.value}
-                </Display>
-                <Mono className="mt-1.5 text-[10px]">{stat.detail}</Mono>
-                <Mono className="mt-1.5 text-[8px]" color={alpha(C.inkFaint, 0.5)}>
-                  {stat.source}
-                </Mono>
-              </Panel>
-            ))}
-          </View>
+        <View className="gap-4 px-5 pt-14">
+          <Display className="text-4xl">One decision engine. Two skins.</Display>
+          <Body>{PIPELINE_COPY}</Body>
+          <Panel tint={C.teal}>
+            <Eyebrow color={C.teal}>CAPE Youth Edition</Eyebrow>
+            <Mono className="mt-3 text-[11px]">{CAPE_CARD_COPY}</Mono>
+          </Panel>
+          <Panel tint={C.gold}>
+            <Eyebrow color={C.gold}>Adult continuation · 18+</Eyebrow>
+            <Mono className="mt-3 text-[11px]">{ADULT_CARD_COPY}</Mono>
+          </Panel>
         </View>
 
         {/* FRAMEWORK */}
@@ -119,8 +100,8 @@ export default function Landing() {
             </Eyebrow>
             <Display className="text-center text-4xl">What does M.A.T.C.H. stand for?</Display>
             <Body className="mt-4 text-center">
-              Five modules. One compass. Each builds a layer of real-world readiness — from medical
-              knowledge to communication skills to daily habits.
+              Five MATCH letters. One compass. Health choices, awareness, trusted support, consent,
+              and choosing your pace.
             </Body>
           </View>
 
@@ -147,11 +128,11 @@ export default function Landing() {
                   <View className="flex-1">
                     <View className="mb-1 flex-row items-center gap-2">
                       <Mono className="text-base">{mod.emoji}</Mono>
-                      <Mono bold color={mod.color} className="text-[12px]">
+                      <Mono bold color={mod.color} className="flex-1 text-[12px]">
                         {mod.name}
                       </Mono>
                     </View>
-                    <Mono className="text-[10px]">{mod.tagline}</Mono>
+                    <Mono className="text-[10px]">{moduleTagline(mod, 'green')}</Mono>
                   </View>
                 </View>
               </Panel>
@@ -210,16 +191,15 @@ export default function Landing() {
                   }}
                 >
                   <Mono bold color={C.flame} className="text-[9px]">
-                    💊 PEP CLOCK · 71:23:45
+                    Trusted support
                   </Mono>
                   <Mono className="mt-0.5 text-[8px]" color={alpha('#ff9682', 0.7)}>
-                    Within 72-hour window
+                    Safety Circle · A trusted adult
                   </Mono>
                 </View>
               </View>
               <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
-                24/7 direct-dial and text lines for the moments that can&apos;t wait. PEP clock
-                included.
+                Urgent help stays available on both tracks. No pause is required to reach help.
               </Mono>
             </PreviewCard>
 
@@ -260,7 +240,7 @@ export default function Landing() {
                 </View>
               </View>
               <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
-                Five modules. XP, badges, and a SafER score that grows with every visit.
+                Five MATCH letters. XP, badges, and progress saved on this device.
               </Mono>
             </PreviewCard>
           </View>
@@ -359,8 +339,9 @@ export default function Landing() {
               <Mono className="mb-5 text-[10px]">
                 CAPE FLOW is built on trust. Parents and educators have full visibility into every
                 piece of content students see. The Parent &amp; School Dashboard includes curriculum
-                overviews, facilitation approach, parent rights, COPPA/FERPA compliance details, and
-                printable family activities.
+                overviews, facilitation approach, parent rights, and family activities. Supplemental
+                and TEKS-aligned, not a district-adopted human sexuality curriculum. Follow local
+                board policy.
               </Mono>
               <View className="mb-5 gap-2.5">
                 {PARENT_CARDS.slice(0, 3).map((card) => (
@@ -423,8 +404,7 @@ export default function Landing() {
               <Eyebrow color={alpha(C.inkFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
             </View>
             <Mono className="text-center text-[10px]" color={alpha(C.inkFaint, 0.6)}>
-              All recommendations are grounded in peer-reviewed research and public health
-              guidelines.
+              Confirm clinical details with a licensed provider or current CDC guidance.
             </Mono>
           </View>
           <View className="mt-6 gap-2.5">

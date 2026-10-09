@@ -6,6 +6,8 @@ import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
 import { CURRICULUM, PARENT_CARDS, PRIVACY_NOTE } from '@/lib/data/content';
+import { CANON_DATE, PRINT_CANON, EDUCATOR_HUB_COPY, PRINT_ERRATA_COPY } from '@/lib/data/canon';
+import { BrandFooter } from '@/components/cape/BrandFooter';
 
 export default function Parents() {
   const [openCard, setOpenCard] = useState<string | null>(PARENT_CARDS[0].title);
@@ -32,8 +34,15 @@ export default function Parents() {
         <Display className="mt-6 text-4xl">Every topic. Every grade band.</Display>
         <Body className="mt-3">
           CAPE FLOW is built on trust. Parents and educators can read exactly what students see,
-          including sources, opt-out rights, and the privacy architecture behind the app.
+          including sources, district consent policy, and on-device privacy.
         </Body>
+
+        <Panel tint={C.teal} className="mt-8">
+          <Eyebrow color={C.teal}>Educator hub</Eyebrow>
+          <Mono className="mt-3 text-[11px]">{EDUCATOR_HUB_COPY}</Mono>
+          <Mono className="mt-3 text-[10px]">Print canon: {PRINT_CANON}</Mono>
+          <Mono className="mt-2 text-[10px]">Canon date: {CANON_DATE}</Mono>
+        </Panel>
 
         <View className="mt-8">
           <Eyebrow color={C.teal}>CURRICULUM OVERVIEW</Eyebrow>
@@ -139,6 +148,11 @@ export default function Parents() {
           </View>
         </View>
 
+        <Panel tint={C.gold} className="mt-8">
+          <Eyebrow color={C.gold}>Print errata · Until the next interior reprint</Eyebrow>
+          <Mono className="mt-3 text-[11px]">{PRINT_ERRATA_COPY}</Mono>
+        </Panel>
+
         <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">
           <View className="flex-row items-start gap-3">
             <Lock size={16} color={C.teal} />
@@ -150,6 +164,7 @@ export default function Parents() {
             </View>
           </View>
         </Panel>
+        <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
   );

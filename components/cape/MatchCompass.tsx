@@ -62,7 +62,7 @@ export function MatchCompass({
       />
       {preview ? (
         <View className="flex-row flex-wrap items-center gap-2">
-          <Chip label="TIERED TRACKS · GRADES 4–12" tint={C.teal} />
+          <Chip label="TWO TRACKS · GRADES 6–12" tint={C.teal} />
         </View>
       ) : (
         <View>

@@ -393,7 +393,7 @@ export function getGhost(id: string): GhostDef | undefined {
 }
 
 export const GHOST_LOCK_NOTE =
-  'Some clinical ghosts — barrier failure, test results, disclosure, and clinical discomfort — belong to the Grades 9–12 track. On the Grades 4–8 track they stay locked and the vault focuses on mindset, consent, and access.';
+  'Some clinical ghosts — barrier failure, test results, disclosure, and clinical discomfort — belong to the Grades 9–12 track. On the Grades 6–8 track they stay locked and the vault focuses on mindset, consent, and access.';
 
 /** The Emotional Transition Spectrum: fearful → cautious → prepared → fearless. */
 export type FearState = 'fearful' | 'cautious' | 'prepared' | 'fearless';

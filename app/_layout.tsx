@@ -138,6 +138,7 @@ export default function RootLayout() {
           />
           <Stack.Screen name="parents" options={{ title: 'Parents & Schools' }} />
           <Stack.Screen name="module/[id]" options={{ title: 'Module' }} />
+          <Stack.Screen name="book-part/[part]" options={{ title: 'CAPE track gate' }} />
           <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
           <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
           <Stack.Screen name="tools/ghost-vault" options={{ title: 'Digital Ghost Vault' }} />

@@ -234,12 +234,11 @@ export const EMERGENCY_GROUPS: EmergencyGroup[] = [
         track: 'blue',
       },
       {
-        id: 'pepline',
-        name: 'PEPLINE (FOR YOUR CLINICIAN)',
+        id: 'pep-emergency-department',
+        name: 'EMERGENCY DEPARTMENT · PEP EVALUATION',
         detail:
-          'National clinician consultation line for post-exposure care. Hand this number to the provider treating you.',
-        hours: '888-448-4911',
-        dial: '8884484911',
+          'Inside 72 hours of a possible HIV exposure, go to an emergency department with a trusted adult and ask to be evaluated for PEP. This app does not provide medication.',
+        hours: 'Go now · Do not wait for a hotline',
         track: 'blue',
       },
     ],

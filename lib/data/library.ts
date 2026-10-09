@@ -489,7 +489,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     ],
     realTalk: 'The plan is not "someone would help". The plan is a name and a number.',
     category: 'safety',
-    source: 'CAPE curriculum · Safety Kit',
+    source: 'CAPE Youth Edition · Tools & Trusted Support',
     keywords: ['safety circle', 'contacts', 'help', 'ride', 'code word'],
   },
   {
@@ -701,16 +701,15 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
   {
     id: 'vaccines-blue',
     term: 'Prevention Vaccines',
-    short: 'HPV, hepatitis A and B, and mpox where indicated.',
+    short: 'HPV and hepatitis A and B — ask which vaccines fit your track and health needs.',
     body: [
       'HPV vaccination prevents several cancers and is recommended routinely at 11–12, with catch-up available later.',
       'Hepatitis B vaccination is routine from birth; hepatitis A is recommended for many groups — ask whether your series is complete.',
-      'Mpox vaccination is recommended for certain groups; a clinic can tell you if it applies to you.',
     ],
     realTalk: 'Vaccines are the only shield that keeps working while you are asleep.',
     category: 'prevention',
     source: 'CDC · ACIP immunization schedules',
-    keywords: ['vaccine', 'hepatitis', 'hpv', 'mpox', 'immunization'],
+    keywords: ['vaccine', 'hepatitis', 'hpv', 'immunization'],
     track: 'blue',
   },
   {
@@ -756,7 +755,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     body: [
       'PEP must start as soon as possible and within 72 hours of the exposure. Sooner is better; after 72 hours it is not effective.',
       'It is a 28-day course of medication, and finishing the course is what makes it work.',
-      'Get it from an emergency department, urgent care, or a sexual health clinic. Say plainly: "I may have been exposed to HIV in the last three days and need to be evaluated for PEP."',
+      'Inside 72 hours, go to an emergency department with a trusted adult. Say: "I may have been exposed to HIV and need to be evaluated for PEP." This app does not provide medication.',
       'Cost help exists. Do not let a bill question burn hours off the clock.',
     ],
     realTalk:

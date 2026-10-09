@@ -38,7 +38,7 @@ export function CompassRose({
         source={require('@/assets/images/match-compass.png')}
         accessible
         accessibilityRole="image"
-        accessibilityLabel="M.A.T.C.H. compass: five module buttons surround a gold compass. M is Health Armor, A is Built-In Radar, T is Safety Kit, C is Strongest Voice, and H is Daily Superpower."
+        accessibilityLabel="M.A.T.C.H. compass: five letter buttons surround a gold compass. M is My Medical / Health Choices, A is Awareness, T is Tools & Trusted Support, C is Clear Communication & Consent, and H is Healthy Habits / Choosing Your Pace."
         resizeMode="contain"
         style={{ width: '100%', height: '100%' }}
       />
