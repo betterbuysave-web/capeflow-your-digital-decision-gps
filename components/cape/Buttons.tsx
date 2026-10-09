@@ -102,6 +102,8 @@ export function TintedRow({
   className,
   fill = 0.05,
   stroke = 0.16,
+  accessibilityLabel,
+  accessibilityHint,
 }: {
   tint: string;
   onPress: () => void;
@@ -109,10 +111,14 @@ export function TintedRow({
   className?: string;
   fill?: number;
   stroke?: number;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }) {
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
       onPress={onPress}
       className={cn('rounded-2xl p-4 active:opacity-70', className)}
       style={{

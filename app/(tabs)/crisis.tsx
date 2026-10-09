@@ -1,4 +1,4 @@
-import { Linking, Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   ArrowRight,
@@ -21,9 +21,7 @@ import { CRISIS_LINES, CRISIS_STEPS } from '@/lib/data/crisis';
 import { DISCLAIMER, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const open = (url: string) => {
-  void Linking.openURL(url);
-};
+import { openUrgentLink as open, smsURL } from '@/lib/urgentLinks';
 
 export default function Crisis() {
   const circle = useCapeStore((s) => s.circle);
@@ -41,6 +39,25 @@ export default function Crisis() {
       >
         <Eyebrow color={C.flame}>CRISIS PROTOCOL</Eyebrow>
         <Display className="mt-2 text-4xl">For the moments that can&apos;t wait.</Display>
+        <TintedRow
+          tint={C.no}
+          fill={0.14}
+          stroke={0.36}
+          className="mt-4"
+          accessibilityLabel="Call 911, emergency services in the United States"
+          accessibilityHint="Opens your phone dialer. No pause is required."
+          onPress={() => void open('tel:911')}
+        >
+          <View className="flex-row items-center gap-3">
+            <Phone size={22} color={C.no} />
+            <View className="flex-1">
+              <Mono bold color={C.no} className="text-[14px]">
+                Call 911
+              </Mono>
+              <Mono className="mt-1 text-[10px]">Immediate danger · U.S. emergency services</Mono>
+            </View>
+          </View>
+        </TintedRow>
         <Body className="mt-3">
           Direct-dial and text lines, staffed 24/7. This is the 1 a.m. version: direct next moves,
           real people, and no need for perfect words. If you are in immediate danger, call 911
@@ -52,6 +69,8 @@ export default function Crisis() {
             tint={C.flame}
             fill={0.14}
             stroke={0.34}
+            accessibilityLabel="Open Emergency Directory"
+            accessibilityHint="Urgent help is available before the optional three-second pause."
             onPress={() => router.push('/emergency-directory')}
           >
             <View className="flex-row items-center gap-3">
@@ -101,6 +120,7 @@ export default function Crisis() {
                   <ActionPill
                     tint={line.tint}
                     icon={<Phone size={13} color={line.tint} />}
+                    accessibilityLabel={`Call ${line.name}, ${line.dial}`}
                     label="CALL"
                     onPress={() => open(`tel:${line.dial}`)}
                   />
@@ -109,8 +129,9 @@ export default function Crisis() {
                   <ActionPill
                     tint={line.tint}
                     icon={<MessageSquare size={13} color={line.tint} />}
+                    accessibilityLabel={`Text ${line.name}, ${line.sms.number}, message ${line.sms.body}`}
                     label="TEXT"
-                    onPress={() => open(`sms:${line.sms?.number}?body=${line.sms?.body ?? ''}`)}
+                    onPress={() => open(smsURL(line.sms!.number, line.sms!.body))}
                   />
                 ) : null}
               </View>
@@ -164,12 +185,12 @@ export default function Crisis() {
               <Users size={18} color={C.azure} />
               <View className="flex-1">
                 <Mono bold color={C.azure} className="text-[11px]" tracking={1}>
-                  CALL YOUR SAFETY CIRCLE
+                  OPEN YOUR SAFETY CIRCLE
                 </Mono>
                 <Mono className="mt-0.5 text-[9px]">
                   {circle.length === 0
                     ? 'No contacts yet — add them before you need them'
-                    : `${circle.length} people saved on this device`}
+                    : `${circle.length} ${circle.length === 1 ? 'person' : 'people'} saved on this device`}
                 </Mono>
               </View>
             </View>
@@ -217,19 +238,23 @@ function ActionPill({
   tint,
   icon,
   label,
+  accessibilityLabel,
   onPress,
 }: {
   tint: string;
   icon: React.ReactNode;
   label: string;
+  accessibilityLabel: string;
   onPress: () => void;
 }) {
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
       style={{
+        minHeight: 48,
         backgroundColor: alpha(tint, 0.14),
         borderWidth: 1,
         borderColor: alpha(tint, 0.35),

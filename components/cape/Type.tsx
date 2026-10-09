@@ -10,13 +10,16 @@ export function Eyebrow({
   children,
   color,
   className,
+  accessibilityRole,
 }: {
   children: ReactNode;
   color: string;
   className?: string;
+  accessibilityRole?: TextProps['accessibilityRole'];
 }) {
   return (
     <Text
+      accessibilityRole={accessibilityRole}
       className={cn('font-mono text-[10px]', className)}
       style={{ color, letterSpacing: 3, fontFamily: 'JetBrainsMono_700Bold' }}
     >

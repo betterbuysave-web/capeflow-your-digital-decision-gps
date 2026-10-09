@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Linking, Pressable, ScrollView, View } from 'react-native';
+import { AccessibilityInfo, Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import {
@@ -32,9 +32,7 @@ import {
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const open = (url: string) => {
-  void Linking.openURL(url);
-};
+import { openUrgentLink as open, smsURL } from '@/lib/urgentLinks';
 
 export default function EmergencyDirectory() {
   const gradeBand = useCapeStore((s) => s.gradeBand);
@@ -70,6 +68,8 @@ export default function EmergencyDirectory() {
             tint={C.no}
             fill={0.14}
             stroke={0.36}
+            accessibilityLabel="Call 911, emergency services in the United States"
+            accessibilityHint="Opens your phone dialer. No pause is required."
             onPress={() => open('tel:911')}
             className="p-5"
           >
@@ -114,7 +114,9 @@ export default function EmergencyDirectory() {
           <View key={group.id} className="mt-8">
             <View className="flex-row items-center gap-2">
               <Mono className="text-base">{group.emoji}</Mono>
-              <Eyebrow color={group.tint}>{group.label}</Eyebrow>
+              <Eyebrow accessibilityRole="header" color={group.tint}>
+                {group.label}
+              </Eyebrow>
             </View>
             <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.75)}>
               {group.blurb}
@@ -220,6 +222,9 @@ function CircuitBreaker() {
         if (timer.current) clearInterval(timer.current);
         timer.current = null;
         setCount(4);
+        AccessibilityInfo.announceForAccessibility(
+          'Pause complete. Choose your next action. Urgent help remains available.',
+        );
         void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
           () => undefined,
         );
@@ -268,7 +273,11 @@ function CircuitBreaker() {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={
-          running ? `Pause in progress, step ${count} of 3` : 'Take a three-second pause'
+          running
+            ? `Pause in progress, step ${count} of 3`
+            : done
+              ? 'Take another three-second pause'
+              : 'Take an optional three-second pause'
         }
         accessibilityState={{ disabled: running, busy: running }}
         disabled={running}
@@ -310,6 +319,7 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
           <ActionPill
             tint={tint}
             icon={<Phone size={13} color={tint} />}
+            accessibilityLabel={`Call ${contact.name}, ${contact.dial}`}
             label="CALL"
             onPress={() => open(`tel:${contact.dial}`)}
           />
@@ -318,14 +328,16 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
           <ActionPill
             tint={tint}
             icon={<MessageSquare size={13} color={tint} />}
+            accessibilityLabel={`Text ${contact.name}, ${contact.sms.number}, message ${contact.sms.body}`}
             label="TEXT"
-            onPress={() => open(`sms:${contact.sms?.number}?body=${contact.sms?.body ?? ''}`)}
+            onPress={() => open(smsURL(contact.sms!.number, contact.sms!.body))}
           />
         ) : null}
         {contact.url ? (
           <ActionPill
             tint={tint}
             icon={<ExternalLink size={13} color={tint} />}
+            accessibilityLabel={`Open ${contact.name} website`}
             label="SITE"
             onPress={() => open(contact.url ?? '')}
           />
@@ -339,19 +351,23 @@ function ActionPill({
   tint,
   icon,
   label,
+  accessibilityLabel,
   onPress,
 }: {
   tint: string;
   icon: React.ReactNode;
   label: string;
+  accessibilityLabel: string;
   onPress: () => void;
 }) {
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
       style={{
+        minHeight: 48,
         backgroundColor: alpha(tint, 0.14),
         borderWidth: 1,
         borderColor: alpha(tint, 0.35),
