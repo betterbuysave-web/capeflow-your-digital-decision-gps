@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowRight, Lock, RotateCcw, Zap } from 'lucide-react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { MetallicButton } from '@/components/cape/Buttons';
+import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { MissionComplete } from '@/components/cape/MissionComplete';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
@@ -220,20 +220,18 @@ export default function SimDetail() {
               <Eyebrow color={C.teal}>DEBRIEF</Eyebrow>
               <Mono className="mt-2 text-[11px]">{scenario.debrief}</Mono>
             </Panel>
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={() => {
                 setPickedId(null);
                 setPivotId(null);
               }}
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3"
-              style={{ backgroundColor: C.card, borderWidth: 1, borderColor: alpha(C.ink, 0.14) }}
             >
-              <RotateCcw size={13} color={C.inkFaint} />
-              <Mono bold color={C.inkFaint} className="text-[10px]">
+              <RotateCcw size={13} color={C.paper2} />
+              <Mono bold color={C.paper2} className="text-[11px]">
                 RUN IT AGAIN
               </Mono>
-            </Pressable>
+            </GradientAction>
             {nextScenario ? (
               <MetallicButton
                 label="NEXT SCENARIO"

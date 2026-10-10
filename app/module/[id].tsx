@@ -7,6 +7,7 @@ import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Typ
 import { StackHeader } from '@/components/cape/Screen';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { C, alpha } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 import { getModule, lessonsForTrack, lockedLessonsForTrack, moduleTagline } from '@/lib/data/match';
 import { TRACKS, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
@@ -169,22 +170,16 @@ export default function ModuleDetail() {
                       </View>
                     </Panel>
 
-                    <Pressable
-                      accessibilityRole="button"
+                    <GradientAction
                       disabled={isDone}
                       onPress={() => completeLesson(lesson.id, lesson.xp)}
-                      className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
-                      style={{
-                        backgroundColor: alpha(mod.color, isDone ? 0.08 : 0.18),
-                        borderWidth: 1,
-                        borderColor: alpha(mod.color, isDone ? 0.2 : 0.45),
-                      }}
+                      className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3"
                     >
-                      {isDone ? <Check size={14} color={mod.color} /> : null}
-                      <Mono bold color={mod.color} tracking={2} className="text-[10px]">
+                      {isDone ? <Check size={14} color={C.paper2} /> : null}
+                      <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
                         {isDone ? 'COMPLETE' : `MARK COMPLETE · +${lesson.xp} XP`}
                       </Mono>
-                    </Pressable>
+                    </GradientAction>
                   </View>
                 ) : null}
               </View>

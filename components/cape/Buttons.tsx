@@ -1,13 +1,61 @@
-import type { ReactNode } from 'react';
-import { Pressable, View } from 'react-native';
+import { cloneElement, isValidElement, type ReactNode } from 'react';
+import { Pressable, StyleSheet, View, type PressableProps } from 'react-native';
 import { ArrowRight } from 'lucide-react-native';
 
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
-import { C, METALLIC, METALLIC_LOCATIONS, alpha, wash } from '@/lib/colors';
+import { C, CAPE_BUTTON_GRADIENT, CAPE_BUTTON_LOCATIONS, alpha, wash } from '@/lib/colors';
 import { Mono } from '@/components/cape/Type';
 import { cn } from '@/lib/utils';
 
-/** Primary action: forged teal→gold pill with a gold edge and a cream label. */
+/** Shared action surface; keep content above the contrast scrim. */
+export function GradientAction({
+  children,
+  className,
+  style,
+  disabled,
+  accessibilityState,
+  ...props
+}: PressableProps & { className?: string }) {
+  return (
+    <Pressable
+      {...props}
+      accessibilityRole={props.accessibilityRole ?? 'button'}
+      accessibilityState={{
+        ...accessibilityState,
+        disabled: disabled || accessibilityState?.disabled,
+      }}
+      disabled={disabled}
+      className={cn('min-h-11 overflow-hidden rounded-xl active:opacity-80', className)}
+      style={(state) => [
+        typeof style === 'function' ? style(state) : style,
+        {
+          borderWidth: 0,
+          backgroundColor: 'transparent',
+          zIndex: 0,
+          opacity: disabled ? 0.55 : state.pressed ? 0.8 : 1,
+        },
+      ]}
+    >
+      {(state) => (
+        <>
+          <View pointerEvents="none" style={[StyleSheet.absoluteFill, { zIndex: -1 }]}>
+            <LinearGradient
+              colors={CAPE_BUTTON_GRADIENT}
+              locations={CAPE_BUTTON_LOCATIONS}
+              start={{ x: 0, y: 0.5 }}
+              end={{ x: 1, y: 0.5 }}
+              style={StyleSheet.absoluteFill}
+            />
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: alpha(C.ink, 0.4) }]} />
+          </View>
+          {typeof children === 'function' ? children(state) : children}
+        </>
+      )}
+    </Pressable>
+  );
+}
+
+/** Primary action: four-color CAPE pill with a high-contrast label. */
 export function MetallicButton({
   label,
   onPress,
@@ -20,44 +68,23 @@ export function MetallicButton({
   showArrow?: boolean;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       accessibilityLabel={label}
       onPress={onPress}
-      className={cn('min-h-11 overflow-hidden rounded-full active:opacity-80', className)}
-      style={{
-        borderWidth: 1,
-        borderColor: alpha(C.goldBright, 0.55),
-        shadowColor: C.ink,
-        shadowOpacity: 0.16,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 3 },
-      }}
+      className={cn(
+        'flex-row items-center justify-center gap-2 rounded-full px-6 py-3.5',
+        className,
+      )}
     >
-      <LinearGradient
-        colors={METALLIC}
-        locations={METALLIC_LOCATIONS}
-        start={{ x: 0, y: 1 }}
-        end={{ x: 1, y: 0 }}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 8,
-          paddingHorizontal: 26,
-          paddingVertical: 14,
-        }}
-      >
-        <Mono bold color={C.paper2} tracking={2} className="text-[12px]">
-          {label}
-        </Mono>
-        {showArrow ? <ArrowRight size={16} color={C.paper2} /> : null}
-      </LinearGradient>
-    </Pressable>
+      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[12px]">
+        {label}
+      </Mono>
+      {showArrow ? <ArrowRight size={16} color={C.paper2} /> : null}
+    </GradientAction>
   );
 }
 
-/** Secondary action: index-card pill with a drafted border. */
+/** Secondary action shares the CAPE gradient, without the forward arrow. */
 export function GhostButton({
   label,
   onPress,
@@ -72,25 +99,20 @@ export function GhostButton({
   icon?: ReactNode;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       accessibilityLabel={label}
       onPress={onPress}
       className={cn(
-        'min-h-11 flex-row items-center justify-center gap-2 rounded-full px-6 py-3.5 active:opacity-70',
+        'flex-row items-center justify-center gap-2 rounded-full px-6 py-3.5',
         className,
       )}
-      style={{
-        backgroundColor: C.card,
-        borderWidth: 1,
-        borderColor: alpha(tint, 0.32),
-      }}
+      style={{ backgroundColor: tint }}
     >
-      {icon}
-      <Mono bold color={C.inkSoft} tracking={2} className="text-[12px]">
+      {isValidElement<{ color?: string }>(icon) ? cloneElement(icon, { color: C.paper2 }) : icon}
+      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[12px]">
         {label}
       </Mono>
-    </Pressable>
+    </GradientAction>
   );
 }
 

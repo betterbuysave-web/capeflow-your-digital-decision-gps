@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import {
   ArrowRight,
@@ -15,7 +15,7 @@ import {
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { GhostButton, MetallicButton, TintedRow } from '@/components/cape/Buttons';
+import { GradientAction, GhostButton, MetallicButton, TintedRow } from '@/components/cape/Buttons';
 import { BrandBanner } from '@/components/cape/BrandBanner';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { MatchCompass } from '@/components/cape/MatchCompass';
@@ -362,21 +362,15 @@ export default function Landing() {
                   </Panel>
                 ))}
               </View>
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 onPress={() => router.push('/parents')}
-                className="flex-row items-center justify-center gap-2 rounded-xl px-5 py-3 active:opacity-70"
-                style={{
-                  backgroundColor: alpha(C.gold, 0.1),
-                  borderWidth: 1,
-                  borderColor: alpha(C.gold, 0.4),
-                }}
+                className="flex-row items-center justify-center gap-2 rounded-xl px-5 py-3"
               >
-                <Mono bold color={C.goldLight} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.paper2} className="shrink text-center text-[11px]" tracking={1}>
                   VIEW PARENT &amp; SCHOOL DASHBOARD
                 </Mono>
-                <ArrowRight size={14} color={C.goldLight} />
-              </Pressable>
+                <ArrowRight size={14} color={C.paper2} />
+              </GradientAction>
             </View>
           </Panel>
         </View>
@@ -465,32 +459,25 @@ export default function Landing() {
                 </Eyebrow>
                 <Mono className="text-[9px]">{PRIVACY_NOTE}</Mono>
               </View>
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 accessibilityLabel="Dismiss privacy notice"
                 onPress={() => setShowPrivacy(false)}
-                className="h-11 w-11 items-center justify-center active:opacity-60"
+                className="h-11 w-11 items-center justify-center rounded-full"
               >
-                <X size={16} color={alpha(C.inkFaint, 0.7)} />
-              </Pressable>
+                <X size={16} color={C.paper2} />
+              </GradientAction>
             </View>
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={() => {
                 acknowledgePrivacy();
                 setShowPrivacy(false);
               }}
-              className="mt-3 self-start rounded-full px-4 py-2 active:opacity-70"
-              style={{
-                backgroundColor: alpha(C.teal, 0.14),
-                borderWidth: 1,
-                borderColor: alpha(C.teal, 0.3),
-              }}
+              className="mt-3 self-start rounded-full px-4 py-2"
             >
-              <Mono bold color={C.teal} className="text-[10px]" tracking={2}>
+              <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
                 GOT IT
               </Mono>
-            </Pressable>
+            </GradientAction>
           </Panel>
         </View>
       ) : null}

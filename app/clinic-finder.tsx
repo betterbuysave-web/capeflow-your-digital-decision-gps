@@ -12,7 +12,7 @@ import { ExternalLink, Lock, MapPin, Phone, Search, ShieldCheck, X } from 'lucid
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { Chip } from '@/components/cape/Buttons';
+import { Chip, GradientAction } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C, alpha } from '@/lib/colors';
@@ -102,14 +102,13 @@ export default function ClinicFinder() {
                 style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
               />
               {query.length > 0 ? (
-                <Pressable
-                  accessibilityRole="button"
+                <GradientAction
                   accessibilityLabel="Clear search"
                   onPress={() => setQuery('')}
-                  className="h-11 w-11 items-center justify-center active:opacity-60"
+                  className="h-11 w-11 items-center justify-center rounded-full"
                 >
-                  <X size={14} color={alpha(C.inkFaint, 0.7)} />
-                </Pressable>
+                  <X size={14} color={C.paper2} />
+                </GradientAction>
               ) : null}
             </View>
 
@@ -187,18 +186,17 @@ export default function ClinicFinder() {
               {results.length} {results.length === 1 ? 'FINDER' : 'FINDERS'}
             </Eyebrow>
             {query.length > 0 || category ? (
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 onPress={() => {
                   setQuery('');
                   setCategory(null);
                 }}
-                className="min-h-11 min-w-11 items-center justify-center active:opacity-60"
+                className="min-h-11 min-w-11 items-center justify-center rounded-full px-2"
               >
-                <Mono bold color={alpha(C.inkFaint, 0.8)} className="text-[9px]" tracking={1.5}>
+                <Mono bold color={C.paper2} className="text-[9px]" tracking={1.5}>
                   RESET
                 </Mono>
-              </Pressable>
+              </GradientAction>
             ) : null}
           </View>
 
@@ -320,37 +318,25 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
         </Mono>
       </View>
       <View className="mt-3 flex-row gap-2">
-        <Pressable
-          accessibilityRole="button"
+        <GradientAction
           onPress={() => open(locatorUrl(network, zip))}
-          className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-          style={{
-            backgroundColor: alpha(tint, 0.14),
-            borderWidth: 1,
-            borderColor: alpha(tint, 0.35),
-          }}
+          className="flex-1 flex-row items-center justify-center gap-2 rounded-xl px-2 py-2.5"
         >
-          <ExternalLink size={13} color={tint} />
-          <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
+          <ExternalLink size={13} color={C.paper2} />
+          <Mono bold color={C.paper2} className="shrink text-center text-[11px]" tracking={1}>
             OPEN FINDER
           </Mono>
-        </Pressable>
+        </GradientAction>
         {network.phone ? (
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => open(`tel:${network.phone}`)}
-            className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-            style={{
-              backgroundColor: alpha(C.azure, 0.12),
-              borderWidth: 1,
-              borderColor: alpha(C.azure, 0.32),
-            }}
+            className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
           >
-            <Phone size={13} color={C.azure} />
-            <Mono bold color={C.azure} className="text-[10px]" tracking={1.5}>
+            <Phone size={13} color={C.paper2} />
+            <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
               CALL
             </Mono>
-          </Pressable>
+          </GradientAction>
         ) : null}
       </View>
     </View>

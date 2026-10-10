@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Eye, Search, Users } from 'lucide-react-nati
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { DETECTIVE_SCENES, PRACTICE_CARDS } from '@/lib/data/cafe';
 import { C, alpha, wash } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 
 type Drill = 'detective' | 'roleplay';
 
@@ -87,7 +88,7 @@ function DeckNav({
         label="PREVIOUS"
         disabled={index === 0}
         onPress={() => onChange(index - 1)}
-        icon={<ChevronLeft size={14} color={C.inkSoft} />}
+        icon={<ChevronLeft size={14} color={C.paper2} />}
       />
       <Mono bold color={C.inkFaint} className="text-[10px]">
         {index + 1} / {total}
@@ -96,7 +97,7 @@ function DeckNav({
         label="NEXT"
         disabled={index === total - 1}
         onPress={() => onChange(index + 1)}
-        icon={<ChevronRight size={14} color={C.inkSoft} />}
+        icon={<ChevronRight size={14} color={C.paper2} />}
         trailing
       />
     </View>
@@ -117,25 +118,17 @@ function NavButton({
   trailing?: boolean;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ disabled }}
+    <GradientAction
       disabled={disabled}
       onPress={onPress}
-      className="flex-row items-center gap-1.5 rounded-full px-3.5 py-2 active:opacity-70"
-      style={{
-        backgroundColor: C.card,
-        borderWidth: 1,
-        borderColor: alpha(C.ink, 0.16),
-        opacity: disabled ? 0.4 : 1,
-      }}
+      className="flex-row items-center justify-center gap-1.5 rounded-full px-3.5 py-2"
     >
       {trailing ? null : icon}
-      <Mono bold color={C.inkSoft} tracking={1.5} className="text-[9px]">
+      <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
         {label}
       </Mono>
       {trailing ? icon : null}
-    </Pressable>
+    </GradientAction>
   );
 }
 
@@ -242,21 +235,15 @@ function DetectiveDeck() {
             </Mono>
           </View>
         ) : (
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => setRevealed((prev) => [...prev, scene.id])}
-            className="mt-4 flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
-            style={{
-              backgroundColor: wash(C.goldBright, 0.16),
-              borderWidth: 1,
-              borderColor: alpha(C.goldBright, 0.55),
-            }}
+            className="mt-4 flex-row items-center justify-center gap-2 rounded-xl py-3"
           >
-            <Eye size={14} color={C.gold} />
-            <Mono bold color={C.gold} tracking={2} className="text-[10px]">
+            <Eye size={14} color={C.paper2} />
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               REVEAL VERDICT
             </Mono>
-          </Pressable>
+          </GradientAction>
         )}
       </View>
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { CircleAlert, Lock, MapPin, Phone, Play, Square } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 import { PEP_WINDOW_MS } from '@/lib/data/crisis';
 import { PEP_LOCK_NOTE, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -61,21 +62,15 @@ export default function PepClock() {
             </View>
           </Panel>
 
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => router.push('/(tabs)/crisis')}
-            className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
-            style={{
-              backgroundColor: alpha(C.teal, 0.1),
-              borderWidth: 1,
-              borderColor: alpha(C.teal, 0.3),
-            }}
+            className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5"
           >
-            <Phone size={14} color={C.teal} />
-            <Mono bold color={C.teal} tracking={2} className="text-[11px]">
+            <Phone size={14} color={C.paper2} />
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               OPEN CRISIS PROTOCOL
             </Mono>
-          </Pressable>
+          </GradientAction>
         </ScrollView>
       </View>
     );
@@ -118,54 +113,36 @@ export default function PepClock() {
 
         <View className="mt-5 gap-3">
           {pepStartedAt ? (
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={clearPep}
-              className="flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
-              style={{
-                backgroundColor: C.card,
-                borderWidth: 1,
-                borderColor: alpha(C.ink, 0.16),
-              }}
+              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
             >
-              <Square size={14} color={alpha(C.inkFaint, 0.8)} />
-              <Mono bold color={alpha(C.inkFaint, 0.85)} tracking={2} className="text-[11px]">
+              <Square size={14} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={2} className="text-[11px]">
                 RESET CLOCK
               </Mono>
-            </Pressable>
+            </GradientAction>
           ) : (
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={startPep}
-              className="flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
-              style={{
-                backgroundColor: alpha(C.flame, 0.18),
-                borderWidth: 1,
-                borderColor: alpha(C.flame, 0.5),
-              }}
+              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
             >
-              <Play size={14} color={C.flame} />
-              <Mono bold color={C.flame} tracking={2} className="text-[11px]">
+              <Play size={14} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
                 START THE CLOCK NOW
               </Mono>
-            </Pressable>
+            </GradientAction>
           )}
 
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => router.push('/(tabs)/crisis')}
-            className="flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
-            style={{
-              backgroundColor: alpha(C.teal, 0.1),
-              borderWidth: 1,
-              borderColor: alpha(C.teal, 0.3),
-            }}
+            className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
           >
-            <Phone size={14} color={C.teal} />
-            <Mono bold color={C.teal} tracking={2} className="text-[11px]">
+            <Phone size={14} color={C.paper2} />
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               OPEN CRISIS PROTOCOL
             </Mono>
-          </Pressable>
+          </GradientAction>
         </View>
 
         <View className="mt-8 gap-2.5">

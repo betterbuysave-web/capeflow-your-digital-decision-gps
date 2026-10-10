@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   ArrowRight,
@@ -14,7 +14,7 @@ import {
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { TintedRow } from '@/components/cape/Buttons';
+import { GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { C, alpha } from '@/lib/colors';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { CRISIS_LINES, CRISIS_STEPS } from '@/lib/data/crisis';
@@ -39,25 +39,24 @@ export default function Crisis() {
       >
         <Eyebrow color={C.flame}>CRISIS PROTOCOL</Eyebrow>
         <Display className="mt-2 text-4xl">For the moments that can&apos;t wait.</Display>
-        <TintedRow
-          tint={C.no}
-          fill={0.14}
-          stroke={0.36}
-          className="mt-4"
+        <GradientAction
+          className="mt-4 rounded-2xl p-4"
           accessibilityLabel="Call 911, emergency services in the United States"
           accessibilityHint="Opens your phone dialer. No pause is required."
           onPress={() => void open('tel:911')}
         >
           <View className="flex-row items-center gap-3">
-            <Phone size={22} color={C.no} />
+            <Phone size={22} color={C.paper2} />
             <View className="flex-1">
-              <Mono bold color={C.no} className="text-[14px]">
+              <Mono bold color={C.paper2} className="text-[14px]">
                 Call 911
               </Mono>
-              <Mono className="mt-1 text-[10px]">Immediate danger · U.S. emergency services</Mono>
+              <Mono color={C.paper2} className="mt-1 text-[11px]">
+                Immediate danger · U.S. emergency services
+              </Mono>
             </View>
           </View>
-        </TintedRow>
+        </GradientAction>
         <Body className="mt-3">
           Direct-dial and text lines, staffed 24/7. This is the 1 a.m. version: direct next moves,
           real people, and no need for perfect words. If you are in immediate danger, call 911
@@ -119,7 +118,7 @@ export default function Crisis() {
                 {line.dial ? (
                   <ActionPill
                     tint={line.tint}
-                    icon={<Phone size={13} color={line.tint} />}
+                    icon={<Phone size={13} color={C.paper2} />}
                     accessibilityLabel={`Call ${line.name}, ${line.dial}`}
                     label="CALL"
                     onPress={() => open(`tel:${line.dial}`)}
@@ -128,7 +127,7 @@ export default function Crisis() {
                 {line.sms ? (
                   <ActionPill
                     tint={line.tint}
-                    icon={<MessageSquare size={13} color={line.tint} />}
+                    icon={<MessageSquare size={13} color={C.paper2} />}
                     accessibilityLabel={`Text ${line.name}, ${line.sms.number}, message ${line.sms.body}`}
                     label="TEXT"
                     onPress={() => open(smsURL(line.sms!.number, line.sms!.body))}
@@ -248,22 +247,16 @@ function ActionPill({
   onPress: () => void;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
-      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-      style={{
-        minHeight: 48,
-        backgroundColor: alpha(tint, 0.14),
-        borderWidth: 1,
-        borderColor: alpha(tint, 0.35),
-      }}
+      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
+      style={{ minHeight: 48, backgroundColor: tint }}
     >
       {icon}
-      <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
+      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
         {label}
       </Mono>
-    </Pressable>
+    </GradientAction>
   );
 }

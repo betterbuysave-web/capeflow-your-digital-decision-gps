@@ -21,7 +21,7 @@ import {
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { Chip } from '@/components/cape/Buttons';
+import { Chip, GradientAction } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
@@ -146,26 +146,22 @@ export default function AdherenceSettings() {
           ) : null}
 
           {notificationsSupported && !granted ? (
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={() => void requestPermission().then(setGranted)}
-              className="mt-5 rounded-2xl p-4 active:opacity-70"
-              style={{
-                backgroundColor: alpha(C.flame, 0.06),
-                borderWidth: 1,
-                borderColor: alpha(C.flame, 0.24),
-              }}
+              className="mt-5 rounded-2xl p-4"
             >
               <View className="flex-row items-start gap-3">
-                <BellRing size={16} color={C.flame} />
+                <BellRing size={16} color={C.paper2} />
                 <View className="flex-1">
-                  <Mono bold color={C.flame} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
                     NOTIFICATIONS ARE OFF — TAP TO ALLOW
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{ADHERENCE_PERMISSION_NOTE}</Mono>
+                  <Mono color={C.paper2} className="mt-1 text-[11px]">
+                    {ADHERENCE_PERMISSION_NOTE}
+                  </Mono>
                 </View>
               </View>
-            </Pressable>
+            </GradientAction>
           ) : null}
 
           {/* ARMED REMINDERS */}
@@ -204,37 +200,32 @@ export default function AdherenceSettings() {
               {templates.map((template) => {
                 const added = usedTemplates.has(template.id);
                 return (
-                  <Pressable
+                  <GradientAction
                     key={template.id}
-                    accessibilityRole="button"
                     accessibilityLabel={`Add ${template.label}`}
                     onPress={() => addFromTemplate(template.id)}
                     disabled={added}
-                    className="flex-row items-center gap-3 rounded-2xl p-3.5 active:opacity-70"
-                    style={{
-                      backgroundColor: alpha(template.tint, added ? 0.03 : 0.06),
-                      borderWidth: 1,
-                      borderColor: alpha(template.tint, added ? 0.1 : 0.2),
-                      opacity: added ? 0.55 : 1,
-                    }}
+                    className="flex-row items-center gap-3 rounded-2xl p-3.5"
                   >
                     <Mono className="text-base">{template.emoji}</Mono>
                     <View className="flex-1">
-                      <Mono bold color={template.tint} className="text-[10px]" tracking={1.5}>
+                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
                         {template.label}
                       </Mono>
-                      <Mono className="mt-0.5 text-[10px]">{template.detail}</Mono>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+                      <Mono color={C.paper2} className="mt-0.5 text-[11px]">
+                        {template.detail}
+                      </Mono>
+                      <Mono className="mt-1 text-[11px]" color={C.paper2}>
                         {formatTime(template.defaultTime)} · {describeDays(template.defaultDays)} ·{' '}
                         {toneInfo(template.defaultTone).label}
                       </Mono>
                     </View>
                     {added ? (
-                      <Check size={15} color={alpha(template.tint, 0.8)} />
+                      <Check size={15} color={C.paper2} />
                     ) : (
-                      <Plus size={15} color={alpha(template.tint, 0.8)} />
+                      <Plus size={15} color={C.paper2} />
                     )}
-                  </Pressable>
+                  </GradientAction>
                 );
               })}
             </View>
@@ -286,19 +277,13 @@ export default function AdherenceSettings() {
                   borderColor: alpha(C.ink, 0.14),
                 }}
               />
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 accessibilityLabel="Add custom reminder"
                 onPress={addCustom}
-                className="rounded-xl p-3 active:opacity-70"
-                style={{
-                  backgroundColor: alpha(C.violet, 0.14),
-                  borderWidth: 1,
-                  borderColor: alpha(C.violet, 0.3),
-                }}
+                className="items-center justify-center rounded-xl p-3"
               >
-                <Plus size={16} color={C.violet} />
-              </Pressable>
+                <Plus size={16} color={C.paper2} />
+              </GradientAction>
             </View>
           </View>
 
@@ -441,21 +426,15 @@ function ReminderCard({
         </View>
       </View>
 
-      <Pressable
-        accessibilityRole="button"
+      <GradientAction
         onPress={() => logDose(reminder.id)}
-        className="mt-3 flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
-        style={{
-          backgroundColor: alpha(doneToday ? C.yes : tint, doneToday ? 0.16 : 0.1),
-          borderWidth: 1,
-          borderColor: alpha(doneToday ? C.yes : tint, doneToday ? 0.4 : 0.24),
-        }}
+        className="mt-3 flex-row items-center justify-center gap-2 rounded-xl py-3"
       >
-        {doneToday ? <Check size={14} color={C.yes} /> : null}
-        <Mono bold color={doneToday ? C.yes : tint} className="text-[10px]" tracking={1.5}>
+        {doneToday ? <Check size={14} color={C.paper2} /> : null}
+        <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
           {doneToday ? 'LOGGED TODAY · TAP TO UNDO' : 'LOG TODAY'}
         </Mono>
-      </Pressable>
+      </GradientAction>
 
       {open ? (
         <View className="mt-4 gap-4">
@@ -469,7 +448,7 @@ function ReminderCard({
                 label="−15 minutes"
                 tint={tint}
                 onPress={() => nudgeTime(-15)}
-                icon={<Minus size={14} color={tint} />}
+                icon={<Minus size={14} color={C.paper2} />}
               />
               <View
                 className="flex-1 items-center rounded-xl py-2.5"
@@ -487,7 +466,7 @@ function ReminderCard({
                 label="+15 minutes"
                 tint={tint}
                 onPress={() => nudgeTime(15)}
-                icon={<Plus size={14} color={tint} />}
+                icon={<Plus size={14} color={C.paper2} />}
               />
             </View>
             <View className="mt-2 flex-row gap-2">
@@ -579,21 +558,15 @@ function ReminderCard({
             </View>
           </View>
 
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => void removeReminder(reminder.id)}
-            className="flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
-            style={{
-              backgroundColor: alpha(C.no, 0.08),
-              borderWidth: 1,
-              borderColor: alpha(C.no, 0.22),
-            }}
+            className="flex-row items-center justify-center gap-2 rounded-xl py-3"
           >
-            <Trash2 size={13} color={C.no} />
-            <Mono bold color={C.no} className="text-[10px]" tracking={1.5}>
+            <Trash2 size={13} color={C.paper2} />
+            <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
               DELETE REMINDER
             </Mono>
-          </Pressable>
+          </GradientAction>
         </View>
       ) : null}
     </View>
@@ -612,37 +585,27 @@ function StepButton({
   icon: React.ReactNode;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       accessibilityLabel={label}
       onPress={onPress}
-      className="rounded-xl p-3 active:opacity-70"
-      style={{
-        backgroundColor: alpha(tint, 0.12),
-        borderWidth: 1,
-        borderColor: alpha(tint, 0.28),
-      }}
+      className="items-center justify-center rounded-xl p-3"
+      style={{ backgroundColor: tint }}
     >
       {icon}
-    </Pressable>
+    </GradientAction>
   );
 }
 
 function StepChip({ label, tint, onPress }: { label: string; tint: string; onPress: () => void }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       onPress={onPress}
-      className="flex-1 items-center rounded-lg py-2 active:opacity-70"
-      style={{
-        backgroundColor: C.card,
-        borderWidth: 1,
-        borderColor: alpha(C.ink, 0.13),
-      }}
+      className="flex-1 items-center justify-center rounded-lg py-2"
+      style={{ backgroundColor: tint }}
     >
-      <Mono color={alpha(tint, 0.85)} className="text-[9px]" tracking={1}>
+      <Mono color={C.paper2} className="text-center text-[11px]">
         {label}
       </Mono>
-    </Pressable>
+    </GradientAction>
   );
 }

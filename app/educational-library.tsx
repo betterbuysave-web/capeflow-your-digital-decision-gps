@@ -11,7 +11,7 @@ import { BookOpen, ChevronDown, Lock, Search, X } from 'lucide-react-native';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { Chip } from '@/components/cape/Buttons';
+import { Chip, GradientAction } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C, alpha } from '@/lib/colors';
@@ -91,14 +91,13 @@ export default function EducationalLibrary() {
               style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
             />
             {query.length > 0 ? (
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 accessibilityLabel="Clear search"
                 onPress={() => setQuery('')}
-                className="h-11 w-11 items-center justify-center active:opacity-60"
+                className="h-11 w-11 items-center justify-center rounded-full"
               >
-                <X size={14} color={alpha(C.inkFaint, 0.7)} />
-              </Pressable>
+                <X size={14} color={C.paper2} />
+              </GradientAction>
             ) : null}
           </View>
 

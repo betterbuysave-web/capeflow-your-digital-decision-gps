@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import {
@@ -17,11 +17,11 @@ import {
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { BADGES } from '@/lib/data/badges';
-import { PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
+import { PRIVACY_NOTE, SOURCES, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
   VAULT_TARGET,
@@ -33,7 +33,6 @@ import { BrandFooter } from '@/components/cape/BrandFooter';
 import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
 import { allLessonsForTrack } from '@/lib/data/match';
 import { scenariosForTrack } from '@/lib/data/scenarios';
-import { trackFor } from '@/lib/data/content';
 
 export default function Me() {
   const codename = useCapeStore((s) => s.codename);
@@ -313,37 +312,25 @@ export default function Me() {
         </View>
 
         <View className="mt-8 gap-3">
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={() => router.push('/')}
-            className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5 active:opacity-70"
-            style={{
-              backgroundColor: C.card,
-              borderWidth: 1,
-              borderColor: alpha(C.ink, 0.14),
-            }}
+            className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
           >
-            <RotateCcw size={14} color={alpha(C.inkFaint, 0.8)} />
-            <Mono bold color={alpha(C.inkFaint, 0.8)} tracking={2} className="text-[11px]">
+            <RotateCcw size={14} color={C.paper2} />
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               REVISIT THE INTRO
             </Mono>
-          </Pressable>
+          </GradientAction>
 
-          <Pressable
-            accessibilityRole="button"
+          <GradientAction
             onPress={confirmReset}
-            className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5 active:opacity-70"
-            style={{
-              backgroundColor: alpha(C.no, 0.1),
-              borderWidth: 1,
-              borderColor: alpha(C.no, 0.3),
-            }}
+            className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
           >
-            <Trash2 size={14} color={C.no} />
-            <Mono bold color={C.no} tracking={2} className="text-[11px]">
+            <Trash2 size={14} color={C.paper2} />
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               DELETE ALL MY DATA
             </Mono>
-          </Pressable>
+          </GradientAction>
 
           <Body className="text-center text-[11px]" color={C.inkFaint}>
             Clears saved CAPE entries and reminders on this device. Shared copies and existing
@@ -362,31 +349,26 @@ export default function Me() {
         tint={C.no}
         footer={
           <View className="gap-3">
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               accessibilityState={{ disabled: deleting, busy: deleting }}
               disabled={deleting}
               onPress={() => void wipe()}
-              className="min-h-11 flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
-              style={{ backgroundColor: C.no, opacity: deleting ? 0.65 : 1 }}
+              className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
             >
               {deleting ? <ActivityIndicator size="small" color={C.paper2} /> : null}
               <Mono bold color={C.paper2} className="text-[12px]">
                 {deleting ? 'Deleting…' : resetError ? 'Retry deletion' : 'Delete everything'}
               </Mono>
-            </Pressable>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={{ disabled: deleting }}
+            </GradientAction>
+            <GradientAction
               disabled={deleting}
               onPress={() => setResetOpen(false)}
-              className="min-h-11 items-center justify-center rounded-full px-5 py-3"
-              style={{ backgroundColor: C.card, opacity: deleting ? 0.65 : 1 }}
+              className="items-center justify-center rounded-full px-5 py-3"
             >
-              <Mono bold className="text-[12px]">
+              <Mono bold color={C.paper2} className="text-[12px]">
                 Cancel
               </Mono>
-            </Pressable>
+            </GradientAction>
           </View>
         }
       >

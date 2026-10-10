@@ -6,6 +6,7 @@ import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { CAFE_QUIZ, CAFE_TAGLINE, FRIES_CARDS } from '@/lib/data/cafe';
 import { C, alpha, wash } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 /** Station 01 — the F.R.I.E.S. menu, then the detective drill. */
@@ -209,20 +210,11 @@ function DetectiveQuiz() {
               {isCorrect ? question.correct : question.wrong}
             </Mono>
           </View>
-          <Pressable
-            accessibilityRole="button"
-            onPress={next}
-            className="mt-3 items-center rounded-xl py-3 active:opacity-70"
-            style={{
-              backgroundColor: wash(C.modC, 0.16),
-              borderWidth: 1,
-              borderColor: alpha(C.modC, 0.5),
-            }}
-          >
-            <Mono bold color={C.modC} tracking={2} className="text-[10px]">
+          <GradientAction onPress={next} className="mt-3 items-center rounded-xl py-3">
+            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
               NEXT SCENARIO
             </Mono>
-          </Pressable>
+          </GradientAction>
         </>
       ) : null}
     </View>

@@ -22,7 +22,7 @@ import {
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { Chip } from '@/components/cape/Buttons';
+import { Chip, GradientAction } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { GlitchLabel, useGlitchClock } from '@/components/cape/Glitch';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
@@ -332,23 +332,16 @@ export default function GhostVault() {
                 {nodeMeta(draftNode).letter} · {nodeMeta(draftNode).callsign}
               </Mono>
 
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 disabled={draftName.trim().length === 0}
-                accessibilityState={{ disabled: draftName.trim().length === 0 }}
                 onPress={submitCustom}
-                className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
-                style={{
-                  backgroundColor: alpha(C.modT, draftName.trim().length > 0 ? 0.22 : 0.08),
-                  borderWidth: 1,
-                  borderColor: alpha(C.modT, draftName.trim().length > 0 ? 0.6 : 0.18),
-                }}
+                className="mt-4 flex-row items-center justify-center gap-2 rounded-full px-3 py-3"
               >
-                <Plus size={14} color={C.violet} />
-                <Mono bold color={C.violet} tracking={2} className="text-[11px]">
+                <Plus size={14} color={C.paper2} />
+                <Mono bold color={C.paper2} tracking={1} className="shrink text-center text-[11px]">
                   DRAG IT INTO THE LIGHT
                 </Mono>
-              </Pressable>
+              </GradientAction>
             </View>
 
             {customGhosts.length > 0 ? (
@@ -495,20 +488,15 @@ function GhostCard({
             {node.callsign} · {ghost.shield}
           </Mono>
         </View>
-        <Pressable
-          accessibilityRole="button"
+        <GradientAction
           accessibilityLabel={
             onRemove ? `Delete ${ghost.name}` : `Return ${ghost.name} to the dark`
           }
           onPress={onRemove ?? onRelease}
-          className="h-11 w-11 items-center justify-center active:opacity-60"
+          className="h-11 w-11 items-center justify-center rounded-full"
         >
-          {onRemove ? (
-            <Trash2 size={14} color={alpha(C.no, 0.75)} />
-          ) : (
-            <X size={14} color={alpha(C.inkFaint, 0.6)} />
-          )}
-        </Pressable>
+          {onRemove ? <Trash2 size={14} color={C.paper2} /> : <X size={14} color={C.paper2} />}
+        </GradientAction>
       </View>
 
       <View className="mt-3.5 gap-2">
@@ -545,21 +533,15 @@ function GhostCard({
         }}
       />
 
-      <Pressable
-        accessibilityRole="button"
+      <GradientAction
         onPress={() => onDisarm(plan)}
-        className="mt-3 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
-        style={{
-          backgroundColor: alpha(disarmed ? C.teal : node.color, disarmed ? 0.14 : 0.2),
-          borderWidth: 1,
-          borderColor: alpha(disarmed ? C.teal : node.color, disarmed ? 0.4 : 0.55),
-        }}
+        className="mt-3 flex-row items-center justify-center gap-2 rounded-full px-3 py-3"
       >
-        <ShieldCheck size={14} color={disarmed ? C.teal : node.color} />
-        <Mono bold color={disarmed ? C.teal : node.color} tracking={2} className="text-[11px]">
+        <ShieldCheck size={14} color={C.paper2} />
+        <Mono bold color={C.paper2} tracking={1} className="shrink text-center text-[11px]">
           {disarmed ? 'SHIELD ONLINE · SAVE CHANGES' : 'DEPLOY SHIELD'}
         </Mono>
-      </Pressable>
+      </GradientAction>
     </View>
   );
 }

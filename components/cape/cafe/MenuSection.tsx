@@ -4,7 +4,7 @@ import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
 import { Eye, Plus, RotateCcw, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
-import { GhostButton } from '@/components/cape/Buttons';
+import { GradientAction, GhostButton } from '@/components/cape/Buttons';
 import { C, alpha, wash } from '@/lib/colors';
 import { BOUNDARY_MENU, BOUNDARY_SECTIONS, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { MENU_COURSES, type CafeCourse, type CafeMenuItem } from '@/lib/data/cafe';
@@ -161,32 +161,25 @@ export function MenuSection() {
                   className="flex-1 py-2"
                   style={{ color: C.ink, fontFamily: INPUT_FONT, fontSize: 11 }}
                 />
-                <Pressable
-                  accessibilityRole="button"
+                <GradientAction
                   accessibilityLabel={`Remove ${item.text || 'item'}`}
                   onPress={() => removeCafeItem(course.id, index)}
-                  className="h-11 w-11 items-center justify-center rounded-full active:opacity-60"
+                  className="h-11 w-11 items-center justify-center rounded-full"
                 >
-                  <X size={13} color={C.inkFaint} />
-                </Pressable>
+                  <X size={13} color={C.paper2} />
+                </GradientAction>
               </View>
             ))}
 
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={() => addCafeItem(course.id, '')}
-              className="mt-1 min-h-11 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-              style={{
-                borderWidth: 1,
-                borderStyle: 'dashed',
-                borderColor: alpha(course.tint, 0.5),
-              }}
+              className="mt-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
             >
-              <Plus size={13} color={course.tint} />
-              <Mono bold color={course.tint} tracking={1.5} className="text-[9px]">
+              <Plus size={13} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
                 {course.addLabel}
               </Mono>
-            </Pressable>
+            </GradientAction>
           </View>
         </View>
       ))}

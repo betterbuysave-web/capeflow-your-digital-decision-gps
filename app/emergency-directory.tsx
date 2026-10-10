@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, Pressable, ScrollView, View } from 'react-native';
+import { AccessibilityInfo, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import {
@@ -14,7 +14,7 @@ import {
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { Chip, TintedRow } from '@/components/cape/Buttons';
+import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
@@ -64,27 +64,24 @@ export default function EmergencyDirectory() {
         </View>
 
         <View className="mt-8 gap-2.5">
-          <TintedRow
-            tint={C.no}
-            fill={0.14}
-            stroke={0.36}
+          <GradientAction
             accessibilityLabel="Call 911, emergency services in the United States"
             accessibilityHint="Opens your phone dialer. No pause is required."
             onPress={() => open('tel:911')}
-            className="p-5"
+            className="rounded-2xl p-5"
           >
             <View className="flex-row items-center gap-3">
-              <Phone size={22} color={C.no} />
+              <Phone size={22} color={C.paper2} />
               <View className="flex-1">
-                <Mono bold color={C.no} className="text-[14px]" tracking={2}>
+                <Mono bold color={C.paper2} className="text-[14px]" tracking={2}>
                   CALL 911
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono color={C.paper2} className="mt-1 text-[11px]">
                   Immediate danger, serious injury, overdose, assault in progress
                 </Mono>
               </View>
             </View>
-          </TintedRow>
+          </GradientAction>
 
           <TintedRow
             tint={C.azure}
@@ -270,7 +267,7 @@ function CircuitBreaker() {
         })}
       </View>
 
-      <Pressable
+      <GradientAction
         accessibilityRole="button"
         accessibilityLabel={
           running
@@ -288,7 +285,7 @@ function CircuitBreaker() {
         <Mono accessibilityLiveRegion="polite" bold color={C.paper2} className="text-[12px]">
           {running ? `Hold — ${count}` : done ? 'Pause again' : 'Pause for 3 seconds'}
         </Mono>
-      </Pressable>
+      </GradientAction>
 
       <Mono className="mt-3 text-[10px]" color={C.inkSoft}>
         {THREE_SECOND_RULE.close}
@@ -318,7 +315,7 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
         {contact.dial ? (
           <ActionPill
             tint={tint}
-            icon={<Phone size={13} color={tint} />}
+            icon={<Phone size={13} color={C.paper2} />}
             accessibilityLabel={`Call ${contact.name}, ${contact.dial}`}
             label="CALL"
             onPress={() => open(`tel:${contact.dial}`)}
@@ -327,7 +324,7 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
         {contact.sms ? (
           <ActionPill
             tint={tint}
-            icon={<MessageSquare size={13} color={tint} />}
+            icon={<MessageSquare size={13} color={C.paper2} />}
             accessibilityLabel={`Text ${contact.name}, ${contact.sms.number}, message ${contact.sms.body}`}
             label="TEXT"
             onPress={() => open(smsURL(contact.sms!.number, contact.sms!.body))}
@@ -336,7 +333,7 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
         {contact.url ? (
           <ActionPill
             tint={tint}
-            icon={<ExternalLink size={13} color={tint} />}
+            icon={<ExternalLink size={13} color={C.paper2} />}
             accessibilityLabel={`Open ${contact.name} website`}
             label="SITE"
             onPress={() => open(contact.url ?? '')}
@@ -361,22 +358,16 @@ function ActionPill({
   onPress: () => void;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
-      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-      style={{
-        minHeight: 48,
-        backgroundColor: alpha(tint, 0.14),
-        borderWidth: 1,
-        borderColor: alpha(tint, 0.35),
-      }}
+      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
+      style={{ minHeight: 48, backgroundColor: tint }}
     >
       {icon}
-      <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
+      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
         {label}
       </Mono>
-    </Pressable>
+    </GradientAction>
   );
 }

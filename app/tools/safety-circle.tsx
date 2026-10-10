@@ -7,6 +7,7 @@ import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -82,52 +83,39 @@ export default function SafetyCircle() {
                         {contact.role} · {contact.phone}
                       </Mono>
                     </View>
-                    <Pressable
-                      accessibilityRole="button"
+                    <GradientAction
                       accessibilityLabel={`Remove ${contact.name}`}
                       onPress={() => removeContact(contact.id)}
-                      className="h-11 w-11 items-center justify-center active:opacity-60"
+                      className="h-11 w-11 items-center justify-center rounded-full"
                     >
-                      <Trash2 size={15} color={alpha(C.no, 0.8)} />
-                    </Pressable>
+                      <Trash2 size={15} color={C.paper2} />
+                    </GradientAction>
                   </View>
                   <View className="mt-3 flex-row gap-2">
-                    <Pressable
-                      accessibilityRole="button"
+                    <GradientAction
                       accessibilityLabel={`Call ${contact.name}`}
                       onPress={() => void Linking.openURL(`tel:${contact.phone}`)}
-                      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-                      style={{
-                        backgroundColor: alpha(C.azure, 0.14),
-                        borderWidth: 1,
-                        borderColor: alpha(C.azure, 0.35),
-                      }}
+                      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
                     >
-                      <Phone size={13} color={C.azure} />
-                      <Mono bold color={C.azure} className="text-[10px]" tracking={1.5}>
+                      <Phone size={13} color={C.paper2} />
+                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
                         CALL
                       </Mono>
-                    </Pressable>
-                    <Pressable
-                      accessibilityRole="button"
+                    </GradientAction>
+                    <GradientAction
                       accessibilityLabel={`Text code word to ${contact.name}`}
                       onPress={() =>
                         void Linking.openURL(
                           `sms:${contact.phone}?body=Code word. I need help getting out of here.`,
                         )
                       }
-                      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70"
-                      style={{
-                        backgroundColor: alpha(C.teal, 0.12),
-                        borderWidth: 1,
-                        borderColor: alpha(C.teal, 0.3),
-                      }}
+                      className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
                     >
-                      <MessageSquare size={13} color={C.teal} />
-                      <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                      <MessageSquare size={13} color={C.paper2} />
+                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
                         CODE WORD
                       </Mono>
-                    </Pressable>
+                    </GradientAction>
                   </View>
                 </View>
               ))
@@ -194,27 +182,16 @@ export default function SafetyCircle() {
                 </View>
               </View>
 
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 disabled={!canAdd}
                 onPress={submit}
-                className="mt-2 flex-row items-center justify-center gap-2 rounded-full py-3.5 active:opacity-70"
-                style={{
-                  backgroundColor: alpha(C.azure, canAdd ? 0.2 : 0.06),
-                  borderWidth: 1,
-                  borderColor: alpha(C.azure, canAdd ? 0.5 : 0.15),
-                }}
+                className="mt-2 flex-row items-center justify-center gap-2 rounded-full py-3.5"
               >
-                <Plus size={15} color={canAdd ? C.azure : alpha(C.inkFaint, 0.6)} />
-                <Mono
-                  bold
-                  color={canAdd ? C.azure : alpha(C.inkFaint, 0.6)}
-                  tracking={2}
-                  className="text-[11px]"
-                >
+                <Plus size={15} color={C.paper2} />
+                <Mono bold color={C.paper2} tracking={2} className="text-[11px]">
                   ADD TO CIRCLE
                 </Mono>
-              </Pressable>
+              </GradientAction>
             </View>
           </View>
 

@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { ArrowRight, RotateCcw } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { MetallicButton } from '@/components/cape/Buttons';
+import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { StackHeader } from '@/components/cape/Screen';
 import { VerdictBadge } from '@/components/cape/VerdictBadge';
 import { C, alpha } from '@/lib/colors';
@@ -146,21 +146,15 @@ export default function SampleScenario() {
               <Mono className="text-[11px]">{scenario.debrief}</Mono>
             </Panel>
 
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               onPress={() => setPickedId(null)}
-              className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3 active:opacity-70"
-              style={{
-                backgroundColor: C.card,
-                borderWidth: 1,
-                borderColor: alpha(C.ink, 0.14),
-              }}
+              className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3"
             >
-              <RotateCcw size={13} color={alpha(C.inkFaint, 0.8)} />
-              <Mono bold color={alpha(C.inkFaint, 0.8)} tracking={2} className="text-[10px]">
+              <RotateCcw size={13} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
                 TRY ANOTHER ANSWER
               </Mono>
-            </Pressable>
+            </GradientAction>
           </View>
         ) : null}
 

@@ -6,6 +6,7 @@ import { GraduationCap, NotebookPen, Pause, Play, RotateCcw, Timer, X } from 'lu
 import { Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { TIMER_PRESETS } from '@/lib/data/cafe';
 import { C, alpha, wash } from '@/lib/colors';
+import { GradientAction } from '@/components/cape/Buttons';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const INPUT_FONT = 'JetBrainsMono_400Regular';
@@ -50,15 +51,20 @@ export function FacilitatorBar({ onExit }: { onExit: () => void }) {
       <View className="flex-row flex-wrap justify-center gap-2">
         <BarButton
           label="TIMER"
-          icon={<Timer size={13} color={C.inkSoft} />}
+          icon={<Timer size={13} color={C.paper2} />}
           onPress={() => setTool('timer')}
         />
         <BarButton
           label="NOTES"
-          icon={<NotebookPen size={13} color={C.inkSoft} />}
+          icon={<NotebookPen size={13} color={C.paper2} />}
           onPress={() => setTool('notes')}
         />
-        <BarButton label="EXIT" tint={C.no} icon={<X size={13} color={C.no} />} onPress={onExit} />
+        <BarButton
+          label="EXIT"
+          tint={C.no}
+          icon={<X size={13} color={C.paper2} />}
+          onPress={onExit}
+        />
       </View>
 
       <DiscussionTimer visible={tool === 'timer'} onClose={() => setTool(null)} />
@@ -79,21 +85,16 @@ function BarButton({
   tint?: string;
 }) {
   return (
-    <Pressable
-      accessibilityRole="button"
+    <GradientAction
       onPress={onPress}
-      className="min-h-11 min-w-11 flex-row items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 active:opacity-70"
-      style={{
-        backgroundColor: C.card,
-        borderWidth: 1,
-        borderColor: alpha(tint, tint === C.no ? 0.4 : 0.16),
-      }}
+      className="min-w-11 flex-row items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5"
+      style={{ backgroundColor: tint }}
     >
       {icon}
-      <Mono bold color={tint === C.no ? C.no : C.inkSoft} className="text-[8px]">
+      <Mono bold color={C.paper2} className="text-[11px]">
         {label}
       </Mono>
-    </Pressable>
+    </GradientAction>
   );
 }
 
@@ -166,36 +167,24 @@ function DiscussionTimer({ visible, onClose }: { visible: boolean; onClose: () =
       </View>
 
       <View className="mt-4 flex-row gap-2.5">
-        <Pressable
-          accessibilityRole="button"
+        <GradientAction
           onPress={() => (seconds === 0 ? choose(preset) : setRunning((r) => !r))}
-          className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-3 active:opacity-70"
-          style={{
-            backgroundColor: wash(C.tealBright, 0.16),
-            borderWidth: 1,
-            borderColor: alpha(C.tealBright, 0.5),
-          }}
+          className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-3"
         >
-          {running ? <Pause size={14} color={C.teal} /> : <Play size={14} color={C.teal} />}
-          <Mono bold color={C.teal} tracking={2} className="text-[10px]">
+          {running ? <Pause size={14} color={C.paper2} /> : <Play size={14} color={C.paper2} />}
+          <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
             {seconds === 0 ? 'RESET' : running ? 'PAUSE' : 'START'}
           </Mono>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
+        </GradientAction>
+        <GradientAction
           onPress={() => choose(preset)}
-          className="flex-row items-center justify-center gap-2 rounded-xl px-4 py-3 active:opacity-70"
-          style={{
-            backgroundColor: C.card,
-            borderWidth: 1,
-            borderColor: alpha(C.ink, 0.16),
-          }}
+          className="flex-row items-center justify-center gap-2 rounded-xl px-4 py-3"
         >
-          <RotateCcw size={14} color={C.inkSoft} />
-          <Mono bold color={C.inkSoft} tracking={2} className="text-[10px]">
+          <RotateCcw size={14} color={C.paper2} />
+          <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
             RESET
           </Mono>
-        </Pressable>
+        </GradientAction>
       </View>
     </AccessibleSheet>
   );
@@ -212,20 +201,11 @@ function SessionNotes({ visible, onClose }: { visible: boolean; onClose: () => v
       title="Session notes"
       tint={C.gold}
       footer={
-        <Pressable
-          accessibilityRole="button"
-          onPress={onClose}
-          className="min-h-11 items-center justify-center rounded-xl py-3 active:opacity-70"
-          style={{
-            backgroundColor: wash(C.goldBright, 0.16),
-            borderWidth: 1,
-            borderColor: alpha(C.goldBright, 0.55),
-          }}
-        >
-          <Mono bold color={C.gold} tracking={2} className="text-[10px]">
+        <GradientAction onPress={onClose} className="items-center justify-center rounded-xl py-3">
+          <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
             DONE
           </Mono>
-        </Pressable>
+        </GradientAction>
       }
     >
       <Mono className="mt-2 text-[10px]">

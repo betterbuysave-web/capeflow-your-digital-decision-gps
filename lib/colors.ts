@@ -74,10 +74,16 @@ export const C = {
   modH: '#C2540A',
 } as const;
 
-/**
- * Forged teal → gold sweep for every primary action. Kept deep enough that a
- * cream label clears AA across the whole pill.
- */
+/** Exact CAPE action-button stops; a separate ink scrim protects label contrast. */
+export const CAPE_BUTTON_GRADIENT: readonly [string, string, ...string[]] = [
+  C.tealBright,
+  C.goldBright,
+  C.magenta,
+  C.purple,
+];
+export const CAPE_BUTTON_LOCATIONS: readonly [number, number, ...number[]] = [0, 1 / 3, 2 / 3, 1];
+
+/** Legacy metallic sweep for non-button artwork. */
 export const METALLIC: readonly [string, string, ...string[]] = [
   '#1F7A6E',
   '#1B6E63',

@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Platform, Pressable, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IOS_HINT_DISMISSED_KEY } from '@/lib/localStorage';
 
+import { GradientAction } from '@/components/cape/Buttons';
+import { Mono } from '@/components/cape/Type';
+import { C } from '@/lib/colors';
 import { Text } from 'heroui-native';
 
 /**
@@ -123,24 +126,22 @@ export function InstallPrompt() {
             Install this app for a full-screen experience
           </Text.Paragraph>
         </View>
-        <Pressable
-          accessibilityRole="button"
-          className="rounded-md px-3 py-2"
+        <GradientAction
+          className="items-center justify-center rounded-md px-3 py-2"
           onPress={() => setInstallEvent(null)}
         >
-          <Text.Paragraph type="body-sm" weight="semibold" color="muted">
+          <Mono bold color={C.paper2}>
             Not now
-          </Text.Paragraph>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          className="bg-primary rounded-md px-3 py-2"
+          </Mono>
+        </GradientAction>
+        <GradientAction
+          className="items-center justify-center rounded-md px-3 py-2"
           onPress={handleInstall}
         >
-          <Text.Paragraph type="body-sm" weight="semibold" className="text-primary-foreground">
+          <Mono bold color={C.paper2}>
             Install
-          </Text.Paragraph>
-        </Pressable>
+          </Mono>
+        </GradientAction>
       </View>
     );
   }
@@ -159,15 +160,14 @@ export function InstallPrompt() {
             Tap Share, then “Add to Home Screen” to install this app
           </Text.Paragraph>
         </View>
-        <Pressable
-          accessibilityRole="button"
-          className="rounded-md px-3 py-2"
+        <GradientAction
+          className="items-center justify-center rounded-md px-3 py-2"
           onPress={dismissIosHint}
         >
-          <Text.Paragraph type="body-sm" weight="semibold" color="muted">
+          <Mono bold color={C.paper2}>
             Got it
-          </Text.Paragraph>
-        </Pressable>
+          </Mono>
+        </GradientAction>
       </View>
     );
   }

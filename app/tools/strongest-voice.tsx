@@ -5,7 +5,7 @@ import { Input, Label, TextField } from 'heroui-native';
 import { Check, MessageSquareText, Trash2 } from 'lucide-react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { MetallicButton } from '@/components/cape/Buttons';
+import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';
@@ -104,24 +104,18 @@ export default function StrongestVoice() {
                 <Mono className="mt-2 text-[11px]">
                   “{script.trim() || 'Your line goes here.'}”
                 </Mono>
-                <Pressable
-                  accessibilityRole="button"
+                <GradientAction
                   onPress={() => {
                     setRehearsals((count) => Math.min(3, count + 1));
                     void Haptics.selectionAsync();
                   }}
-                  className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
-                  style={{
-                    backgroundColor: alpha(C.modC, 0.12),
-                    borderWidth: 1,
-                    borderColor: alpha(C.modC, 0.35),
-                  }}
+                  className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3"
                 >
-                  <Check size={14} color={C.modC} />
-                  <Mono bold color={C.modC} className="text-[10px]" tracking={1}>
+                  <Check size={14} color={C.paper2} />
+                  <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
                     SAID IT {rehearsals}/3
                   </Mono>
-                </Pressable>
+                </GradientAction>
               </View>
             </View>
           </Panel>
@@ -142,14 +136,13 @@ export default function StrongestVoice() {
                   }}
                 >
                   <Mono className="flex-1 text-[10px]">{item}</Mono>
-                  <Pressable
-                    accessibilityRole="button"
+                  <GradientAction
                     accessibilityLabel={`Delete script: ${item}`}
-                    className="h-11 w-11 items-center justify-center"
+                    className="h-11 w-11 items-center justify-center rounded-full"
                     onPress={() => removeScript(item)}
                   >
-                    <Trash2 size={15} color={C.no} />
-                  </Pressable>
+                    <Trash2 size={15} color={C.paper2} />
+                  </GradientAction>
                 </View>
               ))}
             </View>
