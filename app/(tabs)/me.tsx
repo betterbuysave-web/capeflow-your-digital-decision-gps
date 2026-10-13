@@ -20,7 +20,7 @@ import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Typ
 import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
-import { BADGES } from '@/lib/data/badges';
+import { badgesForTrack } from '@/lib/data/badges';
 import { PRIVACY_NOTE, SOURCES, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
@@ -39,7 +39,7 @@ export default function Me() {
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const xp = useCapeStore((s) => s.xp);
   const streak = useCapeStore((s) => s.streak);
-  const badges = useCapeStore((s) => s.badges);
+  const storedBadges = useCapeStore((s) => s.badges);
   const completedLessons = useCapeStore((s) => s.completedLessons);
   const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
@@ -51,6 +51,8 @@ export default function Me() {
   const [deleting, setDeleting] = useState(false);
   const [resetError, setResetError] = useState<string | null>(null);
   const track = trackFor(gradeBand);
+  const BADGES = badgesForTrack(track);
+  const badges = storedBadges.filter((id) => BADGES.some((badge) => badge.id === id));
   const availableLessons = allLessonsForTrack(track);
   const doneLessons = availableLessons.filter((lesson) =>
     completedLessons.includes(lesson.id),
@@ -140,7 +142,7 @@ export default function Me() {
             <ScoreRow
               label="BOUNDARY MENU"
               detail={`${Object.keys(boundaries).length} of ${TOTALS.boundaries}`}
-              weight="14 pts"
+              weight={gradeBand === '9-12' ? '14 pts' : '24 pts'}
               value={(Object.keys(boundaries).length / TOTALS.boundaries) * 100}
               tint={C.amber}
             />
@@ -151,13 +153,15 @@ export default function Me() {
               value={(Math.min(circle.length, 3) / 3) * 100}
               tint={C.azure}
             />
-            <ScoreRow
-              label="GHOSTS DISARMED"
-              detail={`${disarmedGhosts} of ${VAULT_TARGET}`}
-              weight="10 pts"
-              value={(Math.min(disarmedGhosts, VAULT_TARGET) / VAULT_TARGET) * 100}
-              tint={C.gold}
-            />
+            {gradeBand === '9-12' ? (
+              <ScoreRow
+                label="HEALTHCARE GHOSTS DISARMED"
+                detail={`${disarmedGhosts} of ${VAULT_TARGET}`}
+                weight="10 pts"
+                value={(Math.min(disarmedGhosts, VAULT_TARGET) / VAULT_TARGET) * 100}
+                tint={C.gold}
+              />
+            ) : null}
           </View>
         </View>
 
@@ -373,7 +377,7 @@ export default function Me() {
         }
       >
         <Body>
-          This clears your Ghost Vault, scripts, plans, Safety Circle, progress, preferences, and
+          This clears your private inputs, scripts, plans, Safety Circle, progress, preferences, and
           reminders saved in CAPE Flow on this device. It cannot be undone.
         </Body>
         <Body className="mt-3 text-[12px]">

@@ -12,7 +12,7 @@ import {
 import { BOUNDARY_MENU, type BoundaryAnswer } from '@/lib/data/boundaries';
 import { SCENARIOS, scenariosForTrack, type Verdict } from '@/lib/data/scenarios';
 import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
-import { type FearState, ghostsForTrack } from '@/lib/data/ghosts';
+import { type FearState, getGhost, GHOSTS, ghostsForTrack } from '@/lib/data/ghosts';
 import {
   CAFE_QUIZ,
   DEFAULT_CAFE_MENU,
@@ -141,8 +141,6 @@ interface CapeState {
   disarmGhost: (ghostId: string, plan: string) => void;
   setGhostPlan: (ghostId: string, plan: string) => void;
   releaseGhost: (ghostId: string) => void;
-  addCustomGhost: (name: string, node: ModuleId) => void;
-  removeCustomGhost: (ghostId: string) => void;
   setFearState: (state: FearState) => void;
   addCafeItem: (course: CafeCourse, text: string) => void;
   setCafeItem: (course: CafeCourse, index: number, text: string) => void;
@@ -190,8 +188,12 @@ export function ghostTotal(band: GradeBand | null): number {
 }
 
 /** Ghosts pulled into the light and turned into a shield with a plan. */
+export function namedGhostCount(ghosts: Record<string, GhostRecord>): number {
+  return GHOSTS.filter((ghost) => ghosts[ghost.id]).length;
+}
+
 export function disarmedCount(ghosts: Record<string, GhostRecord>): number {
-  return Object.values(ghosts).filter((g) => g.status === 'disarmed').length;
+  return GHOSTS.filter((ghost) => ghosts[ghost.id]?.status === 'disarmed').length;
 }
 
 /** SafER Score: 0–100 readiness across knowledge, boundaries, team, practice, and the vault. */
@@ -210,7 +212,9 @@ export function saferScore(state: {
   ).length;
   const lessons = (done / total) * 40;
   const answered = Object.keys(state.boundaries).length;
-  const menu = (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * 14;
+  const auditAvailable = state.gradeBand === '9-12';
+  const menu =
+    (Math.min(answered, TOTAL_BOUNDARIES) / TOTAL_BOUNDARIES) * (auditAvailable ? 14 : 24);
   const team = (Math.min(state.circle.length, 3) / 3) * 14;
   const availableScenarios = scenariosForTrack(trackFor(state.gradeBand ?? null));
   const availableScenarioIds = new Set(availableScenarios.map((scenario) => scenario.id));
@@ -219,7 +223,7 @@ export function saferScore(state: {
   ).length;
   const sims = (Math.min(played, availableScenarios.length) / availableScenarios.length) * 22;
   const disarmed = disarmedCount(state.ghosts ?? {});
-  const vault = (Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 10;
+  const vault = auditAvailable ? (Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 10 : 0;
   return Math.round(lessons + menu + team + sims + vault);
 }
 
@@ -263,8 +267,12 @@ function earnedBadges(state: CapeState): string[] {
   const quizCorrect = Object.values(state.cafeQuiz).filter(Boolean).length;
   if (quizCorrect >= CAFE_QUIZ.length) earned.add('fries-detective');
   if (state.cafeExit.completedAt !== null) earned.add('cafe-regular');
-  if (Object.keys(state.ghosts).length > 0) earned.add('ghost-named');
-  if (disarmedCount(state.ghosts) >= VAULT_TARGET) earned.add('vault-armed');
+  earned.delete('ghost-named');
+  earned.delete('vault-armed');
+  if (state.gradeBand === '9-12') {
+    if (namedGhostCount(state.ghosts) > 0) earned.add('ghost-named');
+    if (disarmedCount(state.ghosts) >= VAULT_TARGET) earned.add('vault-armed');
+  }
   if (saferScore(state) >= 100) earned.add('compass-complete');
 
   return [...earned];
@@ -373,7 +381,7 @@ export const useCapeStore = create<CapeState>()(
       acknowledgePrivacy: () => set({ privacyAcknowledged: true }),
 
       nameGhost: (ghostId) => {
-        if (get().ghosts[ghostId]) return;
+        if (get().gradeBand !== '9-12' || !getGhost(ghostId) || get().ghosts[ghostId]) return;
         set((s) => ({
           ghosts: { ...s.ghosts, [ghostId]: { status: 'named', plan: '', at: Date.now() } },
           xp: s.xp + 5,
@@ -382,6 +390,7 @@ export const useCapeStore = create<CapeState>()(
       },
 
       disarmGhost: (ghostId, plan) => {
+        if (get().gradeBand !== '9-12' || !getGhost(ghostId)) return;
         const current = get().ghosts[ghostId];
         const alreadyDisarmed = current?.status === 'disarmed';
         set((s) => ({
@@ -395,39 +404,18 @@ export const useCapeStore = create<CapeState>()(
       },
 
       setGhostPlan: (ghostId, plan) => {
+        if (get().gradeBand !== '9-12' || !getGhost(ghostId)) return;
         const current = get().ghosts[ghostId];
         if (!current) return;
         set((s) => ({ ghosts: { ...s.ghosts, [ghostId]: { ...current, plan } } }));
       },
 
       releaseGhost: (ghostId) => {
+        if (get().gradeBand !== '9-12' || !getGhost(ghostId)) return;
         set((s) => {
           const next = { ...s.ghosts };
           delete next[ghostId];
           return { ghosts: next };
-        });
-      },
-
-      addCustomGhost: (name, node) => {
-        const label = name.trim();
-        if (label.length === 0) return;
-        const id = `custom-${Date.now()}`;
-        set((s) => ({
-          customGhosts: [...s.customGhosts, { id, name: label, node }],
-          ghosts: { ...s.ghosts, [id]: { status: 'named', plan: '', at: Date.now() } },
-          xp: s.xp + 5,
-        }));
-        set({ badges: earnedBadges(get()) });
-      },
-
-      removeCustomGhost: (ghostId) => {
-        set((s) => {
-          const nextGhosts = { ...s.ghosts };
-          delete nextGhosts[ghostId];
-          return {
-            customGhosts: s.customGhosts.filter((g) => g.id !== ghostId),
-            ghosts: nextGhosts,
-          };
         });
       },
 
@@ -577,7 +565,8 @@ export const useCapeStore = create<CapeState>()(
             canonBlueGateAccepted: false,
           };
         }
-        return { ...current, ...saved };
+        const merged = { ...current, ...saved };
+        return { ...merged, badges: earnedBadges(merged) };
       },
     },
   ),

@@ -1,3 +1,4 @@
+import type { Track } from '@/lib/data/content';
 import { C } from '@/lib/colors';
 
 export interface BadgeDef {
@@ -103,15 +104,15 @@ export const BADGES: BadgeDef[] = [
   {
     id: 'ghost-named',
     emoji: '👻',
-    name: 'Ghost Named',
-    requirement: 'Pull your first ghost into the Vault',
+    name: 'Healthcare Ghost Named',
+    requirement: 'Name one of the six healthcare ghosts',
     tint: C.violet,
   },
   {
     id: 'vault-armed',
     emoji: '🛡',
-    name: 'Vault Armed',
-    requirement: 'Disarm 6 ghosts with a plan',
+    name: 'Care Plan Ready',
+    requirement: 'Disarm all six healthcare ghosts with a plan',
     tint: C.teal,
   },
   {
@@ -122,6 +123,12 @@ export const BADGES: BadgeDef[] = [
     tint: C.goldLight,
   },
 ];
+
+export function badgesForTrack(track: Track): BadgeDef[] {
+  return BADGES.filter(
+    (badge) => track === 'blue' || (badge.id !== 'ghost-named' && badge.id !== 'vault-armed'),
+  );
+}
 
 export function getBadge(id: string): BadgeDef | undefined {
   return BADGES.find((b) => b.id === id);

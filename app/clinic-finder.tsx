@@ -238,7 +238,7 @@ export default function ClinicFinder() {
           {/* INTAKE SCRIPTS */}
           <View className="mt-10">
             <Eyebrow color={C.modC}>FRONT-DESK SCRIPTS</Eyebrow>
-            <Display className="mt-2 text-3xl">Kill the Phone Ghost.</Display>
+            <Display className="mt-2 text-3xl">Prepare your clinic call.</Display>
             <Body className="mt-2">
               Say these flat. Nobody on the other end is grading your delivery — they answer these
               calls all day.

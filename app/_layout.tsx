@@ -141,7 +141,7 @@ export default function RootLayout() {
           <Stack.Screen name="book-part/[part]" options={{ title: 'CAPE track gate' }} />
           <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
           <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
-          <Stack.Screen name="tools/ghost-vault" options={{ title: 'Digital Ghost Vault' }} />
+          <Stack.Screen name="tools/ghost-vault" options={{ title: 'Healthcare Anxiety Audit' }} />
           <Stack.Screen name="tools/strongest-voice" options={{ title: 'Strongest Voice' }} />
           <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
           <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />

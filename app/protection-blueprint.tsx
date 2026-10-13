@@ -25,25 +25,20 @@ import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { VaultCore } from '@/components/cape/VaultCore';
 import { C, alpha } from '@/lib/colors';
-import { BADGES, getBadge } from '@/lib/data/badges';
+import { badgesForTrack, getBadge } from '@/lib/data/badges';
 import { BOUNDARY_MENU } from '@/lib/data/boundaries';
 import { DISCLAIMER, TRACKS, pepUnlocked, trackFor } from '@/lib/data/content';
 import { PEP_WINDOW_MS } from '@/lib/data/crisis';
 import { MATCH_MODULES, lessonsForTrack } from '@/lib/data/match';
 import { getScenario, scenariosForTrack } from '@/lib/data/scenarios';
-import {
-  SAFETY_EXCEPTION,
-  fearStateInfo,
-  getGhost,
-  ghostsForTrack,
-  nodeMeta,
-} from '@/lib/data/ghosts';
+import { SAFETY_EXCEPTION, fearStateInfo, ghostsForTrack, nodeMeta } from '@/lib/data/ghosts';
 import { describeDays, formatTime, logDayKey, recentDayKeys, toneInfo } from '@/lib/data/adherence';
 import { verdictLabel } from '@/lib/verdict';
 import {
   TOTALS,
   VAULT_TARGET,
   disarmedCount,
+  namedGhostCount,
   lessonTotal,
   moduleProgress,
   saferScore,
@@ -84,13 +79,12 @@ export default function ProtectionBlueprint() {
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const xp = useCapeStore((s) => s.xp);
   const streak = useCapeStore((s) => s.streak);
-  const badges = useCapeStore((s) => s.badges);
+  const storedBadges = useCapeStore((s) => s.badges);
   const completedLessons = useCapeStore((s) => s.completedLessons);
   const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const ghosts = useCapeStore((s) => s.ghosts);
-  const customGhosts = useCapeStore((s) => s.customGhosts);
   const fearState = useCapeStore((s) => s.fearState);
   const cafeMenu = useCapeStore((s) => s.cafeMenu);
   const cafeExit = useCapeStore((s) => s.cafeExit);
@@ -99,6 +93,9 @@ export default function ProtectionBlueprint() {
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
 
   const track = trackFor(gradeBand);
+  const auditAvailable = gradeBand === '9-12';
+  const BADGES = badgesForTrack(track);
+  const badges = storedBadges.filter((id) => BADGES.some((badge) => badge.id === id));
   const trackInfo = TRACKS[track];
   const availableScenarios = scenariosForTrack(track);
   const availableScenarioIds = new Set(availableScenarios.map((scenario) => scenario.id));
@@ -113,7 +110,7 @@ export default function ProtectionBlueprint() {
   const verdict = readiness(score);
   const lessonsAvailable = lessonTotal(gradeBand);
   const disarmed = disarmedCount(ghosts);
-  const named = Object.keys(ghosts).length;
+  const named = namedGhostCount(ghosts);
 
   const history = useMemo(() => recentDayKeys(HISTORY_DAYS), []);
   const today = logDayKey();
@@ -147,21 +144,20 @@ export default function ProtectionBlueprint() {
 
   const shields = useMemo(
     () =>
-      Object.entries(ghosts)
-        .filter(([, record]) => record.status === 'disarmed')
-        .map(([id, record]) => {
-          const def = getGhost(id);
-          const custom = customGhosts.find((g) => g.id === id);
-          const node = def?.node ?? custom?.node ?? 'tools';
-          return {
-            id,
-            name: def?.name ?? custom?.name ?? 'Named fear',
-            shield: def?.shield ?? 'Custom shield plate',
-            node,
+      ghostsForTrack(track).flatMap((def) => {
+        const record = ghosts[def.id];
+        if (record?.status !== 'disarmed') return [];
+        return [
+          {
+            id: def.id,
+            name: def.name,
+            shield: def.shield,
+            node: def.node,
             plan: record.plan.trim(),
-          };
-        }),
-    [ghosts, customGhosts],
+          },
+        ];
+      }),
+    [ghosts, track],
   );
 
   const pepActive =
@@ -186,10 +182,10 @@ export default function ProtectionBlueprint() {
         tint: C.amber,
         href: '/tools/consent-cafe',
       });
-    if (disarmed < VAULT_TARGET)
+    if (auditAvailable && disarmed < VAULT_TARGET)
       moves.push({
-        label: 'DISARM ANOTHER GHOST',
-        detail: `${disarmed} of ${VAULT_TARGET} fears turned into shields.`,
+        label: 'OPEN HEALTHCARE ANXIETY AUDIT',
+        detail: `${disarmed} of ${VAULT_TARGET} healthcare ghosts turned into care plans.`,
         tint: C.modT,
         href: '/tools/ghost-vault',
       });
@@ -216,6 +212,7 @@ export default function ProtectionBlueprint() {
       });
     return moves.slice(0, 4);
   }, [
+    auditAvailable,
     circle.length,
     answered,
     disarmed,
@@ -226,7 +223,7 @@ export default function ProtectionBlueprint() {
     reminders.length,
   ]);
 
-  const fearInfo = fearStateInfo(fearState);
+  const fearInfo = auditAvailable ? fearStateInfo(fearState) : null;
 
   const generated = new Date().toLocaleDateString(undefined, {
     year: 'numeric',
@@ -310,7 +307,7 @@ export default function ProtectionBlueprint() {
             <LayerRow
               label="BOUNDARY MENU"
               detail={`${answered} of ${TOTALS.boundaries}`}
-              weight="14 pts"
+              weight={auditAvailable ? '14 pts' : '24 pts'}
               value={(answered / TOTALS.boundaries) * 100}
               tint={C.amber}
             />
@@ -321,13 +318,15 @@ export default function ProtectionBlueprint() {
               value={(Math.min(circle.length, 3) / 3) * 100}
               tint={C.azure}
             />
-            <LayerRow
-              label="GHOSTS DISARMED"
-              detail={`${disarmed} of ${VAULT_TARGET}`}
-              weight="10 pts"
-              value={(Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 100}
-              tint={C.gold}
-            />
+            {auditAvailable ? (
+              <LayerRow
+                label="HEALTHCARE GHOSTS DISARMED"
+                detail={`${disarmed} of ${VAULT_TARGET}`}
+                weight="10 pts"
+                value={(Math.min(disarmed, VAULT_TARGET) / VAULT_TARGET) * 100}
+                tint={C.gold}
+              />
+            ) : null}
           </View>
         </View>
 
@@ -575,76 +574,80 @@ export default function ProtectionBlueprint() {
           </Panel>
         </View>
 
-        {/* VAULT / SHIELDS */}
-        <View className="mt-10">
-          <Eyebrow color={C.modT}>SHIELD INVENTORY</Eyebrow>
-          <Display className="mt-2 text-3xl">Fears turned into gear.</Display>
-          <View className="mt-4 items-center">
-            <VaultCore named={named} disarmed={disarmed} total={ghostsForTrack(track).length} />
-          </View>
-          <View className="mt-4 flex-row flex-wrap justify-center gap-2">
-            <Chip label={`${named} NAMED`} tint={C.modT} />
-            <Chip label={`${disarmed} DISARMED`} tint={C.teal} />
-            {customGhosts.length > 0 ? (
-              <Chip label={`${customGhosts.length} YOUR OWN`} tint={C.gold} />
-            ) : null}
-          </View>
-          {shields.length === 0 ? (
-            <Panel tint={C.modT} fill={0.05} stroke={0.16} className="mt-4">
-              <View className="flex-row items-start gap-3">
-                <Ghost size={16} color={C.modT} />
-                <Mono className="flex-1 text-[10px]">
-                  No shields deployed yet. Naming a fear in the Ghost Vault is the whole first step
-                  — it takes one tap.
-                </Mono>
-              </View>
-            </Panel>
-          ) : (
-            <View className="mt-4 gap-2">
-              {shields.map((shield) => {
-                const meta = nodeMeta(shield.node);
-                return (
-                  <View
-                    key={shield.id}
-                    className="rounded-2xl p-3.5"
-                    style={{
-                      backgroundColor: alpha(meta.color, 0.06),
-                      borderWidth: 1,
-                      borderColor: alpha(meta.color, 0.22),
-                    }}
-                  >
-                    <View className="flex-row items-center gap-3">
-                      <View
-                        className="h-7 w-7 items-center justify-center rounded-lg"
-                        style={{
-                          backgroundColor: alpha(meta.color, 0.16),
-                          borderWidth: 1,
-                          borderColor: alpha(meta.color, 0.4),
-                        }}
-                      >
-                        <Mono bold color={meta.color} className="text-[11px]">
-                          {meta.letter}
-                        </Mono>
-                      </View>
-                      <View className="flex-1">
-                        <Mono bold color={meta.color} className="text-[10px]" tracking={1}>
-                          {shield.shield.toUpperCase()}
-                        </Mono>
-                        <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
-                          Answers: {shield.name} · {meta.callsign}
-                        </Mono>
-                      </View>
-                      <ShieldCheck size={15} color={meta.color} />
-                    </View>
-                    {shield.plan.length > 0 ? (
-                      <Mono className="mt-2 text-[10px]">&quot;{shield.plan}&quot;</Mono>
-                    ) : null}
-                  </View>
-                );
-              })}
+        {/* Healthcare care plans — Blue Track only */}
+        {auditAvailable ? (
+          <View className="mt-10">
+            <Eyebrow color={C.modT}>HEALTHCARE ANXIETY AUDIT</Eyebrow>
+            <Display className="mt-2 text-3xl">Your care plans.</Display>
+            <View className="mt-4 items-center">
+              <VaultCore named={named} disarmed={disarmed} total={ghostsForTrack(track).length} />
             </View>
-          )}
-        </View>
+            <View className="mt-4 flex-row flex-wrap justify-center gap-2">
+              <Chip label={`${named} NAMED`} tint={C.modT} />
+              <Chip label={`${disarmed} DISARMED`} tint={C.teal} />
+            </View>
+            {shields.length === 0 ? (
+              <Panel tint={C.modT} fill={0.05} stroke={0.16} className="mt-4">
+                <View className="flex-row items-start gap-3">
+                  <Ghost size={16} color={C.modT} />
+                  <Mono className="flex-1 text-[10px]">
+                    Your care plans will appear here. Name one of the six healthcare ghosts to
+                    start.
+                  </Mono>
+                </View>
+                <GhostButton
+                  label="OPEN HEALTHCARE AUDIT"
+                  tint={C.modT}
+                  onPress={() => router.push('/tools/ghost-vault')}
+                />
+              </Panel>
+            ) : (
+              <View className="mt-4 gap-2">
+                {shields.map((shield) => {
+                  const meta = nodeMeta(shield.node);
+                  return (
+                    <View
+                      key={shield.id}
+                      className="rounded-2xl p-3.5"
+                      style={{
+                        backgroundColor: alpha(meta.color, 0.06),
+                        borderWidth: 1,
+                        borderColor: alpha(meta.color, 0.22),
+                      }}
+                    >
+                      <View className="flex-row items-center gap-3">
+                        <View
+                          className="h-7 w-7 items-center justify-center rounded-lg"
+                          style={{
+                            backgroundColor: alpha(meta.color, 0.16),
+                            borderWidth: 1,
+                            borderColor: alpha(meta.color, 0.4),
+                          }}
+                        >
+                          <Mono bold color={meta.color} className="text-[11px]">
+                            {meta.letter}
+                          </Mono>
+                        </View>
+                        <View className="flex-1">
+                          <Mono bold color={meta.color} className="text-[10px]" tracking={1}>
+                            {shield.shield.toUpperCase()}
+                          </Mono>
+                          <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                            Answers: {shield.name} · {meta.callsign}
+                          </Mono>
+                        </View>
+                        <ShieldCheck size={15} color={meta.color} />
+                      </View>
+                      {shield.plan.length > 0 ? (
+                        <Mono className="mt-2 text-[10px]">&quot;{shield.plan}&quot;</Mono>
+                      ) : null}
+                    </View>
+                  );
+                })}
+              </View>
+            )}
+          </View>
+        ) : null}
 
         {/* DRILL LOG */}
         <View className="mt-10">
@@ -767,8 +770,8 @@ export default function ProtectionBlueprint() {
                   EVERY LAYER IS UP
                 </Mono>
                 <Mono className="mt-1 text-[10px]">
-                  Lessons, drills, boundaries, circle, and vault are all complete. Re-run a drill
-                  whenever your situation changes — the plan should move with you.
+                  All the layers on your track are complete. Re-run a drill whenever your situation
+                  changes — the plan should move with you.
                 </Mono>
               </View>
             </View>

@@ -49,7 +49,7 @@ const PRIVACY_POINTS = [
     icon: Lock,
     title: 'LOCAL STORAGE ONLY',
     detail:
-      'Your Ghost Vault, boundary menu, Safety Circle, reminders, and progress live in this app on this device.',
+      'Your private plans, boundary menu, Safety Circle, reminders, and progress live in this app on this device.',
   },
   {
     icon: Trash2,

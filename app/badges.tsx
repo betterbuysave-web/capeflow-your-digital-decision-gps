@@ -4,11 +4,15 @@ import { Lock } from 'lucide-react-native';
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha, wash } from '@/lib/colors';
-import { BADGES } from '@/lib/data/badges';
+import { badgesForTrack } from '@/lib/data/badges';
+import { trackFor } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function BadgeCabinet() {
-  const badges = useCapeStore((s) => s.badges);
+  const storedBadges = useCapeStore((s) => s.badges);
+  const gradeBand = useCapeStore((s) => s.gradeBand);
+  const BADGES = badgesForTrack(trackFor(gradeBand));
+  const badges = storedBadges.filter((id) => BADGES.some((badge) => badge.id === id));
   const earned = badges.length;
 
   return (

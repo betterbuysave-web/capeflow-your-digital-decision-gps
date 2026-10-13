@@ -23,10 +23,12 @@ import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES, lessonsForTrack, allLessonsForTrack } from '@/lib/data/match';
 import { scenariosForTrack } from '@/lib/data/scenarios';
+import { badgesForTrack } from '@/lib/data/badges';
 import { pepUnlocked, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
   disarmedCount,
+  namedGhostCount,
   ghostTotal,
   lessonTotal,
   moduleProgress,
@@ -39,14 +41,13 @@ export default function Compass() {
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const xp = useCapeStore((s) => s.xp);
   const streak = useCapeStore((s) => s.streak);
-  const badges = useCapeStore((s) => s.badges);
+  const storedBadges = useCapeStore((s) => s.badges);
   const completedLessons = useCapeStore((s) => s.completedLessons);
   const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
   const ghosts = useCapeStore((s) => s.ghosts);
-  const customGhosts = useCapeStore((s) => s.customGhosts);
   const registerVisit = useCapeStore((s) => s.registerVisit);
 
   useEffect(() => {
@@ -62,15 +63,18 @@ export default function Compass() {
     gradeBand,
   });
   const track = trackFor(gradeBand);
+  const badges = storedBadges.filter((id) =>
+    badgesForTrack(track).some((badge) => badge.id === id),
+  );
   const doneLessons = allLessonsForTrack(track).filter((lesson) =>
     completedLessons.includes(lesson.id),
   ).length;
   const scenarios = scenariosForTrack(track);
   const playedSims = scenarios.filter((scenario) => scenarioResults[scenario.id]).length;
   const nextSim = scenarios.find((scenario) => !scenarioResults[scenario.id]) ?? scenarios[0];
-  const namedGhosts = Object.keys(ghosts).length;
+  const namedGhosts = namedGhostCount(ghosts);
   const disarmedGhosts = disarmedCount(ghosts);
-  const ghostRange = ghostTotal(gradeBand) + customGhosts.length;
+  const ghostRange = ghostTotal(gradeBand);
 
   return (
     <View className="bg-paper flex-1">
@@ -105,7 +109,9 @@ export default function Compass() {
               tint={C.amber}
             />
             <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
-            <Chip label={`${disarmedGhosts}/${ghostRange} GHOSTS`} tint={C.gold} />
+            {gradeBand === '9-12' ? (
+              <Chip label={`${disarmedGhosts}/${ghostRange} HEALTHCARE GHOSTS`} tint={C.gold} />
+            ) : null}
           </View>
         </Panel>
 
@@ -195,28 +201,30 @@ export default function Compass() {
         ) : null}
 
         {/* GHOST VAULT */}
-        <TintedRow
-          tint={C.violet}
-          fill={0.07}
-          stroke={0.22}
-          className="mt-4"
-          onPress={() => router.push('/tools/ghost-vault')}
-        >
-          <View className="flex-row items-center gap-3">
-            <Ghost size={18} color={C.violet} />
-            <View className="flex-1">
-              <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
-                DIGITAL GHOST VAULT
-              </Mono>
-              <Mono className="mt-0.5 text-[9px]">
-                {namedGhosts === 0
-                  ? 'Name the ghosts — turn anxiety into a shield'
-                  : `${namedGhosts} named · ${disarmedGhosts} shields online`}
-              </Mono>
+        {gradeBand === '9-12' ? (
+          <TintedRow
+            tint={C.violet}
+            fill={0.07}
+            stroke={0.22}
+            className="mt-4"
+            onPress={() => router.push('/tools/ghost-vault')}
+          >
+            <View className="flex-row items-center gap-3">
+              <Ghost size={18} color={C.violet} />
+              <View className="flex-1">
+                <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
+                  Healthcare Anxiety Audit
+                </Mono>
+                <Mono className="mt-0.5 text-[9px]">
+                  {namedGhosts === 0
+                    ? 'Name a healthcare ghost — plan your next care step'
+                    : `${namedGhosts} named · ${disarmedGhosts} shields online`}
+                </Mono>
+              </View>
+              <ArrowRight size={14} color={C.violet} />
             </View>
-            <ArrowRight size={14} color={C.violet} />
-          </View>
-        </TintedRow>
+          </TintedRow>
+        ) : null}
 
         {/* MATCH COMPASS */}
         <View className="mt-8">

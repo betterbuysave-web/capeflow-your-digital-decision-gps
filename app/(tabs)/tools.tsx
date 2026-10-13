@@ -23,7 +23,7 @@ import { scenariosForTrack } from '@/lib/data/scenarios';
 import { PEP_LOCK_NOTE, pepUnlocked, trackFor } from '@/lib/data/content';
 import { networksForTrack } from '@/lib/data/clinics';
 import { entriesForTrack } from '@/lib/data/library';
-import { disarmedCount, useCapeStore } from '@/lib/store/useCapeStore';
+import { disarmedCount, namedGhostCount, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function ToolsTab() {
   const boundaries = useCapeStore((s) => s.boundaries);
@@ -34,7 +34,7 @@ export default function ToolsTab() {
   const ghosts = useCapeStore((s) => s.ghosts);
   const reminders = useCapeStore((s) => s.reminders);
   const pepAvailable = pepUnlocked(gradeBand);
-  const namedGhosts = Object.keys(ghosts).length;
+  const namedGhosts = namedGhostCount(ghosts);
   const disarmedGhosts = disarmedCount(ghosts);
   const track = trackFor(gradeBand);
   const scenarios = scenariosForTrack(track);
@@ -58,27 +58,29 @@ export default function ToolsTab() {
         </Body>
 
         <View className="mt-6 gap-3">
-          <TintedRow
-            tint={C.violet}
-            fill={0.07}
-            stroke={0.22}
-            onPress={() => router.push('/tools/ghost-vault')}
-          >
-            <View className="flex-row items-center gap-3">
-              <Ghost size={20} color={C.violet} />
-              <View className="flex-1">
-                <Mono bold color={C.violet} className="text-[12px]" tracking={1}>
-                  DIGITAL GHOST VAULT
-                </Mono>
-                <Mono className="mt-1 text-[10px]">
-                  {namedGhosts === 0
-                    ? 'Anxiety audit — name the fear, get the shield'
-                    : `${namedGhosts} named · ${disarmedGhosts} shields online`}
-                </Mono>
+          {gradeBand === '9-12' ? (
+            <TintedRow
+              tint={C.violet}
+              fill={0.07}
+              stroke={0.22}
+              onPress={() => router.push('/tools/ghost-vault')}
+            >
+              <View className="flex-row items-center gap-3">
+                <Ghost size={20} color={C.violet} />
+                <View className="flex-1">
+                  <Mono bold color={C.violet} className="text-[12px]" tracking={1}>
+                    Healthcare Anxiety Audit
+                  </Mono>
+                  <Mono className="mt-1 text-[10px]">
+                    {namedGhosts === 0
+                      ? 'Six healthcare ghosts — questions and care plans'
+                      : `${namedGhosts} named · ${disarmedGhosts} shields online`}
+                  </Mono>
+                </View>
+                <ArrowRight size={14} color={C.violet} />
               </View>
-              <ArrowRight size={14} color={C.violet} />
-            </View>
-          </TintedRow>
+            </TintedRow>
+          ) : null}
 
           <TintedRow
             tint={C.amber}
