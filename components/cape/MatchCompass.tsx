@@ -15,7 +15,7 @@ import { router } from 'expo-router';
 import { ArrowRight, Lock, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
-import { Chip, MetallicButton } from '@/components/cape/Buttons';
+import { Chip, GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { CompassRose } from '@/components/cape/CompassRose';
 import { C, alpha, wash } from '@/lib/colors';
 import { COMPASS_NODES, type CompassNode, nodeBullets } from '@/lib/data/compass';
@@ -232,14 +232,13 @@ function NodeBriefing({
                 <Eyebrow color={C.inkSoft}>{node.callsign.toUpperCase()}</Eyebrow>
                 <Display className="mt-1 text-2xl">{node.title}</Display>
               </View>
-              <Pressable
-                accessibilityRole="button"
+              <GradientAction
                 accessibilityLabel="Close briefing"
                 onPress={onClose}
-                className="h-12 w-12 items-center justify-center active:opacity-60"
+                className="h-12 w-12 shrink-0 items-center justify-center rounded-full"
               >
-                <X size={18} color={C.inkFaint} />
-              </Pressable>
+                <X size={18} color={C.paper2} />
+              </GradientAction>
             </View>
 
             <ScrollView

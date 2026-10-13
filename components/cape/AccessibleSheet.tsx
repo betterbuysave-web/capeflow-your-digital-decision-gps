@@ -13,6 +13,7 @@ import {
 import { X } from 'lucide-react-native';
 
 import { Display, Eyebrow } from '@/components/cape/Type';
+import { GradientAction } from '@/components/cape/Buttons';
 import { C, alpha } from '@/lib/colors';
 
 /** Notebook sheet with separate backdrop, a focused heading, and a fixed footer. */
@@ -81,15 +82,13 @@ export function AccessibleSheet({
               {eyebrow ? <Eyebrow color={tint}>{eyebrow}</Eyebrow> : null}
               <Display className="mt-1.5 text-3xl">{title}</Display>
             </View>
-            <Pressable
-              accessibilityRole="button"
+            <GradientAction
               accessibilityLabel={`Close ${title}`}
               onPress={onClose}
-              className="h-11 w-11 items-center justify-center rounded-full active:opacity-60"
-              style={{ backgroundColor: C.card, borderWidth: 1, borderColor: alpha(C.ink, 0.16) }}
+              className="h-11 w-11 shrink-0 items-center justify-center rounded-full"
             >
-              <X size={15} color={C.inkSoft} />
-            </Pressable>
+              <X size={15} color={C.paper2} />
+            </GradientAction>
           </View>
           <ScrollView
             style={{ maxHeight: height * 0.58 }}
