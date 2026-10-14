@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, Image, Pressable, View } from 'react-native';
+import { AccessibilityInfo, Image, Pressable, Text, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
 import { Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';
 import { THREE_SECOND_RULE } from '@/lib/data/emergency';
+import { PAUSE_FRAMES, PAUSE_IDLE } from '@/lib/pauseFrames';
 
-const ART = require('@/assets/images/pause-button.jpg');
-const ART_RATIO = 660 / 600;
+const ART_RATIO = 560 / 454;
 const TOTAL_MS = 3000;
 
 type Phase = 'idle' | 'running' | 'done';
@@ -75,6 +75,12 @@ export function PauseButton({ className }: { className?: string }) {
   const secondFraction = running ? (elapsed % 1000) / 1000 : 0;
   const ringColor = done ? C.teal : C.flame;
   const step = running ? THREE_SECOND_RULE.steps[3 - number] : null;
+  const last = PAUSE_FRAMES.length - 1;
+  const frameIndex = done
+    ? last
+    : running
+      ? Math.min(last, Math.floor((elapsed / TOTAL_MS) * PAUSE_FRAMES.length))
+      : -1;
 
   return (
     <Panel tint={ringColor} fill={running ? 0.08 : 0.04} stroke={0.24} className={className}>
@@ -94,21 +100,42 @@ export function PauseButton({ className }: { className?: string }) {
         className="mt-5 overflow-hidden rounded-2xl active:opacity-90"
         style={{ width: '100%', aspectRatio: ART_RATIO, backgroundColor: C.ink }}
       >
+        {/* All frames stay mounted so swapping is instant; only one is visible. */}
         <Image
-          source={ART}
+          source={PAUSE_IDLE}
           resizeMode="cover"
           accessibilityIgnoresInvertColors
-          style={{ width: '100%', height: '100%', opacity: running ? 0.35 : done ? 0.5 : 1 }}
+          className="absolute inset-0"
+          style={{ width: '100%', height: '100%', opacity: running || done ? 0 : 1 }}
         />
+        {PAUSE_FRAMES.map((frame, i) => (
+          <Image
+            key={String(frame)}
+            source={frame}
+            resizeMode="cover"
+            accessibilityIgnoresInvertColors
+            className="absolute inset-0"
+            style={{ width: '100%', height: '100%', opacity: i === frameIndex ? 1 : 0 }}
+          />
+        ))}
         {running || done ? (
           <View
             className="absolute inset-0 items-center justify-center"
-            style={{ backgroundColor: alpha(done ? C.teal : C.ink, done ? 0.35 : 0.25) }}
+            style={{ backgroundColor: alpha(C.ink, done ? 0.35 : 0.12) }}
           >
             {running ? (
-              <Display color={C.paper2} className="text-[150px] leading-[156px]">
+              <Text
+                className="text-[150px] leading-[156px]"
+                style={{
+                  color: C.paper2,
+                  fontFamily: 'BebasNeue_400Regular',
+                  textShadowColor: alpha('#000000', 0.85),
+                  textShadowOffset: { width: 0, height: 2 },
+                  textShadowRadius: 18,
+                }}
+              >
                 {number}
-              </Display>
+              </Text>
             ) : (
               <View className="items-center">
                 <Display color={C.paper2} className="text-6xl">
