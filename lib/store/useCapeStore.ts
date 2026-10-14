@@ -115,6 +115,8 @@ interface CapeState {
   cafeQuiz: Record<string, boolean>;
   cafeExit: CafeExitCard;
   facilitatorNotes: string;
+  /** Private notes per book lesson (key: lesson number). Device-only. */
+  lessonNotes: Record<string, string>;
   reminders: Reminder[];
   /** reminderId → local day keys the dose/check-in was logged. */
   adherenceLog: Record<string, string[]>;
@@ -152,6 +154,7 @@ interface CapeState {
   completeCafeExit: () => void;
   clearCafeExit: () => void;
   setFacilitatorNotes: (notes: string) => void;
+  setLessonNote: (lesson: number, text: string) => void;
   addReminder: (input: NewReminder) => Promise<void>;
   updateReminder: (id: string, patch: Partial<NewReminder>) => Promise<void>;
   toggleReminder: (id: string) => Promise<void>;
@@ -301,6 +304,7 @@ const initial = {
   cafeQuiz: {} as Record<string, boolean>,
   cafeExit: freshExitCard(),
   facilitatorNotes: '',
+  lessonNotes: {} as Record<string, string>,
   reminders: [] as Reminder[],
   adherenceLog: {} as Record<string, string[]>,
 };
@@ -479,6 +483,9 @@ export const useCapeStore = create<CapeState>()(
       clearCafeExit: () => set({ cafeExit: freshExitCard() }),
 
       setFacilitatorNotes: (notes) => set({ facilitatorNotes: notes }),
+
+      setLessonNote: (lesson, text) =>
+        set((s) => ({ lessonNotes: { ...s.lessonNotes, [String(lesson)]: text } })),
 
       addReminder: async (input) => {
         const id = `${Date.now()}-${get().reminders.length}`;
