@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { ArrowRight, Timer } from 'lucide-react-native';
-import Svg, { Circle } from 'react-native-svg';
+import Svg, { Circle, Line } from 'react-native-svg';
+import {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 
-import { TintedRow } from '@/components/cape/Buttons';
-import { Display, Mono } from '@/components/cape/Type';
-import { C, alpha, wash } from '@/lib/colors';
+import { AnimatedView } from '@/components/ui/primitives/AnimatedView';
+
+import { Mono } from '@/components/cape/Type';
+import { C, alpha } from '@/lib/colors';
 import { PEP_WINDOW_MS } from '@/lib/data/crisis';
 import { pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -51,7 +61,21 @@ export function pepTint(left: number, expired: boolean): string {
   return C.flame;
 }
 
-/** The big countdown ring. */
+/** Console colours: neon on the dark mission panel. */
+const NEON = { amber: '#FF7A2F', red: '#FF3B4E', cyan: '#3FE0D0', dim: '#2B3A47', grid: '#1E2E3B' };
+
+function neonFor(left: number, expired: boolean, running: boolean): string {
+  if (!running) return '#7D8B97';
+  return expired || left < 24 * 3_600_000 ? NEON.red : NEON.amber;
+}
+
+const glow = (color: string, radius = 14) => ({
+  textShadowColor: color,
+  textShadowOffset: { width: 0, height: 0 },
+  textShadowRadius: radius,
+});
+
+/** The mission-console countdown: 72 hour ticks, a seconds sweep, a pulse. */
 export function PepRing({
   startedAt,
   left,
@@ -61,58 +85,198 @@ export function PepRing({
   left: number;
   expired: boolean;
 }) {
-  const size = 248;
-  const stroke = 14;
-  const r = (size - stroke) / 2;
-  const circ = 2 * Math.PI * r;
-  const fraction = startedAt ? Math.max(0, Math.min(1, left / PEP_WINDOW_MS)) : 1;
-  const tint = startedAt ? pepTint(left, expired) : C.inkFaint;
+  const running = startedAt !== null;
+  const neon = neonFor(left, expired, running);
+  const size = 280;
+  const c = size / 2;
+  const tickOuter = c - 8;
+  const tickInner = c - 24;
+  const sweepR = c - 34;
+  const sweepCirc = 2 * Math.PI * sweepR;
+  const hoursLeft = running ? Math.max(0, Math.ceil(left / 3_600_000)) : 72;
+  const secondFraction = running && !expired ? (left % 60_000) / 60_000 : 0;
+  const urgent = running && !expired && left < 24 * 3_600_000;
+
+  const reduceMotion = useReducedMotion();
+  const pulse = useSharedValue(0);
+  useEffect(() => {
+    if (!running || expired || reduceMotion) {
+      cancelAnimation(pulse);
+      pulse.value = 0;
+      return;
+    }
+    pulse.value = withRepeat(
+      withTiming(1, { duration: urgent ? 650 : 1300, easing: Easing.inOut(Easing.quad) }),
+      -1,
+      true,
+    );
+  }, [pulse, running, expired, urgent, reduceMotion]);
+  const pulseStyle = useAnimatedStyle(() => ({
+    opacity: 0.25 + pulse.value * 0.55,
+    transform: [{ scale: 0.94 + pulse.value * 0.08 }],
+  }));
+
+  const hms = running ? formatHMS(left) : '72:00:00';
+  const [hh, mm, ss] = hms.split(':');
+  const elapsedHours = 72 - hoursLeft;
+  const phase = !running ? -1 : expired ? 3 : Math.min(2, Math.floor(elapsedHours / 24));
+  const PHASES = ['GO TODAY', 'GO NOW', 'LAST CALL'];
 
   return (
     <View
-      accessible
-      accessibilityRole="timer"
-      accessibilityLabel={
-        startedAt
-          ? expired
-            ? 'The 72-hour window has passed.'
-            : `${Math.floor(left / 3_600_000)} hours and ${Math.floor((left % 3_600_000) / 60_000)} minutes left in the 72-hour window.`
-          : 'Clock not started. 72 hours.'
-      }
-      className="items-center justify-center"
-      style={{ width: size, height: size }}
+      className="w-full overflow-hidden rounded-3xl"
+      style={{ backgroundColor: '#0E1821', borderWidth: 1, borderColor: alpha(neon, 0.45) }}
     >
-      <Svg width={size} height={size} style={{ position: 'absolute' }}>
-        <Circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          stroke={alpha(tint, 0.14)}
-          strokeWidth={stroke}
-          fill={wash(tint, 0.06, C.card)}
-        />
-        <Circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          stroke={tint}
-          strokeWidth={stroke}
-          strokeLinecap="round"
-          fill="none"
-          strokeDasharray={`${circ} ${circ}`}
-          strokeDashoffset={circ * (1 - fraction)}
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        />
-      </Svg>
-      <Mono bold color={tint} tracking={2} className="text-[10px]">
-        {startedAt ? (expired ? 'WINDOW PASSED' : 'TIME LEFT') : 'NOT STARTED'}
-      </Mono>
-      <Display color={startedAt ? tint : C.ink} className="mt-1 text-5xl">
-        {startedAt ? formatHMS(left) : '72:00:00'}
-      </Display>
-      <Mono className="mt-1 text-[9px]" color={C.inkFaint} tracking={2}>
-        HRS : MIN : SEC
-      </Mono>
+      {/* Header strip */}
+      <View
+        className="flex-row items-center justify-between px-4 py-2.5"
+        style={{ borderBottomWidth: 1, borderBottomColor: NEON.grid }}
+      >
+        <View className="flex-row items-center gap-2">
+          <View
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: running && !expired ? neon : NEON.dim }}
+          />
+          <Mono
+            bold
+            color={running && !expired ? neon : '#7D8B97'}
+            tracking={2}
+            className="text-[9px]"
+          >
+            {running ? (expired ? 'WINDOW CLOSED' : 'LIVE · PEP WINDOW') : 'STANDING BY'}
+          </Mono>
+        </View>
+        <Mono bold color="#7D8B97" tracking={2} className="text-[9px]">
+          T-MINUS 72H
+        </Mono>
+      </View>
+
+      <View
+        accessible
+        accessibilityRole="timer"
+        accessibilityLabel={
+          running
+            ? expired
+              ? 'The 72-hour window has passed.'
+              : `${Math.floor(left / 3_600_000)} hours and ${Math.floor((left % 3_600_000) / 60_000)} minutes left in the 72-hour window.`
+            : 'Clock not started. 72 hours.'
+        }
+        className="items-center py-6"
+      >
+        <View style={{ width: size, height: size }} className="items-center justify-center">
+          <AnimatedView
+            pointerEvents="none"
+            className="absolute rounded-full"
+            style={[
+              {
+                width: size - 20,
+                height: size - 20,
+                borderWidth: 18,
+                borderColor: alpha(neon, 0.18),
+              },
+              pulseStyle,
+            ]}
+          />
+          <Svg width={size} height={size} style={{ position: 'absolute' }}>
+            <Circle
+              cx={c}
+              cy={c}
+              r={tickInner - 6}
+              fill="#0B141C"
+              stroke={NEON.grid}
+              strokeWidth={1}
+            />
+            {Array.from({ length: 72 }, (_, i) => {
+              const angle = ((i * 5 - 90) * Math.PI) / 180;
+              const lit = i < hoursLeft;
+              const major = i % 12 === 0;
+              const inner = major ? tickInner - 6 : tickInner;
+              return (
+                <Line
+                  key={i}
+                  x1={c + inner * Math.cos(angle)}
+                  y1={c + inner * Math.sin(angle)}
+                  x2={c + tickOuter * Math.cos(angle)}
+                  y2={c + tickOuter * Math.sin(angle)}
+                  stroke={lit ? neon : NEON.dim}
+                  strokeWidth={major ? 4 : 3}
+                  strokeLinecap="round"
+                  opacity={lit ? 1 : 0.6}
+                />
+              );
+            })}
+            {running && !expired ? (
+              <Circle
+                cx={c}
+                cy={c}
+                r={sweepR}
+                stroke={NEON.cyan}
+                strokeWidth={3}
+                strokeLinecap="round"
+                fill="none"
+                strokeDasharray={`${sweepCirc} ${sweepCirc}`}
+                strokeDashoffset={sweepCirc * (1 - secondFraction)}
+                transform={`rotate(-90 ${c} ${c})`}
+                opacity={0.85}
+              />
+            ) : null}
+          </Svg>
+
+          <Mono bold color={alpha(neon, 0.9)} tracking={3} className="text-[10px]">
+            {running ? (expired ? 'WINDOW PASSED' : 'TIME LEFT') : 'NOT STARTED'}
+          </Mono>
+          <Text
+            className="mt-1 text-[84px] leading-[88px]"
+            style={{
+              color: neon,
+              fontFamily: 'BebasNeue_400Regular',
+              letterSpacing: 2,
+              ...glow(neon, 18),
+            }}
+          >
+            {hh}
+          </Text>
+          <Text
+            className="-mt-1 text-4xl"
+            style={{
+              color: neon,
+              fontFamily: 'BebasNeue_400Regular',
+              letterSpacing: 2,
+              ...glow(neon, 10),
+            }}
+          >
+            {`${mm}:${ss}`}
+          </Text>
+          <Mono color="#7D8B97" tracking={3} className="mt-1 text-[9px]">
+            HRS · MIN : SEC
+          </Mono>
+        </View>
+      </View>
+
+      {/* Phase track */}
+      <View className="flex-row gap-1.5 px-4 pb-4">
+        {PHASES.map((label, i) => {
+          const done = phase > i;
+          const now = phase === i;
+          const tint = i === 2 ? NEON.red : NEON.amber;
+          return (
+            <View key={label} className="flex-1">
+              <View
+                className="h-1.5 rounded-full"
+                style={{ backgroundColor: now ? tint : done ? alpha(tint, 0.35) : NEON.dim }}
+              />
+              <Mono
+                bold={now}
+                color={now ? tint : '#7D8B97'}
+                tracking={1.5}
+                className="mt-1.5 text-center text-[8px]"
+              >
+                {`${i * 24}–${(i + 1) * 24}H\n${label}`}
+              </Mono>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 }
@@ -123,37 +287,46 @@ export function PepCountdownBanner({ className }: { className?: string }) {
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const { left, expired } = usePepTime(pepStartedAt);
   if (!pepStartedAt || !pepUnlocked(gradeBand)) return null;
-  const tint = pepTint(left, expired);
+  const neon = neonFor(left, expired, true);
 
   return (
-    <TintedRow
-      tint={tint}
-      fill={0.12}
-      stroke={0.4}
-      className={className}
+    <Pressable
+      accessibilityRole="button"
       accessibilityLabel={
         expired
           ? 'PEP clock: the 72-hour window has passed. Open the PEP clock.'
           : `PEP clock running. ${formatHMS(left)} left. Open the PEP clock.`
       }
       onPress={() => router.push('/tools/pep-clock')}
+      className={`rounded-2xl px-4 py-3 active:opacity-80 ${className ?? ''}`}
+      style={{ backgroundColor: '#0E1821', borderWidth: 1, borderColor: alpha(neon, 0.55) }}
     >
       <View className="flex-row items-center gap-3">
-        <Timer size={20} color={tint} />
+        <Timer size={22} color={neon} />
         <View className="flex-1">
-          <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
-            {expired ? 'PEP WINDOW PASSED' : 'PEP CLOCK RUNNING'}
+          <Mono bold color={neon} className="text-[9px]" tracking={2}>
+            {expired ? 'PEP WINDOW PASSED' : 'LIVE · PEP WINDOW · T-MINUS'}
           </Mono>
           {expired ? (
-            <Mono className="mt-0.5 text-[10px]">Still get checked. Tap for next steps.</Mono>
+            <Mono color="#C9D3DB" className="mt-0.5 text-[10px]">
+              Still get checked. Tap for next steps.
+            </Mono>
           ) : (
-            <Display color={tint} className="mt-0.5 text-3xl">
+            <Text
+              className="mt-0.5 text-4xl"
+              style={{
+                color: neon,
+                fontFamily: 'BebasNeue_400Regular',
+                letterSpacing: 2,
+                ...glow(neon, 10),
+              }}
+            >
               {formatHMS(left)}
-            </Display>
+            </Text>
           )}
         </View>
-        <ArrowRight size={14} color={tint} />
+        <ArrowRight size={16} color={neon} />
       </View>
-    </TintedRow>
+    </Pressable>
   );
 }
