@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, ScrollView, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   CircleAlert,
@@ -17,7 +15,7 @@ import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
-import { Telemetry } from '@/components/cape/Telemetry';
+import { PauseButton } from '@/components/cape/PauseButton';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
@@ -25,7 +23,6 @@ import {
   EMERGENCY_LOCK_NOTE,
   EMERGENCY_NOTE,
   type EmergencyContact,
-  THREE_SECOND_RULE,
   groupsForTrack,
   lockedGroupCount,
 } from '@/lib/data/emergency';
@@ -105,7 +102,7 @@ export default function EmergencyDirectory() {
           </TintedRow>
         </View>
 
-        <CircuitBreaker />
+        <PauseButton className="mt-6" />
 
         {groups.map((group) => (
           <View key={group.id} className="mt-8">
@@ -195,102 +192,6 @@ export default function EmergencyDirectory() {
         <BrandFooter className="mt-8" />
       </ScrollView>
     </View>
-  );
-}
-
-/** The 3-Second Rule: a counted pause before choosing a next step. */
-function CircuitBreaker() {
-  const [count, setCount] = useState(0);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
-  }, []);
-
-  const run = () => {
-    if (timer.current) return;
-    const startedAt = Date.now();
-    setCount(1);
-    timer.current = setInterval(() => {
-      const elapsed = Date.now() - startedAt;
-      if (elapsed >= 3000) {
-        if (timer.current) clearInterval(timer.current);
-        timer.current = null;
-        setCount(4);
-        AccessibilityInfo.announceForAccessibility(
-          'Pause complete. Choose your next action. Urgent help remains available.',
-        );
-        void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(
-          () => undefined,
-        );
-        return;
-      }
-      setCount(Math.min(3, Math.floor(elapsed / 1000) + 1));
-    }, 100);
-  };
-
-  const running = count > 0 && count < 4;
-  const done = count === 4;
-
-  return (
-    <Panel tint={C.flame} fill={running ? 0.1 : 0.05} stroke={0.24} className="mt-6">
-      <View className="flex-row flex-wrap items-center justify-between gap-2">
-        <Eyebrow color={C.flame}>{THREE_SECOND_RULE.title}</Eyebrow>
-        {done ? <Chip label="PAUSE COMPLETE" tint={C.teal} /> : null}
-      </View>
-      <Mono className="mt-2 text-[10px]">{THREE_SECOND_RULE.lead}</Mono>
-
-      <View className="mt-4">
-        <Telemetry tint={running ? C.flame : C.teal} active={running} height={34} />
-      </View>
-
-      <View className="mt-4 gap-2">
-        {THREE_SECOND_RULE.steps.map((step, index) => {
-          const reached = count > index;
-          return (
-            <View
-              key={step}
-              className="rounded-xl px-3 py-2.5"
-              style={{
-                backgroundColor: reached ? alpha(C.flame, 0.14) : C.card,
-                borderWidth: 1,
-                borderColor: alpha(reached ? C.flame : C.ink, reached ? 0.45 : 0.12),
-              }}
-            >
-              <Mono bold={reached} className="text-[10px]" color={reached ? C.flame : C.inkSoft}>
-                {step}
-              </Mono>
-            </View>
-          );
-        })}
-      </View>
-
-      <GradientAction
-        accessibilityRole="button"
-        accessibilityLabel={
-          running
-            ? `Pause in progress, step ${count} of 3`
-            : done
-              ? 'Take another three-second pause'
-              : 'Take an optional three-second pause'
-        }
-        accessibilityState={{ disabled: running, busy: running }}
-        disabled={running}
-        onPress={run}
-        className="mt-4 min-h-11 items-center justify-center rounded-full px-4 py-3.5 active:opacity-70"
-        style={{ backgroundColor: C.flame }}
-      >
-        <Mono accessibilityLiveRegion="polite" bold color={C.paper2} className="text-[12px]">
-          {running ? `Hold — ${count}` : done ? 'Pause again' : 'Pause for 3 seconds'}
-        </Mono>
-      </GradientAction>
-
-      <Mono className="mt-3 text-[10px]" color={C.inkSoft}>
-        {THREE_SECOND_RULE.close}
-      </Mono>
-    </Panel>
   );
 }
 

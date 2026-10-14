@@ -12,6 +12,8 @@ import {
 } from 'lucide-react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
+import { PauseButton } from '@/components/cape/PauseButton';
+import { PepCountdownBanner } from '@/components/cape/PepCountdown';
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { GradientAction, TintedRow } from '@/components/cape/Buttons';
@@ -57,6 +59,7 @@ export default function Crisis() {
             </View>
           </View>
         </GradientAction>
+        <PepCountdownBanner className="mt-3" />
         <Body className="mt-3">
           Direct-dial and text lines, staffed 24/7. This is the 1 a.m. version: direct next moves,
           real people, and no need for perfect words. If you are in immediate danger, call 911
@@ -79,13 +82,15 @@ export default function Crisis() {
                   EMERGENCY DIRECTORY
                 </Mono>
                 <Mono className="mt-1 text-[10px]">
-                  3-Second Rule circuit breaker + one-tap lines, grouped by what is happening
+                  One-tap lines, grouped by what is happening
                 </Mono>
               </View>
               <ArrowRight size={14} color={C.flame} />
             </View>
           </TintedRow>
         </View>
+
+        <PauseButton className="mt-5" />
 
         <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-5">
           <Eyebrow color={C.gold}>SAFETY EXCEPTION</Eyebrow>
@@ -153,10 +158,10 @@ export default function Crisis() {
         </View>
 
         <View className="mt-6 gap-3">
-          {pepAvailable ? (
+          {pepAvailable && pepStartedAt ? null : pepAvailable ? (
             <TintedRow
               tint={C.flame}
-              fill={pepStartedAt ? 0.12 : 0.07}
+              fill={0.07}
               stroke={0.28}
               onPress={() => router.push('/tools/pep-clock')}
             >
@@ -164,7 +169,7 @@ export default function Crisis() {
                 <Timer size={18} color={C.flame} />
                 <View className="flex-1">
                   <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
-                    {pepStartedAt ? 'PEP CLOCK IS RUNNING' : 'START THE PEP CLOCK'}
+                    START THE PEP CLOCK
                   </Mono>
                   <Mono className="mt-0.5 text-[9px]">
                     PEP must begin within 72 hours of a possible exposure

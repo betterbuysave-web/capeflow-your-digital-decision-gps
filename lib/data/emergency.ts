@@ -270,13 +270,14 @@ export const EMERGENCY_LOCK_NOTE =
 /** A brief grounding pause, not a guaranteed physiological reset. */
 export const THREE_SECOND_RULE = {
   title: 'THE 3-SECOND RULE',
-  lead: 'If it is safe to pause, three counted seconds may help make room for your next choice. You do not have to feel calm to ask for help.',
+  lead: 'If it is safe to pause, three counted seconds can make room for your next choice. You do not have to feel calm to ask for help.',
   steps: [
-    'ONE — feet on the floor. Notice where you actually are.',
-    'TWO — one slow breath out, longer than the breath in.',
-    'THREE — name the next single action. Only the next one.',
+    '3 — Feet on the floor. Notice where you actually are.',
+    '2 — One slow breath out, longer than the breath in.',
+    '1 — Name the next single action. Only the next one.',
   ],
-  close: 'Do not delay urgent help or moving away from danger to finish this exercise.',
+  done: 'Pause complete. What is your next single move?',
+  close: 'Never delay urgent help or moving away from danger to finish a pause.',
 } as const;
 
 export const EMERGENCY_FIRST_MOVES = [

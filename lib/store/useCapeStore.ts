@@ -114,7 +114,6 @@ interface CapeState {
   cafeMenu: CafeMenu;
   cafeQuiz: Record<string, boolean>;
   cafeExit: CafeExitCard;
-  facilitatorNotes: string;
   /** Private notes per book lesson (key: lesson number). Device-only. */
   lessonNotes: Record<string, string>;
   reminders: Reminder[];
@@ -135,7 +134,8 @@ interface CapeState {
   setBoundary: (itemId: string, answer: BoundaryAnswer) => void;
   addContact: (contact: Omit<CircleContact, 'id'>) => void;
   removeContact: (id: string) => void;
-  startPep: () => void;
+  /** Start the 72-hour clock from when the possible exposure happened. */
+  startPep: (hoursAgo?: number) => void;
   clearPep: () => void;
   registerVisit: () => void;
   acknowledgePrivacy: () => void;
@@ -153,7 +153,6 @@ interface CapeState {
   setCafeConfidence: (value: number) => void;
   completeCafeExit: () => void;
   clearCafeExit: () => void;
-  setFacilitatorNotes: (notes: string) => void;
   setLessonNote: (lesson: number, text: string) => void;
   addReminder: (input: NewReminder) => Promise<void>;
   updateReminder: (id: string, patch: Partial<NewReminder>) => Promise<void>;
@@ -303,7 +302,6 @@ const initial = {
   cafeMenu: freshCafeMenu(),
   cafeQuiz: {} as Record<string, boolean>,
   cafeExit: freshExitCard(),
-  facilitatorNotes: '',
   lessonNotes: {} as Record<string, string>,
   reminders: [] as Reminder[],
   adherenceLog: {} as Record<string, string[]>,
@@ -370,7 +368,8 @@ export const useCapeStore = create<CapeState>()(
         set((s) => ({ circle: s.circle.filter((c) => c.id !== id) }));
       },
 
-      startPep: () => set({ pepStartedAt: Date.now() }),
+      startPep: (hoursAgo = 0) =>
+        set({ pepStartedAt: Date.now() - Math.max(0, Math.min(72, hoursAgo)) * 3_600_000 }),
       clearPep: () => set({ pepStartedAt: null }),
 
       registerVisit: () => {
@@ -482,8 +481,6 @@ export const useCapeStore = create<CapeState>()(
 
       clearCafeExit: () => set({ cafeExit: freshExitCard() }),
 
-      setFacilitatorNotes: (notes) => set({ facilitatorNotes: notes }),
-
       setLessonNote: (lesson, text) =>
         set((s) => ({ lessonNotes: { ...s.lessonNotes, [String(lesson)]: text } })),
 
@@ -559,7 +556,11 @@ export const useCapeStore = create<CapeState>()(
       name: CAPE_STORAGE_KEY,
       storage: createJSONStorage(() => capeStorage),
       merge: (persisted, current) => {
-        const saved = persisted !== null && typeof persisted === 'object' ? persisted : {};
+        const raw: Record<string, unknown> =
+          persisted !== null && typeof persisted === 'object' ? { ...persisted } : {};
+        // Facilitator tools were removed from the student app; drop any old notes.
+        delete raw.facilitatorNotes;
+        const saved: object = raw;
         const band = 'gradeBand' in saved ? saved.gradeBand : undefined;
         const blueGateAccepted =
           'canonBlueGateAccepted' in saved && saved.canonBlueGateAccepted === true;

@@ -92,10 +92,10 @@ export function MatchCompass({
           style={{ borderBottomWidth: 1, borderBottomColor: alpha(C.tealBright, 0.22) }}
         >
           <Mono bold className="text-[8px]" color={C.inkFaint} tracking={2}>
-            FIG. 01 — CALIBRATING THE YOUTH M.A.T.C.H. COMPASS
+            FIG. 01 — 5 DECISION GPS SUPERPOWERS
           </Mono>
         </View>
-        <View className="px-3 py-2">
+        <View className="px-1 py-1">
           <CompassRose
             nodes={COMPASS_NODES}
             onSelect={selectNode}
@@ -106,7 +106,7 @@ export function MatchCompass({
       </View>
 
       <Mono className="mt-2.5 text-[9px]" tracking={2}>
-        TAP ANY NODE FOR THE BRIEFING
+        TAP A PILLAR OR A LETTER FOR THE BRIEFING
       </Mono>
 
       <View className="mt-3 flex-row gap-2">
