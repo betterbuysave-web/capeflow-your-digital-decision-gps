@@ -78,7 +78,7 @@ export default function AboutCape() {
           <View className="mt-4">
             <Telemetry tint={C.teal} height={30} />
           </View>
-          <Mono bold className="mt-4 text-center text-[11px]" color={alpha(C.gold, 0.9)}>
+          <Mono bold className="mt-4 text-center text-[13px]" color={alpha(C.gold, 0.9)}>
             &quot;Your CAPE is yours to wear — every single day.&quot;
           </Mono>
         </Panel>
@@ -86,17 +86,17 @@ export default function AboutCape() {
         <View className="mt-8 gap-2.5">
           {MISSION.map((item) => (
             <Panel key={item.title} tint={C.violet} fill={0.05} stroke={0.16} className="p-3.5">
-              <Mono bold color={C.violet} className="text-[10px]" tracking={1.5}>
+              <Mono bold color={C.violet} className="text-[13px]" tracking={1.5}>
                 {item.title}
               </Mono>
-              <Mono className="mt-1.5 text-[10px]">{item.detail}</Mono>
+              <Mono className="mt-1.5 text-[13px]">{item.detail}</Mono>
             </Panel>
           ))}
         </View>
 
         <Panel tint={C.teal} className="mt-8">
           <Eyebrow color={C.teal}>The HARNESS Project</Eyebrow>
-          <Mono className="mt-3 text-[11px]">{PIPELINE_COPY}</Mono>
+          <Mono className="mt-3 text-[13px]">{PIPELINE_COPY}</Mono>
         </Panel>
 
         {/* WHAT M.A.T.C.H. IS */}
@@ -157,15 +157,15 @@ export default function AboutCape() {
                     borderColor: alpha(node.color, 0.4),
                   }}
                 >
-                  <Mono bold color={node.color} className="text-[13px]">
+                  <Mono bold color={node.color} className="text-[14px]">
                     {node.letter}
                   </Mono>
                 </View>
                 <View className="flex-1">
-                  <Mono bold color={node.color} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={node.color} className="text-[13px]" tracking={1.5}>
                     {node.name}
                   </Mono>
-                  <Mono className="mt-0.5 text-[10px]">{node.detail}</Mono>
+                  <Mono className="mt-0.5 text-[13px]">{node.detail}</Mono>
                 </View>
               </View>
             ))}
@@ -196,15 +196,15 @@ export default function AboutCape() {
                   }}
                 >
                   <View className="flex-row items-center justify-between">
-                    <Mono bold color={info.tint} className="text-[11px]" tracking={1.5}>
+                    <Mono bold color={info.tint} className="text-[13px]" tracking={1.5}>
                       {info.label}
                     </Mono>
                     {active ? <Chip label="YOUR TRACK" tint={info.tint} /> : null}
                   </View>
-                  <Mono bold className="mt-1.5 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
+                  <Mono bold className="mt-1.5 text-[13px]" color={alpha(C.inkSoft, 0.9)}>
                     {info.name} · {id === 'green' ? 'Grades 6–8' : 'Grades 9–12'}
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{info.scope}</Mono>
+                  <Mono className="mt-1 text-[13px]">{info.scope}</Mono>
                 </View>
               );
             })}
@@ -225,17 +225,17 @@ export default function AboutCape() {
                 <View className="flex-row items-start gap-3">
                   <point.icon size={16} color={C.teal} />
                   <View className="flex-1">
-                    <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.teal} className="text-[13px]" tracking={1.5}>
                       {point.title}
                     </Mono>
-                    <Mono className="mt-1 text-[10px]">{point.detail}</Mono>
+                    <Mono className="mt-1 text-[13px]">{point.detail}</Mono>
                   </View>
                 </View>
               </Panel>
             ))}
           </View>
           <Panel tint={C.teal} fill={0.04} stroke={0.14} className="mt-3">
-            <Mono className="text-[10px]">{PRIVACY_NOTE}</Mono>
+            <Mono className="text-[13px]">{PRIVACY_NOTE}</Mono>
           </Panel>
         </View>
 
@@ -247,7 +247,7 @@ export default function AboutCape() {
               <Eyebrow color={C.gold} className="mb-1.5">
                 THE SAFETY EXCEPTION
               </Eyebrow>
-              <Mono className="text-[10px]">{SAFETY_EXCEPTION}</Mono>
+              <Mono className="text-[13px]">{SAFETY_EXCEPTION}</Mono>
             </View>
           </View>
         </Panel>
@@ -260,7 +260,7 @@ export default function AboutCape() {
               <Eyebrow color={C.lemon} className="mb-1.5">
                 MEDICAL DISCLAIMER
               </Eyebrow>
-              <Mono className="text-[10px]">{DISCLAIMER}</Mono>
+              <Mono className="text-[13px]">{DISCLAIMER}</Mono>
             </View>
           </View>
         </Panel>
@@ -282,10 +282,10 @@ export default function AboutCape() {
                   borderColor: alpha(C.ink, 0.1),
                 }}
               >
-                <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
+                <Mono bold className="text-[13px]" color={alpha(C.inkSoft, 0.85)}>
                   {src.name}
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
                   {src.detail}
                 </Mono>
               </View>
@@ -301,7 +301,7 @@ export default function AboutCape() {
           />
           <View className="mt-4 flex-row items-center gap-2">
             <Compass size={13} color={alpha(C.inkFaint, 0.7)} />
-            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+            <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
               Built by The Harness Project · CAPE Youth Edition
             </Mono>
           </View>

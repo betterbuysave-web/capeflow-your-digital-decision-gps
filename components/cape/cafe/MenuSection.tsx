@@ -43,7 +43,7 @@ export function MenuSection() {
       <Panel tint={C.amber} fill={0.09} stroke={0.4} className="mt-5">
         <View className="flex-row items-center justify-between">
           <Eyebrow color={C.amber}>YOUR STANDING ORDER</Eyebrow>
-          <Mono bold color={C.amber} className="text-[11px]">
+          <Mono bold color={C.amber} className="text-[13px]">
             {answered}/{BOUNDARY_MENU.length}
           </Mono>
         </View>
@@ -70,7 +70,7 @@ export function MenuSection() {
                 >
                   <View className="flex-row items-center gap-2">
                     <Mono className="text-base">{item.emoji}</Mono>
-                    <Mono bold color={C.ink} className="flex-1 text-[11px]">
+                    <Mono bold color={C.ink} className="flex-1 text-[13px]">
                       {item.label}
                     </Mono>
                   </View>
@@ -94,7 +94,7 @@ export function MenuSection() {
                           <Mono
                             bold
                             color={active ? answer.tint : C.inkFaint}
-                            className="text-[10px]"
+                            className="text-[13px]"
                             tracking={1.5}
                           >
                             {answer.label}
@@ -112,7 +112,7 @@ export function MenuSection() {
 
       <View className="mt-10">
         <Eyebrow color={C.teal}>THE MENU BOARD</Eyebrow>
-        <Mono className="mt-2 text-[10px]">
+        <Mono className="mt-2 text-[13px]">
           Write your own items. Edit or delete any of them — nothing here leaves this device.
         </Mono>
       </View>
@@ -129,16 +129,16 @@ export function MenuSection() {
           >
             <Mono className="text-lg">{course.emoji}</Mono>
             <View className="flex-1">
-              <Mono bold color={course.tint} className="text-[12px]">
+              <Mono bold color={course.tint} className="text-[14px]">
                 {course.title}
               </Mono>
-              <Mono className="mt-0.5 text-[9px]">{course.desc}</Mono>
+              <Mono className="mt-0.5 text-[12px]">{course.desc}</Mono>
             </View>
           </View>
 
           <View className="gap-2 p-3.5" style={{ backgroundColor: C.card }}>
             {cafeMenu[course.id].length === 0 ? (
-              <Mono color={C.inkFaint} className="text-[10px]">
+              <Mono color={C.inkFaint} className="text-[13px]">
                 Nothing on this course yet.
               </Mono>
             ) : null}
@@ -176,7 +176,7 @@ export function MenuSection() {
               className="mt-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
             >
               <Plus size={13} color={C.paper2} />
-              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+              <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
                 {course.addLabel}
               </Mono>
             </GradientAction>
@@ -202,7 +202,7 @@ export function MenuSection() {
       <Panel tint={C.tealBright} fill={0.08} stroke={0.35} className="mt-6">
         <View className="flex-row items-start gap-2.5">
           <RotateCcw size={15} color={C.teal} />
-          <Mono className="flex-1 text-[10px]">
+          <Mono className="flex-1 text-[13px]">
             Menus change. Revisit your order any time — yesterday&apos;s answer does not bind today.
           </Mono>
         </View>
@@ -235,21 +235,21 @@ function MenuPreview({
           const items = menu[course.id].filter((i) => i.text.trim().length > 0);
           return (
             <View key={course.id} className="mb-5">
-              <Mono bold color={course.tint} className="text-[11px]">
+              <Mono bold color={course.tint} className="text-[13px]">
                 {course.emoji} {course.title.toUpperCase()}
               </Mono>
               <View className="mt-2 gap-1.5">
                 {items.length === 0 ? (
-                  <Mono color={C.inkFaint} className="text-[10px]">
+                  <Mono color={C.inkFaint} className="text-[13px]">
                     Nothing added yet.
                   </Mono>
                 ) : (
                   items.map((item) => (
                     <View key={item.id} className="flex-row gap-2">
-                      <Mono color={course.tint} className="text-[10px]">
+                      <Mono color={course.tint} className="text-[13px]">
                         —
                       </Mono>
-                      <Mono color={C.inkSoft} className="flex-1 text-[10px]">
+                      <Mono color={C.inkSoft} className="flex-1 text-[13px]">
                         {item.text.trim()}
                       </Mono>
                     </View>
@@ -259,7 +259,7 @@ function MenuPreview({
             </View>
           );
         })}
-        <Mono color={C.inkFaint} className="pb-4 text-[9px]">
+        <Mono color={C.inkFaint} className="pb-4 text-[12px]">
           Screenshot this if you want to share it with someone you trust. It is stored only on this
           device.
         </Mono>

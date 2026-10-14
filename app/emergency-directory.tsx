@@ -74,7 +74,7 @@ export default function EmergencyDirectory() {
                 <Mono bold color={C.paper2} className="text-[14px]" tracking={2}>
                   CALL 911
                 </Mono>
-                <Mono color={C.paper2} className="mt-1 text-[11px]">
+                <Mono color={C.paper2} className="mt-1 text-[13px]">
                   Immediate danger, serious injury, overdose, assault in progress
                 </Mono>
               </View>
@@ -90,10 +90,10 @@ export default function EmergencyDirectory() {
             <View className="flex-row items-center gap-3">
               <Users size={18} color={C.azure} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
                   YOUR SAFETY CIRCLE
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   {circle.length === 0
                     ? 'No one saved yet — add them before you need them'
                     : `${circle.length} ${circle.length === 1 ? 'person' : 'people'} on this device`}
@@ -113,7 +113,7 @@ export default function EmergencyDirectory() {
                 {group.label}
               </Eyebrow>
             </View>
-            <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.75)}>
+            <Mono className="mt-2 text-[13px]" color={alpha(C.inkFaint, 0.75)}>
               {group.blurb}
             </Mono>
             <View className="mt-3 gap-2.5">
@@ -136,10 +136,10 @@ export default function EmergencyDirectory() {
             <View className="flex-row items-start gap-3">
               <Lock size={16} color={C.lemon} />
               <View className="flex-1">
-                <Mono bold color={C.lemon} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
                   {lockedCount} {lockedCount === 1 ? 'GROUP' : 'GROUPS'} ON THE 9–12 TRACK
                 </Mono>
-                <Mono className="mt-1 text-[10px]">{EMERGENCY_LOCK_NOTE}</Mono>
+                <Mono className="mt-1 text-[13px]">{EMERGENCY_LOCK_NOTE}</Mono>
               </View>
             </View>
           </View>
@@ -151,14 +151,14 @@ export default function EmergencyDirectory() {
             {EMERGENCY_FIRST_MOVES.map((move, index) => (
               <Panel key={move.title} tint={C.teal} fill={0.04} stroke={0.15} className="p-3.5">
                 <View className="flex-row items-start gap-3">
-                  <Mono bold color={alpha(C.teal, 0.7)} className="text-[10px]">
+                  <Mono bold color={alpha(C.teal, 0.7)} className="text-[13px]">
                     {`0${index + 1}`}
                   </Mono>
                   <View className="flex-1">
-                    <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.teal} className="text-[13px]" tracking={1.5}>
                       {move.title}
                     </Mono>
-                    <Mono className="mt-1 text-[10px]">{move.detail}</Mono>
+                    <Mono className="mt-1 text-[13px]">{move.detail}</Mono>
                   </View>
                 </View>
               </Panel>
@@ -173,7 +173,7 @@ export default function EmergencyDirectory() {
               <Eyebrow color={C.gold} className="mb-1.5">
                 THE SAFETY EXCEPTION
               </Eyebrow>
-              <Mono className="text-[10px]">{SAFETY_EXCEPTION}</Mono>
+              <Mono className="text-[13px]">{SAFETY_EXCEPTION}</Mono>
             </View>
           </View>
         </Panel>
@@ -185,7 +185,7 @@ export default function EmergencyDirectory() {
               <Eyebrow color={C.lemon} className="mb-1.5">
                 WHAT LEAVES THIS APP
               </Eyebrow>
-              <Mono className="text-[10px]">{EMERGENCY_NOTE}</Mono>
+              <Mono className="text-[13px]">{EMERGENCY_NOTE}</Mono>
             </View>
           </View>
         </Panel>
@@ -206,11 +206,11 @@ function ContactCard({ contact, tint }: { contact: EmergencyContact; tint: strin
         borderColor: alpha(tint, 0.26),
       }}
     >
-      <Mono bold color={tint} className="text-[11px]" tracking={1}>
+      <Mono bold color={tint} className="text-[13px]" tracking={1}>
         {contact.name}
       </Mono>
-      <Mono className="mt-1 text-[10px]">{contact.detail}</Mono>
-      <Mono className="mt-1.5 text-[9px]" color={alpha(C.inkFaint, 0.65)}>
+      <Mono className="mt-1 text-[13px]">{contact.detail}</Mono>
+      <Mono className="mt-1.5 text-[12px]" color={alpha(C.inkFaint, 0.65)}>
         {contact.hours}
       </Mono>
       <View className="mt-3 flex-row gap-2">
@@ -267,7 +267,7 @@ function ActionPill({
       style={{ minHeight: 48, backgroundColor: tint }}
     >
       {icon}
-      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
+      <Mono bold color={C.paper2} className="text-[13px]" tracking={1.5}>
         {label}
       </Mono>
     </GradientAction>

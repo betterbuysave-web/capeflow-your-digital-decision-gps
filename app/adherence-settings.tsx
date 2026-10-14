@@ -140,7 +140,7 @@ export default function AdherenceSettings() {
             <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-5">
               <View className="flex-row items-start gap-3">
                 <BellOff size={16} color={C.lemon} />
-                <Mono className="flex-1 text-[10px]">{ADHERENCE_WEB_NOTE}</Mono>
+                <Mono className="flex-1 text-[13px]">{ADHERENCE_WEB_NOTE}</Mono>
               </View>
             </Panel>
           ) : null}
@@ -153,10 +153,10 @@ export default function AdherenceSettings() {
               <View className="flex-row items-start gap-3">
                 <BellRing size={16} color={C.paper2} />
                 <View className="flex-1">
-                  <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+                  <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
                     NOTIFICATIONS ARE OFF — TAP TO ALLOW
                   </Mono>
-                  <Mono color={C.paper2} className="mt-1 text-[11px]">
+                  <Mono color={C.paper2} className="mt-1 text-[13px]">
                     {ADHERENCE_PERMISSION_NOTE}
                   </Mono>
                 </View>
@@ -182,7 +182,7 @@ export default function AdherenceSettings() {
             </View>
           ) : (
             <Panel tint={C.inkFaint} fill={0.03} stroke={0.1} className="mt-9">
-              <Mono className="text-[10px]">
+              <Mono className="text-[13px]">
                 Nothing scheduled yet. Pick one from the bank below — start with the dose you miss
                 most, not the easiest one.
               </Mono>
@@ -193,7 +193,7 @@ export default function AdherenceSettings() {
           <View className="mt-10">
             <Eyebrow color={C.gold}>REMINDER BANK</Eyebrow>
             <Display className="mt-2 text-3xl">Add what you actually take.</Display>
-            <Mono className="mt-2 text-[10px]">
+            <Mono className="mt-2 text-[13px]">
               Each one arrives with a sensible default time and cadence. Tap to add, then adjust.
             </Mono>
             <View className="mt-4 gap-2">
@@ -209,13 +209,13 @@ export default function AdherenceSettings() {
                   >
                     <Mono className="text-base">{template.emoji}</Mono>
                     <View className="flex-1">
-                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+                      <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
                         {template.label}
                       </Mono>
-                      <Mono color={C.paper2} className="mt-0.5 text-[11px]">
+                      <Mono color={C.paper2} className="mt-0.5 text-[13px]">
                         {template.detail}
                       </Mono>
-                      <Mono className="mt-1 text-[11px]" color={C.paper2}>
+                      <Mono className="mt-1 text-[13px]" color={C.paper2}>
                         {formatTime(template.defaultTime)} · {describeDays(template.defaultDays)} ·{' '}
                         {toneInfo(template.defaultTone).label}
                       </Mono>
@@ -242,10 +242,10 @@ export default function AdherenceSettings() {
                 <View className="flex-row items-start gap-3">
                   <Lock size={16} color={C.lemon} />
                   <View className="flex-1">
-                    <Mono bold color={C.lemon} className="text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
                       {lockedCount} REMINDERS ON THE 9–12 TRACK
                     </Mono>
-                    <Mono className="mt-1 text-[10px]">{ADHERENCE_LOCK_NOTE}</Mono>
+                    <Mono className="mt-1 text-[13px]">{ADHERENCE_LOCK_NOTE}</Mono>
                   </View>
                 </View>
               </View>
@@ -255,7 +255,7 @@ export default function AdherenceSettings() {
           {/* CUSTOM */}
           <View className="mt-10">
             <Eyebrow color={C.violet}>YOUR OWN LABEL</Eyebrow>
-            <Mono className="mt-2 text-[10px]">
+            <Mono className="mt-2 text-[13px]">
               Name it whatever makes sense to you. Vague is fine — the point is that only you know
               what it means.
             </Mono>
@@ -268,7 +268,7 @@ export default function AdherenceSettings() {
                 placeholderTextColor={C.inkFaint}
                 onSubmitEditing={addCustom}
                 returnKeyType="done"
-                className="flex-1 rounded-xl px-3 py-3 text-[11px]"
+                className="flex-1 rounded-xl px-3 py-3 text-[13px]"
                 style={{
                   color: C.inkSoft,
                   fontFamily: INPUT_FONT,
@@ -294,7 +294,7 @@ export default function AdherenceSettings() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   PRIVACY
                 </Eyebrow>
-                <Mono className="text-[10px]">{ADHERENCE_NOTE}</Mono>
+                <Mono className="text-[13px]">{ADHERENCE_NOTE}</Mono>
               </View>
             </View>
           </Panel>
@@ -377,15 +377,15 @@ function ReminderCard({
           <Mono
             bold
             color={reminder.enabled ? tint : alpha(C.inkFaint, 0.8)}
-            className="text-[11px]"
+            className="text-[13px]"
             tracking={1.2}
           >
             {reminder.label}
           </Mono>
-          <Mono className="mt-0.5 text-[10px]">
+          <Mono className="mt-0.5 text-[13px]">
             {formatTime(reminder.time)} · {describeDays(reminder.days)}
           </Mono>
-          <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+          <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
             {toneInfo(reminder.tone).label} · {reminder.enabled ? 'ARMED' : 'PAUSED'}
           </Mono>
         </Pressable>
@@ -398,10 +398,10 @@ function ReminderCard({
       {/* HISTORY STRIP */}
       <View className="mt-3">
         <View className="flex-row items-center justify-between">
-          <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+          <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.6)}>
             LAST {HISTORY_DAYS} DAYS
           </Mono>
-          <Mono bold className="text-[9px]" color={alpha(tint, 0.85)}>
+          <Mono bold className="text-[12px]" color={alpha(tint, 0.85)}>
             {hits}/{HISTORY_DAYS} · {rate}%
           </Mono>
         </View>
@@ -431,7 +431,7 @@ function ReminderCard({
         className="mt-3 flex-row items-center justify-center gap-2 rounded-xl py-3"
       >
         {doneToday ? <Check size={14} color={C.paper2} /> : null}
-        <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+        <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
           {doneToday ? 'LOGGED TODAY · TAP TO UNDO' : 'LOG TODAY'}
         </Mono>
       </GradientAction>
@@ -440,7 +440,7 @@ function ReminderCard({
         <View className="mt-4 gap-4">
           {/* TIME */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+            <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.6)}>
               ALERT TIME
             </Mono>
             <View className="mt-2 flex-row items-center gap-2">
@@ -458,7 +458,7 @@ function ReminderCard({
                   borderColor: alpha(C.ink, 0.14),
                 }}
               >
-                <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[13px]" tracking={1}>
+                <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[14px]" tracking={1}>
                   {formatTime(reminder.time)}
                 </Mono>
               </View>
@@ -479,7 +479,7 @@ function ReminderCard({
 
           {/* DAYS */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+            <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.6)}>
               DAYS
             </Mono>
             <View className="mt-2 flex-row gap-1.5">
@@ -502,7 +502,7 @@ function ReminderCard({
                     <Mono
                       bold={active}
                       color={active ? tint : alpha(C.inkFaint, 0.7)}
-                      className="text-[10px]"
+                      className="text-[13px]"
                     >
                       {day.letter}
                     </Mono>
@@ -514,7 +514,7 @@ function ReminderCard({
 
           {/* TONE */}
           <View>
-            <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+            <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.6)}>
               ALERT TONE
             </Mono>
             <View className="mt-2 gap-2">
@@ -545,12 +545,12 @@ function ReminderCard({
                       <Mono
                         bold={active}
                         color={active ? tone.tint : alpha(C.inkSoft, 0.8)}
-                        className="text-[10px]"
+                        className="text-[13px]"
                         tracking={1.2}
                       >
                         {tone.label}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]">{tone.detail}</Mono>
+                      <Mono className="mt-0.5 text-[12px]">{tone.detail}</Mono>
                     </View>
                   </Pressable>
                 );
@@ -563,7 +563,7 @@ function ReminderCard({
             className="flex-row items-center justify-center gap-2 rounded-xl py-3"
           >
             <Trash2 size={13} color={C.paper2} />
-            <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+            <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
               DELETE REMINDER
             </Mono>
           </GradientAction>
@@ -603,7 +603,7 @@ function StepChip({ label, tint, onPress }: { label: string; tint: string; onPre
       className="flex-1 items-center justify-center rounded-lg py-2"
       style={{ backgroundColor: tint }}
     >
-      <Mono color={C.paper2} className="text-center text-[11px]">
+      <Mono color={C.paper2} className="text-center text-[13px]">
         {label}
       </Mono>
     </GradientAction>

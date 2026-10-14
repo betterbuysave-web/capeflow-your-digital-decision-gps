@@ -98,7 +98,7 @@ export default function ClinicFinder() {
                 onChangeText={setQuery}
                 placeholder="free clinic, vaccine, therapy, testing…"
                 placeholderTextColor={C.inkFaint}
-                className="flex-1 py-3 text-[11px]"
+                className="flex-1 py-3 text-[13px]"
                 style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
               />
               {query.length > 0 ? (
@@ -130,12 +130,12 @@ export default function ClinicFinder() {
                   placeholderTextColor={C.inkFaint}
                   keyboardType="number-pad"
                   maxLength={5}
-                  className="py-3 text-[11px]"
+                  className="py-3 text-[13px]"
                   style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
                 />
               </View>
             </View>
-            <Mono className="mt-2 text-[10px]" color={C.inkFaint}>
+            <Mono className="mt-2 text-[13px]" color={C.inkFaint}>
               A ZIP is only passed to finders that accept one in their link. It is never saved.
             </Mono>
           </Panel>
@@ -160,11 +160,11 @@ export default function ClinicFinder() {
                       borderColor: alpha(cat.tint, active ? 0.5 : 0.16),
                     }}
                   >
-                    <Mono className="text-[10px]">{cat.emoji}</Mono>
+                    <Mono className="text-[13px]">{cat.emoji}</Mono>
                     <Mono
                       bold={active}
                       color={active ? cat.tint : C.inkSoft}
-                      className="text-[9px]"
+                      className="text-[12px]"
                       tracking={1}
                     >
                       {cat.label}
@@ -174,7 +174,7 @@ export default function ClinicFinder() {
               })}
             </View>
             {activeCategory ? (
-              <Mono className="mt-3 text-[10px]" color={alpha(activeCategory.tint, 0.85)}>
+              <Mono className="mt-3 text-[13px]" color={alpha(activeCategory.tint, 0.85)}>
                 {activeCategory.blurb}
               </Mono>
             ) : null}
@@ -193,7 +193,7 @@ export default function ClinicFinder() {
                 }}
                 className="min-h-11 min-w-11 items-center justify-center rounded-full px-2"
               >
-                <Mono bold color={C.paper2} className="text-[9px]" tracking={1.5}>
+                <Mono bold color={C.paper2} className="text-[12px]" tracking={1.5}>
                   RESET
                 </Mono>
               </GradientAction>
@@ -203,7 +203,7 @@ export default function ClinicFinder() {
           <View className="mt-3 gap-3">
             {results.length === 0 ? (
               <Panel tint={C.inkFaint} fill={0.03} stroke={0.1}>
-                <Mono className="text-[10px]">
+                <Mono className="text-[13px]">
                   Nothing matched that. Try a plainer word — &quot;free clinic&quot;,
                   &quot;vaccine&quot;, &quot;therapy&quot; — or clear the filters.
                 </Mono>
@@ -226,10 +226,10 @@ export default function ClinicFinder() {
               <View className="flex-row items-start gap-3">
                 <Lock size={16} color={C.lemon} />
                 <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
                     {lockedCount} FINDERS ON THE 9–12 TRACK
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{CLINIC_GREEN_LOCK_NOTE}</Mono>
+                  <Mono className="mt-1 text-[13px]">{CLINIC_GREEN_LOCK_NOTE}</Mono>
                 </View>
               </View>
             </View>
@@ -246,13 +246,13 @@ export default function ClinicFinder() {
             <View className="mt-4 gap-2.5">
               {scripts.map((script) => (
                 <Panel key={script.id} tint={C.modC} fill={0.05} stroke={0.16} className="p-3.5">
-                  <Mono bold color={C.modC} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={C.modC} className="text-[13px]" tracking={1.5}>
                     {script.label}
                   </Mono>
-                  <Mono bold className="mt-2 text-[11px]" color={alpha(C.inkSoft, 0.92)}>
+                  <Mono bold className="mt-2 text-[13px]" color={alpha(C.inkSoft, 0.92)}>
                     {script.line}
                   </Mono>
-                  <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                  <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                     {script.when}
                   </Mono>
                 </Panel>
@@ -264,14 +264,14 @@ export default function ClinicFinder() {
             <Eyebrow color={C.gold} className="mb-1.5">
               COST IS A GATE, NOT A WALL
             </Eyebrow>
-            <Mono className="text-[10px]">{CLINIC_COST_NOTE}</Mono>
+            <Mono className="text-[13px]">{CLINIC_COST_NOTE}</Mono>
           </Panel>
 
           <Panel tint={C.azure} fill={0.05} stroke={0.18} className="mt-3">
             <Eyebrow color={C.azure} className="mb-1.5">
               CONFIDENTIALITY — ASK TWO QUESTIONS
             </Eyebrow>
-            <Mono className="text-[10px]">{CLINIC_CONFIDENTIALITY_NOTE}</Mono>
+            <Mono className="text-[13px]">{CLINIC_CONFIDENTIALITY_NOTE}</Mono>
           </Panel>
 
           <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-3">
@@ -281,7 +281,7 @@ export default function ClinicFinder() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   ZERO STIGMA TAX
                 </Eyebrow>
-                <Mono className="text-[10px]">{CLINIC_SAFETY_NOTE}</Mono>
+                <Mono className="text-[13px]">{CLINIC_SAFETY_NOTE}</Mono>
               </View>
             </View>
           </Panel>
@@ -304,16 +304,16 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
         borderColor: alpha(tint, 0.2),
       }}
     >
-      <Mono bold color={tint} className="text-[11px]" tracking={1}>
+      <Mono bold color={tint} className="text-[13px]" tracking={1}>
         {network.name}
       </Mono>
-      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+      <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
         {network.operator}
       </Mono>
-      <Mono className="mt-2 text-[10px]">{network.detail}</Mono>
+      <Mono className="mt-2 text-[13px]">{network.detail}</Mono>
       <View className="mt-3 flex-row items-start gap-2">
-        <Mono className="text-[10px]">💰</Mono>
-        <Mono className="flex-1 text-[9px]" color={alpha(C.gold, 0.85)}>
+        <Mono className="text-[13px]">💰</Mono>
+        <Mono className="flex-1 text-[12px]" color={alpha(C.gold, 0.85)}>
           {network.cost}
         </Mono>
       </View>
@@ -323,7 +323,7 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
           className="flex-1 flex-row items-center justify-center gap-2 rounded-xl px-2 py-2.5"
         >
           <ExternalLink size={13} color={C.paper2} />
-          <Mono bold color={C.paper2} className="shrink text-center text-[11px]" tracking={1}>
+          <Mono bold color={C.paper2} className="shrink text-center text-[13px]" tracking={1}>
             OPEN FINDER
           </Mono>
         </GradientAction>
@@ -333,7 +333,7 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
             className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
           >
             <Phone size={13} color={C.paper2} />
-            <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
+            <Mono bold color={C.paper2} className="text-[13px]" tracking={1.5}>
               CALL
             </Mono>
           </GradientAction>

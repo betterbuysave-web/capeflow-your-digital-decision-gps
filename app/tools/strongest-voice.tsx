@@ -76,13 +76,13 @@ export default function StrongestVoice() {
                   borderColor: alpha(C.modC, starter === script ? 0.45 : 0.18),
                 }}
               >
-                <Mono className="text-[11px]">{starter}</Mono>
+                <Mono className="text-[13px]">{starter}</Mono>
               </Pressable>
             ))}
           </View>
 
           <TextField className="mt-6">
-            <Label className="font-mono text-[10px]">MAKE IT YOURS</Label>
+            <Label className="font-mono text-[13px]">MAKE IT YOURS</Label>
             <Input
               value={script}
               onChangeText={(value) => {
@@ -101,7 +101,7 @@ export default function StrongestVoice() {
               <MessageSquareText size={18} color={C.modC} />
               <View className="flex-1">
                 <Eyebrow color={C.modC}>REHEARSE OUT LOUD</Eyebrow>
-                <Mono className="mt-2 text-[11px]">
+                <Mono className="mt-2 text-[13px]">
                   “{script.trim() || 'Your line goes here.'}”
                 </Mono>
                 <GradientAction
@@ -112,7 +112,7 @@ export default function StrongestVoice() {
                   className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3"
                 >
                   <Check size={14} color={C.paper2} />
-                  <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+                  <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
                     SAID IT {rehearsals}/3
                   </Mono>
                 </GradientAction>
@@ -135,7 +135,7 @@ export default function StrongestVoice() {
                     borderColor: alpha(C.teal, 0.2),
                   }}
                 >
-                  <Mono className="flex-1 text-[10px]">{item}</Mono>
+                  <Mono className="flex-1 text-[13px]">{item}</Mono>
                   <GradientAction
                     accessibilityLabel={`Delete script: ${item}`}
                     className="h-11 w-11 items-center justify-center rounded-full"

@@ -70,7 +70,7 @@ export function MatchCompass({
             <Chip label={trackInfo.label} tint={trackInfo.tint} />
             {activeBand ? <Chip label={`GRADES ${activeBand}`} tint={C.gold} /> : null}
           </View>
-          <Mono className="mt-2 text-[9px]">{trackInfo.scope}</Mono>
+          <Mono className="mt-2 text-[12px]">{trackInfo.scope}</Mono>
         </View>
       )}
 
@@ -91,7 +91,7 @@ export function MatchCompass({
           className="px-4 py-2"
           style={{ borderBottomWidth: 1, borderBottomColor: alpha(C.tealBright, 0.22) }}
         >
-          <Mono bold className="text-[8px]" color={C.inkFaint} tracking={2}>
+          <Mono bold className="text-[11px]" color={C.inkFaint} tracking={2}>
             FIG. 01 — 5 DECISION GPS SUPERPOWERS
           </Mono>
         </View>
@@ -105,7 +105,7 @@ export function MatchCompass({
         </View>
       </View>
 
-      <Mono className="mt-2.5 text-[9px]" tracking={2}>
+      <Mono className="mt-2.5 text-[12px]" tracking={2}>
         TAP A PILLAR OR A LETTER FOR THE BRIEFING
       </Mono>
 
@@ -246,7 +246,7 @@ function NodeBriefing({
               contentContainerClassName="px-5 pt-4 pb-5"
               showsVerticalScrollIndicator={false}
             >
-              <Mono className="text-[10px]">{node.hint}</Mono>
+              <Mono className="text-[13px]">{node.hint}</Mono>
 
               <View className="mt-4 gap-2.5">
                 {nodeBullets(node, track).map((point) => (
@@ -255,7 +255,7 @@ function NodeBriefing({
                       className="mt-1.5 h-1.5 w-1.5 rounded-full"
                       style={{ backgroundColor: node.color }}
                     />
-                    <Body className="flex-1 text-[13px]">{point}</Body>
+                    <Body className="flex-1 text-[14px]">{point}</Body>
                   </View>
                 ))}
               </View>
@@ -270,17 +270,17 @@ function NodeBriefing({
                   }}
                 >
                   <Lock size={14} color={C.lemon} />
-                  <Mono className="flex-1 text-[10px]">{node.lockNote}</Mono>
+                  <Mono className="flex-1 text-[13px]">{node.lockNote}</Mono>
                 </View>
               ) : null}
 
               {preview ? null : (
                 <View className="mt-6">
                   <View className="mb-2 flex-row items-center justify-between">
-                    <Mono bold color={C.inkSoft} className="text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.inkSoft} className="text-[13px]" tracking={1.5}>
                       MODULE PROGRESS
                     </Mono>
-                    <Mono className="text-[9px]">
+                    <Mono className="text-[12px]">
                       {moduleProgress(node.id, completedLessons, track)}%
                     </Mono>
                   </View>
@@ -311,7 +311,7 @@ function NodeBriefing({
                 onPress={onClose}
                 className="mt-3 min-h-12 flex-row items-center justify-center gap-2 py-3 active:opacity-60"
               >
-                <Mono bold color={C.inkSoft} tracking={2} className="text-[11px]">
+                <Mono bold color={C.inkSoft} tracking={2} className="text-[13px]">
                   BACK TO THE COMPASS
                 </Mono>
                 <ArrowRight size={14} color={C.inkSoft} />

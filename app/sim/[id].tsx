@@ -104,7 +104,7 @@ export default function SimDetail() {
         <Display className="mt-2 text-4xl">{scenario.title}</Display>
 
         <Panel tint={C.violet} fill={0.06} stroke={0.22} className="mt-5">
-          <Mono className="text-[10px]">{scenario.setup}</Mono>
+          <Mono className="text-[13px]">{scenario.setup}</Mono>
           <View
             className="mt-4 ml-auto max-w-[90%] rounded-2xl px-4 py-3"
             style={{
@@ -113,8 +113,8 @@ export default function SimDetail() {
               borderColor: alpha(C.azure, 0.28),
             }}
           >
-            <Mono className="text-[12px]">{scenario.message}</Mono>
-            <Mono className="mt-1 text-right text-[8px]" color={C.inkFaint}>
+            <Mono className="text-[14px]">{scenario.message}</Mono>
+            <Mono className="mt-1 text-right text-[11px]" color={C.inkFaint}>
               {scenario.bubbleTime}
             </Mono>
           </View>
@@ -149,7 +149,7 @@ export default function SimDetail() {
                       : alpha(C.ink, 0.13),
                   }}
                 >
-                  <Mono className="flex-1 text-[11px]">{choice.label}</Mono>
+                  <Mono className="flex-1 text-[13px]">{choice.label}</Mono>
                   {selected ? (
                     <VerdictBadge verdict={choice.verdict} />
                   ) : (
@@ -165,9 +165,9 @@ export default function SimDetail() {
           <View className="mt-5 gap-3" accessibilityLiveRegion="polite">
             <Panel tint={verdictColor(picked.verdict)} fill={0.06} stroke={0.22}>
               <Eyebrow color={verdictColor(picked.verdict)}>{verdictLabel(picked.verdict)}</Eyebrow>
-              <Mono className="mt-2 text-[11px]">{picked.feedback}</Mono>
+              <Mono className="mt-2 text-[13px]">{picked.feedback}</Mono>
               {mod ? (
-                <Mono bold color={mod.color} className="mt-3 text-[10px]">
+                <Mono bold color={mod.color} className="mt-3 text-[13px]">
                   {mod.name.toUpperCase()} MOVE
                 </Mono>
               ) : null}
@@ -177,7 +177,7 @@ export default function SimDetail() {
                 <Zap size={17} color={C.flame} />
                 <Eyebrow color={C.flame}>THE PIVOT</Eyebrow>
               </View>
-              <Mono bold className="mt-3 text-[11px]">
+              <Mono bold className="mt-3 text-[13px]">
                 {pivot.trigger}
               </Mono>
               <Body className="mt-2">
@@ -205,7 +205,7 @@ export default function SimDetail() {
                           : alpha(C.ink, 0.14),
                     }}
                   >
-                    <Mono className="text-[10px]">{choice.label}</Mono>
+                    <Mono className="text-[13px]">{choice.label}</Mono>
                   </Pressable>
                 ))}
               </View>
@@ -218,7 +218,7 @@ export default function SimDetail() {
             <MissionComplete detail="You practiced the Pivot: when one layer fails, deploy another instead of freezing." />
             <Panel tint={C.teal} fill={0.05} stroke={0.18}>
               <Eyebrow color={C.teal}>DEBRIEF</Eyebrow>
-              <Mono className="mt-2 text-[11px]">{scenario.debrief}</Mono>
+              <Mono className="mt-2 text-[13px]">{scenario.debrief}</Mono>
             </Panel>
             <GradientAction
               onPress={() => {
@@ -228,7 +228,7 @@ export default function SimDetail() {
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3"
             >
               <RotateCcw size={13} color={C.paper2} />
-              <Mono bold color={C.paper2} className="text-[11px]">
+              <Mono bold color={C.paper2} className="text-[13px]">
                 RUN IT AGAIN
               </Mono>
             </GradientAction>

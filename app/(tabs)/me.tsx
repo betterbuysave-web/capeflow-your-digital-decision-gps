@@ -175,10 +175,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <FileText size={18} color={C.gold} />
               <View className="flex-1">
-                <Mono bold color={C.gold} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.gold} className="text-[13px]" tracking={1}>
                   PROTECTION BLUEPRINT
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   Signature Shield readout, active plans, adherence history
                 </Mono>
               </View>
@@ -194,10 +194,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <BellRing size={18} color={C.modM} />
               <View className="flex-1">
-                <Mono bold color={C.modM} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.modM} className="text-[13px]" tracking={1}>
                   ADHERENCE SETTINGS
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   {reminders.length > 0
                     ? `${armedReminders} of ${reminders.length} reminders armed`
                     : 'Set reminders, tones, and weekly schedules'}
@@ -215,10 +215,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <Library size={18} color={C.azure} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
                   EDUCATIONAL LIBRARY
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   Glossary and topics, searchable by category
                 </Mono>
               </View>
@@ -234,10 +234,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <Info size={18} color={C.teal} />
               <View className="flex-1">
-                <Mono bold color={C.teal} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.teal} className="text-[13px]" tracking={1}>
                   ABOUT CAPE FLOW
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   Mission, medical disclaimer, privacy-first design
                 </Mono>
               </View>
@@ -248,10 +248,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <Award size={18} color={C.gold} />
               <View className="flex-1">
-                <Mono bold color={C.gold} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.gold} className="text-[13px]" tracking={1}>
                   BADGE CABINET
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">{badges.length} earned</Mono>
+                <Mono className="mt-0.5 text-[12px]">{badges.length} earned</Mono>
               </View>
             </View>
           </TintedRow>
@@ -265,10 +265,10 @@ export default function Me() {
             <View className="flex-row items-center gap-3">
               <Users size={18} color={C.violet} />
               <View className="flex-1">
-                <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
                   PARENT &amp; SCHOOL DASHBOARD
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   Curriculum, parent rights, COPPA/FERPA, home activities
                 </Mono>
               </View>
@@ -283,7 +283,7 @@ export default function Me() {
               <Eyebrow color={C.teal} className="mb-1.5">
                 ZERO STIGMA TAX — NO TRACKING
               </Eyebrow>
-              <Mono className="text-[10px]">{PRIVACY_NOTE}</Mono>
+              <Mono className="text-[13px]">{PRIVACY_NOTE}</Mono>
             </View>
           </View>
         </Panel>
@@ -304,10 +304,10 @@ export default function Me() {
                   borderColor: alpha(C.ink, 0.1),
                 }}
               >
-                <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
+                <Mono bold className="text-[13px]" color={alpha(C.inkSoft, 0.85)}>
                   {src.name}
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
                   {src.detail}
                 </Mono>
               </View>
@@ -321,7 +321,7 @@ export default function Me() {
             className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
           >
             <RotateCcw size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
               REVISIT THE INTRO
             </Mono>
           </GradientAction>
@@ -331,12 +331,12 @@ export default function Me() {
             className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
           >
             <Trash2 size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
               DELETE ALL MY DATA
             </Mono>
           </GradientAction>
 
-          <Body className="text-center text-[11px]" color={C.inkFaint}>
+          <Body className="text-center text-[13px]" color={C.inkFaint}>
             Clears saved CAPE entries and reminders on this device. Shared copies and existing
             device backups are not erased.
           </Body>
@@ -360,7 +360,7 @@ export default function Me() {
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
             >
               {deleting ? <ActivityIndicator size="small" color={C.paper2} /> : null}
-              <Mono bold color={C.paper2} className="text-[12px]">
+              <Mono bold color={C.paper2} className="text-[14px]">
                 {deleting ? 'Deleting…' : resetError ? 'Retry deletion' : 'Delete everything'}
               </Mono>
             </GradientAction>
@@ -369,7 +369,7 @@ export default function Me() {
               onPress={() => setResetOpen(false)}
               className="items-center justify-center rounded-full px-5 py-3"
             >
-              <Mono bold color={C.paper2} className="text-[12px]">
+              <Mono bold color={C.paper2} className="text-[14px]">
                 Cancel
               </Mono>
             </GradientAction>
@@ -380,7 +380,7 @@ export default function Me() {
           This clears your private inputs, scripts, plans, Safety Circle, progress, preferences, and
           reminders saved in CAPE Flow on this device. It cannot be undone.
         </Body>
-        <Body className="mt-3 text-[12px]">
+        <Body className="mt-3 text-[14px]">
           Shared or copied text, call history, and existing device backups are outside CAPE Flow and
           are not erased.
         </Body>
@@ -410,10 +410,10 @@ function ScoreRow({
   return (
     <View>
       <View className="mb-2 flex-row items-center justify-between">
-        <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
+        <Mono bold color={tint} className="text-[13px]" tracking={1.5}>
           {label}
         </Mono>
-        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+        <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
           {detail} · {weight}
         </Mono>
       </View>

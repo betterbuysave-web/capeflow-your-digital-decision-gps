@@ -19,16 +19,16 @@ export function BrandFooter({ className }: { className?: string }) {
         borderColor: alpha(C.ink, 0.12),
       }}
     >
-      <Mono bold className="mb-2 text-center text-[11px]" color={C.teal}>
+      <Mono bold className="mb-2 text-center text-[13px]" color={C.teal}>
         Your CAPE is yours to wear—every single day
       </Mono>
-      <Mono bold className="text-center text-[10px]" color={C.inkSoft}>
+      <Mono bold className="text-center text-[13px]" color={C.inkSoft}>
         The HARNESS Project LLC | CAPE Youth Edition | CAPE Flow App | theharnessproject.org.
       </Mono>
-      <Mono className="mt-1 text-center text-[9px]" color={C.inkFaint}>
+      <Mono className="mt-1 text-center text-[12px]" color={C.inkFaint}>
         For educational purposes only. Not medical advice.
       </Mono>
-      <Mono className="text-center text-[9px]" color={C.inkFaint}>
+      <Mono className="text-center text-[12px]" color={C.inkFaint}>
         © 2026 Christopher Zacharie.
       </Mono>
     </View>

@@ -44,12 +44,12 @@ export function JourneyBar({
                 borderColor: alpha(station.tint, isActive ? 0.6 : 0.22),
               }}
             >
-              <Mono className="text-[11px]">{station.emoji}</Mono>
+              <Mono className="text-[13px]">{station.emoji}</Mono>
               <Mono
                 bold
                 tracking={1.5}
                 color={isActive ? station.tint : C.inkFaint}
-                className="text-[9px]"
+                className="text-[12px]"
               >
                 {station.label}
               </Mono>
@@ -59,7 +59,7 @@ export function JourneyBar({
       </ScrollView>
 
       <View className="flex-row items-center gap-2 px-5 pb-3">
-        <Mono bold tracking={2} color={C.inkFaint} className="text-[8px]">
+        <Mono bold tracking={2} color={C.inkFaint} className="text-[11px]">
           JOURNEY
         </Mono>
         <View className="flex-1 flex-row items-center">

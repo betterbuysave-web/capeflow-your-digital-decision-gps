@@ -54,7 +54,7 @@ export default function LessonScreen() {
           <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-6">
             <View className="flex-row items-start gap-2.5">
               <Lock size={15} color={C.lemon} />
-              <Mono className="flex-1 text-[10px]">
+              <Mono className="flex-1 text-[13px]">
                 Choosing your pace is the base layer. If you have questions, a trusted adult is the
                 right next step.
               </Mono>
@@ -66,7 +66,7 @@ export default function LessonScreen() {
             className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5"
           >
             <Phone size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
               OPEN CRISIS PROTOCOL
             </Mono>
           </GradientAction>
@@ -97,7 +97,7 @@ export default function LessonScreen() {
         <Display className="mt-2 text-4xl">{lesson.title}</Display>
         {lesson.number === 12 && track === 'green' ? (
           <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-4">
-            <Mono className="text-[10px]">
+            <Mono className="text-[13px]">
               Welcome back. Parts 3 and 5 belong to the Blue Track, so the Green Track goes straight
               from Lesson 7 to here. You haven’t missed anything you need.
             </Mono>
@@ -141,7 +141,7 @@ export default function LessonScreen() {
             textAlignVertical="top"
             placeholder="In your own words"
             placeholderTextColor={C.inkFaint}
-            className="mt-3 rounded-2xl p-4 text-[13px]"
+            className="mt-3 rounded-2xl p-4 text-[14px]"
             style={{
               minHeight: 120,
               color: C.inkSoft,
@@ -161,7 +161,7 @@ export default function LessonScreen() {
         {lesson.tool ? (
           <TintedRow tint={tint} className="mt-4" onPress={() => router.push(lesson.tool!.href)}>
             <View className="flex-row items-center justify-between gap-3">
-              <Mono bold color={tint} className="flex-1 text-[11px]" tracking={1}>
+              <Mono bold color={tint} className="flex-1 text-[13px]" tracking={1}>
                 {lesson.tool.label.toUpperCase()}
               </Mono>
               <ArrowRight size={14} color={alpha(tint, 0.85)} />
@@ -179,7 +179,7 @@ export default function LessonScreen() {
             }
           >
             <View className="flex-row items-center justify-between gap-3">
-              <Mono className="flex-1 text-[11px]">{`Next · Lesson ${next.number}: ${next.title}`}</Mono>
+              <Mono className="flex-1 text-[13px]">{`Next · Lesson ${next.number}: ${next.title}`}</Mono>
               <ArrowRight size={14} color={C.inkFaint} />
             </View>
           </TintedRow>

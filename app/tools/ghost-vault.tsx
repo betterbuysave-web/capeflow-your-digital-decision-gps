@@ -98,11 +98,11 @@ function HealthcareAuditContent() {
           </View>
           <Panel tint={C.flame} fill={0.05} stroke={0.2} className="mt-9">
             <Eyebrow color={C.flame}>SAFETY EXCEPTION</Eyebrow>
-            <Body className="mt-2 text-[12px]">{SAFETY_EXCEPTION}</Body>
+            <Body className="mt-2 text-[14px]">{SAFETY_EXCEPTION}</Body>
           </Panel>
           <View className="mt-5 flex-row items-start gap-2.5">
             <Lock size={14} color={C.teal} />
-            <Body className="flex-1 text-[12px]">
+            <Body className="flex-1 text-[14px]">
               Your healthcare audit and plans stay on this device. Use Delete all my data in Me to
               clear them. Device backups and browser storage have separate settings.
             </Body>
@@ -136,10 +136,10 @@ function GhostCard({
     <Panel tint={node.color} fill={disarmed ? 0.09 : 0.05} stroke={disarmed ? 0.45 : 0.22}>
       <View className="flex-row items-start gap-3">
         <View className="flex-1">
-          <Mono bold color={node.color} className="text-[13px]">
+          <Mono bold color={node.color} className="text-[14px]">
             {ghost.name}
           </Mono>
-          <Body className="mt-2 text-[12px]">What it feels like: “{ghost.whisper}”</Body>
+          <Body className="mt-2 text-[14px]">What it feels like: “{ghost.whisper}”</Body>
         </View>
         {record ? (
           <GradientAction
@@ -155,7 +155,7 @@ function GhostCard({
           </GradientAction>
         ) : null}
       </View>
-      <Mono bold color={node.color} className="mt-4 text-[12px]">
+      <Mono bold color={node.color} className="mt-4 text-[14px]">
         Counter: {ghost.counter}
       </Mono>
       <View className="mt-3 gap-2">
@@ -164,7 +164,7 @@ function GhostCard({
             <View className="mt-1">
               <Shield size={13} color={node.color} />
             </View>
-            <Body className="flex-1 text-[12px]">{step}</Body>
+            <Body className="flex-1 text-[14px]">{step}</Body>
           </View>
         ))}
       </View>
@@ -176,7 +176,7 @@ function GhostCard({
           }}
           className="mt-4 items-center rounded-full px-3 py-3"
         >
-          <Mono bold color={C.paper2} className="text-center text-[12px]">
+          <Mono bold color={C.paper2} className="text-center text-[14px]">
             Name this healthcare ghost
           </Mono>
         </GradientAction>
@@ -212,7 +212,7 @@ function GhostCard({
             className="mt-3 flex-row items-center justify-center gap-2 rounded-full px-3 py-3"
           >
             <ShieldCheck size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} className="shrink text-center text-[12px]">
+            <Mono bold color={C.paper2} className="shrink text-center text-[14px]">
               {disarmed ? 'Save care plan' : 'Deploy shield'}
             </Mono>
           </GradientAction>

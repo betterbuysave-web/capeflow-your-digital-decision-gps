@@ -69,18 +69,18 @@ export default function Learn() {
                     <View className="mb-1 flex-row items-center justify-between">
                       <View className="flex-1 flex-row items-start gap-2">
                         <Mono className="text-sm">{mod.emoji}</Mono>
-                        <Mono bold color={mod.color} className="flex-1 text-[12px]">
+                        <Mono bold color={mod.color} className="flex-1 text-[14px]">
                           {mod.name}
                         </Mono>
                       </View>
                       {progress === 100 ? <CircleCheck size={15} color={mod.color} /> : null}
                     </View>
-                    <Mono className="text-[10px]">{moduleTagline(mod, track)}</Mono>
+                    <Mono className="text-[13px]">{moduleTagline(mod, track)}</Mono>
                     <View className="mt-2.5">
                       <Rail value={progress} color={mod.color} />
                     </View>
                     <View className="mt-1.5 flex-row items-center justify-between">
-                      <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                      <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                         {done}/{available.length} lessons
                       </Mono>
                       <ArrowRight size={13} color={alpha(mod.color, 0.8)} />
@@ -102,7 +102,7 @@ export default function Learn() {
             const partTint = BOOK_PARTS[part].track === 'blue' ? C.azure : C.teal;
             return (
               <View key={part} className="mt-5 gap-2">
-                <Mono bold color={partTint} tracking={1} className="text-[10px]">
+                <Mono bold color={partTint} tracking={1} className="text-[13px]">
                   {`PART ${part} · ${BOOK_PARTS[part].title.toUpperCase()}`}
                 </Mono>
                 {BOOK_LESSONS.filter((l) => l.part === part).map((lesson) => {
@@ -126,7 +126,7 @@ export default function Learn() {
                         <Display color={open ? partTint : C.inkFaint} className="w-7 text-2xl">
                           {lesson.number}
                         </Display>
-                        <Mono className="flex-1 text-[11px]" color={open ? C.inkSoft : C.inkFaint}>
+                        <Mono className="flex-1 text-[13px]" color={open ? C.inkSoft : C.inkFaint}>
                           {lesson.title}
                         </Mono>
                         {!open ? (
@@ -154,7 +154,7 @@ export default function Learn() {
               accessibilityLabel={`Part ${part}, ${track === 'green' ? 'locked on Green Track' : 'Blue Track companion topics'}`}
               onPress={() => router.push({ pathname: '/book-part/[part]', params: { part } })}
             >
-              <Mono bold className="text-[12px]" color={C.azure}>
+              <Mono bold className="text-[14px]" color={C.azure}>
                 Part {part} · {track === 'green' ? 'Locked on Green' : 'Blue Track'}
               </Mono>
             </TintedRow>
@@ -172,10 +172,10 @@ export default function Learn() {
                     {letter.letter}
                   </Display>
                   <View className="flex-1">
-                    <Mono bold color={C.modC} className="text-[11px]">
+                    <Mono bold color={C.modC} className="text-[13px]">
                       {letter.word}
                     </Mono>
-                    <Mono className="mt-0.5 text-[10px]">{letter.detail}</Mono>
+                    <Mono className="mt-0.5 text-[13px]">{letter.detail}</Mono>
                   </View>
                 </View>
               </Panel>

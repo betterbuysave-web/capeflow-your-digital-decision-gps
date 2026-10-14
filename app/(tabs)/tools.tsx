@@ -68,10 +68,10 @@ export default function ToolsTab() {
               <View className="flex-row items-center gap-3">
                 <Ghost size={20} color={C.violet} />
                 <View className="flex-1">
-                  <Mono bold color={C.violet} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.violet} className="text-[14px]" tracking={1}>
                     Healthcare Anxiety Audit
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     {namedGhosts === 0
                       ? 'Six healthcare ghosts — questions and care plans'
                       : `${namedGhosts} named · ${disarmedGhosts} shields online`}
@@ -91,10 +91,10 @@ export default function ToolsTab() {
             <View className="flex-row items-center gap-3">
               <Coffee size={20} color={C.amber} />
               <View className="flex-1">
-                <Mono bold color={C.amber} className="text-[12px]" tracking={1}>
+                <Mono bold color={C.amber} className="text-[14px]" tracking={1}>
                   THE CONSENT CAFÉ
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono className="mt-1 text-[13px]">
                   F.R.I.E.S. drills, your menu, exit card — {Object.keys(boundaries).length}{' '}
                   boundaries answered
                 </Mono>
@@ -112,10 +112,10 @@ export default function ToolsTab() {
             <View className="flex-row items-center gap-3">
               <MessageSquareText size={20} color={C.modC} />
               <View className="flex-1">
-                <Mono bold color={C.modC} className="text-[12px]" tracking={1}>
+                <Mono bold color={C.modC} className="text-[14px]" tracking={1}>
                   STRONGEST VOICE SCRIPT LAB
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono className="mt-1 text-[13px]">
                   Build and rehearse the line before pressure arrives
                 </Mono>
               </View>
@@ -132,10 +132,10 @@ export default function ToolsTab() {
             <View className="flex-row items-center gap-3">
               <Users size={20} color={C.azure} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[12px]" tracking={1}>
+                <Mono bold color={C.azure} className="text-[14px]" tracking={1}>
                   SAFETY CIRCLE
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono className="mt-1 text-[13px]">
                   {circle.length === 0
                     ? 'Add the people who answer at 2 AM'
                     : `${circle.length} people on call`}
@@ -155,10 +155,10 @@ export default function ToolsTab() {
               <View className="flex-row items-center gap-3">
                 <Timer size={20} color={C.flame} />
                 <View className="flex-1">
-                  <Mono bold color={C.flame} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.flame} className="text-[14px]" tracking={1}>
                     PEP CLOCK
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     {pepStartedAt ? 'Running — tap for time left' : '72-hour window tracker'}
                   </Mono>
                 </View>
@@ -177,10 +177,10 @@ export default function ToolsTab() {
               <View className="flex-row items-start gap-3">
                 <Lock size={18} color={C.lemon} />
                 <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.lemon} className="text-[14px]" tracking={1}>
                     PEP CLOCK · LOCKED
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{PEP_LOCK_NOTE}</Mono>
+                  <Mono className="mt-1 text-[13px]">{PEP_LOCK_NOTE}</Mono>
                 </View>
               </View>
             </View>
@@ -204,10 +204,10 @@ export default function ToolsTab() {
               <View className="flex-row items-center gap-3">
                 <MapPin size={20} color={C.modM} />
                 <View className="flex-1">
-                  <Mono bold color={C.modM} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.modM} className="text-[14px]" tracking={1}>
                     CLINIC FINDER
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     {networkCount} national locators · free and confidential filters
                   </Mono>
                 </View>
@@ -224,10 +224,10 @@ export default function ToolsTab() {
               <View className="flex-row items-center gap-3">
                 <BellRing size={20} color={C.gold} />
                 <View className="flex-1">
-                  <Mono bold color={C.gold} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.gold} className="text-[14px]" tracking={1}>
                     ADHERENCE SETTINGS
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     {reminders.length === 0
                       ? 'Set reminders, tones, and schedules'
                       : `${activeReminders} of ${reminders.length} reminders armed`}
@@ -246,10 +246,10 @@ export default function ToolsTab() {
               <View className="flex-row items-center gap-3">
                 <BookOpen size={20} color={C.modA} />
                 <View className="flex-1">
-                  <Mono bold color={C.modA} className="text-[12px]" tracking={1}>
+                  <Mono bold color={C.modA} className="text-[14px]" tracking={1}>
                     EDUCATIONAL LIBRARY
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     {libraryCount} plain-words entries · search by topic
                   </Mono>
                 </View>
@@ -284,15 +284,15 @@ export default function ToolsTab() {
                     <Mono className="text-xl">{scenario.emoji}</Mono>
                     <View className="flex-1">
                       <View className="flex-row items-center gap-2">
-                        <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
+                        <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
                           {scenario.time}
                         </Mono>
                         {result ? <VerdictBadge verdict={result.verdict} /> : null}
                       </View>
-                      <Mono bold className="mt-1 text-[11px]" color={alpha(C.inkSoft, 0.9)}>
+                      <Mono bold className="mt-1 text-[13px]" color={alpha(C.inkSoft, 0.9)}>
                         {scenario.title}
                       </Mono>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                      <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                         {scenario.choices.length} responses · {scenario.xp} XP
                       </Mono>
                     </View>

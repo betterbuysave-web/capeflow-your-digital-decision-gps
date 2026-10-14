@@ -31,7 +31,7 @@ export function ExitCardSection() {
             Your reflections matter. You are always the customer here — the order is yours to set,
             change, or send back.
           </Body>
-          <Mono bold color={C.teal} tracking={1.5} className="mt-4 text-center text-[10px]">
+          <Mono bold color={C.teal} tracking={1.5} className="mt-4 text-center text-[13px]">
             FREELY GIVEN · REVERSIBLE · INFORMED · ENTHUSIASTIC · SPECIFIC
           </Mono>
         </View>
@@ -39,7 +39,7 @@ export function ExitCardSection() {
         <Panel tint={C.tealBright} fill={0.08} stroke={0.35} className="mt-7">
           <View className="flex-row items-start gap-2.5">
             <Lock size={15} color={C.teal} />
-            <Mono className="flex-1 text-[10px]">
+            <Mono className="flex-1 text-[13px]">
               Your card is saved on this device only. Nobody else can read it, and deleting the app
               erases it for good.
             </Mono>
@@ -85,11 +85,11 @@ export function ExitCardSection() {
                 className="rounded-md px-1.5 py-0.5"
                 style={{ backgroundColor: wash(C.tealBright, 0.2) }}
               >
-                <Mono bold color={C.teal} className="text-[9px]">
+                <Mono bold color={C.teal} className="text-[12px]">
                   {String(index + 1).padStart(2, '0')}
                 </Mono>
               </View>
-              <Mono bold color={C.ink} className="flex-1 text-[11px]">
+              <Mono bold color={C.ink} className="flex-1 text-[13px]">
                 {question}
               </Mono>
             </View>
@@ -121,11 +121,11 @@ export function ExitCardSection() {
               className="rounded-md px-1.5 py-0.5"
               style={{ backgroundColor: wash(C.tealBright, 0.2) }}
             >
-              <Mono bold color={C.teal} className="text-[9px]">
+              <Mono bold color={C.teal} className="text-[12px]">
                 05
               </Mono>
             </View>
-            <Mono bold color={C.ink} className="flex-1 text-[11px]">
+            <Mono bold color={C.ink} className="flex-1 text-[13px]">
               How confident do I feel right now about understanding consent?
             </Mono>
           </View>
@@ -148,7 +148,7 @@ export function ExitCardSection() {
                   <Mono bold color={active ? C.teal : C.inkSoft} className="text-sm">
                     {level.value}
                   </Mono>
-                  <Mono color={active ? C.teal : C.inkFaint} className="mt-0.5 text-[8px]">
+                  <Mono color={active ? C.teal : C.inkFaint} className="mt-0.5 text-[11px]">
                     {level.label}
                   </Mono>
                 </Pressable>
@@ -159,7 +159,7 @@ export function ExitCardSection() {
       </View>
 
       {hint ? (
-        <Mono color={C.maybe} className="mt-4 text-[10px]">
+        <Mono color={C.maybe} className="mt-4 text-[13px]">
           Answer a couple of prompts or set your confidence, then complete the card.
         </Mono>
       ) : null}

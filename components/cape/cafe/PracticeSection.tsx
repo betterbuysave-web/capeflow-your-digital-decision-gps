@@ -66,7 +66,7 @@ function DrillTab({
       }}
     >
       {icon}
-      <Mono bold tracking={1.5} color={active ? C.violet : C.inkFaint} className="text-[9px]">
+      <Mono bold tracking={1.5} color={active ? C.violet : C.inkFaint} className="text-[12px]">
         {label}
       </Mono>
     </Pressable>
@@ -90,7 +90,7 @@ function DeckNav({
         onPress={() => onChange(index - 1)}
         icon={<ChevronLeft size={14} color={C.paper2} />}
       />
-      <Mono bold color={C.inkFaint} className="text-[10px]">
+      <Mono bold color={C.inkFaint} className="text-[13px]">
         {index + 1} / {total}
       </Mono>
       <NavButton
@@ -124,7 +124,7 @@ function NavButton({
       className="flex-row items-center justify-center gap-1.5 rounded-full px-3.5 py-2"
     >
       {trailing ? null : icon}
-      <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+      <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
         {label}
       </Mono>
       {trailing ? icon : null}
@@ -172,12 +172,12 @@ function DetectiveDeck() {
             borderLeftColor: C.violet,
           }}
         >
-          <Mono color={C.inkSoft} className="text-[11px]">
+          <Mono color={C.inkSoft} className="text-[13px]">
             {scene.setup}
           </Mono>
         </View>
 
-        <Mono bold color={C.inkFaint} className="mt-4 text-[10px]">
+        <Mono bold color={C.inkFaint} className="mt-4 text-[13px]">
           {scene.prompt}
         </Mono>
 
@@ -205,15 +205,15 @@ function DetectiveDeck() {
                     borderColor: alpha(on ? C.tealBright : C.ink, on ? 0.65 : 0.18),
                   }}
                 >
-                  <Mono bold color={on ? C.teal : C.inkFaint} className="text-[11px]">
+                  <Mono bold color={on ? C.teal : C.inkFaint} className="text-[13px]">
                     {clue.letter}
                   </Mono>
                 </View>
                 <View className="flex-1">
-                  <Mono bold color={C.ink} className="text-[10px]">
+                  <Mono bold color={C.ink} className="text-[13px]">
                     {clue.label}
                   </Mono>
-                  <Mono className="mt-0.5 text-[10px]">{clue.text}</Mono>
+                  <Mono className="mt-0.5 text-[13px]">{clue.text}</Mono>
                 </View>
               </Pressable>
             );
@@ -230,7 +230,7 @@ function DetectiveDeck() {
             }}
           >
             <Eyebrow color={C.gold}>DETECTIVE&apos;S VERDICT</Eyebrow>
-            <Mono color={C.inkSoft} className="mt-1.5 text-[10px]">
+            <Mono color={C.inkSoft} className="mt-1.5 text-[13px]">
               {scene.verdict}
             </Mono>
           </View>
@@ -240,7 +240,7 @@ function DetectiveDeck() {
             className="mt-4 flex-row items-center justify-center gap-2 rounded-xl py-3"
           >
             <Eye size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
               REVEAL VERDICT
             </Mono>
           </GradientAction>
@@ -294,11 +294,11 @@ function RolePlayDeck() {
                   borderLeftColor: tint,
                 }}
               >
-                <Mono bold color={tint} tracking={1.2} className="text-[9px]">
+                <Mono bold color={tint} tracking={1.2} className="text-[12px]">
                   {line.speaker.toUpperCase()}
                   {line.flag ? ' · PRESSURE' : ''}
                 </Mono>
-                <Mono color={C.inkSoft} className="mt-1 text-[11px]">
+                <Mono color={C.inkSoft} className="mt-1 text-[13px]">
                   {line.text}
                 </Mono>
               </View>
@@ -315,7 +315,7 @@ function RolePlayDeck() {
           }}
         >
           <Eyebrow color={C.inkFaint}>REFLECT</Eyebrow>
-          <Mono className="mt-1.5 text-[10px]">{card.reflection}</Mono>
+          <Mono className="mt-1.5 text-[13px]">{card.reflection}</Mono>
         </View>
       </View>
 
@@ -334,7 +334,7 @@ function RoleChip({ label, tint }: { label: string; tint: string }) {
         borderColor: alpha(tint, 0.4),
       }}
     >
-      <Mono bold color={tint} className="text-[9px]">
+      <Mono bold color={tint} className="text-[12px]">
         {label}
       </Mono>
     </View>

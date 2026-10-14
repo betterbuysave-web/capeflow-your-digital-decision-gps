@@ -268,12 +268,12 @@ export default function ProtectionBlueprint() {
             <Display className="text-5xl" color={verdict.tint}>
               {score}
             </Display>
-            <Mono className="pb-2 text-[11px]">/ 100 SafER</Mono>
+            <Mono className="pb-2 text-[13px]">/ 100 SafER</Mono>
           </View>
           <View className="mt-3">
             <Rail value={score} color={verdict.tint} height={6} />
           </View>
-          <Mono className="mt-3 text-[10px]">{verdict.line}</Mono>
+          <Mono className="mt-3 text-[13px]">{verdict.line}</Mono>
           <View className="mt-4">
             <Telemetry tint={C.teal} height={30} active={armed.length > 0} />
           </View>
@@ -358,15 +358,15 @@ export default function ProtectionBlueprint() {
                         borderColor: alpha(mod.color, 0.4),
                       }}
                     >
-                      <Mono bold color={mod.color} className="text-[12px]">
+                      <Mono bold color={mod.color} className="text-[14px]">
                         {mod.letter}
                       </Mono>
                     </View>
                     <View className="flex-1">
-                      <Mono bold color={mod.color} className="text-[10px]" tracking={1.5}>
+                      <Mono bold color={mod.color} className="text-[13px]" tracking={1.5}>
                         {mod.name.toUpperCase()}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                      <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                         {done} of {available.length} lessons · {pct}%
                       </Mono>
                     </View>
@@ -390,10 +390,10 @@ export default function ProtectionBlueprint() {
               <View className="flex-row items-start gap-3">
                 <Timer size={16} color={C.flame} />
                 <View className="flex-1">
-                  <Mono bold color={C.flame} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={C.flame} className="text-[13px]" tracking={1.5}>
                     PEP CLOCK RUNNING
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     About {pepHoursLeft} hours left in the 72-hour window. Call a clinic or an ER
                     now — sooner is stronger.
                   </Mono>
@@ -406,16 +406,16 @@ export default function ProtectionBlueprint() {
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center gap-2">
                 <BellRing size={15} color={C.teal} />
-                <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.teal} className="text-[13px]" tracking={1.5}>
                   REMINDERS
                 </Mono>
               </View>
-              <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+              <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                 {armed.length} armed · {loggedToday} logged today
               </Mono>
             </View>
             {reminders.length === 0 ? (
-              <Mono className="mt-2 text-[10px]">
+              <Mono className="mt-2 text-[13px]">
                 No reminders set. The Adherence Deck can arm a daily check-in in two taps.
               </Mono>
             ) : (
@@ -437,7 +437,7 @@ export default function ProtectionBlueprint() {
                         <Mono
                           bold
                           color={reminder.enabled ? reminder.tint : alpha(C.inkFaint, 0.7)}
-                          className="flex-1 text-[10px]"
+                          className="flex-1 text-[13px]"
                           tracking={1}
                         >
                           {reminder.label.toUpperCase()}
@@ -447,7 +447,7 @@ export default function ProtectionBlueprint() {
                           tint={reminder.enabled ? reminder.tint : alpha(C.inkFaint, 0.8)}
                         />
                       </View>
-                      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                      <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                         {formatTime(reminder.time)} · {describeDays(reminder.days)} ·{' '}
                         {toneInfo(reminder.tone).label}
                       </Mono>
@@ -455,7 +455,7 @@ export default function ProtectionBlueprint() {
                         <View className="flex-1">
                           <Rail value={(hits / HISTORY_DAYS) * 100} color={reminder.tint} />
                         </View>
-                        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                        <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                           {hits}/{HISTORY_DAYS}d
                         </Mono>
                       </View>
@@ -469,19 +469,19 @@ export default function ProtectionBlueprint() {
           <Panel tint={C.azure} fill={0.05} stroke={0.18} className="mt-3">
             <View className="flex-row items-center gap-2">
               <Users size={15} color={C.azure} />
-              <Mono bold color={C.azure} className="text-[10px]" tracking={1.5}>
+              <Mono bold color={C.azure} className="text-[13px]" tracking={1.5}>
                 SAFETY CIRCLE · {circle.length}
               </Mono>
             </View>
             {circle.length === 0 ? (
-              <Mono className="mt-2 text-[10px]">
+              <Mono className="mt-2 text-[13px]">
                 No one saved yet. Three names is the target: a ride, a bed, and an adult who
                 answers.
               </Mono>
             ) : (
               <View className="mt-2 gap-1.5">
                 {circle.map((contact) => (
-                  <Mono key={contact.id} className="text-[10px]">
+                  <Mono key={contact.id} className="text-[13px]">
                     · {contact.name} — {contact.role}
                   </Mono>
                 ))}
@@ -492,7 +492,7 @@ export default function ProtectionBlueprint() {
           <Panel tint={C.amber} fill={0.05} stroke={0.18} className="mt-3">
             <View className="flex-row items-center gap-2">
               <ListChecks size={15} color={C.amber} />
-              <Mono bold color={C.amber} className="text-[10px]" tracking={1.5}>
+              <Mono bold color={C.amber} className="text-[13px]" tracking={1.5}>
                 BOUNDARY ORDER
               </Mono>
             </View>
@@ -503,12 +503,12 @@ export default function ProtectionBlueprint() {
             </View>
             {hardLimits.length > 0 ? (
               <View className="mt-3">
-                <Mono bold className="text-[9px]" color={alpha(C.inkFaint, 0.8)} tracking={1.5}>
+                <Mono bold className="text-[12px]" color={alpha(C.inkFaint, 0.8)} tracking={1.5}>
                   NOT ON THE MENU
                 </Mono>
                 <View className="mt-1.5 gap-1">
                   {hardLimits.map((item) => (
-                    <Mono key={item.id} className="text-[10px]">
+                    <Mono key={item.id} className="text-[13px]">
                       · {item.text}
                     </Mono>
                   ))}
@@ -516,7 +516,7 @@ export default function ProtectionBlueprint() {
               </View>
             ) : null}
             {cafeExit.completedAt !== null ? (
-              <Mono className="mt-3 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+              <Mono className="mt-3 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                 Consent Café exit card completed
                 {cafeExit.confidence ? ` · confidence ${cafeExit.confidence}/5` : ''}
               </Mono>
@@ -535,18 +535,18 @@ export default function ProtectionBlueprint() {
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center gap-2">
                 <CalendarCheck size={15} color={C.modM} />
-                <Mono bold color={C.modM} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.modM} className="text-[13px]" tracking={1.5}>
                   ON-TIME RATE
                 </Mono>
               </View>
-              <Mono bold color={C.modM} className="text-[12px]">
+              <Mono bold color={C.modM} className="text-[14px]">
                 {adherence.expected === 0 ? '—' : `${adherence.rate}%`}
               </Mono>
             </View>
             <View className="mt-3">
               <Rail value={adherence.rate} color={C.modM} height={6} />
             </View>
-            <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+            <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
               {adherence.expected === 0
                 ? 'Nothing scheduled in this window yet.'
                 : `${adherence.hits} of ${adherence.expected} scheduled check-ins logged`}
@@ -564,7 +564,7 @@ export default function ProtectionBlueprint() {
                         borderColor: anyLogged ? alpha(C.modM, 0.9) : alpha(C.ink, 0.14),
                       }}
                     />
-                    <Mono className="text-[7px]" color={alpha(C.inkFaint, 0.55)}>
+                    <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.55)}>
                       {day.slice(8)}
                     </Mono>
                   </View>
@@ -590,7 +590,7 @@ export default function ProtectionBlueprint() {
               <Panel tint={C.modT} fill={0.05} stroke={0.16} className="mt-4">
                 <View className="flex-row items-start gap-3">
                   <Ghost size={16} color={C.modT} />
-                  <Mono className="flex-1 text-[10px]">
+                  <Mono className="flex-1 text-[13px]">
                     Your care plans will appear here. Name one of the six healthcare ghosts to
                     start.
                   </Mono>
@@ -624,22 +624,22 @@ export default function ProtectionBlueprint() {
                             borderColor: alpha(meta.color, 0.4),
                           }}
                         >
-                          <Mono bold color={meta.color} className="text-[11px]">
+                          <Mono bold color={meta.color} className="text-[13px]">
                             {meta.letter}
                           </Mono>
                         </View>
                         <View className="flex-1">
-                          <Mono bold color={meta.color} className="text-[10px]" tracking={1}>
+                          <Mono bold color={meta.color} className="text-[13px]" tracking={1}>
                             {shield.shield.toUpperCase()}
                           </Mono>
-                          <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                          <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                             Answers: {shield.name} · {meta.callsign}
                           </Mono>
                         </View>
                         <ShieldCheck size={15} color={meta.color} />
                       </View>
                       {shield.plan.length > 0 ? (
-                        <Mono className="mt-2 text-[10px]">&quot;{shield.plan}&quot;</Mono>
+                        <Mono className="mt-2 text-[13px]">&quot;{shield.plan}&quot;</Mono>
                       ) : null}
                     </View>
                   );
@@ -657,7 +657,7 @@ export default function ProtectionBlueprint() {
             <Panel tint={C.violet} fill={0.05} stroke={0.16} className="mt-4">
               <View className="flex-row items-start gap-3">
                 <Radio size={16} color={C.violet} />
-                <Mono className="flex-1 text-[10px]">
+                <Mono className="flex-1 text-[13px]">
                   No Midnight Sims run yet. Each drill takes about a minute and shows what a
                   redundant layer buys you.
                 </Mono>
@@ -684,7 +684,7 @@ export default function ProtectionBlueprint() {
                     }}
                   >
                     <Eye size={14} color={tint} />
-                    <Mono bold className="flex-1 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
+                    <Mono bold className="flex-1 text-[13px]" color={alpha(C.inkSoft, 0.9)}>
                       {scenario?.title ?? 'Scenario'}
                     </Mono>
                     <Chip label={verdictLabel(result.verdict).toUpperCase()} tint={tint} />
@@ -714,8 +714,8 @@ export default function ProtectionBlueprint() {
                       borderColor: alpha(badge.tint, 0.28),
                     }}
                   >
-                    <Mono className="text-[11px]">{badge.emoji}</Mono>
-                    <Mono bold color={badge.tint} className="text-[9px]" tracking={1}>
+                    <Mono className="text-[13px]">{badge.emoji}</Mono>
+                    <Mono bold color={badge.tint} className="text-[12px]" tracking={1}>
                       {badge.name.toUpperCase()}
                     </Mono>
                   </View>
@@ -744,10 +744,10 @@ export default function ProtectionBlueprint() {
                   <View className="flex-row items-start gap-3">
                     <Activity size={15} color={move.tint} />
                     <View className="flex-1">
-                      <Mono bold color={move.tint} className="text-[10px]" tracking={1.2}>
+                      <Mono bold color={move.tint} className="text-[13px]" tracking={1.2}>
                         {move.label}
                       </Mono>
-                      <Mono className="mt-1 text-[10px]">{move.detail}</Mono>
+                      <Mono className="mt-1 text-[13px]">{move.detail}</Mono>
                     </View>
                   </View>
                   <View className="mt-3">
@@ -766,10 +766,10 @@ export default function ProtectionBlueprint() {
             <View className="flex-row items-start gap-3">
               <ShieldCheck size={16} color={C.teal} />
               <View className="flex-1">
-                <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.teal} className="text-[13px]" tracking={1.5}>
                   EVERY LAYER IS UP
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono className="mt-1 text-[13px]">
                   All the layers on your track are complete. Re-run a drill whenever your situation
                   changes — the plan should move with you.
                 </Mono>
@@ -786,7 +786,7 @@ export default function ProtectionBlueprint() {
               <Eyebrow color={C.teal} className="mb-1.5">
                 THIS REPORT NEVER LEAVES THE DEVICE
               </Eyebrow>
-              <Mono className="text-[10px]">
+              <Mono className="text-[13px]">
                 Nothing here is uploaded, synced, or shared. If you want a clinician or a trusted
                 adult to see it, show them the screen — that choice stays yours.
               </Mono>
@@ -801,7 +801,7 @@ export default function ProtectionBlueprint() {
               <Eyebrow color={C.gold} className="mb-1.5">
                 THE SAFETY EXCEPTION
               </Eyebrow>
-              <Mono className="text-[10px]">{SAFETY_EXCEPTION}</Mono>
+              <Mono className="text-[13px]">{SAFETY_EXCEPTION}</Mono>
             </View>
           </View>
         </Panel>
@@ -813,7 +813,7 @@ export default function ProtectionBlueprint() {
               <Eyebrow color={C.lemon} className="mb-1.5">
                 MEDICAL DISCLAIMER
               </Eyebrow>
-              <Mono className="text-[10px]">{DISCLAIMER}</Mono>
+              <Mono className="text-[13px]">{DISCLAIMER}</Mono>
             </View>
           </View>
         </Panel>
@@ -852,10 +852,10 @@ function LayerRow({
   return (
     <View>
       <View className="mb-2 flex-row items-center justify-between">
-        <Mono bold color={tint} className="text-[10px]" tracking={1.5}>
+        <Mono bold color={tint} className="text-[13px]" tracking={1.5}>
           {label}
         </Mono>
-        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+        <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
           {detail} · {weight}
         </Mono>
       </View>

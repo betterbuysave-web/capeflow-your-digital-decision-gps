@@ -77,7 +77,7 @@ export default function Landing() {
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
             </View>
 
-            <Mono className="mt-6 text-center text-[9px]" color={C.inkFaint}>
+            <Mono className="mt-6 text-center text-[12px]" color={C.inkFaint}>
               GRADES 6–12 · GREEN 6–8 · BLUE 9–12
             </Mono>
           </View>
@@ -88,7 +88,7 @@ export default function Landing() {
           <Body>{PIPELINE_COPY}</Body>
           <Panel tint={C.teal}>
             <Eyebrow color={C.teal}>CAPE Youth Edition</Eyebrow>
-            <Mono className="mt-3 text-[11px]">{CAPE_CARD_COPY}</Mono>
+            <Mono className="mt-3 text-[13px]">{CAPE_CARD_COPY}</Mono>
           </Panel>
         </View>
 
@@ -128,11 +128,11 @@ export default function Landing() {
                   <View className="flex-1">
                     <View className="mb-1 flex-row items-center gap-2">
                       <Mono className="text-base">{mod.emoji}</Mono>
-                      <Mono bold color={mod.color} className="flex-1 text-[12px]">
+                      <Mono bold color={mod.color} className="flex-1 text-[14px]">
                         {mod.name}
                       </Mono>
                     </View>
-                    <Mono className="text-[10px]">{moduleTagline(mod, 'green')}</Mono>
+                    <Mono className="text-[13px]">{moduleTagline(mod, 'green')}</Mono>
                   </View>
                 </View>
               </Panel>
@@ -160,7 +160,7 @@ export default function Landing() {
                 <MenuLine label="🤗 Hugs" verdict="MAYBE" tint={C.amber} chip={C.maybe} />
                 <MenuLine label="📍 Share Location" verdict="NO" tint={C.amber} chip={C.no} />
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
+              <Mono className="mt-3 text-[12px]" color={alpha(C.inkSoft, 0.55)}>
                 Order from a menu of boundaries. YES, MAYBE, or NO — your choice, always reversible.
               </Mono>
             </PreviewCard>
@@ -175,10 +175,10 @@ export default function Landing() {
                     borderColor: alpha(C.flame, 0.3),
                   }}
                 >
-                  <Mono bold color={C.flame} className="text-[9px]">
+                  <Mono bold color={C.flame} className="text-[12px]">
                     🆘 988 — CRISIS LIFELINE
                   </Mono>
-                  <Mono className="mt-0.5 text-[8px]" color={alpha('#ff9682', 0.7)}>
+                  <Mono className="mt-0.5 text-[11px]" color={alpha('#ff9682', 0.7)}>
                     Call or text · 24/7 · Free
                   </Mono>
                 </View>
@@ -190,15 +190,15 @@ export default function Landing() {
                     borderColor: alpha(C.flame, 0.3),
                   }}
                 >
-                  <Mono bold color={C.flame} className="text-[9px]">
+                  <Mono bold color={C.flame} className="text-[12px]">
                     Trusted support
                   </Mono>
-                  <Mono className="mt-0.5 text-[8px]" color={alpha('#ff9682', 0.7)}>
+                  <Mono className="mt-0.5 text-[11px]" color={alpha('#ff9682', 0.7)}>
                     Safety Circle · A trusted adult
                   </Mono>
                 </View>
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
+              <Mono className="mt-3 text-[12px]" color={alpha(C.inkSoft, 0.55)}>
                 Urgent help stays available on both tracks. No pause is required to reach help.
               </Mono>
             </PreviewCard>
@@ -228,7 +228,7 @@ export default function Landing() {
                 }}
               >
                 <View className="flex-row items-center justify-between">
-                  <Mono color={C.teal} className="text-[9px]">
+                  <Mono color={C.teal} className="text-[12px]">
                     SafER SCORE
                   </Mono>
                   <Display color={C.teal} className="text-base">
@@ -239,7 +239,7 @@ export default function Landing() {
                   <Rail value={67} color={C.teal} />
                 </View>
               </View>
-              <Mono className="mt-3 text-[9px]" color={alpha(C.inkSoft, 0.55)}>
+              <Mono className="mt-3 text-[12px]" color={alpha(C.inkSoft, 0.55)}>
                 Five MATCH letters. XP, badges, and progress saved on this device.
               </Mono>
             </PreviewCard>
@@ -278,7 +278,7 @@ export default function Landing() {
                 <Mono className="text-base">{SAMPLE_SCENARIO.emoji}</Mono>
                 <Eyebrow color={C.teal}>SAMPLE SCENARIO · MIDNIGHT SIM</Eyebrow>
               </View>
-              <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.7)}>
+              <Mono className="text-[13px]" color={alpha(C.inkFaint, 0.7)}>
                 {SAMPLE_SCENARIO.setup}
               </Mono>
             </View>
@@ -292,16 +292,16 @@ export default function Landing() {
                   borderBottomLeftRadius: 4,
                 }}
               >
-                <Mono className="text-[12px]" color={alpha(C.inkSoft, 0.9)}>
+                <Mono className="text-[14px]" color={alpha(C.inkSoft, 0.9)}>
                   {SAMPLE_SCENARIO.message}
                 </Mono>
-                <Mono className="mt-1.5 text-right text-[8px]" color={alpha(C.inkFaint, 0.5)}>
+                <Mono className="mt-1.5 text-right text-[11px]" color={alpha(C.inkFaint, 0.5)}>
                   {SAMPLE_SCENARIO.bubbleTime}
                 </Mono>
               </View>
             </View>
             <View className="flex-row items-center justify-between px-5 pb-5">
-              <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.6)} tracking={2}>
+              <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.6)} tracking={2}>
                 {SAMPLE_SCENARIO.prompt}
               </Mono>
               <ArrowRight size={14} color={C.teal} />
@@ -330,13 +330,13 @@ export default function Landing() {
               <Users size={20} color={C.teal} />
               <View className="flex-1">
                 <Eyebrow color={C.teal}>FOR PARENTS, GUARDIANS &amp; EDUCATORS</Eyebrow>
-                <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+                <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
                   Full curriculum transparency — no surprises
                 </Mono>
               </View>
             </View>
             <View className="px-5 py-5">
-              <Mono className="mb-5 text-[10px]">
+              <Mono className="mb-5 text-[13px]">
                 CAPE FLOW is built on trust. Parents and educators have full visibility into every
                 piece of content students see. The Parent &amp; School Dashboard includes curriculum
                 overviews, facilitation approach, parent rights, and family activities. Supplemental
@@ -353,10 +353,10 @@ export default function Landing() {
                     className="p-3"
                   >
                     <Mono className="mb-1.5 text-xl">{card.emoji}</Mono>
-                    <Mono bold color={card.tint} className="text-[10px]">
+                    <Mono bold color={card.tint} className="text-[13px]">
                       {card.title}
                     </Mono>
-                    <Mono className="mt-0.5 text-[8px]" color={alpha(C.inkFaint, 0.6)}>
+                    <Mono className="mt-0.5 text-[11px]" color={alpha(C.inkFaint, 0.6)}>
                       {card.detail}
                     </Mono>
                   </Panel>
@@ -366,7 +366,7 @@ export default function Landing() {
                 onPress={() => router.push('/parents')}
                 className="flex-row items-center justify-center gap-2 rounded-xl px-5 py-3"
               >
-                <Mono bold color={C.paper2} className="shrink text-center text-[11px]" tracking={1}>
+                <Mono bold color={C.paper2} className="shrink text-center text-[13px]" tracking={1}>
                   VIEW PARENT &amp; SCHOOL DASHBOARD
                 </Mono>
                 <ArrowRight size={14} color={C.paper2} />
@@ -384,7 +384,7 @@ export default function Landing() {
                 <Eyebrow color={C.lemon} className="mb-2">
                   IMPORTANT DISCLAIMER
                 </Eyebrow>
-                <Mono className="text-[10px]">{DISCLAIMER}</Mono>
+                <Mono className="text-[13px]">{DISCLAIMER}</Mono>
               </View>
             </View>
           </Panel>
@@ -397,7 +397,7 @@ export default function Landing() {
               <BookOpen size={16} color={alpha(C.inkFaint, 0.7)} />
               <Eyebrow color={alpha(C.inkFaint, 0.7)}>SOURCES &amp; REFERENCES</Eyebrow>
             </View>
-            <Mono className="text-center text-[10px]" color={alpha(C.inkFaint, 0.6)}>
+            <Mono className="text-center text-[13px]" color={alpha(C.inkFaint, 0.6)}>
               Confirm clinical details with a licensed provider or current CDC guidance.
             </Mono>
           </View>
@@ -414,10 +414,10 @@ export default function Landing() {
               >
                 <CircleCheck size={14} color={alpha(C.teal, 0.6)} />
                 <View className="flex-1">
-                  <Mono bold className="text-[10px]" color={alpha(C.inkSoft, 0.85)}>
+                  <Mono bold className="text-[13px]" color={alpha(C.inkSoft, 0.85)}>
                     {src.name}
                   </Mono>
-                  <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+                  <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
                     {src.detail}
                   </Mono>
                 </View>
@@ -457,7 +457,7 @@ export default function Landing() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   ZERO STIGMA TAX — NO TRACKING
                 </Eyebrow>
-                <Mono className="text-[9px]">{PRIVACY_NOTE}</Mono>
+                <Mono className="text-[12px]">{PRIVACY_NOTE}</Mono>
               </View>
               <GradientAction
                 accessibilityLabel="Dismiss privacy notice"
@@ -474,7 +474,7 @@ export default function Landing() {
               }}
               className="mt-3 self-start rounded-full px-4 py-2"
             >
-              <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+              <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
                 GOT IT
               </Mono>
             </GradientAction>
@@ -535,7 +535,7 @@ function MenuLine({
         borderColor: alpha(tint, 0.2),
       }}
     >
-      <Mono color={tint} className="text-[10px]">
+      <Mono color={tint} className="text-[13px]">
         {label}
       </Mono>
       <View
@@ -546,7 +546,7 @@ function MenuLine({
           borderColor: alpha(chip, 0.25),
         }}
       >
-        <Mono bold color={chip} className="text-[8px]">
+        <Mono bold color={chip} className="text-[11px]">
           {verdict}
         </Mono>
       </View>

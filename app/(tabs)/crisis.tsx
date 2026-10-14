@@ -54,7 +54,7 @@ export default function Crisis() {
               <Mono bold color={C.paper2} className="text-[14px]">
                 Call 911
               </Mono>
-              <Mono color={C.paper2} className="mt-1 text-[11px]">
+              <Mono color={C.paper2} className="mt-1 text-[13px]">
                 Immediate danger · U.S. emergency services
               </Mono>
             </View>
@@ -79,10 +79,10 @@ export default function Crisis() {
             <View className="flex-row items-center gap-3">
               <ShieldAlert size={20} color={C.flame} />
               <View className="flex-1">
-                <Mono bold color={C.flame} className="text-[12px]" tracking={1}>
+                <Mono bold color={C.flame} className="text-[14px]" tracking={1}>
                   EMERGENCY DIRECTORY
                 </Mono>
-                <Mono className="mt-1 text-[10px]">
+                <Mono className="mt-1 text-[13px]">
                   One-tap lines, grouped by what is happening
                 </Mono>
               </View>
@@ -95,7 +95,7 @@ export default function Crisis() {
 
         <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-5">
           <Eyebrow color={C.gold}>SAFETY EXCEPTION</Eyebrow>
-          <Mono className="mt-2 text-[10px]">{SAFETY_EXCEPTION}</Mono>
+          <Mono className="mt-2 text-[13px]">{SAFETY_EXCEPTION}</Mono>
         </Panel>
 
         <View className="mt-6 gap-2.5">
@@ -112,10 +112,10 @@ export default function Crisis() {
               <View className="flex-row items-start gap-3">
                 <Mono className="text-lg">{line.emoji}</Mono>
                 <View className="flex-1">
-                  <Mono bold color={line.tint} className="text-[11px]" tracking={1}>
+                  <Mono bold color={line.tint} className="text-[13px]" tracking={1}>
                     {line.name}
                   </Mono>
-                  <Mono className="mt-1 text-[9px]" color={alpha(C.inkSoft, 0.7)}>
+                  <Mono className="mt-1 text-[12px]" color={alpha(C.inkSoft, 0.7)}>
                     {line.detail}
                   </Mono>
                 </View>
@@ -149,10 +149,10 @@ export default function Crisis() {
           <View className="mt-4 gap-2">
             {CRISIS_STEPS.map((step) => (
               <Panel key={step.title} tint={C.teal} fill={0.04} stroke={0.15} className="p-3.5">
-                <Mono bold color={C.teal} className="text-[10px]" tracking={1.5}>
+                <Mono bold color={C.teal} className="text-[13px]" tracking={1.5}>
                   {step.title}
                 </Mono>
-                <Mono className="mt-1 text-[10px]">{step.detail}</Mono>
+                <Mono className="mt-1 text-[13px]">{step.detail}</Mono>
               </Panel>
             ))}
           </View>
@@ -169,10 +169,10 @@ export default function Crisis() {
               <View className="flex-row items-center gap-3">
                 <Timer size={18} color={C.flame} />
                 <View className="flex-1">
-                  <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
+                  <Mono bold color={C.flame} className="text-[13px]" tracking={1}>
                     START THE PEP CLOCK
                   </Mono>
-                  <Mono className="mt-0.5 text-[9px]">
+                  <Mono className="mt-0.5 text-[12px]">
                     PEP must begin within 72 hours of a possible exposure
                   </Mono>
                 </View>
@@ -189,10 +189,10 @@ export default function Crisis() {
             <View className="flex-row items-center gap-3">
               <Users size={18} color={C.azure} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
                   OPEN YOUR SAFETY CIRCLE
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   {circle.length === 0
                     ? 'No contacts yet — add them before you need them'
                     : `${circle.length} ${circle.length === 1 ? 'person' : 'people'} saved on this device`}
@@ -210,10 +210,10 @@ export default function Crisis() {
             <View className="flex-row items-center gap-3">
               <MapPin size={18} color={C.modM} />
               <View className="flex-1">
-                <Mono bold color={C.modM} className="text-[11px]" tracking={1}>
+                <Mono bold color={C.modM} className="text-[13px]" tracking={1}>
                   FIND CARE NEAR YOU
                 </Mono>
-                <Mono className="mt-0.5 text-[9px]">
+                <Mono className="mt-0.5 text-[12px]">
                   Free and confidential locators, plus what to say at the front desk
                 </Mono>
               </View>
@@ -228,7 +228,7 @@ export default function Crisis() {
               <Eyebrow color={C.lemon} className="mb-2">
                 IMPORTANT DISCLAIMER
               </Eyebrow>
-              <Mono className="text-[10px]">{DISCLAIMER}</Mono>
+              <Mono className="text-[13px]">{DISCLAIMER}</Mono>
             </View>
           </View>
         </Panel>
@@ -260,7 +260,7 @@ function ActionPill({
       style={{ minHeight: 48, backgroundColor: tint }}
     >
       {icon}
-      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
+      <Mono bold color={C.paper2} className="text-[13px]" tracking={1.5}>
         {label}
       </Mono>
     </GradientAction>

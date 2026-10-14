@@ -30,7 +30,7 @@ export function MissionComplete({ detail }: { detail: string }) {
         <Eyebrow color={C.gold} className="mt-3">
           MISSION COMPLETE
         </Eyebrow>
-        <Mono className="mt-2 text-center text-[10px]">{detail}</Mono>
+        <Mono className="mt-2 text-center text-[13px]">{detail}</Mono>
       </View>
     </Animated.View>
   );

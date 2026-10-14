@@ -30,7 +30,7 @@ export function RightsSection() {
         <Display color={C.gold} className="text-2xl">
           Your rights as a customer
         </Display>
-        <Mono className="mt-2 text-[10px]">
+        <Mono className="mt-2 text-[13px]">
           Changing your mind is not a mixed signal. Leaving is not manipulation. Saying no — or not
           anymore — is self-knowledge.
         </Mono>
@@ -47,7 +47,7 @@ export function RightsSection() {
               >
                 <Check size={11} color={C.teal} />
               </View>
-              <Mono color={C.inkSoft} className="flex-1 text-[11px]">
+              <Mono color={C.inkSoft} className="flex-1 text-[13px]">
                 {right}
               </Mono>
             </View>
@@ -77,7 +77,7 @@ export function RightsSection() {
               }}
             >
               <Eyebrow color={C.no}>COMMON MYTH</Eyebrow>
-              <Mono bold color={C.ink} className="mt-1.5 text-[11px]">
+              <Mono bold color={C.ink} className="mt-1.5 text-[13px]">
                 &ldquo;{card.myth}&rdquo;
               </Mono>
               {expanded ? (
@@ -90,7 +90,7 @@ export function RightsSection() {
                   }}
                 >
                   <Eyebrow color={C.teal}>THE TRUTH</Eyebrow>
-                  <Mono color={C.inkSoft} className="mt-1.5 text-[10px]">
+                  <Mono color={C.inkSoft} className="mt-1.5 text-[13px]">
                     {card.truth}
                   </Mono>
                 </View>
@@ -105,7 +105,7 @@ export function RightsSection() {
           <ShieldAlert size={16} color={C.flame} />
           <View className="flex-1">
             <Eyebrow color={C.flame}>THE SAFETY EXCEPTION</Eyebrow>
-            <Mono className="mt-1.5 text-[10px]">{CAFE_SAFETY_NOTE}</Mono>
+            <Mono className="mt-1.5 text-[13px]">{CAFE_SAFETY_NOTE}</Mono>
           </View>
         </View>
       </Panel>
