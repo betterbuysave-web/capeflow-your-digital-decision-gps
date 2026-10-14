@@ -42,6 +42,7 @@ export default function Crisis() {
         <Eyebrow color={C.flame}>CRISIS PROTOCOL</Eyebrow>
         <Display className="mt-2 text-4xl">For the moments that can&apos;t wait.</Display>
         <GradientAction
+          tint={C.no}
           className="mt-4 rounded-2xl p-4"
           accessibilityLabel="Call 911, emergency services in the United States"
           accessibilityHint="Opens your phone dialer. No pause is required."

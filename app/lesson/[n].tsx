@@ -61,6 +61,7 @@ export default function LessonScreen() {
             </View>
           </Panel>
           <GradientAction
+            tint={C.flame}
             onPress={() => router.push('/(tabs)/crisis')}
             className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5"
           >

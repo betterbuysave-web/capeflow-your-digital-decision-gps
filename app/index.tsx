@@ -69,7 +69,11 @@ export default function Landing() {
             </Body>
 
             <View className="mt-8 w-full gap-3">
-              <MetallicButton label="GET STARTED" onPress={() => router.push('/onboarding')} />
+              <MetallicButton
+                brand
+                label="GET STARTED"
+                onPress={() => router.push('/onboarding')}
+              />
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
             </View>
 

@@ -62,6 +62,7 @@ export default function EmergencyDirectory() {
 
         <View className="mt-8 gap-2.5">
           <GradientAction
+            tint={C.no}
             accessibilityLabel="Call 911, emergency services in the United States"
             accessibilityHint="Opens your phone dialer. No pause is required."
             onPress={() => open('tel:911')}
