@@ -79,7 +79,7 @@ export function PauseButton({ className }: { className?: string }) {
   return (
     <Panel tint={ringColor} fill={running ? 0.08 : 0.04} stroke={0.24} className={className}>
       <Eyebrow color={ringColor}>THE PAUSE BUTTON</Eyebrow>
-      <Mono className="mt-2 text-[10px]">{THREE_SECOND_RULE.lead}</Mono>
+      <Mono className="mt-2 text-[13px]">{THREE_SECOND_RULE.lead}</Mono>
 
       <Pressable
         accessibilityRole="button"
@@ -114,7 +114,7 @@ export function PauseButton({ className }: { className?: string }) {
                 <Display color={C.paper2} className="text-6xl">
                   NEXT MOVE
                 </Display>
-                <Mono bold color={C.paper2} tracking={2} className="mt-1 text-[11px]">
+                <Mono bold color={C.paper2} tracking={2} className="mt-1 text-[13px]">
                   TAP TO PAUSE AGAIN
                 </Mono>
               </View>
@@ -126,7 +126,7 @@ export function PauseButton({ className }: { className?: string }) {
               className="rounded-full px-4 py-1.5"
               style={{ backgroundColor: alpha(C.ink, 0.7) }}
             >
-              <Mono bold color={C.paper2} tracking={3} className="text-[11px]">
+              <Mono bold color={C.paper2} tracking={3} className="text-[13px]">
                 TAP TO PAUSE · 3 · 2 · 1
               </Mono>
             </View>
@@ -157,12 +157,12 @@ export function PauseButton({ className }: { className?: string }) {
           ),
         }}
       >
-        <Mono bold={running || done} className="text-center text-[11px]" color={C.inkSoft}>
+        <Mono bold={running || done} className="text-center text-[13px]" color={C.inkSoft}>
           {step ?? (done ? THREE_SECOND_RULE.done : 'Tap the button. Count down with it.')}
         </Mono>
       </View>
 
-      <Mono className="mt-3 text-[10px]" color={C.inkSoft}>
+      <Mono className="mt-3 text-[13px]" color={C.inkSoft}>
         {THREE_SECOND_RULE.close}
       </Mono>
     </Panel>

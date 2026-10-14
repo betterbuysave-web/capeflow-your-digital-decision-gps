@@ -32,10 +32,10 @@ export default function BadgeCabinet() {
 
         <View className="mt-5">
           <View className="mb-2 flex-row items-center justify-between">
-            <Mono bold color={C.gold} className="text-[10px]" tracking={1.5}>
+            <Mono bold color={C.gold} className="text-[13px]" tracking={1.5}>
               {earned} OF {BADGES.length} EARNED
             </Mono>
-            <Mono className="text-[10px]" color={alpha(C.inkFaint, 0.7)}>
+            <Mono className="text-[13px]" color={alpha(C.inkFaint, 0.7)}>
               {Math.round((earned / BADGES.length) * 100)}%
             </Mono>
           </View>
@@ -64,11 +64,11 @@ export default function BadgeCabinet() {
                 <Mono
                   bold
                   color={has ? badge.tint : alpha(C.inkFaint, 0.7)}
-                  className="mt-2.5 text-[11px]"
+                  className="mt-2.5 text-[13px]"
                 >
                   {badge.name}
                 </Mono>
-                <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, has ? 0.75 : 0.55)}>
+                <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, has ? 0.75 : 0.55)}>
                   {badge.requirement}
                 </Mono>
               </View>

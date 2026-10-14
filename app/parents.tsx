@@ -25,7 +25,7 @@ export default function Parents() {
           <Users size={22} color={C.teal} />
           <View className="flex-1">
             <Eyebrow color={C.teal}>FOR PARENTS, GUARDIANS &amp; EDUCATORS</Eyebrow>
-            <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+            <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
               Full curriculum transparency — no surprises
             </Mono>
           </View>
@@ -39,7 +39,7 @@ export default function Parents() {
 
         <Panel tint={C.teal} className="mt-8">
           <Eyebrow color={C.teal}>Educator hub</Eyebrow>
-          <Mono className="mt-3 text-[11px]">{EDUCATOR_HUB_COPY}</Mono>
+          <Mono className="mt-3 text-[13px]">{EDUCATOR_HUB_COPY}</Mono>
         </Panel>
 
         <View className="mt-8">
@@ -63,7 +63,7 @@ export default function Parents() {
                     onPress={() => setOpenBand(isOpen ? null : row.band)}
                     className="flex-row items-center justify-between gap-3 p-4 active:opacity-70"
                   >
-                    <Mono bold color={C.teal} className="flex-1 text-[10px]" tracking={1.5}>
+                    <Mono bold color={C.teal} className="flex-1 text-[13px]" tracking={1.5}>
                       {row.band}
                     </Mono>
                     <ChevronDown
@@ -80,7 +80,7 @@ export default function Parents() {
                             className="mt-1.5 h-1.5 w-1.5 rounded-full"
                             style={{ backgroundColor: C.teal }}
                           />
-                          <Mono className="flex-1 text-[10px]">{topic}</Mono>
+                          <Mono className="flex-1 text-[13px]">{topic}</Mono>
                         </View>
                       ))}
                     </View>
@@ -114,10 +114,10 @@ export default function Parents() {
                   >
                     <Mono className="text-xl">{card.emoji}</Mono>
                     <View className="flex-1">
-                      <Mono bold color={card.tint} className="text-[11px]">
+                      <Mono bold color={card.tint} className="text-[13px]">
                         {card.title}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                      <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                         {card.detail}
                       </Mono>
                     </View>
@@ -135,7 +135,7 @@ export default function Parents() {
                             className="mt-1.5 h-1.5 w-1.5 rounded-full"
                             style={{ backgroundColor: card.tint }}
                           />
-                          <Mono className="flex-1 text-[10px]">{line}</Mono>
+                          <Mono className="flex-1 text-[13px]">{line}</Mono>
                         </View>
                       ))}
                     </View>
@@ -148,7 +148,7 @@ export default function Parents() {
 
         <Panel tint={C.gold} className="mt-8">
           <Eyebrow color={C.gold}>Print errata · Until the next interior reprint</Eyebrow>
-          <Mono className="mt-3 text-[11px]">{PRINT_ERRATA_COPY}</Mono>
+          <Mono className="mt-3 text-[13px]">{PRINT_ERRATA_COPY}</Mono>
         </Panel>
 
         <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">
@@ -158,7 +158,7 @@ export default function Parents() {
               <Eyebrow color={C.teal} className="mb-1.5">
                 PRIVACY BY ARCHITECTURE
               </Eyebrow>
-              <Mono className="text-[10px]">{PRIVACY_NOTE}</Mono>
+              <Mono className="text-[13px]">{PRIVACY_NOTE}</Mono>
             </View>
           </View>
         </Panel>

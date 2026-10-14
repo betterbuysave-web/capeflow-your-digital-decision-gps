@@ -20,7 +20,7 @@ export function Eyebrow({
   return (
     <Text
       accessibilityRole={accessibilityRole}
-      className={cn('font-mono text-[10px]', className)}
+      className={cn('font-mono text-[12px]', className)}
       style={{ color, letterSpacing: 3, fontFamily: 'JetBrainsMono_700Bold' }}
     >
       {children}
@@ -64,7 +64,7 @@ export function Body({
   return (
     <Text
       accessibilityRole={accessibilityRole}
-      className={cn('text-sm leading-relaxed', className)}
+      className={cn('text-[15px] leading-relaxed', className)}
       style={{ color, fontFamily: 'Inter_400Regular' }}
     >
       {children}
@@ -91,7 +91,7 @@ export function Mono({
   return (
     <Text
       accessibilityLiveRegion={accessibilityLiveRegion}
-      className={cn('text-[11px] leading-relaxed', className)}
+      className={cn('text-[13px] leading-relaxed', className)}
       style={{
         color,
         fontFamily: bold ? 'JetBrainsMono_700Bold' : 'JetBrainsMono_400Regular',

@@ -52,7 +52,7 @@ export function BrandBanner({ className }: { className?: string }) {
         <View className="overflow-hidden rounded-xl">
           <Wordmark />
         </View>
-        <Mono bold className="mt-3 px-3 text-center text-[9px]" color={C.inkSoft} tracking={0.7}>
+        <Mono bold className="mt-3 px-3 text-center text-[12px]" color={C.inkSoft} tracking={0.7}>
           Your CAPE is yours to wear—every single day.
         </Mono>
       </View>
@@ -71,10 +71,10 @@ export function BrandBanner({ className }: { className?: string }) {
                 : { borderLeftWidth: 1, borderLeftColor: alpha(C.tealBright, 0.25) }
             }
           >
-            <Mono className="text-[7px]" color={C.inkFaint} tracking={1.5}>
+            <Mono className="text-[10px]" color={C.inkFaint} tracking={1.5}>
               {field.label}
             </Mono>
-            <Mono bold className="mt-0.5 text-[8px]" color={C.teal} tracking={0.5}>
+            <Mono bold className="mt-0.5 text-[11px]" color={C.teal} tracking={0.5}>
               {field.value}
             </Mono>
           </View>

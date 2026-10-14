@@ -18,7 +18,6 @@ import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Typ
 import { Chip, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { BrandBanner } from '@/components/cape/BrandBanner';
-import { MatchCompass } from '@/components/cape/MatchCompass';
 import { PauseButton } from '@/components/cape/PauseButton';
 import { PepCountdownBanner } from '@/components/cape/PepCountdown';
 import { C, alpha } from '@/lib/colors';
@@ -32,7 +31,6 @@ import {
   namedGhostCount,
   ghostTotal,
   lessonTotal,
-  moduleProgress,
   saferScore,
   useCapeStore,
 } from '@/lib/store/useCapeStore';
@@ -72,6 +70,7 @@ export default function Compass() {
   const scenarios = scenariosForTrack(track);
   const playedSims = scenarios.filter((scenario) => scenarioResults[scenario.id]).length;
   const nextSim = scenarios.find((scenario) => !scenarioResults[scenario.id]) ?? scenarios[0];
+  const nextStep = pickNextStep(track, completedLessons, nextSim, playedSims, scenarios.length);
   const namedGhosts = namedGhostCount(ghosts);
   const disarmedGhosts = disarmedCount(ghosts);
   const ghostRange = ghostTotal(gradeBand);
@@ -87,57 +86,7 @@ export default function Compass() {
         {/* BRAND BANNER */}
         <BrandBanner />
 
-        {/* SafER SCORE */}
-        <Panel tint={C.teal} fill={0.06} stroke={0.2} className="mt-5">
-          <View className="flex-row items-end justify-between">
-            <View>
-              <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
-              <Mono className="mt-1.5 text-[10px]">Readiness across five MATCH letters</Mono>
-            </View>
-            <Display color={C.teal} className="text-5xl">
-              {score}
-            </Display>
-          </View>
-          <View className="mt-3">
-            <Rail value={score} color={C.teal} height={6} />
-          </View>
-          <View className="mt-4 flex-row flex-wrap gap-2">
-            <Chip label={`${doneLessons}/${lessonTotal(gradeBand)} LESSONS`} tint={C.modM} />
-            <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.violet} />
-            <Chip
-              label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
-              tint={C.amber}
-            />
-            <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
-            {gradeBand === '9-12' ? (
-              <Chip label={`${disarmedGhosts}/${ghostRange} HEALTHCARE GHOSTS`} tint={C.gold} />
-            ) : null}
-          </View>
-        </Panel>
-
-        {/* PROTECTION BLUEPRINT */}
-        <TintedRow
-          tint={C.gold}
-          fill={0.06}
-          stroke={0.2}
-          className="mt-3"
-          onPress={() => router.push('/protection-blueprint')}
-        >
-          <View className="flex-row items-center gap-3">
-            <FileText size={18} color={C.gold} />
-            <View className="flex-1">
-              <Mono bold color={C.gold} className="text-[11px]" tracking={1}>
-                PROTECTION BLUEPRINT
-              </Mono>
-              <Mono className="mt-0.5 text-[9px]">
-                Full readout of your shield, plans, and adherence history
-              </Mono>
-            </View>
-            <ArrowRight size={14} color={C.gold} />
-          </View>
-        </TintedRow>
-
-        <View className="mt-4 flex-row items-center justify-between">
+        <View className="mt-5 flex-row items-center justify-between">
           <View>
             <Eyebrow color={C.teal}>WEAR YOUR CAPE</Eyebrow>
             <Display className="mt-1.5 text-3xl">
@@ -154,7 +103,7 @@ export default function Compass() {
               }}
             >
               <Flame size={13} color={C.flame} />
-              <Mono bold color={C.flame} className="text-[10px]">
+              <Mono bold color={C.flame} className="text-[13px]">
                 {streak}d
               </Mono>
             </View>
@@ -167,125 +116,19 @@ export default function Compass() {
               }}
             >
               <Award size={13} color={C.gold} />
-              <Mono bold color={C.gold} className="text-[10px]">
+              <Mono bold color={C.gold} className="text-[13px]">
                 {xp} XP
               </Mono>
             </View>
           </View>
         </View>
-        <Mono className="mt-2 text-[10px]">
-          Leadership is the next safe move—for you and the people around you.
-        </Mono>
+        {/* NEXT STEP */}
+        <NextStepCard step={nextStep} />
 
         <PepCountdownBanner className="mt-4" />
 
-        {/* GHOST VAULT */}
-        {gradeBand === '9-12' ? (
-          <TintedRow
-            tint={C.violet}
-            fill={0.07}
-            stroke={0.22}
-            className="mt-4"
-            onPress={() => router.push('/tools/ghost-vault')}
-          >
-            <View className="flex-row items-center gap-3">
-              <Ghost size={18} color={C.violet} />
-              <View className="flex-1">
-                <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
-                  Healthcare Anxiety Audit
-                </Mono>
-                <Mono className="mt-0.5 text-[9px]">
-                  {namedGhosts === 0
-                    ? 'Name a healthcare ghost — plan your next care step'
-                    : `${namedGhosts} named · ${disarmedGhosts} shields online`}
-                </Mono>
-              </View>
-              <ArrowRight size={14} color={C.violet} />
-            </View>
-          </TintedRow>
-        ) : null}
-
         {/* PAUSE BUTTON */}
         <PauseButton className="mt-6" />
-
-        {/* MATCH COMPASS */}
-        <View className="mt-8">
-          <Eyebrow color={C.teal}>MATCH COMPASS</Eyebrow>
-          <Display className="mt-2 text-3xl">Five MATCH letters. One compass.</Display>
-          <View className="mt-4">
-            <MatchCompass />
-          </View>
-          <View className="mt-5 gap-3">
-            {MATCH_MODULES.map((mod) => {
-              const progress = moduleProgress(mod.id, completedLessons, track);
-              const available = lessonsForTrack(mod, track);
-              const done = available.filter((l) => completedLessons.includes(l.id)).length;
-              return (
-                <TintedRow
-                  key={mod.id}
-                  tint={mod.color}
-                  fill={0.05}
-                  stroke={0.16}
-                  onPress={() => router.push({ pathname: '/module/[id]', params: { id: mod.id } })}
-                >
-                  <View className="flex-row items-center gap-4">
-                    <View
-                      className="h-12 w-12 items-center justify-center rounded-xl"
-                      style={{
-                        backgroundColor: alpha(mod.color, 0.1),
-                        borderWidth: 1,
-                        borderColor: alpha(mod.color, 0.25),
-                      }}
-                    >
-                      <Display color={mod.color} className="text-2xl">
-                        {mod.letter}
-                      </Display>
-                    </View>
-                    <View className="flex-1">
-                      <View className="flex-row items-center gap-2">
-                        <Mono className="text-sm">{mod.emoji}</Mono>
-                        <Mono bold color={mod.color} className="flex-1 text-[12px]">
-                          {mod.name}
-                        </Mono>
-                      </View>
-                      <View className="mt-2">
-                        <Rail value={progress} color={mod.color} />
-                      </View>
-                      <Mono className="mt-1.5 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
-                        {done}/{available.length} lessons · {progress}%
-                      </Mono>
-                    </View>
-                    <ArrowRight size={14} color={alpha(mod.color, 0.8)} />
-                  </View>
-                </TintedRow>
-              );
-            })}
-          </View>
-        </View>
-
-        {/* TONIGHT'S SIM */}
-        <View className="mt-8">
-          <Eyebrow color={C.violet}>MIDNIGHT SIM</Eyebrow>
-          <Display className="mt-2 text-3xl">Practice before it&apos;s real.</Display>
-          <TintedRow
-            tint={C.violet}
-            fill={0.07}
-            stroke={0.22}
-            className="mt-4"
-            onPress={() => router.push({ pathname: '/sim/[id]', params: { id: nextSim.id } })}
-          >
-            <View className="flex-row items-center gap-3">
-              <Mono className="text-xl">{nextSim.emoji}</Mono>
-              <View className="flex-1">
-                <Mono bold color={C.violet} className="text-[11px]" tracking={1}>
-                  {nextSim.time} · {nextSim.title.toUpperCase()}
-                </Mono>
-                <Mono className="mt-1 text-[10px]">{nextSim.setup}</Mono>
-              </View>
-              <ArrowRight size={14} color={C.violet} />
-            </View>
-          </TintedRow>
-        </View>
 
         {/* QUICK TOOLS */}
         <View className="mt-8">
@@ -320,6 +163,86 @@ export default function Compass() {
               onPress={() => router.push('/(tabs)/tools')}
             />
           </View>
+        </View>
+
+        {/* YOUR PROGRESS */}
+        <View className="mt-8">
+          <Eyebrow color={C.teal}>YOUR PROGRESS</Eyebrow>
+          {/* SafER SCORE */}
+          <Panel tint={C.teal} fill={0.06} stroke={0.2} className="mt-3">
+            <View className="flex-row items-end justify-between">
+              <View>
+                <Eyebrow color={C.teal}>SafER SCORE</Eyebrow>
+                <Mono className="mt-1.5 text-[13px]">Readiness across five MATCH letters</Mono>
+              </View>
+              <Display color={C.teal} className="text-5xl">
+                {score}
+              </Display>
+            </View>
+            <View className="mt-3">
+              <Rail value={score} color={C.teal} height={6} />
+            </View>
+            <View className="mt-4 flex-row flex-wrap gap-2">
+              <Chip label={`${doneLessons}/${lessonTotal(gradeBand)} LESSONS`} tint={C.modM} />
+              <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.violet} />
+              <Chip
+                label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
+                tint={C.amber}
+              />
+              <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
+              {gradeBand === '9-12' ? (
+                <Chip label={`${disarmedGhosts}/${ghostRange} HEALTHCARE GHOSTS`} tint={C.gold} />
+              ) : null}
+            </View>
+          </Panel>
+
+          {/* PROTECTION BLUEPRINT */}
+          <TintedRow
+            tint={C.gold}
+            fill={0.06}
+            stroke={0.2}
+            className="mt-3"
+            onPress={() => router.push('/protection-blueprint')}
+          >
+            <View className="flex-row items-center gap-3">
+              <FileText size={18} color={C.gold} />
+              <View className="flex-1">
+                <Mono bold color={C.gold} className="text-[13px]" tracking={1}>
+                  PROTECTION BLUEPRINT
+                </Mono>
+                <Mono className="mt-0.5 text-[12px]">
+                  Full readout of your shield, plans, and adherence history
+                </Mono>
+              </View>
+              <ArrowRight size={14} color={C.gold} />
+            </View>
+          </TintedRow>
+
+          {/* GHOST VAULT */}
+          {gradeBand === '9-12' ? (
+            <TintedRow
+              tint={C.violet}
+              fill={0.07}
+              stroke={0.22}
+              className="mt-4"
+              onPress={() => router.push('/tools/ghost-vault')}
+            >
+              <View className="flex-row items-center gap-3">
+                <Ghost size={18} color={C.violet} />
+                <View className="flex-1">
+                  <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
+                    Healthcare Anxiety Audit
+                  </Mono>
+                  <Mono className="mt-0.5 text-[12px]">
+                    {namedGhosts === 0
+                      ? 'Name a healthcare ghost — plan your next care step'
+                      : `${namedGhosts} named · ${disarmedGhosts} shields online`}
+                  </Mono>
+                </View>
+                <ArrowRight size={14} color={C.violet} />
+              </View>
+            </TintedRow>
+          ) : null}
         </View>
 
         {/* BADGES */}
@@ -374,12 +297,98 @@ function QuickTile({
       }}
     >
       {icon}
-      <Mono bold color={tint} className="mt-2.5 text-[10px]" tracking={1}>
+      <Mono bold color={tint} className="mt-2.5 text-[13px]" tracking={1}>
         {label}
       </Mono>
-      <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+      <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
         {detail}
       </Mono>
+    </Pressable>
+  );
+}
+
+type NextStep = {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  tint: string;
+  letter?: string;
+  onPress: () => void;
+};
+
+/** One clear answer to "what do I do next?". */
+function pickNextStep(
+  track: ReturnType<typeof trackFor>,
+  completed: string[],
+  nextSim: ReturnType<typeof scenariosForTrack>[number],
+  playedSims: number,
+  totalSims: number,
+): NextStep {
+  for (const mod of MATCH_MODULES) {
+    const lesson = lessonsForTrack(mod, track).find((l) => !completed.includes(l.id));
+    if (lesson) {
+      const first = completed.length === 0;
+      return {
+        eyebrow: first ? 'START HERE' : 'YOUR NEXT STEP',
+        title: lesson.title,
+        detail: `${mod.name} · about ${lesson.minutes} min`,
+        tint: mod.color,
+        letter: mod.letter,
+        onPress: () => router.push({ pathname: '/module/[id]', params: { id: mod.id } }),
+      };
+    }
+  }
+  if (playedSims < totalSims) {
+    return {
+      eyebrow: 'YOUR NEXT STEP',
+      title: nextSim.title,
+      detail: 'Practice a real moment before it happens',
+      tint: C.violet,
+      onPress: () => router.push({ pathname: '/sim/[id]', params: { id: nextSim.id } }),
+    };
+  }
+  return {
+    eyebrow: 'YOU FINISHED EVERY LESSON',
+    title: 'Keep your CAPE ready',
+    detail: 'Review your Protection Blueprint',
+    tint: C.gold,
+    onPress: () => router.push('/protection-blueprint'),
+  };
+}
+
+function NextStepCard({ step }: { step: NextStep }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${step.eyebrow}: ${step.title}. ${step.detail}`}
+      onPress={step.onPress}
+      className="mt-4 rounded-3xl p-5 active:opacity-80"
+      style={{ backgroundColor: step.tint }}
+    >
+      <Mono bold color={C.paper2} tracking={2} className="text-[14px]">
+        {step.eyebrow}
+      </Mono>
+      <View className="mt-2 flex-row items-center gap-4">
+        {step.letter ? (
+          <View
+            className="h-14 w-14 items-center justify-center rounded-2xl"
+            style={{ backgroundColor: alpha(C.paper2, 0.18) }}
+          >
+            <Display color={C.paper2} className="text-4xl">
+              {step.letter}
+            </Display>
+          </View>
+        ) : null}
+        <View className="flex-1">
+          <Display color={C.paper2} className="text-3xl">
+            {step.title}
+          </Display>
+          <Body color={C.paper2} className="mt-1">
+            {step.detail}
+          </Body>
+        </View>
+        <ArrowRight size={22} color={C.paper2} />
+      </View>
     </Pressable>
   );
 }

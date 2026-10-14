@@ -80,7 +80,7 @@ export function StackHeader({
           <ChevronLeft size={18} color={C.inkSoft} />
         </Pressable>
         <View className="flex-1">
-          <Mono bold color={tint} tracking={2.5} className="text-[11px]">
+          <Mono bold color={tint} tracking={2.5} className="text-[13px]">
             {title.toUpperCase()}
           </Mono>
         </View>

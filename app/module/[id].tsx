@@ -72,14 +72,14 @@ export default function ModuleDetail() {
         <Panel tint={mod.color} fill={0.05} stroke={0.18} className="mt-5">
           <View className="flex-row items-center justify-between">
             <Eyebrow color={mod.color}>MODULE PROGRESS</Eyebrow>
-            <Mono bold color={mod.color} className="text-[11px]">
+            <Mono bold color={mod.color} className="text-[13px]">
               {progress}%
             </Mono>
           </View>
           <View className="mt-2.5">
             <Rail value={progress} color={mod.color} height={5} />
           </View>
-          <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+          <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.7)}>
             {done} of {lessons.length} lessons complete
           </Mono>
         </Panel>
@@ -115,23 +115,23 @@ export default function ModuleDetail() {
                     {isDone ? (
                       <Check size={14} color={mod.color} />
                     ) : (
-                      <Mono bold color={mod.color} className="text-[11px]">
+                      <Mono bold color={mod.color} className="text-[13px]">
                         {index + 1}
                       </Mono>
                     )}
                   </View>
                   <View className="flex-1">
-                    <Mono bold className="text-[12px]" color={alpha(C.inkSoft, 0.95)}>
+                    <Mono bold className="text-[14px]" color={alpha(C.inkSoft, 0.95)}>
                       {lesson.title}
                     </Mono>
                     <View className="mt-1 flex-row items-center gap-3">
                       <View className="flex-row items-center gap-1">
                         <Clock size={10} color={alpha(C.inkFaint, 0.7)} />
-                        <Mono className="text-[9px]" color={alpha(C.inkFaint, 0.7)}>
+                        <Mono className="text-[12px]" color={alpha(C.inkFaint, 0.7)}>
                           {lesson.minutes} min
                         </Mono>
                       </View>
-                      <Mono className="text-[9px]" color={alpha(mod.color, 0.9)}>
+                      <Mono className="text-[12px]" color={alpha(mod.color, 0.9)}>
                         +{lesson.xp} XP
                       </Mono>
                     </View>
@@ -145,7 +145,7 @@ export default function ModuleDetail() {
 
                 {isOpen ? (
                   <View className="px-4 pb-4">
-                    <Mono className="text-[11px]">{lesson.intro}</Mono>
+                    <Mono className="text-[13px]">{lesson.intro}</Mono>
                     <View className="mt-3 gap-2">
                       {lesson.points.map((point) => (
                         <View key={point} className="flex-row gap-2.5">
@@ -153,7 +153,7 @@ export default function ModuleDetail() {
                             className="mt-1.5 h-1.5 w-1.5 rounded-full"
                             style={{ backgroundColor: mod.color }}
                           />
-                          <Mono className="flex-1 text-[10px]">{point}</Mono>
+                          <Mono className="flex-1 text-[13px]">{point}</Mono>
                         </View>
                       ))}
                     </View>
@@ -162,10 +162,10 @@ export default function ModuleDetail() {
                       <View className="flex-row items-start gap-2">
                         <Sparkles size={13} color={mod.color} />
                         <View className="flex-1">
-                          <Mono bold color={mod.color} className="text-[9px]" tracking={1.5}>
+                          <Mono bold color={mod.color} className="text-[12px]" tracking={1.5}>
                             TRY IT
                           </Mono>
-                          <Mono className="mt-1 text-[10px]">{lesson.tryIt}</Mono>
+                          <Mono className="mt-1 text-[13px]">{lesson.tryIt}</Mono>
                         </View>
                       </View>
                     </Panel>
@@ -176,7 +176,7 @@ export default function ModuleDetail() {
                       className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3"
                     >
                       {isDone ? <Check size={14} color={C.paper2} /> : null}
-                      <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+                      <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
                         {isDone ? 'COMPLETE' : `MARK COMPLETE · +${lesson.xp} XP`}
                       </Mono>
                     </GradientAction>
@@ -202,10 +202,10 @@ export default function ModuleDetail() {
               >
                 <Lock size={15} color={C.lemon} />
                 <View className="flex-1">
-                  <Mono bold className="text-[11px]" color={alpha(C.inkSoft, 0.85)}>
+                  <Mono bold className="text-[13px]" color={alpha(C.inkSoft, 0.85)}>
                     {lesson.title}
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">
+                  <Mono className="mt-1 text-[13px]">
                     Protection shields open on the {TRACKS.blue.label.toLowerCase()} — grades 9–12.
                     On this track the focus stays on mindset, consent, and digital safety.
                   </Mono>

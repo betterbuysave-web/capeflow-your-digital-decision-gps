@@ -56,10 +56,10 @@ export function FriesSection() {
                   </Display>
                 </View>
                 <View className="flex-1">
-                  <Mono bold color={C.ink} className="text-[12px]">
+                  <Mono bold color={C.ink} className="text-[14px]">
                     {card.word}
                   </Mono>
-                  <Mono color={card.tint} className="mt-0.5 text-[10px]">
+                  <Mono color={card.tint} className="mt-0.5 text-[13px]">
                     {card.nickname}
                   </Mono>
                 </View>
@@ -73,7 +73,7 @@ export function FriesSection() {
                   className="mt-3.5 pt-3.5"
                   style={{ borderTopWidth: 1, borderTopColor: alpha(card.tint, 0.3) }}
                 >
-                  <Mono className="text-[11px]">{card.rule}</Mono>
+                  <Mono className="text-[13px]">{card.rule}</Mono>
                   <View
                     className="mt-3 rounded-xl p-3"
                     style={{
@@ -83,7 +83,7 @@ export function FriesSection() {
                     }}
                   >
                     <Eyebrow color={card.tint}>CAFÉ RULE</Eyebrow>
-                    <Mono className="mt-1.5 text-[10px]">{card.cafeRule}</Mono>
+                    <Mono className="mt-1.5 text-[13px]">{card.cafeRule}</Mono>
                   </View>
                 </View>
               ) : null}
@@ -94,7 +94,7 @@ export function FriesSection() {
 
       <DetectiveQuiz />
 
-      <Mono color={C.gold} tracking={1} className="mt-6 text-center text-[10px]">
+      <Mono color={C.gold} tracking={1} className="mt-6 text-center text-[13px]">
         {CAFE_TAGLINE}
       </Mono>
     </View>
@@ -142,12 +142,12 @@ function DetectiveQuiz() {
           <Search size={15} color={C.modC} />
           <Eyebrow color={C.modC}>F.R.I.E.S. DETECTIVE</Eyebrow>
         </View>
-        <Mono bold color={C.inkFaint} className="text-[9px]">
+        <Mono bold color={C.inkFaint} className="text-[12px]">
           {correctCount}/{CAFE_QUIZ.length} CALLED
         </Mono>
       </View>
 
-      <Mono bold color={C.inkFaint} className="mt-3 text-[9px]" tracking={1.5}>
+      <Mono bold color={C.inkFaint} className="mt-3 text-[12px]" tracking={1.5}>
         SCENARIO {index + 1} OF {CAFE_QUIZ.length} · {answeredCount} LOGGED
       </Mono>
 
@@ -159,7 +159,7 @@ function DetectiveQuiz() {
           borderLeftColor: C.modC,
         }}
       >
-        <Mono color={C.inkSoft} className="text-[11px]">
+        <Mono color={C.inkSoft} className="text-[13px]">
           {question.scenario}
         </Mono>
       </View>
@@ -188,7 +188,7 @@ function DetectiveQuiz() {
                 borderColor: alpha(tint, marked ? 0.55 : 0.14),
               }}
             >
-              <Mono bold color={marked ? tint : C.inkSoft} className="text-[11px]">
+              <Mono bold color={marked ? tint : C.inkSoft} className="text-[13px]">
                 {option}
               </Mono>
             </Pressable>
@@ -206,12 +206,12 @@ function DetectiveQuiz() {
               borderLeftColor: isCorrect ? C.yes : C.no,
             }}
           >
-            <Mono color={C.inkSoft} className="text-[10px]">
+            <Mono color={C.inkSoft} className="text-[13px]">
               {isCorrect ? question.correct : question.wrong}
             </Mono>
           </View>
           <GradientAction onPress={next} className="mt-3 items-center rounded-xl py-3">
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
               NEXT SCENARIO
             </Mono>
           </GradientAction>

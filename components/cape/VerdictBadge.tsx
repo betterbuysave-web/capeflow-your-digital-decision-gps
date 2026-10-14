@@ -17,7 +17,7 @@ export function VerdictBadge({ verdict }: { verdict: Verdict }) {
         borderColor: alpha(tint, 0.45),
       }}
     >
-      <Mono bold color={tint} className="text-[8px]" tracking={1}>
+      <Mono bold color={tint} className="text-[11px]" tracking={1}>
         {verdictShort(verdict)}
       </Mono>
     </View>

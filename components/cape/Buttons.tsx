@@ -93,7 +93,7 @@ export function MetallicButton({
         className,
       )}
     >
-      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[12px]">
+      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[14px]">
         {label}
       </Mono>
       {showArrow ? <ArrowRight size={16} color={C.paper2} /> : null}
@@ -126,7 +126,7 @@ export function GhostButton({
       style={{ backgroundColor: tint }}
     >
       {isValidElement<{ color?: string }>(icon) ? cloneElement(icon, { color: C.paper2 }) : icon}
-      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[12px]">
+      <Mono bold color={C.paper2} tracking={2} className="shrink text-center text-[14px]">
         {label}
       </Mono>
     </GradientAction>
@@ -186,7 +186,7 @@ export function Chip({ label, tint }: { label: string; tint: string }) {
         borderColor: alpha(tint, 0.45),
       }}
     >
-      <Mono bold color={tint} className="text-[9px]" tracking={1}>
+      <Mono bold color={tint} className="text-[12px]" tracking={1}>
         {label}
       </Mono>
     </View>

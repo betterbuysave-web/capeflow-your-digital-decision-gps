@@ -54,7 +54,7 @@ export default function SampleScenario() {
               <Mono className="text-base">{scenario.emoji}</Mono>
               <Eyebrow color={C.teal}>SAMPLE SCENARIO · MIDNIGHT SIM</Eyebrow>
             </View>
-            <Mono className="text-[10px]" color={C.inkFaint}>
+            <Mono className="text-[13px]" color={C.inkFaint}>
               {scenario.setup}
             </Mono>
           </View>
@@ -69,17 +69,17 @@ export default function SampleScenario() {
                 borderBottomLeftRadius: 4,
               }}
             >
-              <Mono className="text-[12px]" color={C.inkSoft}>
+              <Mono className="text-[14px]" color={C.inkSoft}>
                 {scenario.message}
               </Mono>
-              <Mono className="mt-1.5 text-right text-[10px]" color={C.inkFaint}>
+              <Mono className="mt-1.5 text-right text-[13px]" color={C.inkFaint}>
                 {scenario.bubbleTime}
               </Mono>
             </View>
           </View>
 
           <View className="gap-2 px-5 pb-5">
-            <Mono className="mb-1 text-[9px]" color={C.inkFaint} tracking={2}>
+            <Mono className="mb-1 text-[12px]" color={C.inkFaint} tracking={2}>
               {scenario.prompt}
             </Mono>
             {scenario.choices.map((choice) => {
@@ -108,7 +108,7 @@ export default function SampleScenario() {
                       : alpha(C.ink, 0.13),
                   }}
                 >
-                  <Mono className="flex-1 text-[11px]" color={C.inkSoft}>
+                  <Mono className="flex-1 text-[13px]" color={C.inkSoft}>
                     {choice.label}
                   </Mono>
                   {isPicked ? (
@@ -128,11 +128,11 @@ export default function SampleScenario() {
               <Eyebrow color={verdictColor(picked.verdict)} className="mb-2">
                 {verdictLabel(picked.verdict)}
               </Eyebrow>
-              <Mono className="text-[11px]">{picked.feedback}</Mono>
+              <Mono className="text-[13px]">{picked.feedback}</Mono>
               {mod ? (
                 <View className="mt-3 flex-row items-center gap-2">
                   <Mono className="text-sm">{mod.emoji}</Mono>
-                  <Mono bold color={mod.color} className="text-[10px]" tracking={1}>
+                  <Mono bold color={mod.color} className="text-[13px]" tracking={1}>
                     {mod.name.toUpperCase()} MOVE
                   </Mono>
                 </View>
@@ -143,7 +143,7 @@ export default function SampleScenario() {
               <Eyebrow color={C.teal} className="mb-2">
                 DEBRIEF
               </Eyebrow>
-              <Mono className="text-[11px]">{scenario.debrief}</Mono>
+              <Mono className="text-[13px]">{scenario.debrief}</Mono>
             </Panel>
 
             <GradientAction
@@ -151,7 +151,7 @@ export default function SampleScenario() {
               className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3"
             >
               <RotateCcw size={13} color={C.paper2} />
-              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+              <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
                 TRY ANOTHER ANSWER
               </Mono>
             </GradientAction>
@@ -163,7 +163,7 @@ export default function SampleScenario() {
             label="UNLOCK THE FULL COMPASS"
             onPress={() => router.replace('/onboarding')}
           />
-          <Mono className="mt-4 text-center text-[9px]" color={C.inkFaint} tracking={2}>
+          <Mono className="mt-4 text-center text-[12px]" color={C.inkFaint} tracking={2}>
             FREE · NO SIGN-UP NEEDED · GRADES 6–12
           </Mono>
         </View>

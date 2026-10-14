@@ -57,7 +57,7 @@ export default function SafetyCircle() {
               <Panel tint={C.azure} fill={0.05} stroke={0.16}>
                 <View className="flex-row items-center gap-3">
                   <UserPlus size={18} color={C.azure} />
-                  <Mono className="flex-1 text-[10px]">
+                  <Mono className="flex-1 text-[13px]">
                     No contacts yet. Add them now — searching for a number under stress is the
                     problem this solves.
                   </Mono>
@@ -76,10 +76,10 @@ export default function SafetyCircle() {
                 >
                   <View className="flex-row items-start justify-between gap-3">
                     <View className="flex-1">
-                      <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[12px]">
+                      <Mono bold color={alpha(C.inkSoft, 0.95)} className="text-[14px]">
                         {contact.name}
                       </Mono>
-                      <Mono className="mt-0.5 text-[9px]" color={alpha(C.inkFaint, 0.8)}>
+                      <Mono className="mt-0.5 text-[12px]" color={alpha(C.inkFaint, 0.8)}>
                         {contact.role} · {contact.phone}
                       </Mono>
                     </View>
@@ -98,7 +98,7 @@ export default function SafetyCircle() {
                       className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
                     >
                       <Phone size={13} color={C.paper2} />
-                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1.5}>
+                      <Mono bold color={C.paper2} className="text-[13px]" tracking={1.5}>
                         CALL
                       </Mono>
                     </GradientAction>
@@ -112,7 +112,7 @@ export default function SafetyCircle() {
                       className="flex-1 flex-row items-center justify-center gap-2 rounded-xl py-2.5"
                     >
                       <MessageSquare size={13} color={C.paper2} />
-                      <Mono bold color={C.paper2} className="text-[11px]" tracking={1}>
+                      <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
                         CODE WORD
                       </Mono>
                     </GradientAction>
@@ -126,7 +126,7 @@ export default function SafetyCircle() {
             <Eyebrow color={C.azure}>ADD A CONTACT</Eyebrow>
             <View className="mt-3 gap-3">
               <TextField>
-                <Label className="font-mono text-[10px]">NAME</Label>
+                <Label className="font-mono text-[13px]">NAME</Label>
                 <Input
                   placeholder="Who picks up?"
                   value={name}
@@ -137,7 +137,7 @@ export default function SafetyCircle() {
               </TextField>
 
               <TextField>
-                <Label className="font-mono text-[10px]">PHONE</Label>
+                <Label className="font-mono text-[13px]">PHONE</Label>
                 <Input
                   placeholder="555 010 1234"
                   value={phone}
@@ -149,7 +149,7 @@ export default function SafetyCircle() {
               </TextField>
 
               <View>
-                <Mono bold className="mb-2 text-[10px]" color={alpha(C.inkFaint, 0.8)}>
+                <Mono bold className="mb-2 text-[13px]" color={alpha(C.inkFaint, 0.8)}>
                   ROLE
                 </Mono>
                 <View className="flex-row flex-wrap gap-2">
@@ -171,7 +171,7 @@ export default function SafetyCircle() {
                         <Mono
                           bold
                           color={active ? C.azure : alpha(C.inkFaint, 0.8)}
-                          className="text-[10px]"
+                          className="text-[13px]"
                           tracking={1}
                         >
                           {option.toUpperCase()}
@@ -188,7 +188,7 @@ export default function SafetyCircle() {
                 className="mt-2 flex-row items-center justify-center gap-2 rounded-full py-3.5"
               >
                 <Plus size={15} color={C.paper2} />
-                <Mono bold color={C.paper2} tracking={2} className="text-[11px]">
+                <Mono bold color={C.paper2} tracking={2} className="text-[13px]">
                   ADD TO CIRCLE
                 </Mono>
               </GradientAction>
@@ -196,11 +196,11 @@ export default function SafetyCircle() {
           </View>
 
           <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">
-            <Mono className="text-[10px]">
+            <Mono className="text-[13px]">
               Contacts live only in this app on this device. CAPE FLOW never reads your phone
               contacts and never uploads anything you type here.
             </Mono>
-            <Mono className="mt-2 text-[9px]" color={C.inkFaint}>
+            <Mono className="mt-2 text-[12px]" color={C.inkFaint}>
               {SAFETY_EXCEPTION}
             </Mono>
           </Panel>

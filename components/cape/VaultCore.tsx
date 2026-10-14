@@ -110,7 +110,7 @@ export function VaultCore({
             {disarmed}
           </Display>
           <Eyebrow color={C.inkFaint}>DISARMED</Eyebrow>
-          <Mono className="mt-1.5 text-[9px]" color={C.inkFaint}>
+          <Mono className="mt-1.5 text-[12px]" color={C.inkFaint}>
             {named} named · {total} in range
           </Mono>
         </View>

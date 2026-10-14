@@ -91,10 +91,10 @@ export default function Onboarding() {
                     <Eyebrow color={option.tint}>{option.label}</Eyebrow>
                     {selected ? <Check size={16} color={option.tint} /> : null}
                   </View>
-                  <Mono bold className="mt-2 text-[12px]" color={C.ink}>
+                  <Mono bold className="mt-2 text-[14px]" color={C.ink}>
                     {option.tier}
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{option.detail}</Mono>
+                  <Mono className="mt-1 text-[13px]">{option.detail}</Mono>
                 </Pressable>
               );
             })}
@@ -127,8 +127,8 @@ export default function Onboarding() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   ZERO STIGMA TAX — NO TRACKING
                 </Eyebrow>
-                <Mono className="text-[10px]">{PRIVACY_NOTE}</Mono>
-                <Mono className="mt-2 text-[9px]" color={C.inkFaint}>
+                <Mono className="text-[13px]">{PRIVACY_NOTE}</Mono>
+                <Mono className="mt-2 text-[12px]" color={C.inkFaint}>
                   {SAFETY_EXCEPTION}
                 </Mono>
               </View>
@@ -147,7 +147,7 @@ export default function Onboarding() {
                   borderColor: alpha(C.ink, 0.14),
                 }}
               >
-                <Mono bold color={alpha(C.inkFaint, 0.6)} tracking={2} className="text-[12px]">
+                <Mono bold color={alpha(C.inkFaint, 0.6)} tracking={2} className="text-[14px]">
                   SELECT A TRACK TO CONTINUE
                 </Mono>
               </View>

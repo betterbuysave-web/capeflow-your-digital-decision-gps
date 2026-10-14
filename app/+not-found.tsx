@@ -23,7 +23,7 @@ export default function NotFoundScreen() {
               borderColor: alpha(C.teal, 0.35),
             }}
           >
-            <Mono bold color={C.teal} tracking={2} className="text-[11px]">
+            <Mono bold color={C.teal} tracking={2} className="text-[13px]">
               BACK TO CAPE FLOW
             </Mono>
           </View>

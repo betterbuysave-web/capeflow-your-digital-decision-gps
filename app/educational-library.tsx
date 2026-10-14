@@ -87,7 +87,7 @@ export default function EducationalLibrary() {
               onChangeText={setQuery}
               placeholder="search a word or a worry…"
               placeholderTextColor={C.inkFaint}
-              className="flex-1 py-3 text-[11px]"
+              className="flex-1 py-3 text-[13px]"
               style={{ color: C.inkSoft, fontFamily: INPUT_FONT }}
             />
             {query.length > 0 ? (
@@ -118,11 +118,11 @@ export default function EducationalLibrary() {
                     borderColor: alpha(cat.tint, active ? 0.5 : 0.16),
                   }}
                 >
-                  <Mono className="text-[10px]">{cat.emoji}</Mono>
+                  <Mono className="text-[13px]">{cat.emoji}</Mono>
                   <Mono
                     bold={active}
                     color={active ? cat.tint : C.inkSoft}
-                    className="text-[9px]"
+                    className="text-[12px]"
                     tracking={1}
                   >
                     {cat.label}
@@ -134,7 +134,7 @@ export default function EducationalLibrary() {
 
           {grouped.length === 0 ? (
             <Panel tint={C.inkFaint} fill={0.03} stroke={0.1} className="mt-6">
-              <Mono className="text-[10px]">
+              <Mono className="text-[13px]">
                 No entry matched that. Try a shorter word, or clear the category filter.
               </Mono>
             </Panel>
@@ -146,7 +146,7 @@ export default function EducationalLibrary() {
                 <Mono className="text-base">{group.cat.emoji}</Mono>
                 <Eyebrow color={group.cat.tint}>{group.cat.label}</Eyebrow>
               </View>
-              <Mono className="mt-2 text-[10px]" color={alpha(C.inkFaint, 0.75)}>
+              <Mono className="mt-2 text-[13px]" color={alpha(C.inkFaint, 0.75)}>
                 {group.cat.blurb}
               </Mono>
               <View className="mt-3 gap-2.5">
@@ -174,10 +174,10 @@ export default function EducationalLibrary() {
               <View className="flex-row items-start gap-3">
                 <Lock size={16} color={C.lemon} />
                 <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[10px]" tracking={1.5}>
+                  <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
                     {lockedCount} ENTRIES ON THE 9–12 TRACK
                   </Mono>
-                  <Mono className="mt-1 text-[10px]">{LIBRARY_LOCK_NOTE}</Mono>
+                  <Mono className="mt-1 text-[13px]">{LIBRARY_LOCK_NOTE}</Mono>
                 </View>
               </View>
             </View>
@@ -190,7 +190,7 @@ export default function EducationalLibrary() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   HOW TO READ THIS
                 </Eyebrow>
-                <Mono className="text-[10px]">
+                <Mono className="text-[13px]">
                   Every entry names its source so you can check it, and closes with the real-talk
                   line — the version you would actually say out loud. Neither one is a substitute
                   for a clinician who can examine you.
@@ -229,10 +229,10 @@ function EntryCard({
     >
       <View className="flex-row items-start gap-3">
         <View className="flex-1">
-          <Mono bold color={tint} className="text-[11px]" tracking={1}>
+          <Mono bold color={tint} className="text-[13px]" tracking={1}>
             {entry.term.toUpperCase()}
           </Mono>
-          <Mono className="mt-1 text-[10px]">{entry.short}</Mono>
+          <Mono className="mt-1 text-[13px]">{entry.short}</Mono>
         </View>
         <View style={{ transform: [{ rotate: open ? '180deg' : '0deg' }] }}>
           <ChevronDown size={15} color={alpha(tint, 0.8)} />
@@ -243,10 +243,10 @@ function EntryCard({
         <View className="mt-3 gap-2">
           {entry.body.map((line) => (
             <View key={line} className="flex-row gap-2">
-              <Mono color={alpha(tint, 0.7)} className="text-[10px]">
+              <Mono color={alpha(tint, 0.7)} className="text-[13px]">
                 ▸
               </Mono>
-              <Mono className="flex-1 text-[10px]">{line}</Mono>
+              <Mono className="flex-1 text-[13px]">{line}</Mono>
             </View>
           ))}
 
@@ -258,15 +258,15 @@ function EntryCard({
               borderLeftColor: alpha(C.teal, 0.5),
             }}
           >
-            <Mono bold color={alpha(C.teal, 0.9)} className="text-[9px]" tracking={1.5}>
+            <Mono bold color={alpha(C.teal, 0.9)} className="text-[12px]" tracking={1.5}>
               REAL TALK
             </Mono>
-            <Mono className="mt-1 text-[10px]" color={alpha(C.inkSoft, 0.9)}>
+            <Mono className="mt-1 text-[13px]" color={alpha(C.inkSoft, 0.9)}>
               {entry.realTalk}
             </Mono>
           </View>
 
-          <Mono className="mt-1 text-[9px]" color={alpha(C.inkFaint, 0.6)}>
+          <Mono className="mt-1 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
             SOURCE · {entry.source}
           </Mono>
         </View>

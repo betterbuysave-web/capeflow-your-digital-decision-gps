@@ -141,12 +141,12 @@ export function PepRing({
             bold
             color={running && !expired ? neon : '#7D8B97'}
             tracking={2}
-            className="text-[9px]"
+            className="text-[12px]"
           >
             {running ? (expired ? 'WINDOW CLOSED' : 'LIVE · PEP WINDOW') : 'STANDING BY'}
           </Mono>
         </View>
-        <Mono bold color="#7D8B97" tracking={2} className="text-[9px]">
+        <Mono bold color="#7D8B97" tracking={2} className="text-[12px]">
           T-MINUS 72H
         </Mono>
       </View>
@@ -222,7 +222,7 @@ export function PepRing({
             ) : null}
           </Svg>
 
-          <Mono bold color={alpha(neon, 0.9)} tracking={3} className="text-[10px]">
+          <Mono bold color={alpha(neon, 0.9)} tracking={3} className="text-[13px]">
             {running ? (expired ? 'WINDOW PASSED' : 'TIME LEFT') : 'NOT STARTED'}
           </Mono>
           <Text
@@ -247,7 +247,7 @@ export function PepRing({
           >
             {`${mm}:${ss}`}
           </Text>
-          <Mono color="#7D8B97" tracking={3} className="mt-1 text-[9px]">
+          <Mono color="#7D8B97" tracking={2} className="mt-1 text-[10px]">
             HRS · MIN : SEC
           </Mono>
         </View>
@@ -269,7 +269,7 @@ export function PepRing({
                 bold={now}
                 color={now ? tint : '#7D8B97'}
                 tracking={1.5}
-                className="mt-1.5 text-center text-[8px]"
+                className="mt-1.5 text-center text-[11px]"
               >
                 {`${i * 24}–${(i + 1) * 24}H\n${label}`}
               </Mono>
@@ -304,11 +304,11 @@ export function PepCountdownBanner({ className }: { className?: string }) {
       <View className="flex-row items-center gap-3">
         <Timer size={22} color={neon} />
         <View className="flex-1">
-          <Mono bold color={neon} className="text-[9px]" tracking={2}>
+          <Mono bold color={neon} className="text-[12px]" tracking={2}>
             {expired ? 'PEP WINDOW PASSED' : 'LIVE · PEP WINDOW · T-MINUS'}
           </Mono>
           {expired ? (
-            <Mono color="#C9D3DB" className="mt-0.5 text-[10px]">
+            <Mono color="#C9D3DB" className="mt-0.5 text-[13px]">
               Still get checked. Tap for next steps.
             </Mono>
           ) : (
