@@ -31,6 +31,7 @@ import {
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
+import { DiscreetGate } from '@/components/cape/DiscreetGate';
 import { C } from '@/lib/colors';
 
 /**
@@ -155,6 +156,7 @@ export default function RootLayout() {
           <Stack.Screen name="emergency-directory" options={{ title: 'Emergency Directory' }} />
         </Stack>
         <InstallPrompt />
+        <DiscreetGate />
       </HeroUINativeProvider>
     </GestureHandlerRootView>
   );

@@ -285,8 +285,9 @@ export function PepRing({
 export function PepCountdownBanner({ className }: { className?: string }) {
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
   const gradeBand = useCapeStore((s) => s.gradeBand);
+  const discreet = useCapeStore((s) => s.discreetPin !== null);
   const { left, expired } = usePepTime(pepStartedAt);
-  if (!pepStartedAt || !pepUnlocked(gradeBand)) return null;
+  if (!pepStartedAt || !pepUnlocked(gradeBand) || discreet) return null;
   const neon = neonFor(left, expired, true);
 
   return (

@@ -116,6 +116,8 @@ interface CapeState {
   cafeExit: CafeExitCard;
   /** Private notes per book lesson (key: lesson number). Device-only. */
   lessonNotes: Record<string, string>;
+  /** Hashed 4-digit PIN for discreet mode; null when discreet mode is off. */
+  discreetPin: string | null;
   reminders: Reminder[];
   /** reminderId → local day keys the dose/check-in was logged. */
   adherenceLog: Record<string, string[]>;
@@ -154,6 +156,7 @@ interface CapeState {
   completeCafeExit: () => void;
   clearCafeExit: () => void;
   setLessonNote: (lesson: number, text: string) => void;
+  setDiscreetPin: (hash: string | null) => void;
   addReminder: (input: NewReminder) => Promise<void>;
   updateReminder: (id: string, patch: Partial<NewReminder>) => Promise<void>;
   toggleReminder: (id: string) => Promise<void>;
@@ -303,6 +306,7 @@ const initial = {
   cafeQuiz: {} as Record<string, boolean>,
   cafeExit: freshExitCard(),
   lessonNotes: {} as Record<string, string>,
+  discreetPin: null as string | null,
   reminders: [] as Reminder[],
   adherenceLog: {} as Record<string, string[]>,
 };
@@ -481,6 +485,7 @@ export const useCapeStore = create<CapeState>()(
 
       clearCafeExit: () => set({ cafeExit: freshExitCard() }),
 
+      setDiscreetPin: (hash) => set({ discreetPin: hash }),
       setLessonNote: (lesson, text) =>
         set((s) => ({ lessonNotes: { ...s.lessonNotes, [String(lesson)]: text } })),
 

@@ -17,6 +17,7 @@ import {
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
+import { DiscreetModeCard } from '@/components/cape/DiscreetModeCard';
 import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
@@ -120,6 +121,8 @@ export default function Me() {
             <Chip label={`${badges.length}/${BADGES.length} BADGES`} tint={C.violet} />
           </View>
         </Panel>
+
+        <DiscreetModeCard className="mt-5" />
 
         <View className="mt-8">
           <Eyebrow color={C.teal}>SafER SCORE BREAKDOWN</Eyebrow>
