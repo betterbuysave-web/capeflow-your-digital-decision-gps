@@ -83,7 +83,7 @@ export const LIBRARY_CATEGORIES: LibraryCategoryInfo[] = [
     label: 'MEDICAL SHIELDS',
     emoji: '💊',
     tint: C.flame,
-    blurb: 'PrEP, PEP, Doxy-PEP, and the clocks each one runs on.',
+    blurb: 'PrEP, PEP, treatment as prevention, and the clocks each one runs on.',
     track: 'blue',
   },
 ];
@@ -262,8 +262,8 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     term: 'The 3-Second Rule',
     short: 'A circuit breaker between the impulse and the send button.',
     body: [
-      'Under stress, cortisol hands the wheel to the survival brain and the thinking brain lags behind.',
-      'Three slow seconds — count them, breathe once — is usually enough for the prefrontal cortex to re-engage.',
+      'Late at night, or when you are upset, it is harder to think clearly before you act.',
+      'Three slow seconds — count them, breathe once — gives your better judgment a chance to catch up.',
       'Use it before sending, before agreeing, before getting in the car.',
     ],
     realTalk: 'Nothing that truly matters gets worse because you took three seconds.',
@@ -605,6 +605,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     short: 'Many states let minors consent to STI care on their own.',
     body: [
       'Most states allow minors to consent to STI testing and treatment without a parent, but the details vary by state and service.',
+      'In Texas, Family Code §32.003 lets minors consent to care for certain reportable infections, including many STIs. Rules for other services, such as PrEP or birth control, are narrower. Use this as how to ask, not a guarantee.',
       'A separate issue is the paper trail: a service can be confidential and still generate an insurance statement mailed home.',
       'Title X clinics and health centers deal with this daily — ask them both questions directly.',
     ],
@@ -701,10 +702,10 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
   {
     id: 'vaccines-blue',
     term: 'Prevention Vaccines',
-    short: 'HPV and hepatitis A and B — ask which vaccines fit your track and health needs.',
+    short: 'HPV and hepatitis B — ask whether your series is complete.',
     body: [
       'HPV vaccination prevents several cancers and is recommended routinely at 11–12, with catch-up available later.',
-      'Hepatitis B vaccination is routine from birth; hepatitis A is recommended for many groups — ask whether your series is complete.',
+      'Hepatitis B vaccination is routine from birth. Ask your doctor or nurse whether your series is complete.',
     ],
     realTalk: 'Vaccines are the only shield that keeps working while you are asleep.',
     category: 'prevention',
@@ -735,8 +736,8 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     term: 'PrEP (Pre-Exposure Prophylaxis)',
     short: 'Medicine taken before exposure that prevents HIV.',
     body: [
-      'Taken as prescribed, PrEP reduces the risk of getting HIV from sex by about 99%.',
-      'Options include a daily pill and a long-acting injection given every two months, which removes the daily-memory problem entirely.',
+      'There are three forms: a daily pill, an injection every two months (cabotegravir), and an injection twice a year (lenacapavir).',
+      'Taken as prescribed, the daily pill reduces the risk of getting HIV from sex by about 99%. The injections have their own evidence; ask your provider about each one.',
       'PrEP requires an HIV test before starting and follow-up visits with labs, usually every three months.',
       'Most insurance covers PrEP with no copay, and assistance programs cover people without insurance.',
       'PrEP does not prevent other STIs — barriers and screening stay in the plan.',
@@ -745,7 +746,16 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
       'If a daily pill is not realistic for your life, say that out loud at the clinic. The injection exists for exactly that reason.',
     category: 'meds',
     source: 'CDC · PrEP clinical guidance',
-    keywords: ['prep', 'prevention', 'daily pill', 'injection', 'apretude', 'hiv'],
+    keywords: [
+      'prep',
+      'prevention',
+      'daily pill',
+      'injection',
+      'apretude',
+      'lenacapavir',
+      'yeztugo',
+      'hiv',
+    ],
     track: 'blue',
   },
   {
@@ -753,7 +763,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     term: 'PEP (Post-Exposure Prophylaxis)',
     short: 'Emergency medicine after a possible HIV exposure. 72-hour clock.',
     body: [
-      'PEP must start as soon as possible and within 72 hours of the exposure. Sooner is better; after 72 hours it is not effective.',
+      'PEP must start as soon as possible and no later than 72 hours after the exposure. Sooner is better. After 72 hours, still get tested and talk to a clinician.',
       'It is a 28-day course of medication, and finishing the course is what makes it work.',
       'Inside 72 hours, go to an emergency department with a trusted adult. Say: "I may have been exposed to HIV and need to be evaluated for PEP." This app does not provide medication.',
       'Cost help exists. Do not let a bill question burn hours off the clock.',
@@ -763,23 +773,6 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     category: 'meds',
     source: 'CDC · nPEP clinical guidance',
     keywords: ['pep', '72 hours', 'emergency', 'exposure', 'npep', '28 days'],
-    track: 'blue',
-  },
-  {
-    id: 'doxy-pep',
-    term: 'Doxy-PEP',
-    short: 'Doxycycline after sex to prevent bacterial STIs, within 72 hours.',
-    body: [
-      'A single 200 mg dose of doxycycline taken within 72 hours after condomless sex reduces bacterial STIs — syphilis, chlamydia, and to a lesser degree gonorrhea.',
-      'CDC guidelines recommend counselling it for gay and bisexual men and transgender women who have had a bacterial STI in the past 12 months.',
-      'It is prescribed by a clinician and comes with ongoing STI screening, at least every three to six months.',
-      'It is not a substitute for barriers, vaccines, or PrEP.',
-    ],
-    realTalk: 'Ask whether you are a candidate. It is a normal question in a sexual health clinic.',
-    category: 'meds',
-    source:
-      'CDC · Guidelines for the Use of Doxycycline Post-Exposure Prophylaxis, MMWR, June 2024',
-    keywords: ['doxy-pep', 'doxycycline', 'bacterial sti', 'syphilis', '72 hours'],
     track: 'blue',
   },
   {

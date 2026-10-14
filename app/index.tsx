@@ -22,7 +22,7 @@ import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha, wash } from '@/lib/colors';
 import { MATCH_MODULES, moduleTagline } from '@/lib/data/match';
 import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
-import { PIPELINE_COPY, CAPE_CARD_COPY, ADULT_CARD_COPY } from '@/lib/data/canon';
+import { PIPELINE_COPY, CAPE_CARD_COPY } from '@/lib/data/canon';
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -80,15 +80,11 @@ export default function Landing() {
         </View>
 
         <View className="gap-4 px-5 pt-14">
-          <Display className="text-4xl">One decision engine. Two skins.</Display>
+          <Display className="text-4xl">Five letters. One compass.</Display>
           <Body>{PIPELINE_COPY}</Body>
           <Panel tint={C.teal}>
             <Eyebrow color={C.teal}>CAPE Youth Edition</Eyebrow>
             <Mono className="mt-3 text-[11px]">{CAPE_CARD_COPY}</Mono>
-          </Panel>
-          <Panel tint={C.gold}>
-            <Eyebrow color={C.gold}>Adult continuation · 18+</Eyebrow>
-            <Mono className="mt-3 text-[11px]">{ADULT_CARD_COPY}</Mono>
           </Panel>
         </View>
 

@@ -12,12 +12,7 @@ import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { DISCLAIMER, PRIVACY_NOTE, SOURCES, TRACKS, trackFor } from '@/lib/data/content';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
-import {
-  PIPELINE_COPY,
-  CAPE_APP_COPY,
-  MATCH_APP_COPY,
-  MATCH_APP_GATE_COPY,
-} from '@/lib/data/canon';
+import { PIPELINE_COPY, CAPE_APP_COPY } from '@/lib/data/canon';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const MISSION = [
@@ -102,11 +97,6 @@ export default function AboutCape() {
         <Panel tint={C.teal} className="mt-8">
           <Eyebrow color={C.teal}>The HARNESS Project</Eyebrow>
           <Mono className="mt-3 text-[11px]">{PIPELINE_COPY}</Mono>
-        </Panel>
-        <Panel tint={C.gold} className="mt-3">
-          <Eyebrow color={C.gold}>MATCH Flow · Adult app · 18+</Eyebrow>
-          <Mono className="mt-3 text-[11px]">{MATCH_APP_COPY}</Mono>
-          <Mono className="mt-3 text-[11px]">{MATCH_APP_GATE_COPY}</Mono>
         </Panel>
 
         {/* WHAT M.A.T.C.H. IS */}

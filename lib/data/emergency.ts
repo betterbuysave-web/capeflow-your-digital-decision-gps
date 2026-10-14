@@ -126,6 +126,14 @@ export const EMERGENCY_GROUPS: EmergencyGroup[] = [
         dial: '8004224453',
       },
       {
+        id: 'texas-abuse',
+        name: 'TEXAS ABUSE HOTLINE',
+        detail:
+          'Report abuse or neglect of a child in Texas. Adults in your life are required to report, and you can call too.',
+        hours: '24/7 · 800-252-5400',
+        dial: '8002525400',
+      },
+      {
         id: 'dv',
         name: 'NATIONAL DOMESTIC VIOLENCE HOTLINE',
         detail: 'Violence or control at home or in a relationship. Safety planning included.',
