@@ -3,7 +3,6 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { ExitCardSection } from '@/components/cape/cafe/ExitCardSection';
-import { FacilitatorBar, FacilitatorToggle } from '@/components/cape/cafe/FacilitatorBar';
 import { FriesSection } from '@/components/cape/cafe/FriesSection';
 import { JourneyBar } from '@/components/cape/cafe/JourneyBar';
 import { MenuSection } from '@/components/cape/cafe/MenuSection';
@@ -17,7 +16,6 @@ import type { CafeStation } from '@/lib/data/cafe';
 export default function ConsentCafe() {
   const [station, setStation] = useState<CafeStation>('fries');
   const [visited, setVisited] = useState<string[]>(['fries']);
-  const [facilitator, setFacilitator] = useState(false);
 
   const go = (next: CafeStation) => {
     setStation(next);
@@ -27,15 +25,7 @@ export default function ConsentCafe() {
   return (
     <View className="bg-paper flex-1">
       <NotebookBackdrop tint={C.amber} />
-      <StackHeader
-        title="The Consent Café"
-        tint={C.amber}
-        fallback="/(tabs)/tools"
-        right={
-          <FacilitatorToggle active={facilitator} onPress={() => setFacilitator((on) => !on)} />
-        }
-      />
-      {facilitator ? <FacilitatorBar onExit={() => setFacilitator(false)} /> : null}
+      <StackHeader title="The Consent Café" tint={C.amber} fallback="/(tabs)/tools" />
       <JourneyBar active={station} visited={visited} onSelect={go} />
 
       <KeyboardAvoidingView

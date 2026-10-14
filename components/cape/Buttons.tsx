@@ -7,15 +7,24 @@ import { C, CAPE_BUTTON_GRADIENT, CAPE_BUTTON_LOCATIONS, alpha, wash } from '@/l
 import { Mono } from '@/components/cape/Type';
 import { cn } from '@/lib/utils';
 
-/** Shared action surface; keep content above the contrast scrim. */
+/**
+ * Shared action surface. Solid by default: CAPE Teal, or the caller's own
+ * `backgroundColor` / `tint` (use flame or red for urgent actions). The
+ * four-colour CAPE gradient is reserved for `brand` moments such as Get Started.
+ */
 export function GradientAction({
   children,
   className,
   style,
   disabled,
   accessibilityState,
+  tint,
+  brand = false,
   ...props
-}: PressableProps & { className?: string }) {
+}: PressableProps & { className?: string; tint?: string; brand?: boolean }) {
+  const callerBg =
+    typeof style === 'function' ? undefined : StyleSheet.flatten(style)?.backgroundColor;
+  const solid = tint ?? (typeof callerBg === 'string' ? callerBg : C.teal);
   return (
     <Pressable
       {...props}
@@ -30,7 +39,7 @@ export function GradientAction({
         typeof style === 'function' ? style(state) : style,
         {
           borderWidth: 0,
-          backgroundColor: 'transparent',
+          backgroundColor: brand ? 'transparent' : solid,
           zIndex: 0,
           opacity: disabled ? 0.55 : state.pressed ? 0.8 : 1,
         },
@@ -38,16 +47,18 @@ export function GradientAction({
     >
       {(state) => (
         <>
-          <View pointerEvents="none" style={[StyleSheet.absoluteFill, { zIndex: -1 }]}>
-            <LinearGradient
-              colors={CAPE_BUTTON_GRADIENT}
-              locations={CAPE_BUTTON_LOCATIONS}
-              start={{ x: 0, y: 0.5 }}
-              end={{ x: 1, y: 0.5 }}
-              style={StyleSheet.absoluteFill}
-            />
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: alpha(C.ink, 0.4) }]} />
-          </View>
+          {brand ? (
+            <View pointerEvents="none" style={[StyleSheet.absoluteFill, { zIndex: -1 }]}>
+              <LinearGradient
+                colors={CAPE_BUTTON_GRADIENT}
+                locations={CAPE_BUTTON_LOCATIONS}
+                start={{ x: 0, y: 0.5 }}
+                end={{ x: 1, y: 0.5 }}
+                style={StyleSheet.absoluteFill}
+              />
+              <View style={[StyleSheet.absoluteFill, { backgroundColor: alpha(C.ink, 0.4) }]} />
+            </View>
+          ) : null}
           {typeof children === 'function' ? children(state) : children}
         </>
       )}
@@ -55,20 +66,26 @@ export function GradientAction({
   );
 }
 
-/** Primary action: four-color CAPE pill with a high-contrast label. */
+/** Primary action pill. `brand` turns on the four-colour CAPE gradient. */
 export function MetallicButton({
   label,
   onPress,
   className,
   showArrow = true,
+  brand = false,
+  tint,
 }: {
   label: string;
   onPress: () => void;
   className?: string;
   showArrow?: boolean;
+  brand?: boolean;
+  tint?: string;
 }) {
   return (
     <GradientAction
+      brand={brand}
+      tint={tint}
       accessibilityLabel={label}
       onPress={onPress}
       className={cn(
@@ -84,7 +101,7 @@ export function MetallicButton({
   );
 }
 
-/** Secondary action shares the CAPE gradient, without the forward arrow. */
+/** Secondary action: solid pill in `tint`, without the forward arrow. */
 export function GhostButton({
   label,
   onPress,

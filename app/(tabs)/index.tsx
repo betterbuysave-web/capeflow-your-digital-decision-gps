@@ -10,7 +10,6 @@ import {
   Ghost,
   LifeBuoy,
   Moon,
-  Timer,
   Users,
 } from 'lucide-react-native';
 
@@ -20,11 +19,13 @@ import { Chip, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { BrandBanner } from '@/components/cape/BrandBanner';
 import { MatchCompass } from '@/components/cape/MatchCompass';
+import { PauseButton } from '@/components/cape/PauseButton';
+import { PepCountdownBanner } from '@/components/cape/PepCountdown';
 import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES, lessonsForTrack, allLessonsForTrack } from '@/lib/data/match';
 import { scenariosForTrack } from '@/lib/data/scenarios';
 import { badgesForTrack } from '@/lib/data/badges';
-import { pepUnlocked, trackFor } from '@/lib/data/content';
+import { trackFor } from '@/lib/data/content';
 import {
   TOTALS,
   disarmedCount,
@@ -46,7 +47,6 @@ export default function Compass() {
   const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
-  const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
   const ghosts = useCapeStore((s) => s.ghosts);
   const registerVisit = useCapeStore((s) => s.registerVisit);
 
@@ -177,28 +177,7 @@ export default function Compass() {
           Leadership is the next safe move—for you and the people around you.
         </Mono>
 
-        {pepStartedAt && pepUnlocked(gradeBand) ? (
-          <TintedRow
-            tint={C.flame}
-            fill={0.12}
-            stroke={0.35}
-            className="mt-4"
-            onPress={() => router.push('/tools/pep-clock')}
-          >
-            <View className="flex-row items-center gap-3">
-              <Timer size={18} color={C.flame} />
-              <View className="flex-1">
-                <Mono bold color={C.flame} className="text-[11px]" tracking={1}>
-                  PEP CLOCK IS RUNNING
-                </Mono>
-                <Mono className="mt-0.5 text-[9px]">
-                  Tap to see time left in the 72-hour window
-                </Mono>
-              </View>
-              <ArrowRight size={14} color={C.flame} />
-            </View>
-          </TintedRow>
-        ) : null}
+        <PepCountdownBanner className="mt-4" />
 
         {/* GHOST VAULT */}
         {gradeBand === '9-12' ? (
@@ -225,6 +204,9 @@ export default function Compass() {
             </View>
           </TintedRow>
         ) : null}
+
+        {/* PAUSE BUTTON */}
+        <PauseButton className="mt-6" />
 
         {/* MATCH COMPASS */}
         <View className="mt-8">

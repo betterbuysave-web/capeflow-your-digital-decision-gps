@@ -6,7 +6,7 @@ import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
 import { CURRICULUM, PARENT_CARDS, PRIVACY_NOTE } from '@/lib/data/content';
-import { CANON_DATE, PRINT_CANON, EDUCATOR_HUB_COPY, PRINT_ERRATA_COPY } from '@/lib/data/canon';
+import { EDUCATOR_HUB_COPY, PRINT_ERRATA_COPY } from '@/lib/data/canon';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 
 export default function Parents() {
@@ -40,8 +40,6 @@ export default function Parents() {
         <Panel tint={C.teal} className="mt-8">
           <Eyebrow color={C.teal}>Educator hub</Eyebrow>
           <Mono className="mt-3 text-[11px]">{EDUCATOR_HUB_COPY}</Mono>
-          <Mono className="mt-3 text-[10px]">Print canon: {PRINT_CANON}</Mono>
-          <Mono className="mt-2 text-[10px]">Canon date: {CANON_DATE}</Mono>
         </Panel>
 
         <View className="mt-8">

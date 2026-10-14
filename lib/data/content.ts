@@ -142,8 +142,8 @@ export const PARENT_CARDS: ParentCard[] = [
     tint: C.violet,
     body: [
       'You may preview all content before it is used with your student.',
-      'House Bill 1525 added the statutory opt-in language in Texas Education Code §28.004(i-2), with expiration in §28.004(i-3). The statutory opt-in expired August 1, 2024.',
-      'Districts may still require consent under local authority, TEC §11.151. Confirm the current district policy and form before the first session.',
+      'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to get written parent or guardian consent at least 14 days before human sexuality instruction begins.',
+      'CAPE follows the same standard everywhere: no student takes part without written consent. Confirm the current district form before the first session.',
       'TEC §28.004(q-6) still requires written consent before instruction on child abuse, family violence, dating violence, and sex trafficking.',
       'No parental notification is triggered by app usage because no usage data is transmitted.',
     ],

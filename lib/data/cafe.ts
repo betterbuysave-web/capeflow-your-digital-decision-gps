@@ -524,6 +524,3 @@ export const CAFE_TAGLINE = 'You set the menu. You change the order. You leave w
 
 export const CAFE_SAFETY_NOTE =
   'Everything you type here stays on this device — no account, no upload. The one exception in a live session: if a facilitator hears that someone may be in danger, they have to get help.';
-
-/** Facilitator discussion-timer presets, in minutes. */
-export const TIMER_PRESETS = [2, 5, 10, 15];

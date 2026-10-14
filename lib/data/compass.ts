@@ -3,9 +3,8 @@ import type { ModuleId } from '@/lib/data/match';
 import type { Track } from '@/lib/data/content';
 
 /**
- * The five M.A.T.C.H. nodes as drafted on the compass rose.
- * `bearing` is degrees clockwise from north, so each node marker lands on the
- * rose ring at any size.
+ * The five M.A.T.C.H. nodes, each placed on its pillar in the
+ * "5 Decision GPS Superpowers" compass artwork.
  */
 export interface CompassNode {
   id: ModuleId;
@@ -14,8 +13,8 @@ export interface CompassNode {
   callsign: string;
   hint: string;
   color: string;
-  /** Degrees clockwise from north. */
-  bearing: number;
+  /** Centre of this letter's pillar on the compass artwork, as fractions of width and height. */
+  spot: { x: number; y: number };
   green: string[];
   blue: string[];
   lockNote?: string;
@@ -24,12 +23,12 @@ export interface CompassNode {
 export const COMPASS_NODES: CompassNode[] = [
   {
     id: 'medical',
+    spot: { x: 0.258, y: 0.185 },
     letter: 'M',
     title: 'My Medical / Health Choices',
-    callsign: 'My Medical',
+    callsign: 'Health Armor',
     hint: 'Baseline knowledge, vaccines',
     color: C.modM,
-    bearing: 36,
     green: [
       'Your body is the asset. Check-ups, sleep, and dental visits are armor maintenance, not punishment.',
       'Know your baseline: allergies, medications, and the last time you saw a clinician.',
@@ -47,12 +46,12 @@ export const COMPASS_NODES: CompassNode[] = [
   },
   {
     id: 'awareness',
+    spot: { x: 0.137, y: 0.434 },
     letter: 'A',
     title: 'Awareness of Self & Surroundings',
     callsign: 'Built-In Radar',
     hint: 'Trusting your gut, early warning signs',
     color: C.modA,
-    bearing: 324,
     green: [
       'Your body reads risk before your words do — tight chest, dry mouth, stalling stomach.',
       'Rushing you is a flag. Real care can wait until tomorrow.',
@@ -68,12 +67,12 @@ export const COMPASS_NODES: CompassNode[] = [
   },
   {
     id: 'tools',
+    spot: { x: 0.784, y: 0.692 },
     letter: 'T',
     title: 'Tools & Trusted Support',
-    callsign: 'Tools & Trusted Support',
+    callsign: 'Safety Kit',
     hint: 'Charged phone, ride plan, safety buddy',
     color: C.modT,
-    bearing: 108,
     green: [
       'Three to five people who answer without a lecture. Tell them in advance they are on your list.',
       'Agree on a code word that means "call me and get me out" with no follow-up questions.',
@@ -89,12 +88,12 @@ export const COMPASS_NODES: CompassNode[] = [
   },
   {
     id: 'comms',
+    spot: { x: 0.82, y: 0.212 },
     letter: 'C',
     title: 'Clear Communication & Consent',
-    callsign: 'Clear Communication & Consent',
+    callsign: 'Strongest Voice',
     hint: 'FRIES model, boundary scripts',
     color: C.modC,
-    bearing: 252,
     green: [
       'Consent is Freely given, Reversible, Informed, Enthusiastic, and Specific.',
       'Ask before touching — hugs included. "Is this okay?" is the entire script.',
@@ -110,12 +109,12 @@ export const COMPASS_NODES: CompassNode[] = [
   },
   {
     id: 'habits',
+    spot: { x: 0.275, y: 0.747 },
     letter: 'H',
     title: 'Healthy Habits / Choosing Your Pace',
-    callsign: 'Choosing Your Pace',
+    callsign: 'Daily Superpower',
     hint: 'Pacing, sleep, digital legacy',
     color: C.modH,
-    bearing: 180,
     green: [
       'Sleep, water, movement. The boring reps are the actual superpower.',
       'Your digital legacy is everything a screenshot could keep.',

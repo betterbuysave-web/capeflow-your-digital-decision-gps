@@ -1,24 +1,36 @@
-import { useEffect, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { CircleAlert, Lock, MapPin, Phone, Play, Square } from 'lucide-react-native';
+import { CalendarClock, CircleAlert, Lock, MapPin, Phone, RotateCcw } from 'lucide-react-native';
 
-import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
+import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
-import { C, alpha } from '@/lib/colors';
+import { C, alpha, wash } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
-import { PEP_WINDOW_MS } from '@/lib/data/crisis';
+import { PepRing, formatDeadline, pepTint, usePepTime } from '@/components/cape/PepCountdown';
 import { PEP_LOCK_NOTE, pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const pad = (n: number) => n.toString().padStart(2, '0');
+/** "When did it happen?" choices, in hours ago. */
+const WHEN: { label: string; hours: number }[] = [
+  { label: 'Just now', hours: 0 },
+  { label: '1 hr ago', hours: 1 },
+  { label: '3 hrs ago', hours: 3 },
+  { label: '6 hrs ago', hours: 6 },
+  { label: '12 hrs ago', hours: 12 },
+  { label: '24 hrs ago', hours: 24 },
+  { label: '36 hrs ago', hours: 36 },
+  { label: '48 hrs ago', hours: 48 },
+  { label: '60 hrs ago', hours: 60 },
+];
 
-function format(msLeft: number): string {
-  const clamped = Math.max(0, msLeft);
-  const hours = Math.floor(clamped / 3_600_000);
-  const minutes = Math.floor((clamped % 3_600_000) / 60_000);
-  const seconds = Math.floor((clamped % 60_000) / 1000);
-  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+function urgency(left: number, expired: boolean): string {
+  const hours = left / 3_600_000;
+  if (expired)
+    return 'The 72-hour PEP window has passed. Still see a clinician: they can talk about testing and what to do next.';
+  if (hours < 24) return 'Under 24 hours left. Go to an emergency department now.';
+  if (hours < 48) return 'Go now. PEP works best the sooner it starts.';
+  return 'Go today. PEP works best the sooner it starts — every hour counts.';
 }
 
 export default function PepClock() {
@@ -26,18 +38,9 @@ export default function PepClock() {
   const startPep = useCapeStore((s) => s.startPep);
   const clearPep = useCapeStore((s) => s.clearPep);
   const gradeBand = useCapeStore((s) => s.gradeBand);
-  const [now, setNow] = useState(Date.now());
-
-  useEffect(() => {
-    if (!pepStartedAt) return undefined;
-    const timer = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(timer);
-  }, [pepStartedAt]);
-
-  const elapsed = pepStartedAt ? now - pepStartedAt : 0;
-  const left = PEP_WINDOW_MS - elapsed;
-  const pct = pepStartedAt ? Math.max(0, (left / PEP_WINDOW_MS) * 100) : 100;
-  const expired = pepStartedAt !== null && left <= 0;
+  const { left, expired } = usePepTime(pepStartedAt);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const tint = pepStartedAt ? pepTint(left, expired) : C.flame;
 
   if (!pepUnlocked(gradeBand)) {
     return (
@@ -63,6 +66,7 @@ export default function PepClock() {
           </Panel>
 
           <GradientAction
+            tint={C.flame}
             onPress={() => router.push('/(tabs)/crisis')}
             className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5"
           >
@@ -78,7 +82,7 @@ export default function PepClock() {
 
   return (
     <View className="bg-paper flex-1">
-      <StackHeader title="PEP Clock" tint={C.flame} fallback="/(tabs)/crisis" />
+      <StackHeader title="PEP Clock" tint={tint} fallback="/(tabs)/crisis" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-6 pb-16"
@@ -91,59 +95,114 @@ export default function PepClock() {
           possible exposure. This clock exists so you never have to guess.
         </Body>
 
-        <Panel
-          tint={expired ? C.no : C.flame}
-          fill={0.1}
-          stroke={0.3}
-          className="mt-6 items-center py-8"
-        >
-          <Eyebrow color={expired ? C.no : C.flame}>
-            {pepStartedAt ? (expired ? 'WINDOW CLOSED' : 'TIME REMAINING') : 'CLOCK NOT STARTED'}
-          </Eyebrow>
-          <Display color={expired ? C.no : C.flame} className="mt-3 text-6xl">
-            {pepStartedAt ? format(left) : '72:00:00'}
-          </Display>
-          <Mono className="mt-2 text-[9px]" color={alpha(C.inkFaint, 0.8)} tracking={2}>
-            HOURS : MINUTES : SECONDS
-          </Mono>
-          <View className="mt-5 w-full">
-            <Rail value={pct} color={expired ? C.no : C.flame} height={6} />
-          </View>
-        </Panel>
-
-        <View className="mt-5 gap-3">
-          {pepStartedAt ? (
-            <GradientAction
-              onPress={clearPep}
-              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
-            >
-              <Square size={14} color={C.paper2} />
-              <Mono bold color={C.paper2} tracking={2} className="text-[11px]">
-                RESET CLOCK
-              </Mono>
-            </GradientAction>
-          ) : (
-            <GradientAction
-              onPress={startPep}
-              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
-            >
-              <Play size={14} color={C.paper2} />
-              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
-                START THE CLOCK NOW
-              </Mono>
-            </GradientAction>
-          )}
-
-          <GradientAction
-            onPress={() => router.push('/(tabs)/crisis')}
-            className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
-          >
-            <Phone size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
-              OPEN CRISIS PROTOCOL
-            </Mono>
-          </GradientAction>
+        <View className="mt-6 items-center">
+          <PepRing startedAt={pepStartedAt} left={left} expired={expired} />
         </View>
+
+        {pepStartedAt ? (
+          <View className="mt-5 gap-3">
+            <Panel tint={tint} fill={0.1} stroke={0.35}>
+              <Mono bold color={tint} className="text-[12px]">
+                {urgency(left, expired)}
+              </Mono>
+              <View className="mt-3 flex-row items-center gap-2">
+                <CalendarClock size={14} color={C.inkSoft} />
+                <Mono className="flex-1 text-[10px]" color={C.inkSoft}>
+                  {`Window ${expired ? 'closed' : 'closes'} ${formatDeadline(pepStartedAt)}`}
+                </Mono>
+              </View>
+            </Panel>
+
+            <GradientAction
+              tint={C.flame}
+              onPress={() => router.push('/clinic-finder')}
+              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
+            >
+              <MapPin size={14} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+                FIND CARE NEAR ME
+              </Mono>
+            </GradientAction>
+            <GradientAction
+              tint={C.flame}
+              onPress={() => router.push('/(tabs)/crisis')}
+              className="flex-row items-center justify-center gap-2 rounded-full py-3.5"
+            >
+              <Phone size={14} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+                OPEN CRISIS PROTOCOL
+              </Mono>
+            </GradientAction>
+
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={confirmReset ? 'Confirm: clear the clock' : 'Reset the clock'}
+              onPress={() => {
+                if (confirmReset) {
+                  clearPep();
+                  setConfirmReset(false);
+                } else setConfirmReset(true);
+              }}
+              className="min-h-11 flex-row items-center justify-center gap-2 rounded-full py-3 active:opacity-70"
+              style={{ borderWidth: 1, borderColor: alpha(C.ink, 0.15) }}
+            >
+              <RotateCcw size={13} color={confirmReset ? C.no : C.inkSoft} />
+              <Mono
+                bold
+                color={confirmReset ? C.no : C.inkSoft}
+                tracking={1}
+                className="text-[11px]"
+              >
+                {confirmReset ? 'TAP AGAIN TO CLEAR THE CLOCK' : 'RESET CLOCK'}
+              </Mono>
+            </Pressable>
+          </View>
+        ) : (
+          <View className="mt-5">
+            <Eyebrow color={C.flame}>WHEN DID IT HAPPEN?</Eyebrow>
+            <Mono className="mt-1.5 text-[10px]">
+              Pick the closest time. The clock counts down from then, not from now.
+            </Mono>
+            <View className="mt-3 flex-row flex-wrap gap-2">
+              {WHEN.map((option) => (
+                <Pressable
+                  key={option.hours}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Start the clock: ${option.label}`}
+                  onPress={() => startPep(option.hours)}
+                  className="min-h-11 items-center justify-center rounded-full px-4 active:opacity-70"
+                  style={{
+                    backgroundColor: option.hours === 0 ? C.flame : wash(C.flame, 0.08, C.card),
+                    borderWidth: 1,
+                    borderColor: alpha(C.flame, option.hours === 0 ? 1 : 0.35),
+                  }}
+                >
+                  <Mono
+                    bold
+                    color={option.hours === 0 ? C.paper2 : C.flame}
+                    className="text-[11px]"
+                  >
+                    {option.label}
+                  </Mono>
+                </Pressable>
+              ))}
+            </View>
+            <Mono className="mt-3 text-[10px]" color={C.inkSoft}>
+              More than 72 hours ago? PEP is no longer an option, but you should still see a
+              clinician about testing and next steps.
+            </Mono>
+            <GradientAction
+              tint={C.flame}
+              onPress={() => router.push('/(tabs)/crisis')}
+              className="mt-4 flex-row items-center justify-center gap-2 rounded-full py-3.5"
+            >
+              <Phone size={14} color={C.paper2} />
+              <Mono bold color={C.paper2} tracking={1} className="text-[11px]">
+                OPEN CRISIS PROTOCOL
+              </Mono>
+            </GradientAction>
+          </View>
+        )}
 
         <View className="mt-8 gap-2.5">
           <Panel tint={C.flame} fill={0.05} stroke={0.16}>

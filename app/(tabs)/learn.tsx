@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { ArrowRight, CircleCheck } from 'lucide-react-native';
+import { ArrowRight, CircleCheck, Lock, PencilLine } from 'lucide-react-native';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
@@ -11,11 +11,13 @@ import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES, lessonsForTrack, moduleTagline } from '@/lib/data/match';
 import { FRIES } from '@/lib/data/boundaries';
 import { trackFor } from '@/lib/data/content';
+import { BOOK_LESSONS, BOOK_PARTS, lessonUnlocked } from '@/lib/data/lessons';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function Learn() {
   const completedLessons = useCapeStore((s) => s.completedLessons);
   const gradeBand = useCapeStore((s) => s.gradeBand);
+  const lessonNotes = useCapeStore((s) => s.lessonNotes);
   const track = trackFor(gradeBand);
 
   return (
@@ -86,6 +88,59 @@ export default function Learn() {
                   </View>
                 </View>
               </TintedRow>
+            );
+          })}
+        </View>
+
+        <View className="mt-10">
+          <Eyebrow color={C.teal}>CAPE YOUTH EDITION · 18 LESSONS</Eyebrow>
+          <Display className="mt-2 text-3xl">One lesson per chapter.</Display>
+          <Body className="mt-2">
+            Follow along with your class. Your notes stay on this device.
+          </Body>
+          {([1, 2, 3, 4, 5] as const).map((part) => {
+            const partTint = BOOK_PARTS[part].track === 'blue' ? C.azure : C.teal;
+            return (
+              <View key={part} className="mt-5 gap-2">
+                <Mono bold color={partTint} tracking={1} className="text-[10px]">
+                  {`PART ${part} · ${BOOK_PARTS[part].title.toUpperCase()}`}
+                </Mono>
+                {BOOK_LESSONS.filter((l) => l.part === part).map((lesson) => {
+                  const open = lessonUnlocked(lesson, track);
+                  const hasNote = !!lessonNotes[String(lesson.number)]?.trim();
+                  return (
+                    <TintedRow
+                      key={lesson.number}
+                      tint={open ? partTint : C.inkFaint}
+                      fill={open ? 0.05 : 0.03}
+                      className="p-3"
+                      accessibilityLabel={`Lesson ${lesson.number}, ${lesson.title}${open ? '' : ', locked on Green Track'}`}
+                      onPress={() =>
+                        router.push({
+                          pathname: '/lesson/[n]',
+                          params: { n: String(lesson.number) },
+                        })
+                      }
+                    >
+                      <View className="flex-row items-center gap-3">
+                        <Display color={open ? partTint : C.inkFaint} className="w-7 text-2xl">
+                          {lesson.number}
+                        </Display>
+                        <Mono className="flex-1 text-[11px]" color={open ? C.inkSoft : C.inkFaint}>
+                          {lesson.title}
+                        </Mono>
+                        {!open ? (
+                          <Lock size={13} color={C.inkFaint} />
+                        ) : hasNote ? (
+                          <PencilLine size={13} color={partTint} />
+                        ) : (
+                          <ArrowRight size={13} color={alpha(partTint, 0.8)} />
+                        )}
+                      </View>
+                    </TintedRow>
+                  );
+                })}
+              </View>
             );
           })}
         </View>

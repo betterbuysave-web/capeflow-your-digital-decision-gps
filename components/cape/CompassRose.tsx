@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 
-import { Display } from '@/components/cape/Type';
-import { C, alpha, wash } from '@/lib/colors';
+import { alpha } from '@/lib/colors';
 import type { CompassNode } from '@/lib/data/compass';
 
-const MARKER = 48;
-const ARTWORK_RATIO = 1275 / 1169;
+const ART = require('@/assets/images/match-compass-gps.jpg');
+const ARTWORK_RATIO = 1180 / 542;
+const HOTSPOT = 52;
 
-function polar(cx: number, cy: number, radius: number, bearing: number) {
-  const angle = ((bearing - 90) * Math.PI) / 180;
-  return { x: cx + radius * Math.cos(angle), y: cy + radius * Math.sin(angle) };
-}
-
-/** Supplied compass artwork with the five interactive M.A.T.C.H. markers. */
+/**
+ * "5 Decision GPS Superpowers" compass artwork with a tap target on each
+ * M.A.T.C.H. pillar. The selected pillar gets a ring in its module colour.
+ */
 export function CompassRose({
   nodes,
   onSelect,
@@ -27,7 +25,6 @@ export function CompassRose({
 }) {
   const [width, setWidth] = useState(0);
   const height = width / ARTWORK_RATIO;
-  const radius = Math.max(0, Math.min(width * 0.36, height / 2 - MARKER / 2));
 
   return (
     <View
@@ -35,39 +32,35 @@ export function CompassRose({
       style={{ width: '100%', aspectRatio: ARTWORK_RATIO }}
     >
       <Image
-        source={require('@/assets/images/match-compass.png')}
+        source={ART}
         accessible
         accessibilityRole="image"
-        accessibilityLabel="M.A.T.C.H. compass: five letter buttons surround a gold compass. M is My Medical / Health Choices, A is Awareness, T is Tools & Trusted Support, C is Clear Communication & Consent, and H is Healthy Habits / Choosing Your Pace."
+        accessibilityLabel="M.A.T.C.H. compass: a gold compass on a red cape, surrounded by five glowing pillars. M is Health Armor, A is Built-In Radar, T is Safety Kit, C is Strongest Voice, and H is Daily Superpower."
         resizeMode="contain"
         style={{ width: '100%', height: '100%' }}
       />
       {width > 0
         ? nodes.map((node) => {
-            const position = polar(width / 2, height / 2, radius, node.bearing);
+            const selected = selectedId === node.id;
             return (
               <Pressable
                 key={node.id}
                 accessibilityRole="button"
                 accessibilityLabel={`${node.letter}, ${node.callsign}. ${node.title}`}
                 accessibilityHint={briefingHint}
-                accessibilityState={{ selected: selectedId === node.id }}
+                accessibilityState={{ selected }}
                 onPress={() => onSelect(node.id)}
-                className="absolute items-center justify-center rounded-full active:opacity-70"
+                className="absolute rounded-full active:opacity-60"
                 style={{
-                  left: position.x - MARKER / 2,
-                  top: position.y - MARKER / 2,
-                  width: MARKER,
-                  height: MARKER,
-                  backgroundColor: wash(node.color, 0.16, C.card),
-                  borderWidth: 1.5,
-                  borderColor: alpha(node.color, 0.85),
+                  left: node.spot.x * width - HOTSPOT / 2,
+                  top: node.spot.y * height - HOTSPOT / 2,
+                  width: HOTSPOT,
+                  height: HOTSPOT,
+                  borderWidth: selected ? 3 : 0,
+                  borderColor: node.color,
+                  backgroundColor: selected ? alpha(node.color, 0.12) : 'transparent',
                 }}
-              >
-                <Display color={C.ink} className="text-xl">
-                  {node.letter}
-                </Display>
-              </Pressable>
+              />
             );
           })
         : null}
