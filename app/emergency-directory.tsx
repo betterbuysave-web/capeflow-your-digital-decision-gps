@@ -3,7 +3,6 @@ import { router } from 'expo-router';
 import {
   CircleAlert,
   ExternalLink,
-  Lock,
   MessageSquare,
   Phone,
   ShieldAlert,
@@ -15,16 +14,13 @@ import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
-import { PauseButton } from '@/components/cape/PauseButton';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
   EMERGENCY_FIRST_MOVES,
-  EMERGENCY_LOCK_NOTE,
   EMERGENCY_NOTE,
   type EmergencyContact,
   groupsForTrack,
-  lockedGroupCount,
 } from '@/lib/data/emergency';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -36,7 +32,6 @@ export default function EmergencyDirectory() {
   const circle = useCapeStore((s) => s.circle);
   const track = trackFor(gradeBand);
   const groups = groupsForTrack(track);
-  const lockedCount = lockedGroupCount(track);
 
   return (
     <View className="bg-paper flex-1">
@@ -103,8 +98,6 @@ export default function EmergencyDirectory() {
           </TintedRow>
         </View>
 
-        <PauseButton className="mt-6" />
-
         {groups.map((group) => (
           <View key={group.id} className="mt-8">
             <View className="flex-row items-center gap-2">
@@ -123,27 +116,6 @@ export default function EmergencyDirectory() {
             </View>
           </View>
         ))}
-
-        {lockedCount > 0 ? (
-          <View
-            className="mt-6 rounded-2xl p-4"
-            style={{
-              backgroundColor: alpha(C.lemon, 0.04),
-              borderWidth: 1,
-              borderColor: alpha(C.lemon, 0.16),
-            }}
-          >
-            <View className="flex-row items-start gap-3">
-              <Lock size={16} color={C.lemon} />
-              <View className="flex-1">
-                <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
-                  {lockedCount} {lockedCount === 1 ? 'GROUP' : 'GROUPS'} ON THE 9–12 TRACK
-                </Mono>
-                <Mono className="mt-1 text-[13px]">{EMERGENCY_LOCK_NOTE}</Mono>
-              </View>
-            </View>
-          </View>
-        ) : null}
 
         <View className="mt-8">
           <Eyebrow color={C.teal}>FIRST FOUR MOVES</Eyebrow>

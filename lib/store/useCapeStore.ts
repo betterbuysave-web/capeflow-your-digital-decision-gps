@@ -14,8 +14,8 @@ import { SCENARIOS, scenariosForTrack, type Verdict } from '@/lib/data/scenarios
 import { type GradeBand, type Track, trackFor } from '@/lib/data/content';
 import { type FearState, getGhost, GHOSTS, ghostsForTrack } from '@/lib/data/ghosts';
 import {
-  CAFE_QUIZ,
-  DEFAULT_CAFE_MENU,
+  CAFE_QUIZ_LENGTH,
+  defaultCafeMenu,
   EXIT_QUESTIONS,
   type CafeCourse,
   type CafeMenu,
@@ -60,11 +60,19 @@ export interface CafeExitCard {
   completedAt: number | null;
 }
 
-function freshCafeMenu(): CafeMenu {
+/** True while the menu still holds only seeded items (the student has not edited it). */
+function untouchedMenu(menu: CafeMenu): boolean {
+  return [...menu.appetizers, ...menu.mains, ...menu.notserved].every((item) =>
+    item.id.includes('-seed-'),
+  );
+}
+
+function freshCafeMenu(track: Track = 'green'): CafeMenu {
+  const seed = defaultCafeMenu(track);
   return {
-    appetizers: [...DEFAULT_CAFE_MENU.appetizers],
-    mains: [...DEFAULT_CAFE_MENU.mains],
-    notserved: [...DEFAULT_CAFE_MENU.notserved],
+    appetizers: [...seed.appetizers],
+    mains: [...seed.mains],
+    notserved: [...seed.notserved],
   };
 }
 
@@ -101,6 +109,10 @@ interface CapeState {
   completedLessons: string[];
   scenarioResults: Record<string, ScenarioResult>;
   strongestVoiceScripts: string[];
+  /** Script Lab notes: named ghost, commitment card, Blue legacy letter. Device only. */
+  voiceLab: { ghost: string; commitment: string; legacy: string };
+  /** Activity progress keyed by activity id (e.g. answers, completion). Device only. */
+  activityLog: Record<string, Record<string, string>>;
   boundaries: Record<string, BoundaryAnswer>;
   circle: CircleContact[];
   badges: string[];
@@ -132,6 +144,8 @@ interface CapeState {
     xp: number,
   ) => void;
   saveStrongestVoiceScript: (script: string) => void;
+  setVoiceLab: (patch: Partial<{ ghost: string; commitment: string; legacy: string }>) => void;
+  logActivity: (activity: string, key: string, value: string) => void;
   removeStrongestVoiceScript: (script: string) => void;
   setBoundary: (itemId: string, answer: BoundaryAnswer) => void;
   addContact: (contact: Omit<CircleContact, 'id'>) => void;
@@ -270,7 +284,7 @@ function earnedBadges(state: CapeState): string[] {
   if (results.filter((r) => r.verdict === 'best').length >= 3) earned.add('clean-run');
   if (state.streak >= 3) earned.add('streak-3');
   const quizCorrect = Object.values(state.cafeQuiz).filter(Boolean).length;
-  if (quizCorrect >= CAFE_QUIZ.length) earned.add('fries-detective');
+  if (quizCorrect >= CAFE_QUIZ_LENGTH) earned.add('fries-detective');
   if (state.cafeExit.completedAt !== null) earned.add('cafe-regular');
   earned.delete('ghost-named');
   earned.delete('vault-armed');
@@ -292,6 +306,8 @@ const initial = {
   completedLessons: [] as string[],
   scenarioResults: {} as Record<string, ScenarioResult>,
   strongestVoiceScripts: [] as string[],
+  voiceLab: { ghost: '', commitment: '', legacy: '' },
+  activityLog: {} as Record<string, Record<string, string>>,
   boundaries: {} as Record<string, BoundaryAnswer>,
   circle: [] as CircleContact[],
   badges: [] as string[],
@@ -322,6 +338,8 @@ export const useCapeStore = create<CapeState>()(
           gradeBand: band,
           codename: codename.trim(),
           canonBlueGateAccepted: band === '9-12',
+          // Seed the Café menu for this track unless the student already made it their own.
+          ...(untouchedMenu(get().cafeMenu) ? { cafeMenu: freshCafeMenu(trackFor(band)) } : {}),
         });
         get().registerVisit();
       },
@@ -344,6 +362,14 @@ export const useCapeStore = create<CapeState>()(
         set({ badges: earnedBadges(get()) });
       },
 
+      setVoiceLab: (patch) => set((s) => ({ voiceLab: { ...s.voiceLab, ...patch } })),
+      logActivity: (activity, key, value) =>
+        set((s) => ({
+          activityLog: {
+            ...s.activityLog,
+            [activity]: { ...s.activityLog[activity], [key]: value },
+          },
+        })),
       saveStrongestVoiceScript: (script) => {
         const value = script.trim();
         if (!value || get().strongestVoiceScripts.includes(value)) return;
@@ -579,6 +605,10 @@ export const useCapeStore = create<CapeState>()(
           };
         }
         const merged = { ...current, ...saved };
+        // Older installs seeded one shared menu; reseed it for the student's track.
+        if (merged.gradeBand && untouchedMenu(merged.cafeMenu)) {
+          merged.cafeMenu = freshCafeMenu(trackFor(merged.gradeBand));
+        }
         return { ...merged, badges: earnedBadges(merged) };
       },
     },

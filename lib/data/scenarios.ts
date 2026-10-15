@@ -23,13 +23,304 @@ export interface Scenario {
   choices: Choice[];
   debrief: string;
   xp: number;
-  track?: 'blue';
+  /** Each track has its own scenarios; none are shared. */
+  track: Track;
   sample?: boolean;
 }
 
 export const SCENARIOS: Scenario[] = [
+  /* ── Green Track · grades 6–8 ─────────────────────────────── */
+  {
+    id: 'g-group-roast',
+    track: 'green',
+    time: '9:12 PM',
+    title: 'The group chat roast',
+    emoji: '😬',
+    setup: 'Someone posts a photo of a classmate tripping in gym. Then they tag you:',
+    message: 'lol add a caption 😂 you always have the best ones',
+    bubbleTime: '9:12 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 30,
+    sample: true,
+    choices: [
+      {
+        id: 'caption',
+        label: 'Add a caption — it is just a joke',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback:
+          'The classmate never said yes to being posted. A caption from you makes the joke bigger and puts your name on it.',
+      },
+      {
+        id: 'not-funny',
+        label: 'Reply: "Not funny. Can we take it down?"',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback:
+          'One short line, no lecture. It gives everyone else permission to stop too — that is leadership.',
+      },
+      {
+        id: 'tell-adult',
+        label: 'Screenshot it and show a trusted adult',
+        verdict: 'best',
+        matchTag: 'tools',
+        feedback:
+          'Telling is not snitching when someone is being hurt. A teacher or parent can get it taken down.',
+      },
+      {
+        id: 'mute',
+        label: 'Mute the chat and say nothing',
+        verdict: 'ok',
+        matchTag: 'habits',
+        feedback:
+          'Protecting your peace is fine, but the photo is still up. Pair it with a private check-in with the classmate.',
+      },
+    ],
+    debrief:
+      'The F.R.I.E.S. check works on photos too: the person in it never gave a yes. Awareness spots it; Clear Communication ends it in one line.',
+  },
+  {
+    id: 'g-gamer',
+    track: 'green',
+    time: '8:40 PM',
+    title: 'The gamer who asks too much',
+    emoji: '🎮',
+    setup: 'A teammate you met in an online game messages you after a match:',
+    message: 'ur cracked at this 🔥 what school u go to? add me on snap and ill send u free skins',
+    bubbleTime: '8:40 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 30,
+    choices: [
+      {
+        id: 'share',
+        label: 'Tell them your school — free skins!',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback:
+          'Your school tells a stranger where you are five days a week. "Free stuff" is a common hook to move you to a private app.',
+      },
+      {
+        id: 'decline',
+        label: 'Reply: "I don\'t share that. GG though."',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback:
+          'Friendly and closed. You keep the game and keep your info. If they push again, that tells you everything.',
+      },
+      {
+        id: 'report',
+        label: 'Show a parent or trusted adult, then block and report',
+        verdict: 'best',
+        matchTag: 'tools',
+        feedback:
+          'An adult can help you report it. Blocking and reporting protects the next kid they message too.',
+      },
+      {
+        id: 'ignore',
+        label: 'Just ignore the message',
+        verdict: 'ok',
+        matchTag: 'habits',
+        feedback:
+          'Not answering is okay. If they keep messaging or offer gifts again, tell an adult.',
+      },
+    ],
+    debrief:
+      'Awareness rule: people you only know online do not need your school, address, or other apps. Gifts plus "move to another app" is a red flag.',
+  },
+  {
+    id: 'g-secret',
+    track: 'green',
+    time: '7:05 PM',
+    title: 'The secret request',
+    emoji: '🤫',
+    setup: 'An older person you have been chatting with online sends:',
+    message: "you're so mature for your age. don't tell your parents we talk, they wouldn't get it",
+    bubbleTime: '7:05 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 40,
+    choices: [
+      {
+        id: 'keep-secret',
+        label: 'Keep it secret — they seem nice',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback:
+          'Safe adults do not ask kids to keep secrets from their parents. Being asked to hide a chat is the warning sign.',
+      },
+      {
+        id: 'tell-now',
+        label: 'Tell a trusted adult today and show them the chat',
+        verdict: 'best',
+        matchTag: 'tools',
+        feedback:
+          'This is exactly what trusted adults are for. You are not in trouble for telling.',
+      },
+      {
+        id: 'reply-no',
+        label: 'Reply: "I don\'t keep secrets from my family." Then stop replying',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback:
+          'Clear and final. Still tell a trusted adult — they can help you block and report.',
+      },
+      {
+        id: 'delete',
+        label: 'Delete the chat and pretend it never happened',
+        verdict: 'ok',
+        matchTag: 'habits',
+        feedback:
+          'Stepping away is good. Deleting removes the proof an adult would need. Screenshot first, then tell someone.',
+      },
+    ],
+    debrief:
+      'The secrecy rule: if someone asks you to hide your friendship from your family, tell your family. Tools & Trusted Support exist for this moment.',
+  },
+  {
+    id: 'g-dare',
+    track: 'green',
+    time: '3:30 PM',
+    title: 'The dare',
+    emoji: '🎥',
+    setup: 'After school, your friend group is filming a viral challenge. One of them says:',
+    message: 'ur turn. do it on camera or ur not really one of us',
+    bubbleTime: '3:30 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 30,
+    choices: [
+      {
+        id: 'do-it',
+        label: 'Do it so you are not left out',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback:
+          '"Do it or you are out" is pressure, not friendship. Some challenges hurt people, and the video lasts.',
+      },
+      {
+        id: 'pivot',
+        label: 'Say: "Pass. I\'ll be camera person instead."',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback:
+          'The Graceful Pivot: you stay in the group and stay out of the stunt. No speech needed.',
+      },
+      {
+        id: 'leave',
+        label: 'Head home and text a friend who is not there',
+        verdict: 'ok',
+        matchTag: 'tools',
+        feedback:
+          'Leaving is always allowed. Telling someone you trust keeps you from feeling alone about it.',
+      },
+      {
+        id: 'fake',
+        label: 'Pretend to do it so they stop asking',
+        verdict: 'ok',
+        matchTag: 'habits',
+        feedback:
+          'It gets you out today, but the pressure comes back. A clear "pass" works better next time.',
+      },
+    ],
+    debrief:
+      'Freely given applies to friendships: a yes squeezed out by "or you are out" is not a free choice. Real friends accept a pass.',
+  },
+  {
+    id: 'g-friend-low',
+    track: 'green',
+    time: '10:30 PM',
+    title: 'A friend sounds really down',
+    emoji: '💬',
+    setup: 'Your friend sends you a private message:',
+    message: "everyone would be better off without me tbh. don't tell anyone",
+    bubbleTime: '10:30 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 45,
+    choices: [
+      {
+        id: 'joke',
+        label: 'Send a funny meme to cheer them up',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback: 'A joke can feel like you did not hear them. Take the words seriously.',
+      },
+      {
+        id: 'ask',
+        label: 'Tell them you care and ask if they are safe right now',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback: 'Asking directly is caring, not overreacting. It lets them be honest with you.',
+      },
+      {
+        id: 'adult',
+        label: 'Tell a trusted adult tonight, even though they said not to',
+        verdict: 'best',
+        matchTag: 'tools',
+        feedback:
+          'Some secrets are too big to keep. Getting an adult involved is how you help. You can also call or text 988 together.',
+      },
+      {
+        id: 'wait',
+        label: 'Wait and talk to them at school tomorrow',
+        verdict: 'risky',
+        matchTag: 'habits',
+        feedback: 'Tonight matters. Reach out to them and to an adult now.',
+      },
+    ],
+    debrief:
+      'When a friend talks about not being here, it is never a secret to keep. Tell a trusted adult. 988 answers calls and texts 24/7.',
+  },
+  {
+    id: 'g-sleepover',
+    track: 'green',
+    time: '11:45 PM',
+    title: 'The sleepover sneak-out',
+    emoji: '🌙',
+    setup: 'At a sleepover, your friend whispers:',
+    message: "my cousin's friends are at the park rn. let's sneak out, nobody will know",
+    bubbleTime: '11:45 PM',
+    prompt: 'WHAT DO YOU DO?',
+    xp: 30,
+    choices: [
+      {
+        id: 'go',
+        label: 'Go — it is only for a little while',
+        verdict: 'risky',
+        matchTag: 'awareness',
+        feedback:
+          'At night, with older kids nobody knows, and no adult aware of where you are — that is the risky part.',
+      },
+      {
+        id: 'stay',
+        label: 'Say: "Nah, I\'m staying. Let\'s do something here."',
+        verdict: 'best',
+        matchTag: 'comms',
+        feedback:
+          'You said no to the plan, not to your friend. Offering a new plan keeps the night fun.',
+      },
+      {
+        id: 'tell-host',
+        label: 'If they go anyway, wake the host parent',
+        verdict: 'best',
+        matchTag: 'tools',
+        feedback:
+          'You are looking out for your friend, not getting them in trouble. Adults can keep everyone safe.',
+      },
+      {
+        id: 'share-location',
+        label: 'Go, but keep your phone on',
+        verdict: 'ok',
+        matchTag: 'habits',
+        feedback:
+          'A charged phone helps, but no adult knows where you are. The safer move is staying in.',
+      },
+    ],
+    debrief:
+      'Choosing your pace means you can say no to a plan and still be a good friend. Trusted adults are part of the plan, not the enemy.',
+  },
+
+  /* ── Blue Track · grades 9–12 ─────────────────────────────── */
   {
     id: 'owe-me',
+    track: 'blue',
     time: '1:47 AM',
     title: 'The debt frame',
     emoji: '🌙',
@@ -74,10 +365,10 @@ export const SCENARIOS: Scenario[] = [
     ],
     debrief:
       'Urgency plus guilt is the signature of coercion. The M.A.T.C.H. move is Awareness to name the tactic, then Clear Communication & Consent to answer in one line.',
-    sample: true,
   },
   {
     id: 'party-drink',
+    track: 'blue',
     time: '11:20 PM',
     title: 'The unattended cup',
     emoji: '🥤',
@@ -125,6 +416,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 'photo-push',
+    track: 'blue',
     time: '10:05 PM',
     title: 'The photo push',
     emoji: '📸',
@@ -172,6 +464,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 'pep-window',
+    track: 'blue',
     time: '6:30 AM',
     title: 'The morning after an exposure',
     emoji: '💊',
@@ -180,7 +473,6 @@ export const SCENARIOS: Scenario[] = [
     bubbleTime: '6:30 AM',
     prompt: 'WHAT IS THE FIRST MOVE?',
     xp: 50,
-    track: 'blue',
     choices: [
       {
         id: 'wait',
@@ -220,6 +512,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 'friend-crisis',
+    track: 'blue',
     time: '2:12 AM',
     title: 'A friend says something scary',
     emoji: '🆘',
@@ -267,6 +560,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: 'location-share',
+    track: 'blue',
     time: '4:45 PM',
     title: 'Permanent location sharing',
     emoji: '📍',
@@ -319,7 +613,7 @@ export function getScenario(id: string): Scenario | undefined {
 }
 
 export function scenariosForTrack(track: Track): Scenario[] {
-  return SCENARIOS.filter((scenario) => scenario.track !== 'blue' || track === 'blue');
+  return SCENARIOS.filter((scenario) => scenario.track === track);
 }
 
 export interface PivotChallenge {
@@ -350,6 +644,13 @@ const PIVOT_CHOICES: PivotChallenge['choices'] = [
 ];
 
 const PIVOT_TRIGGERS: Record<string, string> = {
+  'g-group-roast':
+    'CHAOS EVENT: Someone replies, "chill, it is just a joke," and the chat piles on.',
+  'g-gamer': 'CHAOS EVENT: They send a link and say, "click to claim ur skins before it expires."',
+  'g-secret': 'CHAOS EVENT: They say they will be upset with you if you tell anyone.',
+  'g-dare': 'CHAOS EVENT: Someone starts filming you anyway.',
+  'g-friend-low': 'CHAOS EVENT: Your friend stops replying.',
+  'g-sleepover': 'CHAOS EVENT: Your friend climbs out the window and asks you to cover for them.',
   'owe-me': 'CHAOS EVENT: They call twice and say they are already outside.',
   'party-drink': 'CHAOS EVENT: Your ride cancels and your phone battery drops to 2%.',
   'photo-push': 'CHAOS EVENT: They threaten to post the conversation in a group chat.',
@@ -365,4 +666,4 @@ export function getPivotChallenge(scenarioId: string): PivotChallenge {
   };
 }
 
-export const SAMPLE_SCENARIO = SCENARIOS[0];
+export const SAMPLE_SCENARIO = SCENARIOS.find((s) => s.sample) ?? SCENARIOS[0];

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Redirect, router } from 'expo-router';
+import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import {
   ArrowRight,
   BookOpen,
@@ -32,12 +32,15 @@ export default function Landing() {
   const acknowledgePrivacy = useCapeStore((s) => s.acknowledgePrivacy);
   const registerVisit = useCapeStore((s) => s.registerVisit);
   const [showPrivacy, setShowPrivacy] = useState(true);
+  const { gate } = useLocalSearchParams<{ gate?: string }>();
+  const returning = onboarded && gate === '1';
 
   useEffect(() => {
     if (onboarded) registerVisit();
   }, [onboarded, registerVisit]);
 
-  if (onboarded) return <Redirect href="/(tabs)" />;
+  // Home's back button opens this gate on purpose (?gate=1); otherwise returning students skip it.
+  if (onboarded && gate !== '1') return <Redirect href="/(tabs)" />;
 
   return (
     <View className="bg-paper flex-1">
@@ -69,9 +72,16 @@ export default function Landing() {
             </Body>
 
             <View className="mt-8 w-full gap-3">
+              {returning ? (
+                <MetallicButton
+                  brand
+                  label="BACK TO MY COMPASS"
+                  onPress={() => router.replace('/(tabs)')}
+                />
+              ) : null}
               <MetallicButton
-                brand
-                label="GET STARTED"
+                brand={!returning}
+                label={returning ? 'CHANGE MY TRACK' : 'GET STARTED'}
                 onPress={() => router.push('/onboarding')}
               />
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
@@ -449,7 +459,7 @@ export default function Landing() {
         </View>
       </ScrollView>
 
-      {!privacyAcknowledged && showPrivacy ? (
+      {(!privacyAcknowledged || returning) && showPrivacy ? (
         <View className="pb-safe-offset-4 absolute right-0 bottom-0 left-0 px-4">
           <Panel tint={C.teal} fill={0.08} stroke={0.25} className="bg-paper-2">
             <View className="flex-row items-start justify-between gap-3">

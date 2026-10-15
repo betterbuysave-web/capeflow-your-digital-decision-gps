@@ -3,7 +3,10 @@ import { Pressable, View } from 'react-native';
 import { ChevronLeft, ChevronRight, Eye, Search, Users } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
-import { DETECTIVE_SCENES, PRACTICE_CARDS } from '@/lib/data/cafe';
+import { detectiveScenes, practiceCards } from '@/lib/data/cafe';
+import { trackFor } from '@/lib/data/content';
+import { useCapeStore } from '@/lib/store/useCapeStore';
+
 import { C, alpha, wash } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
 
@@ -134,10 +137,12 @@ function NavButton({
 
 /** Three case files: tick the broken principles, then reveal the verdict. */
 function DetectiveDeck() {
+  const track = trackFor(useCapeStore((s) => s.gradeBand));
+  const scenes = detectiveScenes(track);
   const [index, setIndex] = useState(0);
   const [checked, setChecked] = useState<string[]>([]);
   const [revealed, setRevealed] = useState<string[]>([]);
-  const scene = DETECTIVE_SCENES[index];
+  const scene = scenes[index];
   const isRevealed = revealed.includes(scene.id);
 
   const toggleClue = (letter: string) => {
@@ -247,15 +252,17 @@ function DetectiveDeck() {
         )}
       </View>
 
-      <DeckNav index={index} total={DETECTIVE_SCENES.length} onChange={setIndex} />
+      <DeckNav index={index} total={scenes.length} onChange={setIndex} />
     </View>
   );
 }
 
 /** Two-person scripts with the strong line and the pressure line side by side. */
 function RolePlayDeck() {
+  const track = trackFor(useCapeStore((s) => s.gradeBand));
+  const cards = practiceCards(track);
   const [index, setIndex] = useState(0);
-  const card = PRACTICE_CARDS[index];
+  const card = cards[index];
 
   return (
     <View>
@@ -319,7 +326,7 @@ function RolePlayDeck() {
         </View>
       </View>
 
-      <DeckNav index={index} total={PRACTICE_CARDS.length} onChange={setIndex} />
+      <DeckNav index={index} total={cards.length} onChange={setIndex} />
     </View>
   );
 }

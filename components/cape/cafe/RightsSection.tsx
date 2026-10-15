@@ -3,11 +3,15 @@ import { Pressable, View } from 'react-native';
 import { Check, ShieldAlert } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
-import { CAFE_MYTHS, CAFE_RIGHTS, CAFE_SAFETY_NOTE } from '@/lib/data/cafe';
+import { CAFE_RIGHTS, CAFE_SAFETY_NOTE, cafeMyths } from '@/lib/data/cafe';
+import { trackFor } from '@/lib/data/content';
+import { useCapeStore } from '@/lib/store/useCapeStore';
+
 import { C, alpha, wash } from '@/lib/colors';
 
 /** Station 03 — the customer satisfaction guarantee and the myth busters. */
 export function RightsSection() {
+  const track = trackFor(useCapeStore((s) => s.gradeBand));
   const [open, setOpen] = useState<string | null>(null);
 
   return (
@@ -59,7 +63,7 @@ export function RightsSection() {
         MYTH BUSTER · TAP TO REVEAL
       </Eyebrow>
       <View className="mt-3 gap-2.5">
-        {CAFE_MYTHS.map((card) => {
+        {cafeMyths(track).map((card) => {
           const expanded = open === card.id;
           return (
             <Pressable

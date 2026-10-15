@@ -14,7 +14,8 @@ import {
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { PauseButton } from '@/components/cape/PauseButton';
 import { PepCountdownBanner } from '@/components/cape/PepCountdown';
-import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { StackHeader } from '@/components/cape/Screen';
+
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { C, alpha } from '@/lib/colors';
@@ -33,7 +34,7 @@ export default function Crisis() {
 
   return (
     <View className="bg-paper flex-1">
-      <SafeAreaView edges={['top']} className="bg-paper" />
+      <StackHeader title="Crisis Protocol" tint={C.flame} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"

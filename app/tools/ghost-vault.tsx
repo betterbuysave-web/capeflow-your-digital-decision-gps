@@ -10,6 +10,7 @@ import {
 import { Redirect } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { Lock, Shield, ShieldCheck, X } from 'lucide-react-native';
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, GradientAction } from '@/components/cape/Buttons';
@@ -73,6 +74,20 @@ function HealthcareAuditContent() {
           <Body className="mt-3">
             Name the healthcare ghost. Practise the question. Make a plan for care.
           </Body>
+          <ActivityGuide
+            className="mt-5"
+            tint={C.violet}
+            minutes={10}
+            what={
+              'A "healthcare ghost" is a fear that stops you from getting care, like being scared to call or worried about cost. Naming it makes it smaller.'
+            }
+            steps={[
+              'Read each ghost and tap the ones that feel true for you.',
+              'Read the counter-move and the question you could ask.',
+              'Mark a ghost "disarmed" once you have a plan for it.',
+            ]}
+            outcome={'a plan for the fear most likely to keep you from care.'}
+          />
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label="ON THIS DEVICE" tint={C.teal} />
             <Chip label="NO ACCOUNT · NO UPLOAD" tint={C.gold} />

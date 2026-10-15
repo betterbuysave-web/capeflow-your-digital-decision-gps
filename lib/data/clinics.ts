@@ -230,10 +230,6 @@ export function categoriesForTrack(track: Track): CareCategoryInfo[] {
   return CARE_CATEGORIES.filter((c) => track === 'blue' || c.track !== 'blue');
 }
 
-export function lockedNetworkCount(track: Track): number {
-  return track === 'blue' ? 0 : CARE_NETWORKS.filter((n) => n.track === 'blue').length;
-}
-
 /** Free-text + category filter over the track's networks. */
 export function searchNetworks(
   track: Track,
@@ -334,9 +330,6 @@ export const CLINIC_COST_NOTE =
 
 export const CLINIC_CONFIDENTIALITY_NOTE =
   'Confidentiality rules for minors vary by state and by service. Ask two questions at the front desk: what stays between you and the clinician, and what appears on an insurance statement. Staff answer this every day — it is a normal question, not a red flag.';
-
-export const CLINIC_GREEN_LOCK_NOTE =
-  'Testing, PrEP, PEP, and sexual health clinic directories are part of the Grades 9–12 track. On this track the finder covers check-ups, coverage, mental health support, and vaccines.';
 
 export const CLINIC_SAFETY_NOTE =
   'CAPE Flow does not store your ZIP code, your searches, or which clinic you opened. Each finder is run by the agency named on the card and opens in your browser.';

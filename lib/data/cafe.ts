@@ -1,4 +1,5 @@
 import { C } from '@/lib/colors';
+import type { Track } from '@/lib/data/content';
 
 /**
  * The Consent Café — full interactive tool content.
@@ -24,6 +25,8 @@ export interface FriesCard {
   nickname: string;
   rule: string;
   cafeRule: string;
+  /** Real-life example for each track. */
+  example: Record<Track, string>;
   tint: string;
 }
 
@@ -35,6 +38,11 @@ export const FRIES_CARDS: FriesCard[] = [
     rule: 'Consent comes from a genuine, unconstrained choice — not guilt-tripping, manipulation, threats, or begging. If someone feels forced or in debt, what they give is not consent.',
     cafeRule:
       'A customer who orders because the server is staring and sighing is not really choosing. A free order comes from a pressure-free moment.',
+    example: {
+      green:
+        'Your friend says, "If you were really my friend you\'d sit with us, not the new kid." Guilt is not a free choice.',
+      blue: 'Your partner says, "After everything I did for you, you owe me." A yes paid as a debt is not freely given.',
+    },
     tint: C.teal,
   },
   {
@@ -44,6 +52,10 @@ export const FRIES_CARDS: FriesCard[] = [
     rule: 'Consent can be withdrawn at any moment — even after a yes, even mid-way. The other person stops immediately. No questions, no guilt trip.',
     cafeRule:
       'If a customer ordered pasta and changes their mind before it arrives, the kitchen stops. Past orders never lock in future ones.',
+    example: {
+      green: 'You agreed to play a two-hour game, and after 30 minutes you want to stop. You can.',
+      blue: 'You said yes to making out, then want to slow down. Stopping is always allowed, even mid-way.',
+    },
     tint: C.modT,
   },
   {
@@ -53,6 +65,11 @@ export const FRIES_CARDS: FriesCard[] = [
     rule: 'Consent requires full, honest information. No hidden ingredients, no misleading descriptions. A yes built on a lie or an omission is not a yes.',
     cafeRule:
       'A dish labelled vegetarian that secretly contains meat is a betrayal of trust. The choice only works with accurate information.',
+    example: {
+      green:
+        "A friend says it's just you two at the movies, but it's really a big group you don't know.",
+      blue: 'Someone agrees to be intimate only with protection, and their partner secretly skips it. That yes was never informed.',
+    },
     tint: C.modC,
   },
   {
@@ -62,6 +79,11 @@ export const FRIES_CARDS: FriesCard[] = [
     rule: 'A real yes is active and willing — not a shrug, a "maybe", a silence, or a reluctant "fine". Absence of a no is not a yes.',
     cafeRule:
       'A customer staring blankly at the menu saying "whatever" is not ordering. Only a clear "yes, I\'ll have that" counts.',
+    example: {
+      green:
+        'Your friend shrugs and says "I guess" when you ask to borrow their phone. That\'s not a yes.',
+      blue: '"Whatever you want" while looking away is not a yes. Look for a real "Heck yes."',
+    },
     tint: C.modH,
   },
   {
@@ -71,6 +93,10 @@ export const FRIES_CARDS: FriesCard[] = [
     rule: 'Yes to one thing is not yes to everything. Each act needs its own consent. Agreeing to one level of closeness does not unlock the rest.',
     cafeRule:
       'Ordering an appetizer is not agreeing to three courses and dessert. Each dish is its own decision.',
+    example: {
+      green: "Saying yes to one photo doesn't mean yes to posting it.",
+      blue: 'Yes to kissing is not yes to anything else. Each step gets its own yes.',
+    },
     tint: C.violet,
   },
 ];
@@ -86,7 +112,7 @@ export interface CafeQuizQuestion {
   wrong: string;
 }
 
-export const CAFE_QUIZ: CafeQuizQuestion[] = [
+const GREEN_QUIZ: CafeQuizQuestion[] = [
   {
     id: 'q-silence',
     scenario:
@@ -235,20 +261,17 @@ function seedItems(course: CafeCourse, texts: string[]): CafeMenuItem[] {
   return texts.map((text, i) => ({ id: `${course}-seed-${i}`, text }));
 }
 
-export const DEFAULT_CAFE_MENU: CafeMenu = {
+const GREEN_MENU: CafeMenu = {
   appetizers: seedItems('appetizers', [
-    'Holding hands',
-    'Text conversations',
-    'Hanging out in groups',
+    'Sitting together at lunch',
+    'Group hangouts',
+    'High-fives and fist bumps',
   ]),
-  mains: seedItems('mains', [
-    'Meeting family or close friends',
-    'Sharing personal photos',
-    'Physical closeness',
-  ]),
+  mains: seedItems('mains', ['Hugs', 'Someone posting a photo of me', 'Borrowing my phone']),
   notserved: seedItems('notserved', [
-    'Sharing my location with someone I do not trust',
+    'Sharing my location with people I only know online',
     'Being touched without asking',
+    'Keeping secrets from my family',
   ]),
 };
 
@@ -269,7 +292,7 @@ export interface MythCard {
   truth: string;
 }
 
-export const CAFE_MYTHS: MythCard[] = [
+const BLUE_MYTHS: MythCard[] = [
   {
     id: 'myth-before',
     myth: 'If you said yes before, you have to keep saying yes.',
@@ -319,7 +342,7 @@ export interface DetectiveScene {
   verdict: string;
 }
 
-export const DETECTIVE_SCENES: DetectiveScene[] = [
+const GREEN_DETECTIVE: DetectiveScene[] = [
   {
     id: 'scene-pressure-text',
     title: 'The Pressure Text',
@@ -370,7 +393,7 @@ export const DETECTIVE_SCENES: DetectiveScene[] = [
     id: 'scene-changed-mind',
     title: 'The Changed Mind',
     setup:
-      'Mia and Theo planned a road trip. Mia agreed two weeks ago. The day before, Mia texts that she is not up for it anymore. Theo says, "You can\'t just change your mind now — I already booked everything. You owe me this."',
+      'Mia said yes to Theo\'s sleepover two weeks ago. The day before, Mia texts that she is not up for it anymore. Theo says, "You can\'t just change your mind now — my mom already bought pizza. You owe me this."',
     prompt: "Which principles does Theo's response violate?",
     clues: [
       {
@@ -381,7 +404,7 @@ export const DETECTIVE_SCENES: DetectiveScene[] = [
       {
         letter: 'F',
         label: 'Freely given',
-        text: 'Guilt over bookings is used as leverage.',
+        text: 'Guilt over the plans is used as leverage.',
       },
       {
         letter: 'E',
@@ -390,7 +413,7 @@ export const DETECTIVE_SCENES: DetectiveScene[] = [
       },
     ],
     verdict:
-      "R and F are the clear violations. Mia has every right to change her mind. Theo weaponises logistics to turn a past yes into a coerced one. Bookings and plans never override someone's say over their own participation.",
+      "R and F are the clear violations. Mia has every right to change her mind. Theo uses the plans to turn a past yes into a pressured one. Plans never override someone's say over their own participation.",
   },
 ];
 
@@ -412,7 +435,7 @@ export interface PracticeCard {
   reflection: string;
 }
 
-export const PRACTICE_CARDS: PracticeCard[] = [
+const GREEN_PRACTICE: PracticeCard[] = [
   {
     id: 'practice-secret',
     title: 'The Secret Share',
@@ -502,6 +525,297 @@ export const PRACTICE_CARDS: PracticeCard[] = [
       'Is cancelling plans a form of withdrawing consent? Does Person A owe an explanation? How does the problem line collide with your right to leave at any time?',
   },
 ];
+
+/* ── Blue Track · grades 9–12 ─────────────────────────────────── */
+
+const BLUE_QUIZ: CafeQuizQuestion[] = [
+  {
+    id: 'b-party',
+    scenario:
+      'At a party, Alex has had a lot to drink and is slurring. Sam wants to go somewhere private with Alex and says, "They said yes earlier, before they were drinking."',
+    options: ['Freely given', 'Informed', 'Reversible', 'Specific'],
+    answer: 0,
+    correct:
+      'Right. Someone who is drunk or high cannot give a free, clear yes. An earlier yes does not carry over.',
+    wrong:
+      'Think about whether Alex is able to choose right now. Which letter needs a clear, unpressured choice?',
+  },
+  {
+    id: 'b-kiss',
+    scenario:
+      'Jordan and Casey agree to kiss. A few minutes later Casey starts going further and says, "You said yes, so I figured you were into it."',
+    options: ['Reversible', 'Specific', 'Informed', 'Enthusiastic'],
+    answer: 1,
+    correct: 'Exactly. Yes to kissing is yes to kissing. Each step needs its own yes.',
+    wrong:
+      'Jordan agreed to one thing. Which letter says yes to one thing is not yes to everything?',
+  },
+  {
+    id: 'b-protection',
+    scenario:
+      'Riley agreed to be intimate only if they used a condom. Their partner took it off without saying anything.',
+    options: ['Enthusiastic', 'Informed', 'Reversible', 'Freely given'],
+    answer: 1,
+    correct:
+      "Correct. Riley's yes depended on protection. Hiding that it was skipped means Riley never had the facts — that yes was not informed.",
+    wrong:
+      'Riley agreed under one condition that was secretly broken. Which letter needs honest information?',
+  },
+  {
+    id: 'b-anniversary',
+    scenario:
+      '"It\'s our six-month anniversary. You owe me this," Devon says. Morgan goes along with it so Devon will stop being upset.',
+    options: ['Freely given', 'Specific', 'Informed', 'Reversible'],
+    answer: 0,
+    correct:
+      'Yes. "You owe me" turns a choice into a debt. Going along to stop someone being upset is not free.',
+    wrong: 'Why did Morgan agree? Which letter covers guilt and pressure?',
+  },
+  {
+    id: 'b-stop',
+    scenario:
+      'Taylor says yes to making out, then says, "Actually, can we stop?" Their partner says, "We already started, it would be weird to stop now."',
+    options: ['Enthusiastic', 'Informed', 'Reversible', 'Specific'],
+    answer: 2,
+    correct:
+      'Correct. Consent can be taken back at any moment, even mid-way. "Can we stop" means stop.',
+    wrong: 'Taylor changed their mind partway through. Which letter guarantees that right?',
+  },
+  {
+    id: 'b-whatever',
+    scenario:
+      'Sam asks, "Do you want to come over tonight?" Jamie looks at their phone and says, "I guess… whatever you want." Sam takes it as a yes.',
+    options: ['Freely given', 'Enthusiastic', 'Specific', 'Reversible'],
+    answer: 1,
+    correct: 'Right. "I guess" and "whatever" are not a yes. Look for a real "Heck yes."',
+    wrong: 'Listen to how Jamie answered. Which letter asks for a clear, willing yes?',
+  },
+  {
+    id: 'b-screenshots',
+    scenario:
+      'Reese sends their partner a private, personal message meant only for them. After a fight, the partner screenshots it and shows friends.',
+    options: ['Reversible', 'Specific', 'Enthusiastic', 'Informed'],
+    answer: 1,
+    correct:
+      'Spot on. Reese shared it with one person. Showing it to others is a different act that needed its own yes.',
+    wrong:
+      'Compare who Reese shared it with and who saw it. Which letter covers the scope of a yes?',
+  },
+  {
+    id: 'b-ride',
+    scenario:
+      'After a game, a friend of a friend offers Morgan a ride home. On the way they say, "Quick stop at my place first," and drive somewhere Morgan did not agree to.',
+    options: ['Informed', 'Enthusiastic', 'Freely given', 'Reversible'],
+    answer: 0,
+    correct:
+      "Correct. Morgan agreed to a ride home, not a stop at someone's place. Changing the plan without asking removes the information.",
+    wrong: 'What did Morgan actually agree to? Which letter needs the real plan up front?',
+  },
+];
+
+const BLUE_MENU: CafeMenu = {
+  appetizers: seedItems('appetizers', [
+    'Holding hands',
+    'Hanging out in public',
+    'Texting during the day',
+  ]),
+  mains: seedItems('mains', ['Kissing', 'Meeting their friends or family', 'Being alone together']),
+  notserved: seedItems('notserved', [
+    'Anything without protection',
+    'Sharing private photos',
+    'Anything after I have been drinking',
+  ]),
+};
+
+const GREEN_MYTHS: MythCard[] = [
+  {
+    id: 'g-myth-friend',
+    myth: 'A real friend always says yes.',
+    truth:
+      'Real friends accept your no. If someone only stays friends when you do what they want, that is pressure, not friendship.',
+  },
+  {
+    id: 'g-myth-before',
+    myth: 'If you did it before, you have to do it again.',
+    truth:
+      'A past yes is for that moment only. You can say no today even if you said yes last week.',
+  },
+  {
+    id: 'g-myth-hug',
+    myth: 'Saying no to a hug is rude.',
+    truth:
+      'Your body, your call. A high-five or a wave is a fine choice, and nobody is owed a hug.',
+  },
+  {
+    id: 'g-myth-joke',
+    myth: 'It is just a joke, so the person in the photo does not get a say.',
+    truth: 'Posting someone needs their yes. If they would not laugh, it is not a joke.',
+  },
+  {
+    id: 'g-myth-secret',
+    myth: 'Keeping a secret for a friend is always loyal.',
+    truth:
+      'Some secrets are too big to keep — like someone getting hurt or an adult asking you to hide things. Telling a trusted adult is the loyal move.',
+  },
+];
+
+const BLUE_DETECTIVE: DetectiveScene[] = [
+  {
+    id: 'b-scene-upstairs',
+    title: 'The Party Upstairs',
+    setup:
+      "At a party, Jordan has had several drinks and keeps saying \"I'm fine, I'm fine.\" Alex keeps refilling Jordan's cup, then says, \"Let's go upstairs, it's quieter.\" Jordan laughs and follows.",
+    prompt: 'Which principles are in trouble? Tap every one you spot.',
+    clues: [
+      { letter: 'F', label: 'Freely given', text: 'Jordan is too drunk to make a free choice.' },
+      { letter: 'E', label: 'Enthusiastic', text: 'Laughing and following is not a clear yes.' },
+      { letter: 'I', label: 'Informed', text: 'Jordan was never told what "upstairs" meant.' },
+      { letter: 'R', label: 'Reversible', text: 'Jordan tried to leave and was stopped.' },
+    ],
+    verdict:
+      'F, E, and I. Someone this drunk cannot give a free, clear yes, laughing along is not enthusiasm, and "it\'s quieter" hid the real plan. R is not shown yet — but the right move is a friend stepping in now.',
+  },
+  {
+    id: 'b-scene-protection',
+    title: 'The Protection Promise',
+    setup:
+      "Sam and Riley agreed together: only with a condom. In the moment, Sam says, \"We don't have one. It's fine, I'm clean.\" Riley goes quiet and does not answer.",
+    prompt: "Which principles does Sam's move break?",
+    clues: [
+      { letter: 'S', label: 'Specific', text: 'The yes was only for protected sex.' },
+      { letter: 'E', label: 'Enthusiastic', text: "Riley's silence is not a yes." },
+      {
+        letter: 'F',
+        label: 'Freely given',
+        text: 'Pressure in the moment replaced a free choice.',
+      },
+      { letter: 'R', label: 'Reversible', text: 'Riley asked to stop and was ignored.' },
+    ],
+    verdict:
+      'S, E, and F. Riley\'s yes had a condition, silence is not agreement, and pushing in the moment is pressure. The pivot: "Let\'s wait until we have one."',
+  },
+  {
+    id: 'b-scene-anniversary',
+    title: 'The Anniversary Ask',
+    setup:
+      'Devon planned a big six-month anniversary night. When Morgan says they are not ready to go further, Devon says, "I spent all this money. Everyone else\'s partner would." Morgan says, "Fine."',
+    prompt: 'Which principles are violated? Tap every one you spot.',
+    clues: [
+      { letter: 'F', label: 'Freely given', text: 'Money and comparison are used as pressure.' },
+      { letter: 'E', label: 'Enthusiastic', text: '"Fine" is not an enthusiastic yes.' },
+      { letter: 'R', label: 'Reversible', text: "Morgan's no was overridden." },
+      { letter: 'I', label: 'Informed', text: 'Morgan did not know the plans in advance.' },
+    ],
+    verdict:
+      'F, E, and R. Spending money never buys a yes. Morgan said no first, and "fine" came from pressure. A partner who cares hears the first no.',
+  },
+];
+
+const BLUE_PRACTICE: PracticeCard[] = [
+  {
+    id: 'b-practice-pace',
+    title: 'The Pacing Boundary',
+    roleA: 'A — wants to slow down',
+    roleB: 'B — is having a great time',
+    lines: [
+      {
+        speaker: 'Person A',
+        side: 'a',
+        text: '"I\'m having such a good time with you. I\'d love to keep hanging out, but I want to keep things where they are for now. Is that cool?"',
+      },
+      {
+        speaker: 'Person B — strong',
+        side: 'b',
+        text: '"Totally cool. I\'m just happy to be here with you."',
+      },
+      {
+        speaker: 'Person B — problem',
+        side: 'b',
+        flag: true,
+        text: '"Seriously? You\'re killing the mood. Just relax."',
+      },
+    ],
+    reflection:
+      'How does Person A keep the vibe and still set a clear limit? Which F.R.I.E.S. letters does the problem line ignore?',
+  },
+  {
+    id: 'b-practice-protection',
+    title: 'The Protection Conversation',
+    roleA: 'A — brings up protection',
+    roleB: 'B — the partner',
+    lines: [
+      {
+        speaker: 'Person A',
+        side: 'a',
+        text: '"Heck yes, I want to — let\'s grab a condom first so we\'re both safe. Does that work for you?"',
+      },
+      {
+        speaker: 'Person B — strong',
+        side: 'b',
+        text: '"Yes, definitely. Thanks for saying it."',
+      },
+      {
+        speaker: 'Person B — problem',
+        side: 'b',
+        flag: true,
+        text: '"Ugh, it feels better without. Don\'t you trust me?"',
+      },
+    ],
+    reflection:
+      'How does Person A stay excited and still set a safety limit? What does "don\'t you trust me" try to do?',
+  },
+  {
+    id: 'b-practice-hardlimit',
+    title: 'The Hard Limit',
+    roleA: 'A — not ready',
+    roleB: 'B — wants more',
+    lines: [
+      {
+        speaker: 'Person A',
+        side: 'a',
+        text: '"I really like where this is going. I\'m not ready for that tonight. Can we keep it to this?"',
+      },
+      {
+        speaker: 'Person B — strong',
+        side: 'b',
+        text: '"Of course. No rush at all."',
+      },
+      {
+        speaker: 'Person B — problem',
+        side: 'b',
+        flag: true,
+        text: '"You said that last time. When will you be ready?"',
+      },
+    ],
+    reflection:
+      'The Sandwich Method: validate, state the limit, ask for alignment. Why does the problem line turn a no into a negotiation?',
+  },
+];
+
+/* ── Track pickers ─────────────────────────────────────────────── */
+
+export function cafeQuiz(track: Track): CafeQuizQuestion[] {
+  return track === 'blue' ? BLUE_QUIZ : GREEN_QUIZ;
+}
+
+export function cafeMyths(track: Track): MythCard[] {
+  return track === 'blue' ? BLUE_MYTHS : GREEN_MYTHS;
+}
+
+export function detectiveScenes(track: Track): DetectiveScene[] {
+  return track === 'blue' ? BLUE_DETECTIVE : GREEN_DETECTIVE;
+}
+
+export function practiceCards(track: Track): PracticeCard[] {
+  return track === 'blue' ? BLUE_PRACTICE : GREEN_PRACTICE;
+}
+
+export function defaultCafeMenu(track: Track): CafeMenu {
+  return track === 'blue' ? BLUE_MENU : GREEN_MENU;
+}
+
+/** Both tracks have the same number of quiz questions (for the badge). */
+export const CAFE_QUIZ_LENGTH = GREEN_QUIZ.length;
 
 /* ── Station 5: exit card ─────────────────────────────────────── */
 

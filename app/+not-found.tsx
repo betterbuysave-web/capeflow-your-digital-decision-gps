@@ -1,6 +1,7 @@
 import { Link, Stack } from 'expo-router';
 import { View } from 'react-native';
 
+import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';
 
@@ -8,6 +9,7 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen options={{ title: 'Off the map' }} />
+      <StackHeader title="Off the map" fallback="/" />
       <View className="bg-paper flex-1 items-center justify-center gap-3 px-8">
         <Eyebrow color={C.flame}>OFF THE MAP</Eyebrow>
         <Display className="text-center text-4xl">This screen doesn&apos;t exist.</Display>

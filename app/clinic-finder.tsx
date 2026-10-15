@@ -8,8 +8,9 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { ExternalLink, Lock, MapPin, Phone, Search, ShieldCheck, X } from 'lucide-react-native';
+import { ExternalLink, MapPin, Phone, Search, ShieldCheck, X } from 'lucide-react-native';
 
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, GradientAction } from '@/components/cape/Buttons';
@@ -20,14 +21,12 @@ import { trackFor } from '@/lib/data/content';
 import {
   CLINIC_CONFIDENTIALITY_NOTE,
   CLINIC_COST_NOTE,
-  CLINIC_GREEN_LOCK_NOTE,
   CLINIC_SAFETY_NOTE,
   type CareCategory,
   type CareNetwork,
   categoriesForTrack,
   intakeScriptsForTrack,
   locatorUrl,
-  lockedNetworkCount,
   searchNetworks,
 } from '@/lib/data/clinics';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -47,7 +46,6 @@ export default function ClinicFinder() {
   const [category, setCategory] = useState<CareCategory | null>(null);
 
   const categories = categoriesForTrack(track);
-  const lockedCount = lockedNetworkCount(track);
   const scripts = intakeScriptsForTrack(track);
   const results = useMemo(() => searchNetworks(track, query, category), [track, query, category]);
   const activeCategory = categories.find((c) => c.id === category) ?? null;
@@ -73,6 +71,20 @@ export default function ClinicFinder() {
             nonprofit. CAPE Flow ships no invented clinic list — a wrong address at 1 a.m. is worse
             than no address.
           </Body>
+          <ActivityGuide
+            className="mt-5"
+            tint={C.teal}
+            minutes={5}
+            what={
+              'Real clinic locators for check-ups, mental health, vaccines, and more, plus the words to use when you get there.'
+            }
+            steps={[
+              'Type what you need or pick a category.',
+              'Open a locator and search by your ZIP code.',
+              'Read the intake script for that kind of visit before you go.',
+            ]}
+            outcome={'a place to go and the first sentence to say.'}
+          />
 
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label="NO ZIP STORED" tint={C.teal} />
@@ -213,27 +225,6 @@ export default function ClinicFinder() {
               <NetworkCard key={network.id} network={network} zip={zip} />
             ))}
           </View>
-
-          {lockedCount > 0 ? (
-            <View
-              className="mt-4 rounded-2xl p-4"
-              style={{
-                backgroundColor: alpha(C.lemon, 0.04),
-                borderWidth: 1,
-                borderColor: alpha(C.lemon, 0.16),
-              }}
-            >
-              <View className="flex-row items-start gap-3">
-                <Lock size={16} color={C.lemon} />
-                <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
-                    {lockedCount} FINDERS ON THE 9–12 TRACK
-                  </Mono>
-                  <Mono className="mt-1 text-[13px]">{CLINIC_GREEN_LOCK_NOTE}</Mono>
-                </View>
-              </View>
-            </View>
-          ) : null}
 
           {/* INTAKE SCRIPTS */}
           <View className="mt-10">

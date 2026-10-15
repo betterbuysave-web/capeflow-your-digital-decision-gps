@@ -8,10 +8,14 @@ import { C, alpha } from '@/lib/colors';
 import { CURRICULUM, PARENT_CARDS, PRIVACY_NOTE } from '@/lib/data/content';
 import { EDUCATOR_HUB_COPY, PRINT_ERRATA_COPY } from '@/lib/data/canon';
 import { BrandFooter } from '@/components/cape/BrandFooter';
+import { useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function Parents() {
   const [openCard, setOpenCard] = useState<string | null>(PARENT_CARDS[0].title);
   const [openBand, setOpenBand] = useState<string | null>(CURRICULUM[0].band);
+  // A Green Track phone shows the Green curriculum only.
+  const green = useCapeStore((s) => s.onboarded && s.gradeBand !== '9-12');
+  const rows = green ? CURRICULUM.slice(0, 1) : CURRICULUM;
 
   return (
     <View className="bg-paper flex-1">
@@ -45,7 +49,7 @@ export default function Parents() {
         <View className="mt-8">
           <Eyebrow color={C.teal}>CURRICULUM OVERVIEW</Eyebrow>
           <View className="mt-3 gap-2.5">
-            {CURRICULUM.map((row) => {
+            {rows.map((row) => {
               const isOpen = openBand === row.band;
               return (
                 <View

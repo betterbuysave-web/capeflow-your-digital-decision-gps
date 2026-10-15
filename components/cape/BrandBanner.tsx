@@ -2,6 +2,7 @@ import { View } from 'react-native';
 
 import { Mono } from '@/components/cape/Type';
 import { Wordmark } from '@/components/cape/Wordmark';
+import { useCapeStore } from '@/lib/store/useCapeStore';
 import { C, alpha } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
@@ -17,6 +18,13 @@ const BLOCK_FIELDS = [
  * supplied brand artwork with a drafted field row beneath.
  */
 export function BrandBanner({ className }: { className?: string }) {
+  const band = useCapeStore((st) => st.gradeBand);
+  // Show only the reader's own track once they have one.
+  const fields = BLOCK_FIELDS.map((f) =>
+    f.label === 'TRACKS' && band
+      ? { label: 'TRACK', value: band === '9-12' ? 'BLUE' : 'GREEN' }
+      : f,
+  );
   return (
     <View
       className={cn('rounded-2xl', className)}
@@ -61,7 +69,7 @@ export function BrandBanner({ className }: { className?: string }) {
         className="flex-row"
         style={{ borderTopWidth: 1, borderTopColor: alpha(C.tealBright, 0.35) }}
       >
-        {BLOCK_FIELDS.map((field, index) => (
+        {fields.map((field, index) => (
           <View
             key={field.label}
             className="flex-1 items-center py-2.5"

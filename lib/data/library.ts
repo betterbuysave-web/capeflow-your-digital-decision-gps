@@ -801,10 +801,6 @@ export function categoriesForLibraryTrack(track: Track): LibraryCategoryInfo[] {
   return LIBRARY_CATEGORIES.filter((c) => track === 'blue' || c.track !== 'blue');
 }
 
-export function lockedEntryCount(track: Track): number {
-  return track === 'blue' ? 0 : LIBRARY_ENTRIES.filter((e) => e.track === 'blue').length;
-}
-
 export function searchLibrary(
   track: Track,
   query: string,
@@ -826,9 +822,6 @@ export function searchLibrary(
 export function libraryCategoryInfo(id: LibraryCategory): LibraryCategoryInfo {
   return LIBRARY_CATEGORIES.find((c) => c.id === id) ?? LIBRARY_CATEGORIES[0];
 }
-
-export const LIBRARY_LOCK_NOTE =
-  'Testing, prevention layers, and medical shield entries are part of the Grades 9–12 track. On this track the library covers body basics, consent, digital safety, daily wellness, and crisis skills.';
 
 export const LIBRARY_INTRO =
   'Read at your own pace. Nothing here is a quiz, nothing is logged, and every entry pairs the medical fact with the real-talk version.';

@@ -147,6 +147,10 @@ export default function RootLayout() {
           <Stack.Screen name="tools/strongest-voice" options={{ title: 'Strongest Voice' }} />
           <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
           <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
+          <Stack.Screen name="tools/three-second" options={{ title: '3-Second Rule Challenge' }} />
+          <Stack.Screen name="tools/vibe-check" options={{ title: 'Vibe Check Navigator' }} />
+          <Stack.Screen name="tools/green-light" options={{ title: 'The Green Light Pivot' }} />
+          <Stack.Screen name="tools/care-navigator" options={{ title: 'Care Navigator' }} />
           <Stack.Screen name="badges" options={{ title: 'Badges' }} />
           <Stack.Screen name="clinic-finder" options={{ title: 'Clinic Finder' }} />
           <Stack.Screen name="adherence-settings" options={{ title: 'Adherence Settings' }} />

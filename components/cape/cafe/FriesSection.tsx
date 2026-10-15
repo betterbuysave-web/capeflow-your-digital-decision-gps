@@ -4,13 +4,15 @@ import { ChevronDown, Search } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { Telemetry } from '@/components/cape/Telemetry';
-import { CAFE_QUIZ, CAFE_TAGLINE, FRIES_CARDS } from '@/lib/data/cafe';
+import { CAFE_TAGLINE, FRIES_CARDS, cafeQuiz } from '@/lib/data/cafe';
+import { trackFor } from '@/lib/data/content';
 import { C, alpha, wash } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 /** Station 01 — the F.R.I.E.S. menu, then the detective drill. */
 export function FriesSection() {
+  const track = trackFor(useCapeStore((s) => s.gradeBand));
   const [open, setOpen] = useState<string | null>(null);
 
   return (
@@ -84,6 +86,9 @@ export function FriesSection() {
                   >
                     <Eyebrow color={card.tint}>CAFÉ RULE</Eyebrow>
                     <Mono className="mt-1.5 text-[13px]">{card.cafeRule}</Mono>
+                    <Mono bold className="mt-2 text-[13px]" color={C.inkSoft}>
+                      {`Real life: ${card.example[track]}`}
+                    </Mono>
                   </View>
                 </View>
               ) : null}
@@ -103,12 +108,14 @@ export function FriesSection() {
 
 /** Eight scenarios: name the principle that just got broken. */
 function DetectiveQuiz() {
+  const track = trackFor(useCapeStore((s) => s.gradeBand));
+  const quiz = cafeQuiz(track);
   const results = useCapeStore((s) => s.cafeQuiz);
   const answerCafeQuiz = useCapeStore((s) => s.answerCafeQuiz);
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
 
-  const question = CAFE_QUIZ[index];
+  const question = quiz[index];
   const answeredCount = Object.keys(results).length;
   const correctCount = Object.values(results).filter(Boolean).length;
   const isCorrect = picked === question.answer;
@@ -121,7 +128,7 @@ function DetectiveQuiz() {
 
   const next = () => {
     setPicked(null);
-    setIndex((i) => (i + 1) % CAFE_QUIZ.length);
+    setIndex((i) => (i + 1) % quiz.length);
   };
 
   return (
@@ -143,12 +150,12 @@ function DetectiveQuiz() {
           <Eyebrow color={C.modC}>F.R.I.E.S. DETECTIVE</Eyebrow>
         </View>
         <Mono bold color={C.inkFaint} className="text-[12px]">
-          {correctCount}/{CAFE_QUIZ.length} CALLED
+          {correctCount}/{quiz.length} CALLED
         </Mono>
       </View>
 
       <Mono bold color={C.inkFaint} className="mt-3 text-[12px]" tracking={1.5}>
-        SCENARIO {index + 1} OF {CAFE_QUIZ.length} · {answeredCount} LOGGED
+        SCENARIO {index + 1} OF {quiz.length} · {answeredCount} LOGGED
       </Mono>
 
       <View

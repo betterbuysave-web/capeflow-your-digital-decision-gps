@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { Check, ChevronDown, Clock, Lock, Sparkles } from 'lucide-react-native';
+import { Check, ChevronDown, Clock, Sparkles } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { C, alpha } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
-import { getModule, lessonsForTrack, lockedLessonsForTrack, moduleTagline } from '@/lib/data/match';
-import { TRACKS, trackFor } from '@/lib/data/content';
+import { getModule, lessonsForTrack, moduleTagline } from '@/lib/data/match';
+import { trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function ModuleDetail() {
@@ -37,7 +37,6 @@ export default function ModuleDetail() {
 
   const progress = moduleProgress(mod.id, completedLessons, track);
   const lessons = lessonsForTrack(mod, track);
-  const locked = lockedLessonsForTrack(mod, track);
   const done = lessons.filter((l) => completedLessons.includes(l.id)).length;
 
   return (
@@ -187,33 +186,6 @@ export default function ModuleDetail() {
           })}
         </View>
 
-        {locked.length > 0 ? (
-          <View className="mt-6 gap-2.5">
-            <Eyebrow color={C.lemon}>LOCKED ON THIS TRACK</Eyebrow>
-            {locked.map((lesson) => (
-              <View
-                key={lesson.id}
-                className="flex-row items-start gap-3 rounded-2xl p-4"
-                style={{
-                  backgroundColor: alpha(C.lemon, 0.04),
-                  borderWidth: 1,
-                  borderColor: alpha(C.lemon, 0.18),
-                }}
-              >
-                <Lock size={15} color={C.lemon} />
-                <View className="flex-1">
-                  <Mono bold className="text-[13px]" color={alpha(C.inkSoft, 0.85)}>
-                    {lesson.title}
-                  </Mono>
-                  <Mono className="mt-1 text-[13px]">
-                    Protection shields open on the {TRACKS.blue.label.toLowerCase()} — grades 9–12.
-                    On this track the focus stays on mindset, consent, and digital safety.
-                  </Mono>
-                </View>
-              </View>
-            ))}
-          </View>
-        ) : null}
         <BrandFooter className="mt-8" />
       </ScrollView>
     </View>

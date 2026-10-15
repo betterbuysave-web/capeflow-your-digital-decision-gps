@@ -260,13 +260,6 @@ export function groupsForTrack(track: Track): EmergencyGroup[] {
   }));
 }
 
-export function lockedGroupCount(track: Track): number {
-  return track === 'blue' ? 0 : EMERGENCY_GROUPS.filter((g) => g.track === 'blue').length;
-}
-
-export const EMERGENCY_LOCK_NOTE =
-  'Sexual health information lines are part of the Grades 9–12 track. Every crisis, abuse, identity, and digital-harm line above is available on every track.';
-
 /** A brief grounding pause, not a guaranteed physiological reset. */
 export const THREE_SECOND_RULE = {
   title: 'THE 3-SECOND RULE',

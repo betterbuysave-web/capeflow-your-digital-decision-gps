@@ -177,12 +177,10 @@ export default function AboutCape() {
           <Eyebrow color={C.azure}>TIERED TRACKS</Eyebrow>
           <Display className="mt-2 text-3xl">Age-appropriate by architecture.</Display>
           <Body className="mt-2">
-            Content is gated, not softened. Nothing from the older track can appear on the younger
-            one — the app filters lessons, tools, finders, and library entries by track before they
-            ever render.
+            Every lesson, tool, finder, and library entry is written for your grade band.
           </Body>
           <View className="mt-4 gap-2.5">
-            {(['green', 'blue'] as const).map((id) => {
+            {(track === 'blue' ? (['green', 'blue'] as const) : (['green'] as const)).map((id) => {
               const info = TRACKS[id];
               const active = track === id;
               return (
