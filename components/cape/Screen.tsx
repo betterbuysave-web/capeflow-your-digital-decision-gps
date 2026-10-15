@@ -8,6 +8,7 @@ import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { C, alpha } from '@/lib/colors';
 import { Mono } from '@/components/cape/Type';
 import { goBackOrReplace } from '@/lib/navigation';
+import { usePageTitle } from '@/lib/usePageTitle';
 import { cn } from '@/lib/utils';
 
 /** Notebook screen shell: engineering paper, a scroll area and safe-area padding. */
@@ -60,6 +61,7 @@ export function StackHeader({
   fallback?: Href;
   right?: ReactNode;
 }) {
+  usePageTitle(title, 'CAPE Flow');
   return (
     <SafeAreaView edges={['top']} className="bg-paper-2">
       <View

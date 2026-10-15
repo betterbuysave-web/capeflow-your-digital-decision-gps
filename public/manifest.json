@@ -1,13 +1,13 @@
 {
-  "name": "Your App Name",
-  "short_name": "Your App",
-  "description": "An app built with Bilt",
+  "name": "CAPE Flow",
+  "short_name": "CAPE Flow",
+  "description": "Free youth decision app: Consent Café, Strongest Voice Script Lab, 3-Second Rule practice and a SafER Score. No sign-ups. Everything stays on your phone.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#6366f1",
-  "background_color": "#ffffff",
+  "theme_color": "#F6F1E3",
+  "background_color": "#F6F1E3",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -27,5 +27,11 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "id": "/",
+  "lang": "en-US",
+  "categories": [
+    "health",
+    "education"
   ]
 }
