@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { AccessibilityInfo, Platform, Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowRight, Lock, RotateCcw, Zap } from 'lucide-react-native';
+import { Redirect, router, useLocalSearchParams } from 'expo-router';
+import { ArrowRight, RotateCcw, Zap } from 'lucide-react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { MissionComplete } from '@/components/cape/MissionComplete';
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { VerdictBadge } from '@/components/cape/VerdictBadge';
@@ -45,25 +46,8 @@ export default function SimDetail() {
     );
   }
 
-  if (scenario.track === 'blue' && track !== 'blue') {
-    return (
-      <View className="bg-paper flex-1">
-        <StackHeader title="Midnight Sim" tint={C.violet} fallback="/(tabs)/tools" />
-        <View className="flex-1 items-center justify-center px-6">
-          <Panel tint={C.lemon} fill={0.08} stroke={0.25}>
-            <Lock size={22} color={C.lemon} />
-            <Eyebrow color={C.lemon} className="mt-3">
-              BLUE TRACK DRILL
-            </Eyebrow>
-            <Body className="mt-2">
-              This clinical scenario unlocks for grades 9–12. Your Green Track keeps the focus on
-              mindset, consent, digital safety, and trusted support.
-            </Body>
-          </Panel>
-        </View>
-      </View>
-    );
-  }
+  // Each track has its own scenarios; the other track's never show.
+  if (scenario.track !== track) return <Redirect href="/(tabs)/tools" />;
 
   const picked = scenario.choices.find((choice) => choice.id === pickedId) ?? null;
   const pivot = getPivotChallenge(scenario.id);
@@ -102,6 +86,21 @@ export default function SimDetail() {
       >
         <Eyebrow color={C.violet}>{scenario.time} · STRESS TEST</Eyebrow>
         <Display className="mt-2 text-4xl">{scenario.title}</Display>
+        <ActivityGuide
+          className="mt-5"
+          tint={C.violet}
+          minutes={3}
+          what={
+            'A Midnight Sim is a practice run of a hard moment. There is no grade and no judgment.'
+          }
+          steps={[
+            'Read the message.',
+            'Pick what you would really do.',
+            'Read why it works or what to watch for.',
+            'Handle the twist, then read the debrief.',
+          ]}
+          outcome={'a plan for this moment before it happens.'}
+        />
 
         <Panel tint={C.violet} fill={0.06} stroke={0.22} className="mt-5">
           <Mono className="text-[13px]">{scenario.setup}</Mono>

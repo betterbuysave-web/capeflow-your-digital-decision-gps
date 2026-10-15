@@ -3,7 +3,7 @@
  *
  * Facilitator material (answer keys, timing, room notes, biological framing)
  * stays in the facilitator curriculum and is never shown here. Blue-track
- * lessons (Parts 3 and 5) render as locked screens on the Green track.
+ * lessons (Parts 3 and 5) do not exist on the Green track.
  */
 import type { Track } from '@/lib/data/content';
 
@@ -21,6 +21,8 @@ export interface BookLesson {
   prompt: string;
   takeaway: string;
   tool?: { label: string; href: string };
+  /** Green Track version of the tool, when the Blue one does not fit grades 6–8. */
+  greenTool?: { label: string; href: string };
 }
 
 export const BOOK_PARTS: Record<BookLesson['part'], { title: string; track: 'both' | 'blue' }> = {
@@ -139,6 +141,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     prompt: 'A message I’d run through the Three Gates, and which gate would stop it.',
     takeaway: 'Three gates. One “not sure” stops the whole thing.',
     tool: { label: 'Try the photo-push sim', href: '/sim/photo-push' },
+    greenTool: { label: 'Try the group chat roast sim', href: '/sim/g-group-roast' },
   },
   {
     number: 7,
@@ -154,6 +157,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     prompt: 'One sentence I would actually say to hold my pace.',
     takeaway: 'Choosing your pace is the base layer. Everything else is backup.',
     tool: { label: 'Part 3 checkpoint', href: '/book-part/3' },
+    greenTool: { label: 'Take the 3-Second Rule Challenge', href: '/tools/three-second' },
   },
   {
     number: 8,
@@ -254,6 +258,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     prompt: 'A time a plan broke, and the letter I could have switched to.',
     takeaway: 'Safety isn’t perfection — it’s how fast and how smartly you adjust.',
     tool: { label: 'Try the unattended-cup sim', href: '/sim/party-drink' },
+    greenTool: { label: 'Try the sleepover sneak-out sim', href: '/sim/g-sleepover' },
   },
   {
     number: 14,
@@ -342,7 +347,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     prompt:
       'What an enthusiastic yes from someone I respect would sound like, and what I’d do if I didn’t hear it.',
     takeaway: 'Say what you mean, believe what you hear, and stop the second anything is unclear.',
-    tool: { label: 'Practise in Strongest Voice', href: '/tools/strongest-voice' },
+    tool: { label: 'Practise the Green Light Pivot', href: '/tools/green-light' },
   },
 ];
 
@@ -350,9 +355,11 @@ export function lessonUnlocked(lesson: BookLesson, track: Track): boolean {
   return lesson.track === 'both' || track === 'blue';
 }
 
+/** The tool link for this lesson on the reader's track. */
+export function lessonTool(lesson: BookLesson, track: Track): BookLesson['tool'] {
+  return track === 'green' && lesson.greenTool ? lesson.greenTool : lesson.tool;
+}
+
 export function getBookLesson(number: number): BookLesson | undefined {
   return BOOK_LESSONS.find((lesson) => lesson.number === number);
 }
-
-export const LESSON_LOCK_NOTE =
-  'This lesson is part of the Blue Track, grades 9–12. It stays locked on the Green Track, grades 6–8. If something happened and you need help, talk to a trusted adult or open the Crisis Protocol.';

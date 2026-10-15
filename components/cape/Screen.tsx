@@ -54,11 +54,14 @@ export function StackHeader({
   tint = C.teal,
   fallback = '/(tabs)',
   right,
+  onBack,
 }: {
   title: string;
   tint?: string;
   fallback?: Href;
   right?: ReactNode;
+  /** Overrides the default back behaviour (history, then `fallback`). */
+  onBack?: () => void;
 }) {
   return (
     <SafeAreaView edges={['top']} className="bg-paper-2">
@@ -69,7 +72,7 @@ export function StackHeader({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Go back"
-          onPress={() => goBackOrReplace(fallback)}
+          onPress={() => (onBack ? onBack() : goBackOrReplace(fallback))}
           className="h-11 w-11 items-center justify-center rounded-full active:opacity-60"
           style={{
             backgroundColor: C.card,

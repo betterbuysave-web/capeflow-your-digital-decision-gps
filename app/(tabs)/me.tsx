@@ -15,7 +15,8 @@ import {
   Users,
 } from 'lucide-react-native';
 
-import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { StackHeader } from '@/components/cape/Screen';
+
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { DiscreetModeCard } from '@/components/cape/DiscreetModeCard';
 import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
@@ -99,7 +100,7 @@ export default function Me() {
 
   return (
     <View className="bg-paper flex-1">
-      <SafeAreaView edges={['top']} className="bg-paper" />
+      <StackHeader title="Me" tint={C.teal} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"

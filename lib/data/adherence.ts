@@ -220,7 +220,7 @@ export const REMINDER_TEMPLATES: ReminderTemplate[] = [
   },
   {
     id: 'appointment-prep',
-    label: 'APPOINTMENT PREP',
+    label: 'APPOINTMENT READY',
     emoji: '📋',
     detail: 'Write the two questions you want answered before you walk in.',
     body: 'Appointment prep: write your two questions down now.',
@@ -315,10 +315,6 @@ export function templatesForTrack(track: Track): ReminderTemplate[] {
   return REMINDER_TEMPLATES.filter((t) => track === 'blue' || t.track !== 'blue');
 }
 
-export function lockedTemplateCount(track: Track): number {
-  return track === 'blue' ? 0 : REMINDER_TEMPLATES.filter((t) => t.track === 'blue').length;
-}
-
 export function getTemplate(id: string): ReminderTemplate | undefined {
   return REMINDER_TEMPLATES.find((t) => t.id === id);
 }
@@ -393,9 +389,6 @@ export function recentDayKeys(count: number, from = new Date()): string[] {
 
 export const ADHERENCE_NOTE =
   'Reminders are scheduled by your device, not by a server. Labels are the ones you choose — pick something only you would decode if a notification lands on a shared lock screen.';
-
-export const ADHERENCE_LOCK_NOTE =
-  'PrEP, PEP, contraception, and testing reminders are part of the Grades 9–12 track. On this track the reminder bank covers medication, chronic condition checks, sleep, movement, and appointment prep.';
 
 export const ADHERENCE_WEB_NOTE =
   'Scheduled reminders need the installed app. In a browser tab the schedule is saved but the alert will not fire — open CAPE Flow on your phone to arm it.';

@@ -11,9 +11,10 @@ import { useCapeStore } from '@/lib/store/useCapeStore';
 
 type Step = 'idle' | 'create' | 'confirm' | 'disable';
 
-/** Me tab: turn discreet mode (PIN lock, hidden PEP countdown) on or off. */
+/** Me tab: turn discreet mode (PIN lock; Blue also hides the PEP countdown) on or off. */
 export function DiscreetModeCard({ className }: { className?: string }) {
   const pinHash = useCapeStore((s) => s.discreetPin);
+  const blue = useCapeStore((s) => s.gradeBand === '9-12');
   const setDiscreetPin = useCapeStore((s) => s.setDiscreetPin);
   const [step, setStep] = useState<Step>('idle');
   const [first, setFirst] = useState('');
@@ -73,8 +74,9 @@ export function DiscreetModeCard({ className }: { className?: string }) {
         <Eyebrow color={C.violet}>{on ? 'DISCREET MODE · ON' : 'DISCREET MODE'}</Eyebrow>
       </View>
       <Body className="mt-2">
-        Share a phone? Discreet mode locks CAPE Flow with a 4-digit PIN every time it opens and
-        hides the PEP countdown from Home and Crisis. Calling 911 or 988 never needs the PIN.
+        {blue
+          ? 'Share a phone? Discreet mode locks CAPE Flow with a 4-digit PIN every time it opens and hides the PEP countdown from Home and Crisis. Calling 911 or 988 never needs the PIN.'
+          : 'Share a phone? Discreet mode locks CAPE Flow with a 4-digit PIN every time it opens, so your notes stay yours. Calling 911 or 988 never needs the PIN.'}
       </Body>
 
       {step === 'idle' ? (

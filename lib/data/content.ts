@@ -23,8 +23,7 @@ export const GRADE_BANDS: GradeBandInfo[] = [
     id: '9-12',
     label: 'GRADES 9–12',
     tier: 'BLUE TRACK',
-    detail:
-      'Full CAPE scope: barrier methods, vaccines, testing, PrEP, PEP, and clinical self-advocacy.',
+    detail: 'The full CAPE scope: protection, vaccines, testing, clinical care, and self-advocacy.',
     tint: C.gold,
   },
 ];
@@ -47,15 +46,14 @@ export const TRACKS: Record<Track, TrackInfo> = {
     name: 'Internal CAPE',
     tint: C.modM,
     scope:
-      'Mindset, communication, consent, boundaries, the 3-Second Rule, decision-making, recovery, and leadership. Parts 3 and 5 stay gated.',
+      'Mindset, communication, consent, boundaries, the 3-Second Rule, decision-making, recovery, and leadership.',
   },
   blue: {
     id: 'blue',
     label: 'BLUE TRACK',
     name: 'Full CAPE Scope',
     tint: C.azure,
-    scope:
-      'The full book scope, including barrier methods, vaccines, testing, PrEP, PEP, and clinical self-advocacy.',
+    scope: 'The full book scope: protection, vaccines, testing, clinical care, and self-advocacy.',
   },
 };
 
@@ -68,9 +66,6 @@ export function trackFor(band: GradeBand | null): Track {
 export function pepUnlocked(band: GradeBand | null): boolean {
   return trackFor(band) === 'blue';
 }
-
-export const PEP_LOCK_NOTE =
-  'The PEP Clock opens only on Blue Track, grades 9–12. It stays locked on Green Track, grades 6–8. If something happened and you need care, ask a trusted adult to help you reach an emergency department.';
 
 export interface CurriculumRow {
   band: string;
@@ -93,7 +88,7 @@ export const CURRICULUM: CurriculumRow[] = [
     band: 'BLUE TRACK · GRADES 9–12',
     topics: [
       'STI screening and confidential care',
-      'PrEP, PEP, and the 72-hour window',
+      'Clinical prevention and urgent-care timing',
       'Vaccines including HPV and meningococcal',
       'Crisis protocol and 24/7 lines',
       'Exit strategies and bystander intervention',
@@ -117,7 +112,7 @@ export const PARENT_CARDS: ParentCard[] = [
     detail: 'Every topic, by grade band — no fine print',
     tint: C.teal,
     body: [
-      'CAPE Youth Edition Curriculum v3.0: 18 lessons, Green Track grades 6–8, Blue Track grades 9–12, two gated parts.',
+      'CAPE Youth Edition Curriculum v3.0: 18 lessons, with content written for each grade band.',
       'CAPE Youth Edition is supplemental and TEKS-aligned. It is not a district-adopted human sexuality curriculum. Follow local board policy.',
       'Parts 3 and 5 are full-page gates for Green Track, not footnotes.',
       'Every lesson lists its takeaways up front, so you can read what a student reads in under a minute.',
@@ -181,7 +176,7 @@ export interface SourceRef {
 
 export const SOURCES: SourceRef[] = [
   { name: 'CDC STI Surveillance', detail: 'Sexually Transmitted Disease Surveillance 2023' },
-  { name: 'CDC PEP Guidelines', detail: 'Post-Exposure Prophylaxis within 72 hours (nPEP)' },
+  { name: 'CDC Prevention Guidelines', detail: 'Clinical prevention and urgent-care guidance' },
   { name: 'Guttmacher Institute', detail: 'Adolescent reproductive health pressure data' },
   { name: 'JAMA Pediatrics', detail: 'Youth healthcare avoidance & anxiety studies' },
   { name: 'F.R.I.E.S. Framework', detail: 'Planned Parenthood consent education model' },

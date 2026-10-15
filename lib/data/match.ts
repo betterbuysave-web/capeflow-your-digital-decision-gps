@@ -409,7 +409,7 @@ export const ALL_LESSONS: Lesson[] = MATCH_MODULES.flatMap((m) => m.lessons);
 
 export function moduleTagline(mod: MatchModule, track: Track): string {
   if (mod.id === 'medical' && track === 'green') {
-    return 'My Medical — checkups, the vaccines named in your track, and a trusted adult. PrEP, PEP, and the PEP clock open only after the Blue Track gate.';
+    return 'My Medical — checkups, vaccines, sleep, mental health, and a trusted adult on your side.';
   }
   return mod.tagline;
 }

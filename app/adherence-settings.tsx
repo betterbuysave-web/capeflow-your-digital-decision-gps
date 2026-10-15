@@ -12,7 +12,6 @@ import {
   BellRing,
   Check,
   ChevronDown,
-  Lock,
   Minus,
   Plus,
   ShieldCheck,
@@ -28,7 +27,6 @@ import { Telemetry } from '@/components/cape/Telemetry';
 import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
-  ADHERENCE_LOCK_NOTE,
   ADHERENCE_NOTE,
   ADHERENCE_PERMISSION_NOTE,
   ADHERENCE_WEB_NOTE,
@@ -37,7 +35,6 @@ import {
   describeDays,
   formatTime,
   logDayKey,
-  lockedTemplateCount,
   recentDayKeys,
   shiftTime,
   templatesForTrack,
@@ -69,7 +66,6 @@ export default function AdherenceSettings() {
   useEffect(refreshPermission, [refreshPermission]);
 
   const templates = templatesForTrack(track);
-  const lockedCount = lockedTemplateCount(track);
   const usedTemplates = useMemo(() => new Set(reminders.map((r) => r.templateId)), [reminders]);
 
   const today = logDayKey();
@@ -229,27 +225,6 @@ export default function AdherenceSettings() {
                 );
               })}
             </View>
-
-            {lockedCount > 0 ? (
-              <View
-                className="mt-3 rounded-2xl p-4"
-                style={{
-                  backgroundColor: alpha(C.lemon, 0.04),
-                  borderWidth: 1,
-                  borderColor: alpha(C.lemon, 0.16),
-                }}
-              >
-                <View className="flex-row items-start gap-3">
-                  <Lock size={16} color={C.lemon} />
-                  <View className="flex-1">
-                    <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
-                      {lockedCount} REMINDERS ON THE 9–12 TRACK
-                    </Mono>
-                    <Mono className="mt-1 text-[13px]">{ADHERENCE_LOCK_NOTE}</Mono>
-                  </View>
-                </View>
-              </View>
-            ) : null}
           </View>
 
           {/* CUSTOM */}

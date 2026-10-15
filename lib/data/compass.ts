@@ -17,7 +17,6 @@ export interface CompassNode {
   spot: { x: number; y: number };
   green: string[];
   blue: string[];
-  lockNote?: string;
 }
 
 export const COMPASS_NODES: CompassNode[] = [
@@ -41,8 +40,6 @@ export const COMPASS_NODES: CompassNode[] = [
       'PrEP is taken before a possible exposure. PEP is taken after, and it must start within 72 hours.',
       'Inside 72 hours, go to an emergency department with a trusted adult and ask to be evaluated for PEP. This app does not provide medication.',
     ],
-    lockNote:
-      'Protection shields — barriers, PrEP, PEP, and clinical intake drills — unlock on the Grades 9–12 track.',
   },
   {
     id: 'awareness',

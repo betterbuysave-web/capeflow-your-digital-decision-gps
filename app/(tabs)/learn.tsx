@@ -2,7 +2,8 @@ import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { ArrowRight, CircleCheck, Lock, PencilLine } from 'lucide-react-native';
 
-import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { StackHeader } from '@/components/cape/Screen';
+
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { MatchCompass } from '@/components/cape/MatchCompass';
@@ -22,7 +23,7 @@ export default function Learn() {
 
   return (
     <View className="bg-paper flex-1">
-      <SafeAreaView edges={['top']} className="bg-paper" />
+      <StackHeader title="M.A.T.C.H." tint={C.teal} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -93,73 +94,84 @@ export default function Learn() {
         </View>
 
         <View className="mt-10">
-          <Eyebrow color={C.teal}>CAPE YOUTH EDITION · 18 LESSONS</Eyebrow>
+          <Eyebrow color={C.teal}>
+            {`CAPE YOUTH EDITION · ${BOOK_LESSONS.filter((l) => lessonUnlocked(l, track)).length} LESSONS`}
+          </Eyebrow>
           <Display className="mt-2 text-3xl">One lesson per chapter.</Display>
           <Body className="mt-2">
             Follow along with your class. Your notes stay on this device.
           </Body>
-          {([1, 2, 3, 4, 5] as const).map((part) => {
-            const partTint = BOOK_PARTS[part].track === 'blue' ? C.azure : C.teal;
-            return (
-              <View key={part} className="mt-5 gap-2">
-                <Mono bold color={partTint} tracking={1} className="text-[13px]">
-                  {`PART ${part} · ${BOOK_PARTS[part].title.toUpperCase()}`}
-                </Mono>
-                {BOOK_LESSONS.filter((l) => l.part === part).map((lesson) => {
-                  const open = lessonUnlocked(lesson, track);
-                  const hasNote = !!lessonNotes[String(lesson.number)]?.trim();
-                  return (
-                    <TintedRow
-                      key={lesson.number}
-                      tint={open ? partTint : C.inkFaint}
-                      fill={open ? 0.05 : 0.03}
-                      className="p-3"
-                      accessibilityLabel={`Lesson ${lesson.number}, ${lesson.title}${open ? '' : ', locked on Green Track'}`}
-                      onPress={() =>
-                        router.push({
-                          pathname: '/lesson/[n]',
-                          params: { n: String(lesson.number) },
-                        })
-                      }
-                    >
-                      <View className="flex-row items-center gap-3">
-                        <Display color={open ? partTint : C.inkFaint} className="w-7 text-2xl">
-                          {lesson.number}
-                        </Display>
-                        <Mono className="flex-1 text-[13px]" color={open ? C.inkSoft : C.inkFaint}>
-                          {lesson.title}
-                        </Mono>
-                        {!open ? (
-                          <Lock size={13} color={C.inkFaint} />
-                        ) : hasNote ? (
-                          <PencilLine size={13} color={partTint} />
-                        ) : (
-                          <ArrowRight size={13} color={alpha(partTint, 0.8)} />
-                        )}
-                      </View>
-                    </TintedRow>
-                  );
-                })}
-              </View>
-            );
-          })}
+          {([1, 2, 3, 4, 5] as const)
+            .filter((part) => BOOK_PARTS[part].track === 'both' || track === 'blue')
+            .map((part) => {
+              const partTint = BOOK_PARTS[part].track === 'blue' ? C.azure : C.teal;
+              return (
+                <View key={part} className="mt-5 gap-2">
+                  <Mono bold color={partTint} tracking={1} className="text-[13px]">
+                    {`PART ${part} · ${BOOK_PARTS[part].title.toUpperCase()}`}
+                  </Mono>
+                  {BOOK_LESSONS.filter((l) => l.part === part && lessonUnlocked(l, track)).map(
+                    (lesson) => {
+                      const open = lessonUnlocked(lesson, track);
+                      const hasNote = !!lessonNotes[String(lesson.number)]?.trim();
+                      return (
+                        <TintedRow
+                          key={lesson.number}
+                          tint={open ? partTint : C.inkFaint}
+                          fill={open ? 0.05 : 0.03}
+                          className="p-3"
+                          accessibilityLabel={`Lesson ${lesson.number}, ${lesson.title}`}
+                          onPress={() =>
+                            router.push({
+                              pathname: '/lesson/[n]',
+                              params: { n: String(lesson.number) },
+                            })
+                          }
+                        >
+                          <View className="flex-row items-center gap-3">
+                            <Display color={open ? partTint : C.inkFaint} className="w-7 text-2xl">
+                              {lesson.number}
+                            </Display>
+                            <Mono
+                              className="flex-1 text-[13px]"
+                              color={open ? C.inkSoft : C.inkFaint}
+                            >
+                              {lesson.title}
+                            </Mono>
+                            {!open ? (
+                              <Lock size={13} color={C.inkFaint} />
+                            ) : hasNote ? (
+                              <PencilLine size={13} color={partTint} />
+                            ) : (
+                              <ArrowRight size={13} color={alpha(partTint, 0.8)} />
+                            )}
+                          </View>
+                        </TintedRow>
+                      );
+                    },
+                  )}
+                </View>
+              );
+            })}
         </View>
 
-        <View className="mt-8 gap-3">
-          <Eyebrow color={C.azure}>CAPE Youth Edition · Gated parts</Eyebrow>
-          {(['3', '5'] as const).map((part) => (
-            <TintedRow
-              key={part}
-              tint={C.azure}
-              accessibilityLabel={`Part ${part}, ${track === 'green' ? 'locked on Green Track' : 'Blue Track companion topics'}`}
-              onPress={() => router.push({ pathname: '/book-part/[part]', params: { part } })}
-            >
-              <Mono bold className="text-[14px]" color={C.azure}>
-                Part {part} · {track === 'green' ? 'Locked on Green' : 'Blue Track'}
-              </Mono>
-            </TintedRow>
-          ))}
-        </View>
+        {track === 'blue' ? (
+          <View className="mt-8 gap-3">
+            <Eyebrow color={C.azure}>BLUE TRACK · PARTS 3 AND 5</Eyebrow>
+            {(['3', '5'] as const).map((part) => (
+              <TintedRow
+                key={part}
+                tint={C.azure}
+                accessibilityLabel={`Part ${part}, Blue Track companion topics`}
+                onPress={() => router.push({ pathname: '/book-part/[part]', params: { part } })}
+              >
+                <Mono bold className="text-[14px]" color={C.azure}>
+                  Part {part} · Companion topics
+                </Mono>
+              </TintedRow>
+            ))}
+          </View>
+        ) : null}
 
         <View className="mt-10">
           <Eyebrow color={C.modC}>THE F.R.I.E.S. CHECK</Eyebrow>

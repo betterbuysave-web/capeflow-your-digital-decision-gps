@@ -5,6 +5,7 @@ import { Input, Label, TextField } from 'heroui-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
@@ -51,6 +52,21 @@ export default function SafetyCircle() {
             Pick a mix: one peer, one adult, one backup. Tell them they are on your list and agree
             on a code word that means &quot;call me and get me out&quot;.
           </Body>
+          <ActivityGuide
+            className="mt-5"
+            tint={C.azure}
+            minutes={5}
+            what={
+              'Your Safety Circle is the short list of people you can call or text when something goes wrong, any time of day.'
+            }
+            steps={[
+              'Pick a mix: one friend, one adult, and one backup.',
+              'Add each person with their name, number, and role.',
+              'Tell them they are on your list.',
+              'Agree on a code word that means "call me and get me out."',
+            ]}
+            outcome={'up to three people saved on this phone, ready to call or text.'}
+          />
 
           <View className="mt-6 gap-2.5">
             {circle.length === 0 ? (

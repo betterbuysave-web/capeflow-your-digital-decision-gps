@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
-import { ArrowRight, Lock, X } from 'lucide-react-native';
+import { ArrowRight, X } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { Chip, GradientAction, MetallicButton } from '@/components/cape/Buttons';
@@ -259,20 +259,6 @@ function NodeBriefing({
                   </View>
                 ))}
               </View>
-
-              {track === 'green' && node.lockNote ? (
-                <View
-                  className="mt-5 flex-row items-start gap-2.5 rounded-2xl p-3.5"
-                  style={{
-                    backgroundColor: wash(C.lemon, 0.12),
-                    borderWidth: 1,
-                    borderColor: alpha(C.lemon, 0.45),
-                  }}
-                >
-                  <Lock size={14} color={C.lemon} />
-                  <Mono className="flex-1 text-[13px]">{node.lockNote}</Mono>
-                </View>
-              ) : null}
 
               {preview ? null : (
                 <View className="mt-6">

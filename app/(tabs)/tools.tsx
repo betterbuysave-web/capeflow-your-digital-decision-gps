@@ -1,32 +1,30 @@
 import { ScrollView, View } from 'react-native';
-import { router } from 'expo-router';
+import { type Href, router } from 'expo-router';
 import {
   ArrowRight,
   BellRing,
   BookOpen,
   Coffee,
   Ghost,
-  Lock,
   MapPin,
-  MessageSquareText,
   Timer,
   Users,
 } from 'lucide-react-native';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
-import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { StackHeader } from '@/components/cape/Screen';
+
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { TintedRow } from '@/components/cape/Buttons';
 import { VerdictBadge } from '@/components/cape/VerdictBadge';
 import { C, alpha } from '@/lib/colors';
 import { scenariosForTrack } from '@/lib/data/scenarios';
-import { PEP_LOCK_NOTE, pepUnlocked, trackFor } from '@/lib/data/content';
+import { pepUnlocked, trackFor } from '@/lib/data/content';
 import { networksForTrack } from '@/lib/data/clinics';
 import { entriesForTrack } from '@/lib/data/library';
 import { disarmedCount, namedGhostCount, useCapeStore } from '@/lib/store/useCapeStore';
 
 export default function ToolsTab() {
-  const boundaries = useCapeStore((s) => s.boundaries);
   const circle = useCapeStore((s) => s.circle);
   const scenarioResults = useCapeStore((s) => s.scenarioResults);
   const pepStartedAt = useCapeStore((s) => s.pepStartedAt);
@@ -41,10 +39,67 @@ export default function ToolsTab() {
   const networkCount = networksForTrack(track).length;
   const libraryCount = entriesForTrack(track).length;
   const activeReminders = reminders.filter((r) => r.enabled).length;
+  const activities: { title: string; detail: string; emoji: string; tint: string; href: Href }[] =
+    track === 'blue'
+      ? [
+          {
+            title: 'THE GREEN LIGHT PIVOT',
+            detail: 'Practise the enthusiastic yes: say what you want and stay safe.',
+            emoji: '🟢',
+            tint: C.yes,
+            href: '/tools/green-light',
+          },
+          {
+            title: '3-SECOND RULE CHALLENGE',
+            detail:
+              'Pause before you post. Four real-life scenarios and the Digital Shield Pledge.',
+            emoji: '⏸️',
+            tint: C.teal,
+            href: '/tools/three-second',
+          },
+          {
+            title: 'CARE NAVIGATOR',
+            detail: 'A mission: get Persona B from "I need care" to the clinic door.',
+            emoji: '🧭',
+            tint: C.azure,
+            href: '/tools/care-navigator',
+          },
+          {
+            title: 'STRONGEST VOICE SCRIPT LAB',
+            detail: 'Write your line, say it three times, practise it against pushback.',
+            emoji: '🎤',
+            tint: C.modC,
+            href: '/tools/strongest-voice',
+          },
+        ]
+      : [
+          {
+            title: 'VIBE CHECK NAVIGATOR',
+            detail: 'Tell a real "Heck yes!" from a polite maybe, and build your Graceful Pivot.',
+            emoji: '✅',
+            tint: C.modA,
+            href: '/tools/vibe-check',
+          },
+          {
+            title: '3-SECOND RULE CHALLENGE',
+            detail:
+              'Pause before you send. Four real-life scenarios and the Digital Shield Pledge.',
+            emoji: '⏸️',
+            tint: C.teal,
+            href: '/tools/three-second',
+          },
+          {
+            title: 'STRONGEST VOICE SCRIPT LAB',
+            detail: 'Write your line, say it three times, practise it against pushback.',
+            emoji: '🎤',
+            tint: C.modC,
+            href: '/tools/strongest-voice',
+          },
+        ];
 
   return (
     <View className="bg-paper flex-1">
-      <SafeAreaView edges={['top']} className="bg-paper" />
+      <StackHeader title="Tools" tint={C.modT} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -57,7 +112,37 @@ export default function ToolsTab() {
           stored on this device only.
         </Body>
 
-        <View className="mt-6 gap-3">
+        <View className="mt-6">
+          <Eyebrow color={C.teal}>PRACTICE ACTIVITIES</Eyebrow>
+          <Body className="mt-1">Start here. Each one explains what to do, step by step.</Body>
+          <View className="mt-3 gap-3">
+            {activities.map((activity) => (
+              <TintedRow
+                key={activity.title}
+                tint={activity.tint}
+                fill={0.08}
+                stroke={0.24}
+                onPress={() => router.push(activity.href)}
+              >
+                <View className="flex-row items-center gap-3">
+                  <Mono className="text-2xl">{activity.emoji}</Mono>
+                  <View className="flex-1">
+                    <Mono bold color={activity.tint} className="text-[14px]" tracking={1}>
+                      {activity.title}
+                    </Mono>
+                    <Mono className="mt-1 text-[13px]">{activity.detail}</Mono>
+                  </View>
+                  <ArrowRight size={14} color={activity.tint} />
+                </View>
+              </TintedRow>
+            ))}
+          </View>
+        </View>
+
+        <Eyebrow color={C.modT} className="mt-8">
+          YOUR TOOLS
+        </Eyebrow>
+        <View className="mt-3 gap-3">
           {gradeBand === '9-12' ? (
             <TintedRow
               tint={C.violet}
@@ -95,31 +180,10 @@ export default function ToolsTab() {
                   THE CONSENT CAFÉ
                 </Mono>
                 <Mono className="mt-1 text-[13px]">
-                  F.R.I.E.S. drills, your menu, exit card — {Object.keys(boundaries).length}{' '}
-                  boundaries answered
+                  Five stations: F.R.I.E.S., your menu, your rights, practice, exit card
                 </Mono>
               </View>
               <ArrowRight size={14} color={C.amber} />
-            </View>
-          </TintedRow>
-
-          <TintedRow
-            tint={C.modC}
-            fill={0.07}
-            stroke={0.2}
-            onPress={() => router.push('/tools/strongest-voice')}
-          >
-            <View className="flex-row items-center gap-3">
-              <MessageSquareText size={20} color={C.modC} />
-              <View className="flex-1">
-                <Mono bold color={C.modC} className="text-[14px]" tracking={1}>
-                  STRONGEST VOICE SCRIPT LAB
-                </Mono>
-                <Mono className="mt-1 text-[13px]">
-                  Build and rehearse the line before pressure arrives
-                </Mono>
-              </View>
-              <ArrowRight size={14} color={C.modC} />
             </View>
           </TintedRow>
 
@@ -165,26 +229,7 @@ export default function ToolsTab() {
                 <ArrowRight size={14} color={C.flame} />
               </View>
             </TintedRow>
-          ) : (
-            <View
-              className="rounded-2xl p-4"
-              style={{
-                backgroundColor: alpha(C.lemon, 0.04),
-                borderWidth: 1,
-                borderColor: alpha(C.lemon, 0.16),
-              }}
-            >
-              <View className="flex-row items-start gap-3">
-                <Lock size={18} color={C.lemon} />
-                <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[14px]" tracking={1}>
-                    PEP CLOCK · LOCKED
-                  </Mono>
-                  <Mono className="mt-1 text-[13px]">{PEP_LOCK_NOTE}</Mono>
-                </View>
-              </View>
-            </View>
-          )}
+          ) : null}
         </View>
 
         <View className="mt-8">

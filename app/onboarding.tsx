@@ -65,7 +65,7 @@ export default function Onboarding() {
 
           <Display className="mt-8 text-3xl">Pick your track.</Display>
           <Body className="mt-2">
-            Green Track is grades 6–8. Blue Track is grades 9–12. Parts 3 and 5 stay gated on Green.
+            Green Track is grades 6–8. Blue Track is grades 9–12. Pick the one for your grade.
           </Body>
 
           <View className="mt-6 gap-3">

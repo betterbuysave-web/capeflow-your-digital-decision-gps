@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { router } from 'expo-router';
-import { CalendarClock, CircleAlert, Lock, MapPin, Phone, RotateCcw } from 'lucide-react-native';
+import { Redirect, router } from 'expo-router';
+import { CalendarClock, CircleAlert, MapPin, Phone, RotateCcw } from 'lucide-react-native';
 
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha, wash } from '@/lib/colors';
 import { GradientAction } from '@/components/cape/Buttons';
 import { PepRing, formatDeadline, pepTint, usePepTime } from '@/components/cape/PepCountdown';
-import { PEP_LOCK_NOTE, pepUnlocked } from '@/lib/data/content';
+import { pepUnlocked } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 /** "When did it happen?" choices, in hours ago. */
@@ -42,43 +43,7 @@ export default function PepClock() {
   const [confirmReset, setConfirmReset] = useState(false);
   const tint = pepStartedAt ? pepTint(left, expired) : C.flame;
 
-  if (!pepUnlocked(gradeBand)) {
-    return (
-      <View className="bg-paper flex-1">
-        <StackHeader title="PEP Clock" tint={C.lemon} fallback="/(tabs)/tools" />
-        <ScrollView
-          className="flex-1"
-          contentContainerClassName="px-5 pt-6 pb-16"
-          showsVerticalScrollIndicator={false}
-        >
-          <Eyebrow color={C.lemon}>LOCKED ON THIS TRACK</Eyebrow>
-          <Display className="mt-2 text-4xl">This shield opens in grades 9–12.</Display>
-          <Body className="mt-3">{PEP_LOCK_NOTE}</Body>
-
-          <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-6">
-            <View className="flex-row items-start gap-2.5">
-              <Lock size={15} color={C.lemon} />
-              <Mono className="flex-1 text-[13px]">
-                If something just happened right now, that is still an emergency and you deserve
-                help. Open the Crisis Protocol, call 911, or tell a trusted adult immediately.
-              </Mono>
-            </View>
-          </Panel>
-
-          <GradientAction
-            tint={C.flame}
-            onPress={() => router.push('/(tabs)/crisis')}
-            className="mt-5 flex-row items-center justify-center gap-2 rounded-full py-3.5"
-          >
-            <Phone size={14} color={C.paper2} />
-            <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
-              OPEN CRISIS PROTOCOL
-            </Mono>
-          </GradientAction>
-        </ScrollView>
-      </View>
-    );
-  }
+  if (!pepUnlocked(gradeBand)) return <Redirect href="/(tabs)/crisis" />;
 
   return (
     <View className="bg-paper flex-1">
@@ -94,6 +59,20 @@ export default function PepClock() {
           Post-exposure prophylaxis has to be started as soon as possible and within 72 hours of a
           possible exposure. This clock exists so you never have to guess.
         </Body>
+        <ActivityGuide
+          className="mt-5"
+          tint={C.flame}
+          minutes={2}
+          what={
+            'PEP is medicine that can stop HIV after a possible exposure, but only if it starts within 72 hours. This clock shows how much time is left.'
+          }
+          steps={[
+            'Tap when it happened (just now, or hours ago).',
+            'Watch the time left and the closing time.',
+            'Tap "Find care near me" and go today with a trusted adult.',
+          ]}
+          outcome={'the exact deadline and where to go.'}
+        />
 
         <View className="mt-6 items-center">
           <PepRing startedAt={pepStartedAt} left={left} expired={expired} />

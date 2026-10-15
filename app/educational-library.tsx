@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { BookOpen, ChevronDown, Lock, Search, X } from 'lucide-react-native';
+import { BookOpen, ChevronDown, Search, X } from 'lucide-react-native';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
@@ -18,12 +18,10 @@ import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import {
   LIBRARY_INTRO,
-  LIBRARY_LOCK_NOTE,
   type LibraryCategory,
   type LibraryEntry,
   categoriesForLibraryTrack,
   libraryCategoryInfo,
-  lockedEntryCount,
   searchLibrary,
 } from '@/lib/data/library';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -39,7 +37,6 @@ export default function EducationalLibrary() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   const categories = categoriesForLibraryTrack(track);
-  const lockedCount = lockedEntryCount(track);
   const results = useMemo(() => searchLibrary(track, query, category), [track, query, category]);
 
   const grouped = useMemo(() => {
@@ -161,27 +158,6 @@ export default function EducationalLibrary() {
               </View>
             </View>
           ))}
-
-          {lockedCount > 0 ? (
-            <View
-              className="mt-6 rounded-2xl p-4"
-              style={{
-                backgroundColor: alpha(C.lemon, 0.04),
-                borderWidth: 1,
-                borderColor: alpha(C.lemon, 0.16),
-              }}
-            >
-              <View className="flex-row items-start gap-3">
-                <Lock size={16} color={C.lemon} />
-                <View className="flex-1">
-                  <Mono bold color={C.lemon} className="text-[13px]" tracking={1.5}>
-                    {lockedCount} ENTRIES ON THE 9–12 TRACK
-                  </Mono>
-                  <Mono className="mt-1 text-[13px]">{LIBRARY_LOCK_NOTE}</Mono>
-                </View>
-              </View>
-            </View>
-          ) : null}
 
           <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-6">
             <View className="flex-row items-start gap-3">

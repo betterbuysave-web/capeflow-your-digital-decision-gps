@@ -13,12 +13,13 @@ import {
   Users,
 } from 'lucide-react-native';
 
-import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
+import { ActivityGuide } from '@/components/cape/ActivityGuide';
+import { StackHeader } from '@/components/cape/Screen';
+
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip, TintedRow } from '@/components/cape/Buttons';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { BrandBanner } from '@/components/cape/BrandBanner';
-import { PauseButton } from '@/components/cape/PauseButton';
 import { PepCountdownBanner } from '@/components/cape/PepCountdown';
 import { C, alpha } from '@/lib/colors';
 import { MATCH_MODULES, lessonsForTrack, allLessonsForTrack } from '@/lib/data/match';
@@ -77,7 +78,12 @@ export default function Compass() {
 
   return (
     <View className="bg-paper flex-1">
-      <SafeAreaView edges={['top']} className="bg-paper" />
+      <StackHeader
+        title="Home"
+        tint={C.teal}
+        fallback="/(tabs)"
+        onBack={() => router.push({ pathname: '/', params: { gate: '1' } })}
+      />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-4 pb-16"
@@ -125,10 +131,20 @@ export default function Compass() {
         {/* NEXT STEP */}
         <NextStepCard step={nextStep} />
 
-        <PepCountdownBanner className="mt-4" />
+        <ActivityGuide
+          className="mt-4"
+          tint={C.teal}
+          what="CAPE Flow is your decision compass. Here is how to use it."
+          steps={[
+            'Tap your Next step above. It always shows the next lesson on your track.',
+            'Open the Tools tab for practice activities like the Script Lab and the 3-Second Rule Challenge.',
+            'The M.A.T.C.H. tab has your lessons and the compass.',
+            'The Crisis tab is there any time you need help fast.',
+          ]}
+          outcome="a clear next move every time you open the app."
+        />
 
-        {/* PAUSE BUTTON */}
-        <PauseButton className="mt-6" />
+        <PepCountdownBanner className="mt-4" />
 
         {/* QUICK TOOLS */}
         <View className="mt-8">
