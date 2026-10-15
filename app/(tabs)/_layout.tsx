@@ -35,6 +35,7 @@ export default function TabLayout() {
           name="index"
           options={{
             title: 'COMPASS',
+            tabBarLabel: 'COMPASS',
             tabBarIcon: ({ color, size }) => <Compass color={color} size={size ?? 24} />,
           }}
         />
@@ -42,6 +43,7 @@ export default function TabLayout() {
           name="learn"
           options={{
             title: 'M.A.T.C.H.',
+            tabBarLabel: 'M.A.T.C.H.',
             tabBarIcon: ({ color, size }) => <Moon color={color} size={size ?? 24} />,
           }}
         />
@@ -49,6 +51,7 @@ export default function TabLayout() {
           name="tools"
           options={{
             title: 'TOOLS',
+            tabBarLabel: 'TOOLS',
             tabBarIcon: ({ color, size }) => <Wrench color={color} size={size ?? 24} />,
           }}
         />
@@ -56,6 +59,7 @@ export default function TabLayout() {
           name="crisis"
           options={{
             title: 'CRISIS',
+            tabBarLabel: 'CRISIS',
             tabBarIcon: ({ color, size }) => <LifeBuoy color={color} size={size ?? 24} />,
           }}
         />
@@ -63,6 +67,7 @@ export default function TabLayout() {
           name="me"
           options={{
             title: 'ME',
+            tabBarLabel: 'ME',
             tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 24} />,
           }}
         />

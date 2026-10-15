@@ -33,6 +33,7 @@ import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import { DiscreetGate } from '@/components/cape/DiscreetGate';
 import { C } from '@/lib/colors';
+import { HOME_TITLE } from '@/lib/usePageTitle';
 
 /**
  * Custom ErrorBoundary that reports React render errors to the parent window (Bilt preview iframe)
@@ -126,7 +127,7 @@ export default function RootLayout() {
             contentStyle: { backgroundColor: C.paper },
           }}
         >
-          <Stack.Screen name="index" options={{ title: 'CAPE Flow' }} />
+          <Stack.Screen name="index" options={{ title: HOME_TITLE }} />
           <Stack.Screen name="(tabs)" options={{ title: 'CAPE Flow' }} />
           <Stack.Screen name="onboarding" options={{ title: 'Get Started' }} />
           <Stack.Screen

@@ -10,10 +10,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 
   return {
     ...config,
-    name: 'CapeFlow',
+    name: 'CAPE Flow',
     slug: 'capeflow',
     version: process.env.BILT_APP_VERSION ?? '1.0.0',
     orientation: 'portrait',
+    icon: './assets/app-icon/app-icon.png',
     userInterfaceStyle: 'automatic',
     scheme: 'capeflow',
     runtimeVersion: {
@@ -30,13 +31,24 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     android: {
       allowBackup: false,
       package: process.env.BILT_ANDROID_PACKAGE ?? 'com.yourcompany.yourapp',
+      adaptiveIcon: {
+        foregroundImage: './assets/app-icon/adaptive-foreground.png',
+        backgroundColor: '#F6F1E3',
+      },
     },
     web: {
       bundler: 'metro',
       // 'single' = SPA export: one index.html + client routing, so edge serving
       // needs only a single 404→index.html fallback rule.
       output: 'single',
-      favicon: './public/icons/icon-192.png',
+      favicon: './public/icons/favicon.png',
+      // Browser tab / search title (substituted into public/index.html).
+      name: 'CAPE Flow: Your Digital Decision GPS | Youth Empowerment',
+      shortName: 'CAPE Flow',
+      description:
+        'Free youth decision app: Consent Café, Strongest Voice Script Lab, 3-Second Rule practice and a SafER Score. No sign-ups. Everything stays on your phone.',
+      themeColor: '#F6F1E3',
+      backgroundColor: '#F6F1E3',
     },
     extra: {
       appStoreAppId: process.env.BILT_APP_STORE_APP_ID,
