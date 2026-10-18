@@ -13,6 +13,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { MatchDial } from '@/components/cape/MatchDial';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 
@@ -386,14 +387,7 @@ function NextStepCard({ step }: { step: NextStep }) {
       </Mono>
       <View className="mt-2 flex-row items-center gap-4">
         {step.letter ? (
-          <View
-            className="h-14 w-14 items-center justify-center rounded-2xl"
-            style={{ backgroundColor: alpha(C.paper2, 0.18) }}
-          >
-            <Display color={C.paper2} className="text-4xl">
-              {step.letter}
-            </Display>
-          </View>
+          <MatchDial letter={step.letter} size={60} />
         ) : null}
         <View className="flex-1">
           <Display color={C.paper2} className="text-3xl">

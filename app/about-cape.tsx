@@ -2,6 +2,7 @@ import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ban, Compass, HeartPulse, Lock, ShieldAlert, Sparkles, Trash2 } from 'lucide-react-native';
 
+import { MatchDial } from '@/components/cape/MatchDial';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { Chip, MetallicButton } from '@/components/cape/Buttons';
@@ -149,18 +150,7 @@ export default function AboutCape() {
                   borderColor: alpha(node.color, 0.2),
                 }}
               >
-                <View
-                  className="h-9 w-9 items-center justify-center rounded-xl"
-                  style={{
-                    backgroundColor: alpha(node.color, 0.16),
-                    borderWidth: 1,
-                    borderColor: alpha(node.color, 0.4),
-                  }}
-                >
-                  <Mono bold color={node.color} className="text-[14px]">
-                    {node.letter}
-                  </Mono>
-                </View>
+                <MatchDial letter={node.letter} size={48} />
                 <View className="flex-1">
                   <Mono bold color={node.color} className="text-[13px]" tracking={1.5}>
                     {node.name}

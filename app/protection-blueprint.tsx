@@ -17,6 +17,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { MatchDial } from '@/components/cape/MatchDial';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { Chip, GhostButton, MetallicButton } from '@/components/cape/Buttons';
@@ -350,18 +351,7 @@ export default function ProtectionBlueprint() {
                   }}
                 >
                   <View className="flex-row items-center gap-3">
-                    <View
-                      className="h-8 w-8 items-center justify-center rounded-lg"
-                      style={{
-                        backgroundColor: alpha(mod.color, 0.16),
-                        borderWidth: 1,
-                        borderColor: alpha(mod.color, 0.4),
-                      }}
-                    >
-                      <Mono bold color={mod.color} className="text-[14px]">
-                        {mod.letter}
-                      </Mono>
-                    </View>
+                    <MatchDial letter={mod.letter} size={44} />
                     <View className="flex-1">
                       <Mono bold color={mod.color} className="text-[13px]" tracking={1.5}>
                         {mod.name.toUpperCase()}
@@ -616,18 +606,7 @@ export default function ProtectionBlueprint() {
                       }}
                     >
                       <View className="flex-row items-center gap-3">
-                        <View
-                          className="h-7 w-7 items-center justify-center rounded-lg"
-                          style={{
-                            backgroundColor: alpha(meta.color, 0.16),
-                            borderWidth: 1,
-                            borderColor: alpha(meta.color, 0.4),
-                          }}
-                        >
-                          <Mono bold color={meta.color} className="text-[13px]">
-                            {meta.letter}
-                          </Mono>
-                        </View>
+                        <MatchDial letter={meta.letter} size={40} />
                         <View className="flex-1">
                           <Mono bold color={meta.color} className="text-[13px]" tracking={1}>
                             {shield.shield.toUpperCase()}

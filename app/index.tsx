@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react-native';
 
+import { MatchDial } from '@/components/cape/MatchDial';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { GradientAction, GhostButton, MetallicButton, TintedRow } from '@/components/cape/Buttons';
@@ -123,18 +124,7 @@ export default function Landing() {
             {MATCH_MODULES.map((mod) => (
               <Panel key={mod.id} tint={mod.color} fill={0.04} stroke={0.15}>
                 <View className="flex-row items-start gap-4">
-                  <View
-                    className="h-12 w-12 items-center justify-center rounded-xl"
-                    style={{
-                      backgroundColor: alpha(mod.color, 0.1),
-                      borderWidth: 1,
-                      borderColor: alpha(mod.color, 0.25),
-                    }}
-                  >
-                    <Display color={mod.color} className="text-2xl">
-                      {mod.letter}
-                    </Display>
-                  </View>
+                  <MatchDial letter={mod.letter} size={52} />
                   <View className="flex-1">
                     <View className="mb-1 flex-row items-center gap-2">
                       <Mono className="text-base">{mod.emoji}</Mono>
