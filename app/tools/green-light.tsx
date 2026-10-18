@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Redirect } from 'expo-router';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide, NextStepButton, StepTabs } from '@/components/cape/ActivityGuide';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { PivotBuilder, SortGame } from '@/components/cape/Drills';
@@ -39,6 +40,7 @@ export default function GreenLightPivot() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="The Green Light Pivot" tint={TINT} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"

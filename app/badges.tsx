@@ -1,6 +1,7 @@
 import { ScrollView, View } from 'react-native';
 import { Lock } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { C, alpha, wash } from '@/lib/colors';
@@ -17,6 +18,7 @@ export default function BadgeCabinet() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Badge Cabinet" tint={C.gold} fallback="/(tabs)/me" />
       <ScrollView
         className="flex-1"

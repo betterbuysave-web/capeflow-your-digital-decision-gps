@@ -13,6 +13,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
@@ -79,6 +80,7 @@ export default function Compass() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader
         title="Home"
         tint={C.teal}

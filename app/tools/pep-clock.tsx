@@ -3,6 +3,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { CalendarClock, CircleAlert, MapPin, Phone, RotateCcw } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
@@ -47,6 +48,7 @@ export default function PepClock() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="PEP Clock" tint={tint} fallback="/(tabs)/crisis" />
       <ScrollView
         className="flex-1"

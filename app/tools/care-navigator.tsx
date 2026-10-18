@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { Redirect, router } from 'expo-router';
 import { Check, MapPin, Mic } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide, NextStepButton, StepTabs } from '@/components/cape/ActivityGuide';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { StackHeader } from '@/components/cape/Screen';
@@ -69,6 +70,7 @@ export default function CareNavigator() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Care Navigator" tint={TINT} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"

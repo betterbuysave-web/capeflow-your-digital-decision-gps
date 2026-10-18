@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { ArrowRight, RotateCcw, Zap } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { MissionComplete } from '@/components/cape/MissionComplete';
@@ -37,6 +38,7 @@ export default function SimDetail() {
   if (!scenario) {
     return (
       <View className="bg-paper flex-1">
+        <NotebookBackdrop />
         <StackHeader title="Midnight Sim" fallback="/(tabs)/tools" />
         <View className="flex-1 items-center justify-center px-6">
           <Display className="text-3xl">Scenario not found</Display>
@@ -78,6 +80,7 @@ export default function SimDetail() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Midnight Sim" tint={C.violet} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"

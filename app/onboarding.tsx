@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as Haptics from 'expo-haptics';
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { CanonGate } from '@/components/cape/CanonGate';
 import { BLUE_GATE_COPY } from '@/lib/data/canon';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
@@ -48,6 +49,7 @@ export default function Onboarding() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Get Started" fallback="/" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

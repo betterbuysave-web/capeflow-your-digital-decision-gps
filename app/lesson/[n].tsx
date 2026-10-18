@@ -2,6 +2,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, TextInput, View } from 'rea
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { ArrowRight } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { TintedRow } from '@/components/cape/Buttons';
@@ -28,6 +29,7 @@ export default function LessonScreen() {
   if (!lesson) {
     return (
       <View className="bg-paper flex-1">
+        <NotebookBackdrop />
         <StackHeader title="Lesson" fallback="/(tabs)/learn" />
         <View className="px-5 pt-6">
           <Body>That lesson is not available.</Body>
@@ -51,6 +53,7 @@ export default function LessonScreen() {
       className="bg-paper flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+      <NotebookBackdrop />
       <StackHeader title={header} tint={tint} fallback="/(tabs)/learn" />
       <ScrollView
         className="flex-1"

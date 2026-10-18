@@ -1,165 +1,122 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useWindowDimensions, View } from 'react-native';
-
-import { Circle, Path, Svg } from '@/components/ui/primitives/Svg';
-import { C, alpha, mix } from '@/lib/colors';
+import Animated, {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 /**
- * TACTICAL NOTEBOOK backdrop.
+ * TACTICAL NOTEBOOK canvas — the CAPE background shared with
+ * theharnessproject.org's CAPE pages.
  *
- * A warm cream sheet with a precise engineering grid, faint paper speckle, and
- * blueprint margin furniture — drafting circles, gear vectors, registration
- * crosshairs and dimension lines. Reads as a physics workbook or a power-suit
- * blueprint, never as clip-art.
+ * Cream engineering graph paper (#FDFBF7, 20px cells, heavier line every
+ * 100px), a slowly turning drafting cog in the top-right margin, a compass
+ * rose with gold points in the bottom-left, and faint teal schematic traces.
  *
  * Purely decorative: sits behind screen content and never takes touches.
- * Self-sizing, so screens mount it with no props.
+ * `tint` is accepted for older call sites but no longer changes the canvas,
+ * so every CAPE screen reads as one notebook.
  */
 
-/** Deterministic pseudo-random so the paper grain never re-shuffles on re-render. */
-function seeded(seed: number): () => number {
-  let value = seed;
-  return () => {
-    value = (value * 1664525 + 1013904223) % 4294967296;
-    return value / 4294967296;
-  };
-}
+const PAPER = '#FDFBF7';
+const GRID_MAJOR = '#E7DCC4';
+const GRID_MINOR = '#F1EBDD';
+const LINE_TEAL = '#BFDDD8';
+const LINE_GOLD = '#DCC79A';
+const LINE_SCHEM = '#D3E6E3';
 
-const CELL = 22;
-const MAJOR_EVERY = 5;
+const MINOR = 20;
+const MAJOR = 100;
 
-function gridPaths(width: number, height: number): { minor: string; major: string } {
+function gridPaths(width: number, height: number) {
   let minor = '';
   let major = '';
-
-  const columns = Math.ceil(width / CELL);
-  for (let i = 0; i <= columns; i += 1) {
-    const x = (i * CELL).toFixed(1);
-    const line = `M${x} 0 L${x} ${height.toFixed(1)} `;
-    if (i % MAJOR_EVERY === 0) major += line;
+  for (let x = 0; x <= width; x += MINOR) {
+    const line = `M${x} 0V${height}`;
+    if (x % MAJOR === 0) major += line;
     else minor += line;
   }
-
-  const rows = Math.ceil(height / CELL);
-  for (let i = 0; i <= rows; i += 1) {
-    const y = (i * CELL).toFixed(1);
-    const line = `M0 ${y} L${width.toFixed(1)} ${y} `;
-    if (i % MAJOR_EVERY === 0) major += line;
+  for (let y = 0; y <= height; y += MINOR) {
+    const line = `M0 ${y}H${width}`;
+    if (y % MAJOR === 0) major += line;
     else minor += line;
   }
-
-  return { minor: minor.trim(), major: major.trim() };
+  return { minor, major };
 }
 
-/** Paper fibre: sparse warm specks so the cream never looks like flat #fff. */
-function speckle(width: number, height: number, count: number) {
-  const random = seeded(31337);
-  return Array.from({ length: count }, (_, i) => ({
-    key: `fibre-${i}`,
-    cx: random() * width,
-    cy: random() * height,
-    r: 0.4 + random() * 0.9,
-    opacity: 0.05 + random() * 0.09,
-  }));
-}
-
-/** Radial tick marks around a drafting circle. */
-function tickRing(cx: number, cy: number, inner: number, outer: number, count: number): string {
+/** Square-toothed gear outline + dashed pitch circle (400×400 art space). */
+function gear(cx: number, cy: number, r: number, teeth: number, depth: number) {
+  const n = teeth * 4;
   let d = '';
-  for (let i = 0; i < count; i += 1) {
-    const a = (i / count) * Math.PI * 2;
-    const cos = Math.cos(a);
-    const sin = Math.sin(a);
-    d += `M${(cx + inner * cos).toFixed(1)} ${(cy + inner * sin).toFixed(1)} L${(cx + outer * cos).toFixed(1)} ${(cy + outer * sin).toFixed(1)} `;
+  for (let i = 0; i < n; i += 1) {
+    const a = (2 * Math.PI * i) / n;
+    const rr = i % 4 === 0 || i % 4 === 1 ? r : r - depth;
+    d += `${i === 0 ? 'M' : 'L'}${(cx + rr * Math.cos(a)).toFixed(1)} ${(cy + rr * Math.sin(a)).toFixed(1)}`;
   }
-  return d.trim();
+  return `${d}Z`;
 }
 
-/** Involute-ish cog outline: flat-topped teeth around a hub. */
-function gearPath(cx: number, cy: number, radius: number, teeth: number, depth: number): string {
-  const step = (Math.PI * 2) / teeth;
-  const root = radius - depth;
-  const at = (r: number, a: number) =>
-    `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
-
-  let d = `M${at(root, 0)}`;
-  for (let i = 0; i < teeth; i += 1) {
-    const a = i * step;
-    d += ` L${at(radius, a + step * 0.16)}`;
-    d += ` L${at(radius, a + step * 0.34)}`;
-    d += ` L${at(root, a + step * 0.5)}`;
-    d += ` L${at(root, a + step)}`;
+/** Eight-point compass rose: star polygons (gold) + tick ring (teal). */
+function rose(cx: number, cy: number, R: number) {
+  let star = '';
+  for (let k = 0; k < 8; k += 1) {
+    const a = (Math.PI / 4) * k - Math.PI / 2;
+    const L = k % 2 === 0 ? R : R * 0.55;
+    const w = R * 0.12;
+    const tip = [cx + L * Math.cos(a), cy + L * Math.sin(a)];
+    const l = [cx + w * Math.cos(a - Math.PI / 2), cy + w * Math.sin(a - Math.PI / 2)];
+    const rt = [cx + w * Math.cos(a + Math.PI / 2), cy + w * Math.sin(a + Math.PI / 2)];
+    star += `M${l[0].toFixed(1)} ${l[1].toFixed(1)}L${tip[0].toFixed(1)} ${tip[1].toFixed(1)}L${rt[0].toFixed(1)} ${rt[1].toFixed(1)}L${cx} ${cy}Z`;
   }
-  return `${d} Z`;
+  let ticks = '';
+  for (let k = 0; k < 72; k += 1) {
+    const a = (2 * Math.PI * k) / 72;
+    const r1 = R * 1.12;
+    const r2 = R * (k % 9 === 0 ? 1.2 : 1.16);
+    ticks += `M${(cx + r1 * Math.cos(a)).toFixed(1)} ${(cy + r1 * Math.sin(a)).toFixed(1)}L${(cx + r2 * Math.cos(a)).toFixed(1)} ${(cy + r2 * Math.sin(a)).toFixed(1)}`;
+  }
+  return { star, ticks };
 }
 
-/** Registration crosshair, as used to align a print plate. */
-function crosshair(cx: number, cy: number, arm: number): string {
-  return (
-    `M${(cx - arm).toFixed(1)} ${cy.toFixed(1)} L${(cx + arm).toFixed(1)} ${cy.toFixed(1)} ` +
-    `M${cx.toFixed(1)} ${(cy - arm).toFixed(1)} L${cx.toFixed(1)} ${(cy + arm).toFixed(1)}`
-  );
-}
+const COG_A = gear(200, 200, 150, 16, 22);
+const COG_B = gear(352, 352, 70, 10, 14);
+const ROSE = rose(200, 200, 140);
+const SCHEM = 'M0 60H180V150H340V40H600M60 300V200H260V260H600';
 
-/** Dimension line with end serifs, drawn down the left margin. */
-function dimensionLine(x: number, top: number, bottom: number, serif: number): string {
-  return (
-    `M${x} ${top} L${x} ${bottom} ` +
-    `M${x - serif} ${top} L${x + serif} ${top} ` +
-    `M${x - serif} ${bottom} L${x + serif} ${bottom}`
-  );
-}
-
-export function NotebookBackdrop({ tint = C.tealBright }: { tint?: string }) {
+export function NotebookBackdrop(_props: { tint?: string } = {}) {
   const { width, height } = useWindowDimensions();
+  const reduceMotion = useReducedMotion();
+  const spin = useSharedValue(0);
 
-  const art = useMemo(() => {
-    if (width <= 0 || height <= 0) return null;
+  useEffect(() => {
+    if (reduceMotion) {
+      cancelAnimation(spin);
+      return;
+    }
+    spin.value = withRepeat(withTiming(360, { duration: 120000, easing: Easing.linear }), -1, false);
+    return () => cancelAnimation(spin);
+  }, [reduceMotion, spin]);
 
-    const grid = gridPaths(width, height);
-    const fibres = speckle(width, height, 110);
+  const cogStyle = useAnimatedStyle(() => ({ transform: [{ rotate: `${spin.value}deg` }] }));
 
-    // Drafting assembly bleeding off the top-right margin.
-    const dialX = width + 46;
-    const dialY = Math.round(height * 0.16);
-    const dialR = Math.max(96, Math.round(width * 0.34));
+  const grid = useMemo(
+    () => (width > 0 && height > 0 ? gridPaths(Math.ceil(width), Math.ceil(height)) : null),
+    [width, height],
+  );
+  if (!grid) return null;
 
-    // Cog vector bleeding off the bottom-left margin.
-    const cogX = -30;
-    const cogY = Math.round(height * 0.84);
-    const cogR = Math.max(74, Math.round(width * 0.24));
-
-    return {
-      grid,
-      fibres,
-      dial: {
-        x: dialX,
-        y: dialY,
-        r: dialR,
-        ticks: tickRing(dialX, dialY, dialR * 0.66, dialR * 0.74, 36),
-      },
-      cog: {
-        x: cogX,
-        y: cogY,
-        r: cogR,
-        outline: gearPath(cogX, cogY, cogR, 14, cogR * 0.17),
-      },
-      marks: [
-        crosshair(30, 30, 9),
-        crosshair(width - 30, 30, 9),
-        crosshair(30, height - 30, 9),
-        crosshair(width - 30, height - 30, 9),
-      ].join(' '),
-      dims: dimensionLine(12, Math.round(height * 0.32), Math.round(height * 0.62), 4),
-      construction:
-        `M0 ${Math.round(height * 0.5)} L${width} ${Math.round(height * 0.5)} ` +
-        `M${Math.round(width * 0.5)} 0 L${Math.round(width * 0.5)} ${height}`,
-    };
-  }, [width, height]);
-
-  if (!art) return null;
-
-  const fibreColor = mix(C.grid, C.ink, 0.4);
+  // Same placement rules as the website canvas (vw / vh based).
+  const vw = width / 100;
+  const vh = height / 100;
+  const cogW = Math.min(52 * vw, 420);
+  const roseW = Math.min(60 * vw, 460);
+  const schemW = Math.min(70 * vw, 620);
 
   return (
     <View
@@ -168,77 +125,91 @@ export function NotebookBackdrop({ tint = C.tealBright }: { tint?: string }) {
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
       aria-hidden
-      className="absolute inset-0"
-      style={{ backgroundColor: C.paper }}
+      className="absolute inset-0 overflow-hidden"
+      style={{ backgroundColor: PAPER }}
     >
-      <Svg width={width} height={height}>
-        {/* Engineering grid: fine cells with a heavier line every fifth. */}
-        <Path d={art.grid.minor} stroke={alpha(C.grid, 0.85)} strokeWidth={0.5} fill="none" />
-        <Path d={art.grid.major} stroke={alpha(C.gridBold, 0.9)} strokeWidth={0.8} fill="none" />
-
-        {/* Construction centrelines — the sheet's own axes. */}
-        <Path d={art.construction} stroke={alpha(tint, 0.07)} strokeWidth={0.6} fill="none" />
-
-        {/* Paper fibre. */}
-        {art.fibres.map((f) => (
-          <Circle key={f.key} cx={f.cx} cy={f.cy} r={f.r} fill={alpha(fibreColor, f.opacity)} />
-        ))}
-
-        {/* Drafting dial, top-right margin. */}
-        <Circle
-          cx={art.dial.x}
-          cy={art.dial.y}
-          r={art.dial.r}
-          stroke={alpha(tint, 0.16)}
-          strokeWidth={1}
-          fill="none"
-        />
-        <Circle
-          cx={art.dial.x}
-          cy={art.dial.y}
-          r={art.dial.r * 0.74}
-          stroke={alpha(tint, 0.11)}
-          strokeWidth={0.7}
-          fill="none"
-        />
-        <Circle
-          cx={art.dial.x}
-          cy={art.dial.y}
-          r={art.dial.r * 0.42}
-          stroke={alpha(C.goldBright, 0.16)}
-          strokeWidth={0.8}
-          fill="none"
-        />
-        <Path d={art.dial.ticks} stroke={alpha(tint, 0.14)} strokeWidth={0.7} fill="none" />
-
-        {/* Cog vector, bottom-left margin. */}
-        <Path
-          d={art.cog.outline}
-          stroke={alpha(tint, 0.15)}
-          strokeWidth={1}
-          fill={alpha(tint, 0.02)}
-        />
-        <Circle
-          cx={art.cog.x}
-          cy={art.cog.y}
-          r={art.cog.r * 0.4}
-          stroke={alpha(C.goldBright, 0.18)}
-          strokeWidth={0.8}
-          fill="none"
-        />
-        <Circle
-          cx={art.cog.x}
-          cy={art.cog.y}
-          r={art.cog.r * 0.16}
-          stroke={alpha(tint, 0.16)}
-          strokeWidth={0.7}
-          fill="none"
-        />
-
-        {/* Margin furniture. */}
-        <Path d={art.marks} stroke={alpha(tint, 0.2)} strokeWidth={0.8} fill="none" />
-        <Path d={art.dims} stroke={alpha(C.goldBright, 0.22)} strokeWidth={0.8} fill="none" />
+      <Svg width={width} height={height} style={{ position: 'absolute', left: 0, top: 0 }}>
+        <Path d={grid.minor} stroke={GRID_MINOR} strokeWidth={1} fill="none" />
+        <Path d={grid.major} stroke={GRID_MAJOR} strokeWidth={1} fill="none" />
       </Svg>
+
+      {/* Schematic traces, lower right */}
+      <Svg
+        width={schemW}
+        height={schemW / 2}
+        viewBox="0 0 600 300"
+        style={{ position: 'absolute', right: -6 * vw, bottom: 10 * vh }}
+      >
+        <Path d={SCHEM} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Circle cx={180} cy={60} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Circle cx={340} cy={150} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Circle cx={260} cy={200} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Circle
+          cx={420}
+          cy={40}
+          r={22}
+          stroke={LINE_SCHEM}
+          strokeWidth={1.5}
+          strokeDasharray="3 5"
+          fill="none"
+        />
+        <Circle cx={420} cy={40} r={40} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+      </Svg>
+
+      {/* Compass rose, bottom left */}
+      <Svg
+        width={roseW}
+        height={roseW}
+        viewBox="0 0 400 400"
+        style={{ position: 'absolute', left: -16 * vw, bottom: -8 * vh }}
+      >
+        <Circle cx={200} cy={200} r={156.8} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+        <Circle
+          cx={200}
+          cy={200}
+          r={179.2}
+          stroke={LINE_TEAL}
+          strokeWidth={1.5}
+          strokeDasharray="2 7"
+          fill="none"
+        />
+        <Circle cx={200} cy={200} r={42} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+        <Path d={ROSE.ticks} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+        <Path d={ROSE.star} stroke={LINE_GOLD} strokeWidth={1.5} fill="none" />
+      </Svg>
+
+      {/* Drafting cog, top right — turns once every two minutes */}
+      <Animated.View
+        style={[
+          { position: 'absolute', width: cogW, height: cogW, right: -12 * vw, top: 6 * vh },
+          cogStyle,
+        ]}
+      >
+        <Svg width={cogW} height={cogW} viewBox="0 0 400 400">
+          <Path d={COG_A} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Circle cx={200} cy={200} r={26} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Circle
+            cx={200}
+            cy={200}
+            r={93}
+            stroke={LINE_TEAL}
+            strokeWidth={1.5}
+            strokeDasharray="4 6"
+            fill="none"
+          />
+          <Path d={COG_B} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Circle cx={352} cy={352} r={12} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Circle
+            cx={352}
+            cy={352}
+            r={43.4}
+            stroke={LINE_TEAL}
+            strokeWidth={1.5}
+            strokeDasharray="4 6"
+            fill="none"
+          />
+        </Svg>
+      </Animated.View>
     </View>
   );
 }
