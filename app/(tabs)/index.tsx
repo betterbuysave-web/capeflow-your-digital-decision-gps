@@ -140,9 +140,9 @@ export default function Compass() {
           what="CAPE Flow is your decision compass. Here is how to use it."
           steps={[
             'Tap your Next step above. It always shows the next lesson on your track.',
-            'Open the Tools tab for practice activities like the Script Lab and the 3-Second Rule Challenge.',
-            'The M.A.T.C.H. tab has your lessons and the compass.',
-            'The Crisis tab is there any time you need help fast.',
+            'Open the Field Kit tab for practice activities like the Script Lab and the 3-Second Rule Challenge.',
+            'The Compass tab has your M.A.T.C.H. lessons.',
+            'The SOS tab is there any time you need help fast.',
           ]}
           outcome="a clear next move every time you open the app."
         />

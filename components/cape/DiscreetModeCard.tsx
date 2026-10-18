@@ -11,7 +11,7 @@ import { useCapeStore } from '@/lib/store/useCapeStore';
 
 type Step = 'idle' | 'create' | 'confirm' | 'disable';
 
-/** Me tab: turn discreet mode (PIN lock; Blue also hides the PEP countdown) on or off. */
+/** My Gear tab: turn discreet mode (PIN lock; Blue also hides the PEP countdown) on or off. */
 export function DiscreetModeCard({ className }: { className?: string }) {
   const pinHash = useCapeStore((s) => s.discreetPin);
   const blue = useCapeStore((s) => s.gradeBand === '9-12');
