@@ -2,6 +2,7 @@ import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
 import { ArrowRight, CircleCheck, Lock, PencilLine } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';
 import { StackHeader } from '@/components/cape/Screen';
 
@@ -24,6 +25,7 @@ export default function Learn() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="M.A.T.C.H." tint={C.teal} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"

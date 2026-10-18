@@ -3,6 +3,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Check, ChevronDown, Clock, Sparkles } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
@@ -25,6 +26,7 @@ export default function ModuleDetail() {
   if (!mod) {
     return (
       <View className="bg-paper flex-1">
+        <NotebookBackdrop />
         <StackHeader title="Module" fallback="/(tabs)/learn" />
         <View className="flex-1 items-center justify-center px-6">
           <Display className="text-3xl">Module not found</Display>
@@ -42,6 +44,7 @@ export default function ModuleDetail() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title={mod.name} tint={mod.color} fallback="/(tabs)/learn" />
       <ScrollView
         className="flex-1"

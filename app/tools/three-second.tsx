@@ -3,6 +3,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { ShieldCheck, Timer } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { StackHeader } from '@/components/cape/Screen';
@@ -76,6 +77,7 @@ export default function ThreeSecondChallenge() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="3-Second Rule Challenge" tint={C.teal} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"

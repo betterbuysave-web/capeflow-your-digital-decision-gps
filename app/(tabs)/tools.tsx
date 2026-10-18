@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { StackHeader } from '@/components/cape/Screen';
 
@@ -99,6 +100,7 @@ export default function ToolsTab() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Tools" tint={C.modT} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"

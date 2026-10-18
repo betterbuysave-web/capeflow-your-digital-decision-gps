@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { ArrowRight, RotateCcw } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { StackHeader } from '@/components/cape/Screen';
@@ -21,6 +22,7 @@ export default function SampleScenario() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Sample Scenario" fallback="/" />
       <ScrollView
         className="flex-1"

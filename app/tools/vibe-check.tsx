@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { Redirect } from 'expo-router';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide, NextStepButton, StepTabs } from '@/components/cape/ActivityGuide';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { FieldDrillCard, PivotBuilder, SortGame } from '@/components/cape/Drills';
@@ -39,6 +40,7 @@ export default function VibeCheck() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Vibe Check Navigator" tint={TINT} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"

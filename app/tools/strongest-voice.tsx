@@ -10,6 +10,7 @@ import {
 import * as Haptics from 'expo-haptics';
 import { Check, Eye, Mic, Trash2 } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide, NextStepButton, StepTabs } from '@/components/cape/ActivityGuide';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { StackHeader } from '@/components/cape/Screen';
@@ -117,6 +118,7 @@ export default function StrongestVoice() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Strongest Voice" tint={TINT} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

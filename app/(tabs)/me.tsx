@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { StackHeader } from '@/components/cape/Screen';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
@@ -100,6 +101,7 @@ export default function Me() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Me" tint={C.teal} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"

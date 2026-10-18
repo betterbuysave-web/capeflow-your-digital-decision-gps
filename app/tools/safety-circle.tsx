@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, View } 
 import { MessageSquare, Phone, Plus, Trash2, UserPlus } from 'lucide-react-native';
 import { Input, Label, TextField } from 'heroui-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
@@ -35,6 +36,7 @@ export default function SafetyCircle() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Safety Circle" tint={C.azure} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react-native';
 
+import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { PauseButton } from '@/components/cape/PauseButton';
 import { PepCountdownBanner } from '@/components/cape/PepCountdown';
@@ -34,6 +35,7 @@ export default function Crisis() {
 
   return (
     <View className="bg-paper flex-1">
+      <NotebookBackdrop />
       <StackHeader title="Crisis Protocol" tint={C.flame} fallback="/(tabs)" />
       <ScrollView
         className="flex-1"
