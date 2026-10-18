@@ -1,7 +1,13 @@
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Compass, LifeBuoy, Moon, User, Wrench } from 'lucide-react-native';
 
+import {
+  CompassIcon,
+  FieldKitIcon,
+  GpsIcon,
+  MyGearIcon,
+  SosIcon,
+} from '@/components/cape/TabIcons';
 import { C, alpha } from '@/lib/colors';
 
 export default function TabLayout() {
@@ -34,41 +40,42 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'COMPASS',
-            tabBarLabel: 'COMPASS',
-            tabBarIcon: ({ color, size }) => <Compass color={color} size={size ?? 24} />,
+            title: 'GPS',
+            tabBarLabel: 'GPS',
+            tabBarIcon: ({ color, focused }) => <GpsIcon color={color} focused={focused} />,
           }}
         />
         <Tabs.Screen
           name="learn"
           options={{
-            title: 'M.A.T.C.H.',
-            tabBarLabel: 'M.A.T.C.H.',
-            tabBarIcon: ({ color, size }) => <Moon color={color} size={size ?? 24} />,
+            title: 'COMPASS',
+            tabBarLabel: 'COMPASS',
+            tabBarIcon: ({ color, focused }) => <CompassIcon color={color} focused={focused} />,
           }}
         />
         <Tabs.Screen
           name="tools"
           options={{
-            title: 'TOOLS',
-            tabBarLabel: 'TOOLS',
-            tabBarIcon: ({ color, size }) => <Wrench color={color} size={size ?? 24} />,
+            title: 'FIELD KIT',
+            tabBarLabel: 'FIELD KIT',
+            tabBarIcon: ({ color, focused }) => <FieldKitIcon color={color} focused={focused} />,
           }}
         />
         <Tabs.Screen
           name="crisis"
           options={{
-            title: 'CRISIS',
-            tabBarLabel: 'CRISIS',
-            tabBarIcon: ({ color, size }) => <LifeBuoy color={color} size={size ?? 24} />,
+            title: 'SOS',
+            tabBarActiveTintColor: C.flame,
+            tabBarLabel: 'SOS',
+            tabBarIcon: ({ color, focused }) => <SosIcon color={color} focused={focused} />,
           }}
         />
         <Tabs.Screen
           name="me"
           options={{
-            title: 'ME',
-            tabBarLabel: 'ME',
-            tabBarIcon: ({ color, size }) => <User color={color} size={size ?? 24} />,
+            title: 'MY GEAR',
+            tabBarLabel: 'MY GEAR',
+            tabBarIcon: ({ color, focused }) => <MyGearIcon color={color} focused={focused} />,
           }}
         />
       </Tabs>

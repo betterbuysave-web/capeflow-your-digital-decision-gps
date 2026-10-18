@@ -204,7 +204,7 @@ export const MATCH_MODULES: MatchModule[] = [
           'Agree on a code word that means "call me and get me out".',
           'Store them in your phone so you never have to search under stress.',
         ],
-        tryIt: 'Add two people to your Safety Circle in the Tools tab.',
+        tryIt: 'Add two people to your Safety Circle in the Field Kit tab.',
       },
       {
         id: 'tools-exit',
