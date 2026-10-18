@@ -3,6 +3,7 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Check, ChevronDown, Clock, Sparkles } from 'lucide-react-native';
 
+import { MatchDial } from '@/components/cape/MatchDial';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { StackHeader } from '@/components/cape/Screen';
 import { BrandFooter } from '@/components/cape/BrandFooter';
@@ -48,18 +49,7 @@ export default function ModuleDetail() {
         showsVerticalScrollIndicator={false}
       >
         <View className="flex-row items-center gap-4">
-          <View
-            className="h-16 w-16 items-center justify-center rounded-2xl"
-            style={{
-              backgroundColor: alpha(mod.color, 0.1),
-              borderWidth: 1,
-              borderColor: alpha(mod.color, 0.28),
-            }}
-          >
-            <Display color={mod.color} className="text-4xl">
-              {mod.letter}
-            </Display>
-          </View>
+          <MatchDial letter={mod.letter} size={72} />
           <View className="flex-1">
             <Mono className="text-xl">{mod.emoji}</Mono>
             <Display className="mt-1 text-3xl">{mod.name}</Display>

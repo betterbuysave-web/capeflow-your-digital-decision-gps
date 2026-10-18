@@ -17,6 +17,7 @@ import { ArrowRight, X } from 'lucide-react-native';
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { Chip, GradientAction, MetallicButton } from '@/components/cape/Buttons';
 import { CompassRose } from '@/components/cape/CompassRose';
+import { MatchDial } from '@/components/cape/MatchDial';
 import { C, alpha, wash } from '@/lib/colors';
 import { COMPASS_NODES, type CompassNode, nodeBullets } from '@/lib/data/compass';
 import { TRACKS, type GradeBand, trackFor } from '@/lib/data/content';
@@ -120,18 +121,18 @@ export function MatchCompass({
               accessibilityHint={briefingHint}
               accessibilityState={{ selected: openId === node.id }}
               onPress={() => selectNode(node.id)}
-              className="flex-1 items-center rounded-xl py-2.5 active:opacity-70"
-              style={{
-                minWidth: 44,
-                minHeight: 48,
-                backgroundColor: wash(node.color, 0.13),
-                borderWidth: 1,
-                borderColor: node.color,
-              }}
+              className="flex-1 items-center py-1.5 active:opacity-70"
+              style={{ minWidth: 44, minHeight: 48 }}
             >
-              <Display color={C.ink} className="text-xl">
-                {node.letter}
-              </Display>
+              <MatchDial
+                letter={node.letter}
+                size={50}
+                style={
+                  openId === node.id
+                    ? { borderWidth: 2, borderColor: node.color, borderRadius: 27 }
+                    : undefined
+                }
+              />
               {preview ? null : (
                 <View className="mt-1.5 w-8">
                   <Rail value={progress} color={node.color} height={3} />
@@ -210,18 +211,7 @@ function NodeBriefing({
                 borderBottomColor: alpha(node.color, 0.35),
               }}
             >
-              <View
-                className="h-12 w-12 items-center justify-center rounded-xl"
-                style={{
-                  backgroundColor: wash(node.color, 0.18),
-                  borderWidth: 1,
-                  borderColor: alpha(node.color, 0.5),
-                }}
-              >
-                <Display color={C.ink} className="text-2xl">
-                  {node.letter}
-                </Display>
-              </View>
+              <MatchDial letter={node.letter} size={56} />
               <View
                 ref={headingRef}
                 accessible
