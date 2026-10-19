@@ -5,7 +5,7 @@ import { C, alpha } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
 export const BRAND_FOOTER_COPY =
-  'The HARNESS Project LLC | CAPE Youth Edition | CAPE Flow App | theharnessproject.org. For educational purposes only. Not medical advice. © 2026 Christopher Zacharie.';
+  'The HARNESS Project LLC | CAPE Youth Edition | CAPE Flow App | theharnessproject.org. For educational purposes only. Not medical advice. © 2026 Christopher Zacharie and The HARNESS Project LLC. All rights reserved.';
 
 /** Mandatory HARNESS Project footer. */
 export function BrandFooter({ className }: { className?: string }) {
@@ -29,7 +29,7 @@ export function BrandFooter({ className }: { className?: string }) {
         For educational purposes only. Not medical advice.
       </Mono>
       <Mono className="text-center text-[12px]" color={C.inkFaint}>
-        © 2026 Christopher Zacharie.
+        © 2026 Christopher Zacharie and The HARNESS Project LLC. All rights reserved.
       </Mono>
     </View>
   );
