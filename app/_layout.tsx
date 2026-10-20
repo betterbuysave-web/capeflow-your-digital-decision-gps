@@ -29,6 +29,7 @@ import {
 } from 'expo-router';
 
 import { registerServiceWorker } from '@/lib/registerServiceWorker';
+import { hideBootSplash } from '@/lib/bootSplash';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import { DiscreetGate } from '@/components/cape/DiscreetGate';
@@ -111,6 +112,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded || error) {
       void SplashScreen.hideAsync();
+      hideBootSplash();
     }
   }, [loaded, error]);
 
