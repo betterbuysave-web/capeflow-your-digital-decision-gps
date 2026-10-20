@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { Check, ShieldAlert } from 'lucide-react-native';
+import { Check, ShieldAlert } from '@/lib/icons';
 
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { CAFE_RIGHTS, CAFE_SAFETY_NOTE, cafeMyths } from '@/lib/data/cafe';

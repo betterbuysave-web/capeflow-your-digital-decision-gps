@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, View } from 'react-native';
-import { MessageSquare, Phone, Plus, Trash2, UserPlus } from 'lucide-react-native';
-import { Input, Label, TextField } from 'heroui-native';
+import { MessageSquare, Phone, Plus, Trash2, UserPlus } from '@/lib/icons';
+import { Input } from 'heroui-native/input';
+import { Label } from 'heroui-native/label';
+import { TextField } from 'heroui-native/text-field';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';

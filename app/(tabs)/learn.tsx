@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { ArrowRight, CircleCheck, Lock, PencilLine } from 'lucide-react-native';
+import { ArrowRight, CircleCheck, Lock, PencilLine } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';

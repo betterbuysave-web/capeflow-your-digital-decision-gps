@@ -1,15 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { type Href, router } from 'expo-router';
-import {
-  ArrowRight,
-  BellRing,
-  BookOpen,
-  Coffee,
-  Ghost,
-  MapPin,
-  Timer,
-  Users,
-} from 'lucide-react-native';
+import { ArrowRight, BellRing, BookOpen, Coffee, Ghost, MapPin, Timer, Users } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';

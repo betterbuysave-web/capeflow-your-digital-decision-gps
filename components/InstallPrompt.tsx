@@ -7,7 +7,7 @@ import { IOS_HINT_DISMISSED_KEY } from '@/lib/localStorage';
 import { GradientAction } from '@/components/cape/Buttons';
 import { Mono } from '@/components/cape/Type';
 import { C } from '@/lib/colors';
-import { Text } from 'heroui-native';
+import { Text } from 'heroui-native/text';
 
 /**
  * Install affordance for the PWA, web only:

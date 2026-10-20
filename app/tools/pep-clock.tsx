@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
-import { CalendarClock, CircleAlert, MapPin, Phone, RotateCcw } from 'lucide-react-native';
+import { CalendarClock, CircleAlert, MapPin, Phone, RotateCcw } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';

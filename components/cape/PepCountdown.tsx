@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { ArrowRight, Timer } from 'lucide-react-native';
+import { ArrowRight, Timer } from '@/lib/icons';
 import Svg, { Circle, Line } from 'react-native-svg';
 import {
   Easing,

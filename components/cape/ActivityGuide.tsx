@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { ChevronDown, ChevronUp, Clock, Compass } from 'lucide-react-native';
+import { ChevronDown, ChevronUp, Clock, Compass } from '@/lib/icons';
 
 import { Body, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';

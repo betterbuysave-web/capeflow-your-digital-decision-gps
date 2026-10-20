@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import type { Href } from 'expo-router';
-import { ChevronLeft } from 'lucide-react-native';
+import { ChevronLeft } from '@/lib/icons';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';

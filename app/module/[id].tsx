@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { Check, ChevronDown, Clock, Sparkles } from 'lucide-react-native';
+import { Check, ChevronDown, Clock, Sparkles } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';

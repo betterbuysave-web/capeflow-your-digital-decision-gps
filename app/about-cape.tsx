@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { Ban, Compass, HeartPulse, Lock, ShieldAlert, Sparkles, Trash2 } from 'lucide-react-native';
+import { Ban, Compass, HeartPulse, Lock, ShieldAlert, Sparkles, Trash2 } from '@/lib/icons';
 
 import { MatchDial } from '@/components/cape/MatchDial';
 import { StackHeader } from '@/components/cape/Screen';

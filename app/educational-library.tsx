@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { BookOpen, ChevronDown, Search, X } from 'lucide-react-native';
+import { BookOpen, ChevronDown, Search, X } from '@/lib/icons';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';

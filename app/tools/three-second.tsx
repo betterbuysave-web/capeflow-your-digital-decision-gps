@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { ShieldCheck, Timer } from 'lucide-react-native';
+import { ShieldCheck, Timer } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';

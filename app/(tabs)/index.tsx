@@ -11,7 +11,7 @@ import {
   LifeBuoy,
   Moon,
   Users,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { MatchDial } from '@/components/cape/MatchDial';
@@ -388,9 +388,7 @@ function NextStepCard({ step }: { step: NextStep }) {
         {step.eyebrow}
       </Mono>
       <View className="mt-2 flex-row items-center gap-4">
-        {step.letter ? (
-          <MatchDial letter={step.letter} size={60} />
-        ) : null}
+        {step.letter ? <MatchDial letter={step.letter} size={60} /> : null}
         <View className="flex-1">
           <Display color={C.paper2} className="text-3xl">
             {step.title}

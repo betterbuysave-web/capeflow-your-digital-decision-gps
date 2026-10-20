@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { Lock } from 'lucide-react-native';
+import { Lock } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';

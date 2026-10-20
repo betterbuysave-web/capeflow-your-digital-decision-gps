@@ -1,13 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import {
-  CircleAlert,
-  ExternalLink,
-  MessageSquare,
-  Phone,
-  ShieldAlert,
-  Users,
-} from 'lucide-react-native';
+import { CircleAlert, ExternalLink, MessageSquare, Phone, ShieldAlert, Users } from '@/lib/icons';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';

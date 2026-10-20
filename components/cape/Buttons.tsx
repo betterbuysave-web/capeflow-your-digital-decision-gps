@@ -1,6 +1,6 @@
 import { cloneElement, isValidElement, type ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type PressableProps } from 'react-native';
-import { ArrowRight } from 'lucide-react-native';
+import { ArrowRight } from '@/lib/icons';
 
 import { LinearGradient } from '@/components/ui/primitives/LinearGradient';
 import { C, CAPE_BUTTON_GRADIENT, CAPE_BUTTON_LOCATIONS, alpha, wash } from '@/lib/colors';

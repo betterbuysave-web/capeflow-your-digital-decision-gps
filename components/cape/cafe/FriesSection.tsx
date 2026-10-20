@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { ChevronDown, Search } from 'lucide-react-native';
+import { ChevronDown, Search } from '@/lib/icons';
 
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { Telemetry } from '@/components/cape/Telemetry';

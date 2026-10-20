@@ -9,7 +9,7 @@ import {
   ShieldAlert,
   Timer,
   Users,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';
