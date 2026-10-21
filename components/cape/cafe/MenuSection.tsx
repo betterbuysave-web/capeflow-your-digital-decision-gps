@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 import { AccessibleSheet } from '@/components/cape/AccessibleSheet';
-import { Eye, Plus, RotateCcw, X } from 'lucide-react-native';
+import { Eye, Plus, RotateCcw, X } from '@/lib/icons';
 
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';
 import { GradientAction, GhostButton } from '@/components/cape/Buttons';

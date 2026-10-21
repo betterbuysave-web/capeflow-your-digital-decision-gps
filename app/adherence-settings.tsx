@@ -16,7 +16,7 @@ import {
   Plus,
   ShieldCheck,
   Trash2,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel, Rail } from '@/components/cape/Type';

@@ -4,7 +4,7 @@ import { Image, Pressable, View } from 'react-native';
 import { alpha } from '@/lib/colors';
 import type { CompassNode } from '@/lib/data/compass';
 
-const ART = require('@/assets/images/match-compass-gps.jpg');
+const ART = require('@/assets/images/match-compass-gps.webp');
 const ARTWORK_RATIO = 1180 / 542;
 const HOTSPOT = 52;
 

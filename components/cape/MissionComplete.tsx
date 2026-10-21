@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
-import { Check } from 'lucide-react-native';
+import { Check } from '@/lib/icons';
 
 import { Eyebrow, Mono } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AccessibilityInfo, Pressable, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { Delete } from 'lucide-react-native';
+import { Delete } from '@/lib/icons';
 
 import { Display, Mono } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';

@@ -10,7 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { X } from 'lucide-react-native';
+import { X } from '@/lib/icons';
 
 import { Display, Eyebrow } from '@/components/cape/Type';
 import { GradientAction } from '@/components/cape/Buttons';

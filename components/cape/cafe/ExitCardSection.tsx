@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
-import { Lock, RotateCcw } from 'lucide-react-native';
+import { Lock, RotateCcw } from '@/lib/icons';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';
 import { GhostButton, MetallicButton } from '@/components/cape/Buttons';
 import { CONFIDENCE_LEVELS, EXIT_QUESTIONS } from '@/lib/data/cafe';

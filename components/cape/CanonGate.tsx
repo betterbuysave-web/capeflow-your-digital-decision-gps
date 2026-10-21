@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { ShieldAlert } from 'lucide-react-native';
+import { ShieldAlert } from '@/lib/icons';
 
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow } from '@/components/cape/Type';

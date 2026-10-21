@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Image, View } from 'react-native';
 
-const BRAND_IMAGE = require('@/assets/images/cape-flow-brand.png');
+const BRAND_IMAGE = require('@/assets/images/cape-flow-brand.webp');
 
 /** Shared CAPE Flow logo, preserving the complete supplied brand artwork. */
 export function Wordmark({ compact = false }: { compact?: boolean }) {

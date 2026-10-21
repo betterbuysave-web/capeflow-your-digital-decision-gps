@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { EyeOff, ShieldCheck } from 'lucide-react-native';
+import { EyeOff, ShieldCheck } from '@/lib/icons';
 
 import { PinPad } from '@/components/cape/PinPad';
 import { Body, Eyebrow, Mono, Panel } from '@/components/cape/Type';

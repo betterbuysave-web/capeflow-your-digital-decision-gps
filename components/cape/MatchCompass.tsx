@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
-import { ArrowRight, X } from 'lucide-react-native';
+import { ArrowRight, X } from '@/lib/icons';
 
 import { Body, Display, Eyebrow, Mono, Rail } from '@/components/cape/Type';
 import { Chip, GradientAction, MetallicButton } from '@/components/cape/Buttons';
@@ -54,7 +54,7 @@ export function MatchCompass({
   return (
     <View onLayout={({ nativeEvent }) => setTitleWidth(nativeEvent.layout.width)}>
       <Image
-        source={require('@/assets/images/match-compass-title.png')}
+        source={require('@/assets/images/match-compass-title.webp')}
         accessible
         accessibilityRole="image"
         accessibilityLabel="M.A.T.C.H. Compass title logo, with five colored letter badges and a gold compass on a red cape"

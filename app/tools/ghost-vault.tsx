@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Redirect } from 'expo-router';
 import * as Haptics from 'expo-haptics';
-import { Lock, Shield, ShieldCheck, X } from 'lucide-react-native';
+import { Lock, Shield, ShieldCheck, X } from '@/lib/icons';
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';

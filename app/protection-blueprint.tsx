@@ -15,7 +15,7 @@ import {
   ShieldCheck,
   Timer,
   Users,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { MatchDial } from '@/components/cape/MatchDial';
 import { StackHeader } from '@/components/cape/Screen';

@@ -13,7 +13,7 @@ import {
   RotateCcw,
   Trash2,
   Users,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { StackHeader } from '@/components/cape/Screen';

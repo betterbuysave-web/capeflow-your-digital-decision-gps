@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
-import { MessageSquare, Phone } from 'lucide-react-native';
+import { MessageSquare, Phone } from '@/lib/icons';
 
 import { SafeAreaView } from '@/components/ui/primitives/SafeAreaView';
 import { PinPad } from '@/components/cape/PinPad';

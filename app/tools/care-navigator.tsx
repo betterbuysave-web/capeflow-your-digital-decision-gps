@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, TextInput, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Redirect, router } from 'expo-router';
-import { Check, MapPin, Mic } from 'lucide-react-native';
+import { Check, MapPin, Mic } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { ActivityGuide, NextStepButton, StepTabs } from '@/components/cape/ActivityGuide';

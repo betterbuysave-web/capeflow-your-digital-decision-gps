@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { ChevronLeft, ChevronRight, Eye, Search, Users } from 'lucide-react-native';
+import { ChevronLeft, ChevronRight, Eye, Search, Users } from '@/lib/icons';
 
 import { Body, Display, Eyebrow, Mono } from '@/components/cape/Type';
 import { detectiveScenes, practiceCards } from '@/lib/data/cafe';

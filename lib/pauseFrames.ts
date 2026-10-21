@@ -3,7 +3,7 @@
  * across the 3-second countdown. Frames are stills rather than a video so
  * the animation runs everywhere without a native video module.
  */
-export const PAUSE_IDLE = require('@/assets/images/pause-button.jpg');
+export const PAUSE_IDLE = require('@/assets/images/pause-button.webp');
 
 export const PAUSE_FRAMES = [
   require('@/assets/images/pause/f01.jpg'),

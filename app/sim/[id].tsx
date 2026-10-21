@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AccessibilityInfo, Platform, Pressable, ScrollView, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Redirect, router, useLocalSearchParams } from 'expo-router';
-import { ArrowRight, RotateCcw, Zap } from 'lucide-react-native';
+import { ArrowRight, RotateCcw, Zap } from '@/lib/icons';
 
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { BrandFooter } from '@/components/cape/BrandFooter';

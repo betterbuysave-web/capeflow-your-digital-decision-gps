@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { ExternalLink, MapPin, Phone, Search, ShieldCheck, X } from 'lucide-react-native';
+import { ExternalLink, MapPin, Phone, Search, ShieldCheck, X } from '@/lib/icons';
 
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';

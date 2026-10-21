@@ -5,8 +5,9 @@ import { CanonGate } from '@/components/cape/CanonGate';
 import { BLUE_GATE_COPY } from '@/lib/data/canon';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { router } from 'expo-router';
-import { Check, Lock } from 'lucide-react-native';
-import { Input, TextField } from 'heroui-native';
+import { Check, Lock } from '@/lib/icons';
+import { Input } from 'heroui-native/input';
+import { TextField } from 'heroui-native/text-field';
 
 import { BrandFooter } from '@/components/cape/BrandFooter';
 import { Body, Display, Eyebrow, Mono, Panel } from '@/components/cape/Type';

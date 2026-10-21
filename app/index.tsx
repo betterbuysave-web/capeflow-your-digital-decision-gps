@@ -11,7 +11,7 @@ import {
   Stethoscope,
   Users,
   X,
-} from 'lucide-react-native';
+} from '@/lib/icons';
 
 import { MatchDial } from '@/components/cape/MatchDial';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
