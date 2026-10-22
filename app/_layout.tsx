@@ -118,6 +118,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="index" options={{ title: HOME_TITLE }} />
+          <Stack.Screen name="gate" options={{ title: 'CAPE Flow', animation: 'fade' }} />
           <Stack.Screen name="(tabs)" options={{ title: 'CAPE Flow' }} />
           <Stack.Screen name="onboarding" options={{ title: 'Get Started' }} />
           <Stack.Screen
