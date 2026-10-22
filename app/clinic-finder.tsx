@@ -1,5 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import * as Location from 'expo-location';
+import * as Haptics from 'expo-haptics';
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Linking,
   Platform,
@@ -8,7 +11,16 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { ExternalLink, MapPin, Phone, Search, ShieldCheck, X } from '@/lib/icons';
+import {
+  ExternalLink,
+  LocateFixed,
+  Map as MapIcon,
+  MapPin,
+  Phone,
+  Search,
+  ShieldCheck,
+  X,
+} from '@/lib/icons';
 
 import { ActivityGuide } from '@/components/cape/ActivityGuide';
 import { StackHeader } from '@/components/cape/Screen';
@@ -22,13 +34,16 @@ import {
   CLINIC_CONFIDENTIALITY_NOTE,
   CLINIC_COST_NOTE,
   CLINIC_SAFETY_NOTE,
+  DEFAULT_MAPS_QUERY,
   type CareCategory,
   type CareNetwork,
   categoriesForTrack,
   intakeScriptsForTrack,
   locatorUrl,
+  mapsSearchUrl,
   searchNetworks,
 } from '@/lib/data/clinics';
+import { nearestZip } from '@/lib/nearestZip';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
 const INPUT_FONT = 'JetBrainsMono_400Regular';
@@ -44,6 +59,52 @@ export default function ClinicFinder() {
   const [query, setQuery] = useState('');
   const [zip, setZip] = useState('');
   const [category, setCategory] = useState<CareCategory | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [zipFromGps, setZipFromGps] = useState(false);
+  /** Bumped when the ZIP is typed, so a GPS result still in flight is discarded. */
+  const lookupId = useRef(0);
+  const [locError, setLocError] = useState<string | null>(null);
+
+  /**
+   * GPS → nearest ZIP, all on the device. The coordinates are dropped as soon
+   * as the ZIP is found: they are never saved and never sent anywhere.
+   */
+  const locateMe = async () => {
+    if (locating) return;
+    const id = (lookupId.current += 1);
+    setLocating(true);
+    setLocError(null);
+    try {
+      const permission = await Location.requestForegroundPermissionsAsync();
+      if (permission.status !== Location.PermissionStatus.GRANTED) {
+        throw new Error('Location is off for CAPE Flow. Type your ZIP code instead.');
+      }
+      // A stalled GPS request gives up after 15 s and asks for a typed ZIP.
+      const position = await Promise.race([
+        Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }),
+        new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error('Location request timed out')), 15000);
+        }),
+      ]);
+      const found = await nearestZip(position.coords);
+      if (!found) throw new Error('No US ZIP code found near you. Type your ZIP code instead.');
+      if (id !== lookupId.current) return;
+      setZip(found);
+      setZipFromGps(true);
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (cause) {
+      if (id !== lookupId.current) return;
+      const message = cause instanceof Error ? cause.message : '';
+      setLocError(
+        /ZIP code instead/.test(message)
+          ? message
+          : 'Could not get your location. Type your ZIP code instead, or try again.',
+      );
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    } finally {
+      if (id === lookupId.current) setLocating(false);
+    }
+  };
 
   const categories = categoriesForTrack(track);
   const scripts = intakeScriptsForTrack(track);
@@ -80,7 +141,7 @@ export default function ClinicFinder() {
             }
             steps={[
               'Type what you need or pick a category.',
-              'Open a locator and search by your ZIP code.',
+              'Type your ZIP code or tap Use my location, then open a finder.',
               'Read the intake script for that kind of visit before you go.',
             ]}
             outcome={'a place to go and the first sentence to say.'}
@@ -137,7 +198,14 @@ export default function ClinicFinder() {
                 <TextInput
                   accessibilityLabel="ZIP code (optional)"
                   value={zip}
-                  onChangeText={(text) => setZip(text.replace(/\D/g, '').slice(0, 5))}
+                  onChangeText={(text) => {
+                    // Typing wins: any GPS lookup still running is discarded.
+                    lookupId.current += 1;
+                    setLocating(false);
+                    setZip(text.replace(/\D/g, '').slice(0, 5));
+                    setZipFromGps(false);
+                    setLocError(null);
+                  }}
                   placeholder="ZIP code (optional)"
                   placeholderTextColor={C.inkFaint}
                   keyboardType="number-pad"
@@ -147,8 +215,42 @@ export default function ClinicFinder() {
                 />
               </View>
             </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Use my location to fill in my ZIP code"
+              accessibilityState={{ busy: locating, disabled: locating }}
+              disabled={locating}
+              onPress={() => void locateMe()}
+              className="mt-3 min-h-11 flex-row items-center justify-center gap-2 rounded-xl px-3 py-2.5 active:opacity-70"
+              style={{
+                backgroundColor: alpha(C.teal, 0.08),
+                borderWidth: 1,
+                borderColor: alpha(C.teal, 0.35),
+              }}
+            >
+              {locating ? (
+                <ActivityIndicator size="small" color={C.teal} />
+              ) : (
+                <LocateFixed size={15} color={C.teal} />
+              )}
+              <Mono bold color={C.teal} className="text-[13px]" tracking={1}>
+                {locating ? 'FINDING YOUR ZIP…' : 'USE MY LOCATION'}
+              </Mono>
+            </Pressable>
+            {locError ? (
+              <Mono className="mt-2 text-[13px]" color={C.no}>
+                {locError}
+              </Mono>
+            ) : null}
+            {zipFromGps && zip.length === 5 ? (
+              <Mono className="mt-2 text-[13px]" color={C.teal}>
+                Using ZIP {zip}, the closest one to where you are.
+              </Mono>
+            ) : null}
             <Mono className="mt-2 text-[13px]" color={C.inkFaint}>
-              A ZIP is only passed to finders that accept one in their link. It is never saved.
+              Your location is turned into a ZIP code on this phone. Your exact location never
+              leaves the phone, and the ZIP is never saved. Finders that accept a ZIP in their link
+              open with it filled in.
             </Mono>
           </Panel>
 
@@ -191,6 +293,29 @@ export default function ClinicFinder() {
               </Mono>
             ) : null}
           </View>
+
+          {/* MAP SEARCH */}
+          {zip.length === 5 && (!activeCategory || activeCategory.mapsQuery) ? (
+            <Panel tint={C.gold} fill={0.05} stroke={0.18} className="mt-6">
+              <Eyebrow color={C.gold}>NEAR {zip}</Eyebrow>
+              <Mono className="mt-2 text-[13px]">
+                See {(activeCategory?.mapsQuery ?? DEFAULT_MAPS_QUERY) + 's'} on a map near ZIP{' '}
+                {zip}. Map results are not checked by CAPE — call ahead to confirm the place offers
+                what you need.
+              </Mono>
+              <GradientAction
+                onPress={() =>
+                  open(mapsSearchUrl(activeCategory?.mapsQuery ?? DEFAULT_MAPS_QUERY, zip))
+                }
+                className="mt-3 flex-row items-center justify-center gap-2 rounded-xl px-3 py-2.5"
+              >
+                <MapIcon size={14} color={C.paper2} />
+                <Mono bold color={C.paper2} className="shrink text-center text-[13px]" tracking={1}>
+                  OPEN MAP SEARCH
+                </Mono>
+              </GradientAction>
+            </Panel>
+          ) : null}
 
           {/* RESULTS */}
           <View className="mt-6 flex-row items-center justify-between">
@@ -308,6 +433,11 @@ function NetworkCard({ network, zip }: { network: CareNetwork; zip: string }) {
           {network.cost}
         </Mono>
       </View>
+      {zip.length === 5 && !network.zipUrl ? (
+        <Mono className="mt-2 text-[12px]" color={C.inkFaint}>
+          Type {zip} when this finder asks for your location.
+        </Mono>
+      ) : null}
       <View className="mt-3 flex-row gap-2">
         <GradientAction
           onPress={() => open(locatorUrl(network, zip))}

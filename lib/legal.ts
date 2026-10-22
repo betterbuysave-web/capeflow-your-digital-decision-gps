@@ -40,7 +40,7 @@ export const LEGAL_OPERATOR = 'The Harness Project LLC';
 export const LEGAL_CONTACT_EMAIL = 'email@theharnessproject.org';
 export const LEGAL_GOVERNING_LAW = 'the State of Texas, United States';
 export const LEGAL_LAST_UPDATED = 'October 22, 2026';
-export const LEGAL_VERSION = '1.0';
+export const LEGAL_VERSION = '1.1';
 export const LEGAL_WEB_URL = 'https://theharnessproject.org/legal/cape-flow';
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
@@ -152,17 +152,19 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: 'What we never collect',
-        body: 'We do not receive or store your name, email address, home address, location, contacts list, photos, school, or any record of what you do in the App. There is no chat, posting, messaging, or public profile, so other users cannot see you or contact you through the App.',
+        body: 'We do not receive or store your name, email address, home address, location, contacts list, photos, school, or any record of what you do in the App. The App reads your location only when you tap Use my location, and only on your device. There is no chat, posting, messaging, or public profile, so other users cannot see you or contact you through the App.',
       },
       {
         heading: 'When information leaves the App',
         body: 'Information leaves the App only when you choose an action that sends it somewhere else:',
         bullets: [
           'Opening a link sends a normal web request to that website, which can see your IP address.',
-          'In Care Navigator, a ZIP code you type is added to the link for finders that accept one. It is never saved.',
+          'In Clinic Finder, a ZIP code you type is added to the link for finders that accept one. It is never saved.',
+          'If you tap Use my location in Clinic Finder, your device asks your permission, then the App turns your position into the nearest ZIP code on the device. Your exact location is never sent anywhere or saved; only the ZIP is used.',
+          'Open map search sends the ZIP and the kind of care you picked to Google Maps, under Google’s own privacy policy.',
           'Tapping a phone number opens your phone app to call it.',
           'Reminders are scheduled by your device’s own notification system. No message goes through us.',
-          'On the web, the site that hosts the App receives standard connection information (such as IP address and browser type) to deliver the page. It does not receive what you enter.',
+          'On the web, the site that hosts the App, and Google Fonts (which supplies the lettering), receive standard connection information such as IP address and browser type to deliver the page. They do not receive what you enter.',
         ],
       },
       {
