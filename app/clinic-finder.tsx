@@ -76,9 +76,13 @@ export default function ClinicFinder() {
       if (permission.status !== Location.PermissionStatus.GRANTED) {
         throw new Error('Location is off for CAPE Flow. Type your ZIP code instead.');
       }
-      const position = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
-      });
+      // A stalled GPS request gives up after 15 s and asks for a typed ZIP.
+      const position = await Promise.race([
+        Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }),
+        new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error('Location request timed out')), 15000);
+        }),
+      ]);
       const found = await nearestZip(position.coords);
       if (!found) throw new Error('No US ZIP code found near you. Type your ZIP code instead.');
       setZip(found);
