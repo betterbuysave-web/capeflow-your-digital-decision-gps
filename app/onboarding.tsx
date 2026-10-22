@@ -19,6 +19,12 @@ import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { GRADE_BANDS, PRIVACY_NOTE, type GradeBand } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
+const LEGAL_LINKS = [
+  { id: 'terms', label: 'Terms of Use' },
+  { id: 'privacy', label: 'Privacy Policy' },
+  { id: 'parents', label: 'Parent & School Notice' },
+] as const;
+
 export default function Onboarding() {
   const startJourney = useCapeStore((s) => s.startJourney);
   const [band, setBand] = useState<GradeBand | null>(null);
@@ -137,6 +143,36 @@ export default function Onboarding() {
               </View>
             </View>
           </Panel>
+
+          <View className="mt-4">
+            <Mono className="text-[12px]" color={C.inkFaint}>
+              By entering, you agree to the Terms of Use. Read them with a parent, guardian, or
+              teacher if you are under 18.
+            </Mono>
+            <View className="mt-2 flex-row flex-wrap gap-2">
+              {LEGAL_LINKS.map((item) => (
+                <Pressable
+                  key={item.id}
+                  accessibilityRole="link"
+                  accessibilityLabel={`Read the ${item.label}`}
+                  hitSlop={6}
+                  onPress={() =>
+                    router.push({ pathname: '/legal/[doc]', params: { doc: item.id } })
+                  }
+                  className="rounded-full px-3 py-1.5 active:opacity-70"
+                  style={{
+                    backgroundColor: alpha(C.azure, 0.08),
+                    borderWidth: 1,
+                    borderColor: alpha(C.azure, 0.3),
+                  }}
+                >
+                  <Mono bold color={C.azure} className="text-[12px]">
+                    {item.label}
+                  </Mono>
+                </Pressable>
+              ))}
+            </View>
+          </View>
 
           <View className="mt-8">
             {band ? (

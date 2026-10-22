@@ -137,7 +137,7 @@ export const PARENT_CARDS: ParentCard[] = [
     tint: C.violet,
     body: [
       'You may preview all content before it is used with your student.',
-      'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to get written parent or guardian consent at least 14 days before human sexuality instruction begins.',
+      'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to send parents or guardians a written consent request at least 14 days before human sexuality instruction begins, and to have written consent before a student takes part.',
       'CAPE follows the same standard everywhere: no student takes part without written consent. Confirm the current district form before the first session.',
       'TEC §28.004(q-6) still requires written consent before instruction on child abuse, family violence, dating violence, and sex trafficking.',
       'No parental notification is triggered by app usage because no usage data is transmitted.',

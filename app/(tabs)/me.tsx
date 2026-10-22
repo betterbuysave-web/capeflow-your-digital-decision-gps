@@ -280,6 +280,20 @@ export default function Me() {
               </View>
             </View>
           </TintedRow>
+
+          <TintedRow tint={C.azure} fill={0.06} stroke={0.2} onPress={() => router.push('/legal')}>
+            <View className="flex-row items-center gap-3">
+              <FileText size={18} color={C.azure} />
+              <View className="flex-1">
+                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
+                  LEGAL &amp; PRIVACY
+                </Mono>
+                <Mono className="mt-0.5 text-[12px]">
+                  Terms, privacy policy, health disclaimer, parent notice
+                </Mono>
+              </View>
+            </View>
+          </TintedRow>
         </View>
 
         <Panel tint={C.teal} fill={0.05} stroke={0.18} className="mt-8">

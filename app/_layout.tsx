@@ -146,6 +146,8 @@ export default function RootLayout() {
           <Stack.Screen name="clinic-finder" options={{ title: 'Clinic Finder' }} />
           <Stack.Screen name="adherence-settings" options={{ title: 'Adherence Settings' }} />
           <Stack.Screen name="about-cape" options={{ title: 'About CAPE Flow' }} />
+          <Stack.Screen name="legal/index" options={{ title: 'Legal & Privacy' }} />
+          <Stack.Screen name="legal/[doc]" options={{ title: 'Legal' }} />
           <Stack.Screen name="protection-blueprint" options={{ title: 'Protection Blueprint' }} />
           <Stack.Screen name="educational-library" options={{ title: 'Educational Library' }} />
           <Stack.Screen name="emergency-directory" options={{ title: 'Emergency Directory' }} />
