@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from 'react';
-import * as Location from 'expo-location';
 import * as Haptics from 'expo-haptics';
 import {
   ActivityIndicator,
@@ -75,6 +74,16 @@ export default function ClinicFinder() {
     setLocating(true);
     setLocError(null);
     try {
+      // Loaded on tap, not with the screen: an app build that predates the
+      // location module still opens Clinic Finder and falls back to a typed ZIP.
+      let Location: typeof import('expo-location');
+      try {
+        Location = await import('expo-location');
+      } catch {
+        throw new Error(
+          'Location is not available in this version of CAPE Flow yet. Type your ZIP code instead.',
+        );
+      }
       const permission = await Location.requestForegroundPermissionsAsync();
       if (permission.status !== Location.PermissionStatus.GRANTED) {
         throw new Error('Location is off for CAPE Flow. Type your ZIP code instead.');

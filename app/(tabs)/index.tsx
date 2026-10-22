@@ -85,7 +85,7 @@ export default function Compass() {
         title="Home"
         tint={C.teal}
         fallback="/(tabs)"
-        onBack={() => router.push({ pathname: '/', params: { gate: '1' } })}
+        onBack={() => router.push('/gate')}
       />
       <ScrollView
         className="flex-1"
