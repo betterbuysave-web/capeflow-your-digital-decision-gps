@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as Location from 'expo-location';
 import * as Haptics from 'expo-haptics';
 import {
@@ -61,6 +61,8 @@ export default function ClinicFinder() {
   const [category, setCategory] = useState<CareCategory | null>(null);
   const [locating, setLocating] = useState(false);
   const [zipFromGps, setZipFromGps] = useState(false);
+  /** Bumped when the ZIP is typed, so a GPS result still in flight is discarded. */
+  const lookupId = useRef(0);
   const [locError, setLocError] = useState<string | null>(null);
 
   /**
@@ -69,6 +71,7 @@ export default function ClinicFinder() {
    */
   const locateMe = async () => {
     if (locating) return;
+    const id = (lookupId.current += 1);
     setLocating(true);
     setLocError(null);
     try {
@@ -85,10 +88,12 @@ export default function ClinicFinder() {
       ]);
       const found = await nearestZip(position.coords);
       if (!found) throw new Error('No US ZIP code found near you. Type your ZIP code instead.');
+      if (id !== lookupId.current) return;
       setZip(found);
       setZipFromGps(true);
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } catch (cause) {
+      if (id !== lookupId.current) return;
       const message = cause instanceof Error ? cause.message : '';
       setLocError(
         /ZIP code instead/.test(message)
@@ -97,7 +102,7 @@ export default function ClinicFinder() {
       );
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     } finally {
-      setLocating(false);
+      if (id === lookupId.current) setLocating(false);
     }
   };
 
@@ -194,6 +199,9 @@ export default function ClinicFinder() {
                   accessibilityLabel="ZIP code (optional)"
                   value={zip}
                   onChangeText={(text) => {
+                    // Typing wins: any GPS lookup still running is discarded.
+                    lookupId.current += 1;
+                    setLocating(false);
                     setZip(text.replace(/\D/g, '').slice(0, 5));
                     setZipFromGps(false);
                     setLocError(null);
