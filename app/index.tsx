@@ -22,8 +22,15 @@ import { BrandFooter } from '@/components/cape/BrandFooter';
 import { MatchCompass } from '@/components/cape/MatchCompass';
 import { C, alpha, wash } from '@/lib/colors';
 import { MATCH_MODULES, moduleTagline } from '@/lib/data/match';
-import { DISCLAIMER, PARENT_CARDS, PRIVACY_NOTE, SOURCES } from '@/lib/data/content';
-import { PIPELINE_COPY, CAPE_CARD_COPY } from '@/lib/data/canon';
+import {
+  COMPLIANCE_LINE,
+  DISCLAIMER,
+  GRADE_BANDS,
+  PARENT_CARDS,
+  PRIVACY_SHORT,
+  SOURCES,
+} from '@/lib/data/content';
+import { PIPELINE_COPY } from '@/lib/data/canon';
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
@@ -69,7 +76,8 @@ export default function Landing() {
             <BrandBanner className="w-full" />
 
             <Body className="mt-6 text-center" color={C.inkSoft}>
-              A decision compass for youth. Five MATCH letters, two tracks, no account.
+              Know what you’d do before the moment comes. Practice real choices, set your
+              boundaries, and find help fast.
             </Body>
 
             <View className="mt-8 w-full gap-3">
@@ -95,12 +103,22 @@ export default function Landing() {
         </View>
 
         <View className="gap-4 px-5 pt-14">
-          <Display className="text-4xl">Five letters. One compass.</Display>
+          <Display className="text-4xl">Two tracks. One compass.</Display>
           <Body>{PIPELINE_COPY}</Body>
-          <Panel tint={C.teal}>
-            <Eyebrow color={C.teal}>CAPE Youth Edition</Eyebrow>
-            <Mono className="mt-3 text-[13px]">{CAPE_CARD_COPY}</Mono>
-          </Panel>
+          {GRADE_BANDS.map((band) => (
+            <Panel key={band.id} tint={band.tint} fill={0.05} stroke={0.2}>
+              <View className="flex-row items-center justify-between">
+                <Eyebrow color={band.tint}>{band.tier}</Eyebrow>
+                <Mono bold className="text-[12px]" color={band.tint}>
+                  {band.label}
+                </Mono>
+              </View>
+              <Mono className="mt-2 text-[13px]">{band.detail}</Mono>
+            </Panel>
+          ))}
+          <Mono className="text-[12px]" color={C.inkFaint}>
+            {COMPLIANCE_LINE}
+          </Mono>
         </View>
 
         {/* FRAMEWORK */}
@@ -111,8 +129,8 @@ export default function Landing() {
             </Eyebrow>
             <Display className="text-center text-4xl">What does M.A.T.C.H. stand for?</Display>
             <Body className="mt-4 text-center">
-              Five MATCH letters. One compass. Health choices, awareness, trusted support, consent,
-              and choosing your pace.
+              One letter for each part of a good decision: health choices, awareness, trusted
+              support, consent, and choosing your pace.
             </Body>
           </View>
 
@@ -146,10 +164,10 @@ export default function Landing() {
             <Eyebrow color={C.azure} className="mb-3">
               SEE IT IN ACTION
             </Eyebrow>
-            <Display className="text-center text-4xl">Built for how youth actually learn.</Display>
+            <Display className="text-center text-4xl">Built for how you actually learn.</Display>
             <Body className="mt-4 text-center">
-              Gamified, judgment-free, and designed for mobile. No lectures — just interactive tools
-              that build muscle memory for real decisions.
+              Judgment-free and made for your phone. No lectures — just interactive tools that build
+              muscle memory for real decisions.
             </Body>
           </View>
 
@@ -240,7 +258,7 @@ export default function Landing() {
                 </View>
               </View>
               <Mono className="mt-3 text-[12px]" color={alpha(C.inkSoft, 0.55)}>
-                Five MATCH letters. XP, badges, and progress saved on this device.
+                Earn XP and badges as you go. Progress stays on this device.
               </Mono>
             </PreviewCard>
           </View>
@@ -252,10 +270,10 @@ export default function Landing() {
             <Eyebrow color={C.teal} className="mb-3">
               TRY IT NOW
             </Eyebrow>
-            <Display className="text-center text-4xl">What would you do at 1:47 AM?</Display>
+            <Display className="text-center text-4xl">Someone tags you. What do you do?</Display>
             <Body className="mt-4 text-center">
-              A taste of the Midnight Simulator. Pick a response and see how the M.A.T.C.H.
-              framework turns panic into a plan.
+              A taste of the Midnight Sim. Pick a response and see how MATCH turns panic into a
+              plan.
             </Body>
           </View>
 
@@ -310,7 +328,7 @@ export default function Landing() {
 
           <View className="mt-8 items-center">
             <MetallicButton
-              label="UNLOCK THE FULL COMPASS"
+              label="OPEN THE FULL COMPASS"
               onPress={() => router.push('/onboarding')}
             />
           </View>
@@ -436,8 +454,8 @@ export default function Landing() {
             Your health. Your pace. Your power.
           </Display>
           <Body className="mb-8 text-center">
-            Join youth building real-world readiness — one module, one badge, one decision at a
-            time.
+            Build real-world readiness — one module, one badge, one decision at a time. Free, no
+            account.
           </Body>
           <MetallicButton
             label="BEGIN YOUR JOURNEY"
@@ -457,7 +475,7 @@ export default function Landing() {
                 <Eyebrow color={C.teal} className="mb-1.5">
                   ZERO STIGMA TAX — NO TRACKING
                 </Eyebrow>
-                <Mono className="text-[12px]">{PRIVACY_NOTE}</Mono>
+                <Mono className="text-[12px]">{PRIVACY_SHORT}</Mono>
               </View>
               <GradientAction
                 accessibilityLabel="Dismiss privacy notice"

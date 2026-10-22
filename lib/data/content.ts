@@ -186,5 +186,12 @@ export const SOURCES: SourceRef[] = [
 export const DISCLAIMER =
   'CAPE FLOW is an educational tool, not a substitute for professional medical advice, diagnosis, or treatment. Always seek the guidance of a qualified health provider with any questions about a medical condition. In an emergency, call 911 or your local emergency number immediately. Crisis resources listed within the app connect you to trained professionals — this app does not provide counseling directly.';
 
+/** Short privacy line for the first screen. The full PRIVACY_NOTE shows during Get Started. */
+export const PRIVACY_SHORT =
+  'Everything you save stays on this device. No accounts, no tracking, no ads. Clear it anytime with Delete all my data in Me.';
+
+export const COMPLIANCE_LINE =
+  'Supplemental and TEKS-aligned. Not a district-adopted human sexuality curriculum. Follow local board policy.';
+
 export const PRIVACY_NOTE =
   'CAPE Flow saves your progress and private entries on this device. No accounts, app analytics, ads, or CAPE cloud backup. Use Delete all my data in Me to clear saved CAPE data. Uninstalling may not clear browser storage or existing device backups; those have separate settings. Copying, sharing, calling, or opening a website sends information outside CAPE Flow.';
