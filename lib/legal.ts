@@ -252,7 +252,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       {
         heading: 'Written consent in Texas schools',
         bullets: [
-          'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to get written parent or guardian consent at least 14 days before human sexuality instruction begins.',
+          'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to send parents or guardians a written consent request at least 14 days before human sexuality instruction begins, and to have written consent before a student takes part.',
           'Texas Education Code §28.004(q-6) requires written consent before instruction on child abuse, family violence, dating violence, and sex trafficking.',
           'CAPE follows the same standard everywhere: no student takes part in facilitated instruction without written consent. Schools should use their district’s current form.',
         ],
