@@ -27,6 +27,12 @@ export interface CareCategoryInfo {
   blurb: string;
   /** Blue-track (grades 9–12) only. */
   track?: 'blue';
+  /**
+   * Words for the optional map search near a ZIP. Left out where an official
+   * locator is the safer route, because general map results can include
+   * places that do not offer the care they appear to.
+   */
+  mapsQuery?: string;
 }
 
 export const CARE_CATEGORIES: CareCategoryInfo[] = [
@@ -36,6 +42,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     emoji: '🩺',
     tint: C.modM,
     blurb: 'Sports physicals, sick visits, asthma, skin, a doctor who knows your name.',
+    mapsQuery: 'community health center',
   },
   {
     id: 'coverage',
@@ -43,6 +50,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     emoji: '💳',
     tint: C.teal,
     blurb: 'Free and sliding-scale clinics, and coverage you may already qualify for.',
+    mapsQuery: 'free clinic',
   },
   {
     id: 'mental',
@@ -50,6 +58,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     emoji: '🧠',
     tint: C.azure,
     blurb: 'Counselors, therapy, and treatment referral lines that answer every day.',
+    mapsQuery: 'mental health clinic',
   },
   {
     id: 'vaccines',
@@ -57,6 +66,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     emoji: '💉',
     tint: C.modA,
     blurb: 'Flu, HPV cancer prevention, meningococcal, catch-up shots.',
+    mapsQuery: 'vaccine clinic',
   },
   {
     id: 'testing',
@@ -65,6 +75,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     tint: C.gold,
     blurb: 'Confidential testing sites, many free, most same-day.',
     track: 'blue',
+    mapsQuery: 'STI testing clinic',
   },
   {
     id: 'prevention',
@@ -250,6 +261,15 @@ export function searchNetworks(
 }
 
 /** Adds the typed ZIP to the locator URL when that locator accepts one. */
+/** Default map search when no category is picked. */
+export const DEFAULT_MAPS_QUERY = 'community health center';
+
+/** Google Maps search for a kind of care near a ZIP (documented Maps URL API). */
+export function mapsSearchUrl(query: string, zip: string): string {
+  const clean = zip.replace(/\D/g, '').slice(0, 5);
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${query} near ${clean}`)}`;
+}
+
 export function locatorUrl(network: CareNetwork, zip: string): string {
   const clean = zip.replace(/\D/g, '').slice(0, 5);
   if (network.zipUrl && clean.length === 5) return network.zipUrl.replace('{zip}', clean);
