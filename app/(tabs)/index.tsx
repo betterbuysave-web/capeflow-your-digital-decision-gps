@@ -38,6 +38,7 @@ import {
   useCapeStore,
 } from '@/lib/store/useCapeStore';
 
+/** Home tab (the student's compass). Its back button opens the consent gate at /gate. */
 export default function Compass() {
   const codename = useCapeStore((s) => s.codename);
   const gradeBand = useCapeStore((s) => s.gradeBand);

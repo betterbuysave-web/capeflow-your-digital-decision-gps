@@ -51,6 +51,10 @@ const open = (url: string) => {
   void Linking.openURL(url);
 };
 
+/**
+ * Clinic Finder: official care locators by category, a ZIP typed or found from
+ * the device's location (never saved), map search, and front-desk scripts.
+ */
 export default function ClinicFinder() {
   const gradeBand = useCapeStore((s) => s.gradeBand);
   const track = trackFor(gradeBand);
