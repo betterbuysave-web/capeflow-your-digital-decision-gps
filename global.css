@@ -101,10 +101,10 @@
   --color-mod-c: #7f6f0a;
   --color-mod-h: #c2540a;
 
-  --font-display: 'BebasNeue_400Regular', 'Bebas Neue', 'Inter_700Bold', sans-serif;
-  --font-mono: 'JetBrainsMono_400Regular', 'JetBrains Mono', monospace;
-  --font-monobold: 'JetBrainsMono_700Bold', 'JetBrains Mono', monospace;
-  --font-body: 'Inter_400Regular', 'Inter', sans-serif;
+  --font-display: 'BebasNeue_400Regular', 'Bebas Neue', 'DMSans_700Bold', sans-serif;
+  --font-mono: 'SpaceMono_400Regular', 'Space Mono', monospace;
+  --font-monobold: 'SpaceMono_700Bold', 'Space Mono', monospace;
+  --font-body: 'DMSans_400Regular', 'DM Sans', sans-serif;
 }
 
 @source './node_modules/heroui-native/lib';

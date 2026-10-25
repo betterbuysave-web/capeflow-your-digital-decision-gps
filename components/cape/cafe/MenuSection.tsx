@@ -10,7 +10,7 @@ import { BOUNDARY_MENU, BOUNDARY_SECTIONS, type BoundaryAnswer } from '@/lib/dat
 import { MENU_COURSES, type CafeCourse, type CafeMenuItem } from '@/lib/data/cafe';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const INPUT_FONT = 'JetBrainsMono_400Regular';
+const INPUT_FONT = 'SpaceMono_400Regular';
 
 const ANSWERS: { id: BoundaryAnswer; label: string; tint: string }[] = [
   { id: 'yes', label: 'YES', tint: C.yes },

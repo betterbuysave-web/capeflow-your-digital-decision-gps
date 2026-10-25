@@ -61,7 +61,7 @@ export function GlitchLabel({
   });
 
   const baseStyle = {
-    fontFamily: 'JetBrainsMono_700Bold',
+    fontFamily: 'SpaceMono_700Bold',
     fontSize: size,
     letterSpacing: 1,
   } as const;

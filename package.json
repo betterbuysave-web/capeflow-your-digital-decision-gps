@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@expo-google-fonts/bebas-neue": "^0.4.1",
-    "@expo-google-fonts/inter": "~0.4.2",
-    "@expo-google-fonts/jetbrains-mono": "^0.4.1",
+    "@expo-google-fonts/dm-sans": "^0.4.2",
+    "@expo-google-fonts/space-mono": "^0.4.2",
     "@expo/config": "^57.0.0",
     "@gorhom/bottom-sheet": "^5.2.9",
     "@hookform/resolvers": "^5.2.2",

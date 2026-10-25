@@ -211,7 +211,7 @@ function GhostCard({
             className="mt-2 rounded-xl px-3 py-2.5"
             style={{
               color: C.ink,
-              fontFamily: 'Inter_400Regular',
+              fontFamily: 'DMSans_400Regular',
               fontSize: 13,
               minHeight: 48,
               backgroundColor: C.card,

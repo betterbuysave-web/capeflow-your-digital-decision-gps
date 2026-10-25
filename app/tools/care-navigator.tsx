@@ -207,7 +207,7 @@ export default function CareNavigator() {
                     backgroundColor: C.card,
                     borderWidth: 1,
                     borderColor: C.hairline,
-                    fontFamily: 'Inter_400Regular',
+                    fontFamily: 'DMSans_400Regular',
                   }}
                 />
               ))}
@@ -239,7 +239,7 @@ export default function CareNavigator() {
                       backgroundColor: C.card,
                       borderWidth: 1,
                       borderColor: C.hairline,
-                      fontFamily: 'Inter_400Regular',
+                      fontFamily: 'DMSans_400Regular',
                     }}
                   />
                 </View>
