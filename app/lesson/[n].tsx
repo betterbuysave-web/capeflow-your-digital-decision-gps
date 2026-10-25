@@ -110,7 +110,7 @@ export default function LessonScreen() {
               backgroundColor: C.card,
               borderWidth: 1,
               borderColor: C.hairline,
-              fontFamily: 'Inter_400Regular',
+              fontFamily: 'DMSans_400Regular',
             }}
           />
         </View>

@@ -44,7 +44,7 @@ import type { ReminderTone } from '@/lib/data/adherence';
 import { notificationsSupported, permissionGranted, requestPermission } from '@/lib/notifications';
 import { type Reminder, useCapeStore } from '@/lib/store/useCapeStore';
 
-const INPUT_FONT = 'JetBrainsMono_400Regular';
+const INPUT_FONT = 'SpaceMono_400Regular';
 const HISTORY_DAYS = 14;
 
 export default function AdherenceSettings() {

@@ -26,7 +26,7 @@ import {
 } from '@/lib/data/library';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const INPUT_FONT = 'JetBrainsMono_400Regular';
+const INPUT_FONT = 'SpaceMono_400Regular';
 
 export default function EducationalLibrary() {
   const gradeBand = useCapeStore((s) => s.gradeBand);

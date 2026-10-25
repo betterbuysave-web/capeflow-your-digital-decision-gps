@@ -31,7 +31,7 @@ export default function TabLayout() {
           tabBarActiveTintColor: C.teal,
           tabBarInactiveTintColor: alpha(C.inkFaint, 0.8),
           tabBarLabelStyle: {
-            fontFamily: 'JetBrainsMono_700Bold',
+            fontFamily: 'SpaceMono_700Bold',
             fontSize: 9,
             letterSpacing: 1,
           },
