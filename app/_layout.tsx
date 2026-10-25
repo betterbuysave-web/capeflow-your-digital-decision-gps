@@ -2,9 +2,9 @@
 import '../global.css';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Inter_400Regular, Inter_700Bold, useFonts } from '@expo-google-fonts/inter';
+import { DMSans_400Regular, DMSans_700Bold, useFonts } from '@expo-google-fonts/dm-sans';
 import { BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
-import { JetBrainsMono_400Regular, JetBrainsMono_700Bold } from '@expo-google-fonts/jetbrains-mono';
+import { SpaceMono_400Regular, SpaceMono_700Bold } from '@expo-google-fonts/space-mono';
 import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
@@ -49,12 +49,13 @@ void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   // Only the weights the app actually renders; each unused TTF cost ~110–335 KB on web.
+  // Brand rule: the four site fonts only (Bebas Neue, Playfair Display, DM Sans, Space Mono).
   const [loaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_700Bold,
+    DMSans_400Regular,
+    DMSans_700Bold,
     BebasNeue_400Regular,
-    JetBrainsMono_400Regular,
-    JetBrainsMono_700Bold,
+    SpaceMono_400Regular,
+    SpaceMono_700Bold,
   });
 
   // Report uncaught JS errors and unhandled promise rejections to parent (Bilt preview iframe)

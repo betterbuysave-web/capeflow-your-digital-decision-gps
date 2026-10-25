@@ -7,7 +7,7 @@ import { CONFIDENCE_LEVELS, EXIT_QUESTIONS } from '@/lib/data/cafe';
 import { C, alpha, wash } from '@/lib/colors';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const INPUT_FONT = 'JetBrainsMono_400Regular';
+const INPUT_FONT = 'SpaceMono_400Regular';
 
 /** Station 05 — the exit card: four reflections plus a confidence read. */
 export function ExitCardSection() {

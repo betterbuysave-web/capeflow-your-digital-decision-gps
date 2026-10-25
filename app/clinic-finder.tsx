@@ -45,7 +45,7 @@ import {
 import { nearestZip } from '@/lib/nearestZip';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const INPUT_FONT = 'JetBrainsMono_400Regular';
+const INPUT_FONT = 'SpaceMono_400Regular';
 
 const open = (url: string) => {
   void Linking.openURL(url);

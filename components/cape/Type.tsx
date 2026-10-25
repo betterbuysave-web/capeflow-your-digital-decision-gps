@@ -21,7 +21,7 @@ export function Eyebrow({
     <Text
       accessibilityRole={accessibilityRole}
       className={cn('font-mono text-[12px]', className)}
-      style={{ color, letterSpacing: 3, fontFamily: 'JetBrainsMono_700Bold' }}
+      style={{ color, letterSpacing: 3, fontFamily: 'SpaceMono_700Bold' }}
     >
       {children}
     </Text>
@@ -49,7 +49,7 @@ export function Display({
   );
 }
 
-/** Body copy in Inter. */
+/** Body copy in DM Sans. */
 export function Body({
   children,
   className,
@@ -65,7 +65,7 @@ export function Body({
     <Text
       accessibilityRole={accessibilityRole}
       className={cn('text-[15px] leading-relaxed', className)}
-      style={{ color, fontFamily: 'Inter_400Regular' }}
+      style={{ color, fontFamily: 'DMSans_400Regular' }}
     >
       {children}
     </Text>
@@ -94,7 +94,7 @@ export function Mono({
       className={cn('text-[13px] leading-relaxed', className)}
       style={{
         color,
-        fontFamily: bold ? 'JetBrainsMono_700Bold' : 'JetBrainsMono_400Regular',
+        fontFamily: bold ? 'SpaceMono_700Bold' : 'SpaceMono_400Regular',
         letterSpacing: tracking,
       }}
     >
