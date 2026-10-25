@@ -1,11 +1,12 @@
 /**
  * CAPE Flow — Legal & Compliance content.
  *
- * Working drafts written to match how this app actually behaves: no accounts,
+ * Written to match how this app actually behaves: no accounts,
  * everything saved on the device, no analytics, no server sync. The same text is
  * published at theharnessproject.org/legal/cape-flow/. Edit the constants below
- * once and every document picks up the change. Have a licensed attorney review
- * the text before public release.
+ * once and every document picks up the change. Attorney review is in progress (Oct 2026);
+ * when the reviewed text lands, bump LEGAL_VERSION and remove the pending-review note in
+ * app/legal/index.tsx.
  *
  * Track rule: every document is readable on Green Track, so none of them names
  * Blue-only medications or links to Blue-only screens.
