@@ -22,7 +22,7 @@ import { registerServiceWorker } from '@/lib/registerServiceWorker';
 import { hideBootSplash } from '@/lib/bootSplash';
 import { reportErrorToParent } from '@/lib/reportPreviewError';
 import { InstallPrompt } from '@/components/InstallPrompt';
-import { DiscreetGate } from '@/components/cape/DiscreetGate';
+import { DiscreetGate, DiscreetShield } from '@/components/cape/DiscreetGate';
 import { C } from '@/lib/colors';
 import { HOME_TITLE } from '@/lib/usePageTitle';
 
@@ -112,48 +112,56 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: C.paper }}>
       <HeroUINativeProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: C.paper },
-          }}
-        >
-          <Stack.Screen name="index" options={{ title: HOME_TITLE }} />
-          <Stack.Screen name="gate" options={{ title: 'CAPE Flow', animation: 'fade' }} />
-          <Stack.Screen name="(tabs)" options={{ title: 'CAPE Flow' }} />
-          <Stack.Screen name="onboarding" options={{ title: 'Get Started' }} />
-          <Stack.Screen
-            name="sample"
-            options={{
-              title: 'Sample Scenario',
-              presentation: 'modal',
+        <DiscreetShield>
+          <Stack
+            screenOptions={{
+              headerShown: false,
               contentStyle: { backgroundColor: C.paper },
             }}
-          />
-          <Stack.Screen name="parents" options={{ title: 'Parents & Schools' }} />
-          <Stack.Screen name="module/[id]" options={{ title: 'Module' }} />
-          <Stack.Screen name="lesson/[n]" options={{ title: 'Lesson' }} />
-          <Stack.Screen name="book-part/[part]" options={{ title: 'CAPE track gate' }} />
-          <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
-          <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
-          <Stack.Screen name="tools/ghost-vault" options={{ title: 'Healthcare Anxiety Audit' }} />
-          <Stack.Screen name="tools/strongest-voice" options={{ title: 'Strongest Voice' }} />
-          <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
-          <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
-          <Stack.Screen name="tools/three-second" options={{ title: '3-Second Rule Challenge' }} />
-          <Stack.Screen name="tools/vibe-check" options={{ title: 'Vibe Check Navigator' }} />
-          <Stack.Screen name="tools/green-light" options={{ title: 'The Green Light Pivot' }} />
-          <Stack.Screen name="tools/care-navigator" options={{ title: 'Care Navigator' }} />
-          <Stack.Screen name="badges" options={{ title: 'Badges' }} />
-          <Stack.Screen name="clinic-finder" options={{ title: 'Clinic Finder' }} />
-          <Stack.Screen name="adherence-settings" options={{ title: 'Adherence Settings' }} />
-          <Stack.Screen name="about-cape" options={{ title: 'About CAPE Flow' }} />
-          <Stack.Screen name="legal/index" options={{ title: 'Legal & Privacy' }} />
-          <Stack.Screen name="legal/[doc]" options={{ title: 'Legal' }} />
-          <Stack.Screen name="protection-blueprint" options={{ title: 'Protection Blueprint' }} />
-          <Stack.Screen name="educational-library" options={{ title: 'Educational Library' }} />
-          <Stack.Screen name="emergency-directory" options={{ title: 'Emergency Directory' }} />
-        </Stack>
+          >
+            <Stack.Screen name="index" options={{ title: HOME_TITLE }} />
+            <Stack.Screen name="gate" options={{ title: 'CAPE Flow', animation: 'fade' }} />
+            <Stack.Screen name="(tabs)" options={{ title: 'CAPE Flow' }} />
+            <Stack.Screen name="onboarding" options={{ title: 'Get Started' }} />
+            <Stack.Screen
+              name="sample"
+              options={{
+                title: 'Sample Scenario',
+                presentation: 'modal',
+                contentStyle: { backgroundColor: C.paper },
+              }}
+            />
+            <Stack.Screen name="parents" options={{ title: 'Parents & Schools' }} />
+            <Stack.Screen name="module/[id]" options={{ title: 'Module' }} />
+            <Stack.Screen name="lesson/[n]" options={{ title: 'Lesson' }} />
+            <Stack.Screen name="book-part/[part]" options={{ title: 'CAPE track gate' }} />
+            <Stack.Screen name="sim/[id]" options={{ title: 'Midnight Sim' }} />
+            <Stack.Screen name="tools/consent-cafe" options={{ title: 'Consent Café' }} />
+            <Stack.Screen
+              name="tools/ghost-vault"
+              options={{ title: 'Healthcare Anxiety Audit' }}
+            />
+            <Stack.Screen name="tools/strongest-voice" options={{ title: 'Strongest Voice' }} />
+            <Stack.Screen name="tools/safety-circle" options={{ title: 'Safety Circle' }} />
+            <Stack.Screen name="tools/pep-clock" options={{ title: 'PEP Clock' }} />
+            <Stack.Screen
+              name="tools/three-second"
+              options={{ title: '3-Second Rule Challenge' }}
+            />
+            <Stack.Screen name="tools/vibe-check" options={{ title: 'Vibe Check Navigator' }} />
+            <Stack.Screen name="tools/green-light" options={{ title: 'The Green Light Pivot' }} />
+            <Stack.Screen name="tools/care-navigator" options={{ title: 'Care Navigator' }} />
+            <Stack.Screen name="badges" options={{ title: 'Badges' }} />
+            <Stack.Screen name="clinic-finder" options={{ title: 'Clinic Finder' }} />
+            <Stack.Screen name="adherence-settings" options={{ title: 'Adherence Settings' }} />
+            <Stack.Screen name="about-cape" options={{ title: 'About CAPE Flow' }} />
+            <Stack.Screen name="legal/index" options={{ title: 'Legal & Privacy' }} />
+            <Stack.Screen name="legal/[doc]" options={{ title: 'Legal' }} />
+            <Stack.Screen name="protection-blueprint" options={{ title: 'Protection Blueprint' }} />
+            <Stack.Screen name="educational-library" options={{ title: 'Educational Library' }} />
+            <Stack.Screen name="emergency-directory" options={{ title: 'Emergency Directory' }} />
+          </Stack>
+        </DiscreetShield>
         <InstallPrompt />
         <DiscreetGate />
       </HeroUINativeProvider>

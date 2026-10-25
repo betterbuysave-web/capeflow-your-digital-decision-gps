@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { AppState, Pressable, ScrollView, View } from 'react-native';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { AppState, Platform, Pressable, ScrollView, View } from 'react-native';
+import { create } from 'zustand';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { MessageSquare, Phone } from '@/lib/icons';
@@ -22,6 +23,50 @@ function useHydrated() {
   return hydrated;
 }
 
+/** Session-only unlock flag (never persisted): a reload or backgrounding locks again. */
+const useUnlock = create<{ unlocked: boolean; setUnlocked: (v: boolean) => void }>((set) => ({
+  unlocked: false,
+  setUnlocked: (unlocked) => set({ unlocked }),
+}));
+
+/** True while discreet mode is on and the PIN has not been entered this session. */
+export function useDiscreetLocked(): boolean {
+  const hydrated = useHydrated();
+  const pinHash = useCapeStore((s) => s.discreetPin);
+  const unlocked = useUnlock((s) => s.unlocked);
+  return hydrated && !!pinHash && !unlocked;
+}
+
+/**
+ * Wraps the app. While locked, everything underneath the lock screen is hidden from screen
+ * readers and removed from keyboard focus, so locked content can't be read or reached
+ * (accessibilityViewIsModal only works on iOS, not on the web build).
+ */
+export function DiscreetShield({ children }: { children: ReactNode }) {
+  const locked = useDiscreetLocked();
+  const ref = useRef<View>(null);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web') return;
+    const node: unknown = ref.current;
+    if (typeof HTMLElement === 'undefined' || !(node instanceof HTMLElement)) return;
+    if (locked) node.setAttribute('inert', '');
+    else node.removeAttribute('inert');
+  }, [locked]);
+
+  return (
+    <View
+      ref={ref}
+      style={{ flex: 1 }}
+      aria-hidden={locked}
+      accessibilityElementsHidden={locked}
+      importantForAccessibility={locked ? 'no-hide-descendants' : 'auto'}
+    >
+      {children}
+    </View>
+  );
+}
+
 /**
  * Discreet mode lock. When a PIN is set, the app opens locked and locks
  * again whenever it goes to the background. Emergency calls never need it.
@@ -29,7 +74,8 @@ function useHydrated() {
 export function DiscreetGate() {
   const hydrated = useHydrated();
   const pinHash = useCapeStore((s) => s.discreetPin);
-  const [unlocked, setUnlocked] = useState(false);
+  const unlocked = useUnlock((s) => s.unlocked);
+  const setUnlocked = useUnlock((s) => s.setUnlocked);
   const wasActive = useRef(true);
 
   useEffect(() => {
@@ -41,7 +87,7 @@ export function DiscreetGate() {
       }
     });
     return () => sub.remove();
-  }, []);
+  }, [setUnlocked]);
 
   if (!hydrated || !pinHash || unlocked) return null;
   return <LockScreen pinHash={pinHash} onUnlock={() => setUnlocked(true)} />;
