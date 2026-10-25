@@ -72,7 +72,7 @@ function HealthcareAuditContent() {
         >
           <Display className="text-4xl">Healthcare Anxiety Audit</Display>
           <Body className="mt-3">
-            Name the healthcare ghost. Practise the question. Make a plan for care.
+            Name the healthcare ghost. Practice the question. Make a plan for care.
           </Body>
           <ActivityGuide
             className="mt-5"

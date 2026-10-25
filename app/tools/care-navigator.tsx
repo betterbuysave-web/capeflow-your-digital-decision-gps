@@ -85,13 +85,13 @@ export default function CareNavigator() {
           className="mt-5"
           tint={TINT}
           minutes={15}
-          what="After high school, nobody walks you to the clinic. This mission practises the whole trip with a made-up person, so the real one feels familiar."
+          what="After high school, nobody walks you to the clinic. This mission practices the whole trip with a made-up person, so the real one feels familiar."
           steps={[
             'Meet Persona B and the clock you are racing.',
             'Name the healthcare ghost that would stop you.',
             'Use the Clinic Finder to pick two places.',
             'Map the exact bus, stop, and final walk.',
-            'Practise the front-desk script out loud.',
+            'Practice the front-desk script out loud.',
           ]}
           outcome="a clinic, a route, and a script you have already said three times."
         />

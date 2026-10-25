@@ -21,7 +21,7 @@ export interface CompassNode {
   callsign: string;
   hint: string;
   color: string;
-  /** Centre of this letter's pillar on the compass artwork, as fractions of width and height. */
+  /** Center of this letter's pillar on the compass artwork, as fractions of width and height. */
   spot: { x: number; y: number };
   green: string[];
   blue: string[];

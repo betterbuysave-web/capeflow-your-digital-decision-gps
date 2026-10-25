@@ -339,8 +339,10 @@ export default function Me() {
         </View>
 
         <View className="mt-8 gap-3">
+          {/* C-7: '/' redirects returning students straight back into the tabs, which stacked
+              Home over Me. The intro for returning students lives at /gate. */}
           <GradientAction
-            onPress={() => router.push('/')}
+            onPress={() => router.push('/gate')}
             className="flex-row items-center justify-center gap-2 rounded-full px-5 py-3.5"
           >
             <RotateCcw size={14} color={C.paper2} />

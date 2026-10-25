@@ -34,7 +34,7 @@ export const GHOSTS: GhostDef[] = [
     node: 'tools',
     counter: 'T — Tools & Trusted Support',
     shield: 'Intake line',
-    disarm: ['Practise the intake line: “Hi, I’d like to get tested today. Do you take walk-ins?”'],
+    disarm: ['Practice the intake line: “Hi, I’d like to get tested today. Do you take walk-ins?”'],
   },
   {
     // Preserve the saved plan ID when renaming the former Paper Trail Ghost.

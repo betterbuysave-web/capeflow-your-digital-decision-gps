@@ -3,7 +3,7 @@ import type { Track } from '@/lib/data/content';
 /**
  * The Strongest Voice Script Lab, student version of the facilitator playbook.
  * Knowing the rules is not enough; the lab turns one clear line into muscle
- * memory: write it, say it, practise it under pushback, then commit to it.
+ * memory: write it, say it, practice it under pushback, then commit to it.
  */
 
 export const VOICE_STEPS = [
@@ -239,7 +239,7 @@ const BLUE_ROLEPLAY: RolePlayCard[] = [
     setup: 'You start telling a trusted adult something that happened. They say:',
     pushback: '"Why didn\'t you tell me sooner?"',
     strong: '"I\'m telling you now because I trust you. I need help with what to do next."',
-    watchFor: ['Did not apologise for telling', 'Asked for help directly', 'Kept going'],
+    watchFor: ['Did not apologize for telling', 'Asked for help directly', 'Kept going'],
   },
 ];
 

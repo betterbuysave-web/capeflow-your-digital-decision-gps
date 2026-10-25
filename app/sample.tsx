@@ -30,7 +30,8 @@ export default function SampleScenario() {
         showsVerticalScrollIndicator={false}
       >
         <Eyebrow color={C.teal}>TRY IT NOW</Eyebrow>
-        <Display className="mt-3 text-4xl">What would you do at 1:47 AM?</Display>
+        {/* C-8: heading time follows the sample scenario's own timestamp. */}
+        <Display className="mt-3 text-4xl">{`What would you do at ${scenario.time}?`}</Display>
         <Body className="mt-3">
           A taste of the Midnight Simulator. Pick a response and see how the M.A.T.C.H. framework
           turns panic into a plan.

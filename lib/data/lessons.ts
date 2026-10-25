@@ -15,7 +15,7 @@ export interface BookLesson {
   track: 'both' | 'blue';
   /** What you'll be able to do, in student language. */
   learn: string[];
-  /** Words to practise out loud. */
+  /** Words to practice out loud. */
   sayIt?: string[];
   /** One private reflection prompt; the answer is saved on the device. */
   prompt: string;
@@ -66,7 +66,7 @@ export const BOOK_LESSONS: BookLesson[] = [
       'I’m going to head out now.',
       'I don’t decide big things at midnight.',
     ],
-    prompt: 'A boundary I want to set, my exact words, and where I’ll practise them this week.',
+    prompt: 'A boundary I want to set, my exact words, and where I’ll practice them this week.',
     takeaway: 'Your voice is your first line of protection — use it early and use it clearly.',
     tool: { label: 'Build your scripts in Strongest Voice', href: '/tools/strongest-voice' },
   },
@@ -152,7 +152,7 @@ export const BOOK_LESSONS: BookLesson[] = [
       'Choosing your pace is the base layer. Everything else is backup.',
       'Name the four kinds of science shields: barriers, vaccines, medications and testing.',
       'Know that choosing your pace is available every day, to everyone.',
-      'Practise your boundary sentence before pressure arrives.',
+      'Practice your boundary sentence before pressure arrives.',
     ],
     prompt: 'One sentence I would actually say to hold my pace.',
     takeaway: 'Choosing your pace is the base layer. Everything else is backup.',
@@ -215,7 +215,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     learn: [
       'Know four words that open doors: sliding scale, charity care, walk-in and Ryan White.',
       'Load six sentences into memory so you don’t have to invent them under stress.',
-      'The fix for nerves is not confidence. It is practised words.',
+      'The fix for nerves is not confidence. It is practiced words.',
       'These are ways to ask, not guarantees. Rules for teens differ by state and clinic.',
     ],
     sayIt: [
@@ -227,7 +227,7 @@ export const BOOK_LESSONS: BookLesson[] = [
       'Can I have a few minutes alone with the nurse?',
     ],
     prompt: 'The sentence that would be hardest for me to say, in my own words.',
-    takeaway: 'Practised words beat nerves every time.',
+    takeaway: 'Practiced words beat nerves every time.',
     tool: { label: 'Open the Clinic Finder', href: '/clinic-finder' },
   },
   {
@@ -272,7 +272,7 @@ export const BOOK_LESSONS: BookLesson[] = [
       'Anywhere in the US, dial 211 for local help, 24/7.',
     ],
     prompt:
-      'My Saturday Crisis Card: a 24-hour place, a locator, two crisis lines, a trusted adult and a local health centre.',
+      'My Saturday Crisis Card: a 24-hour place, a locator, two crisis lines, a trusted adult and a local health center.',
     takeaway: 'A generic list becomes a survival kit the moment you make it local.',
     tool: { label: 'Open the Clinic Finder', href: '/clinic-finder' },
   },
@@ -347,7 +347,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     prompt:
       'What an enthusiastic yes from someone I respect would sound like, and what I’d do if I didn’t hear it.',
     takeaway: 'Say what you mean, believe what you hear, and stop the second anything is unclear.',
-    tool: { label: 'Practise the Green Light Pivot', href: '/tools/green-light' },
+    tool: { label: 'Practice the Green Light Pivot', href: '/tools/green-light' },
   },
 ];
 

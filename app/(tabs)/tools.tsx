@@ -36,7 +36,7 @@ export default function ToolsTab() {
       ? [
           {
             title: 'THE GREEN LIGHT PIVOT',
-            detail: 'Practise the enthusiastic yes: say what you want and stay safe.',
+            detail: 'Practice the enthusiastic yes: say what you want and stay safe.',
             emoji: '🟢',
             tint: C.yes,
             href: '/tools/green-light',
@@ -58,7 +58,7 @@ export default function ToolsTab() {
           },
           {
             title: 'STRONGEST VOICE SCRIPT LAB',
-            detail: 'Write your line, say it three times, practise it against pushback.',
+            detail: 'Write your line, say it three times, practice it against pushback.',
             emoji: '🎤',
             tint: C.modC,
             href: '/tools/strongest-voice',
@@ -82,7 +82,7 @@ export default function ToolsTab() {
           },
           {
             title: 'STRONGEST VOICE SCRIPT LAB',
-            detail: 'Write your line, say it three times, practise it against pushback.',
+            detail: 'Write your line, say it three times, practice it against pushback.',
             emoji: '🎤',
             tint: C.modC,
             href: '/tools/strongest-voice',
@@ -301,8 +301,9 @@ export default function ToolsTab() {
           <Eyebrow color={C.violet}>MIDNIGHT SIMULATOR</Eyebrow>
           <Display className="mt-2 text-3xl">Run the hard nights first.</Display>
           <Body className="mt-2">
-            Pick a response and see how the M.A.T.C.H. framework turns panic into a plan. No scores,
-            no judgment.
+            Pick a response and see how the M.A.T.C.H. framework turns panic into a plan. No grades
+            — practice feedback only. XP is for finishing, not for picking a &quot;right&quot;
+            answer.
           </Body>
 
           <View className="mt-4 gap-3">

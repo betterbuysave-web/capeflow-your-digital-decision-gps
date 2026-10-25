@@ -112,7 +112,7 @@ export const PARENT_CARDS: ParentCard[] = [
     detail: 'Every topic, by grade band — no fine print',
     tint: C.teal,
     body: [
-      'CAPE Youth Edition Curriculum v3.0: 18 lessons, with content written for each grade band.',
+      'CAPE Youth Edition Curriculum v3.1: 18 lessons, with content written for each grade band.',
       'CAPE Youth Edition is supplemental and TEKS-aligned. It is not a district-adopted human sexuality curriculum. Follow local board policy.',
       'Parts 3 and 5 are full-page gates for Green Track, not footnotes.',
       'Every lesson lists its takeaways up front, so you can read what a student reads in under a minute.',
