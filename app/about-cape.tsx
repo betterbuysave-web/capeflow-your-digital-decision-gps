@@ -113,30 +113,35 @@ export default function AboutCape() {
               {
                 letter: 'M',
                 name: 'My Medical / Health Choices',
+                callsign: 'Health Armor',
                 detail: 'Self-worth, check-ups, vaccines, medical choices.',
                 color: C.modM,
               },
               {
                 letter: 'A',
-                name: 'BUILT-IN RADAR',
+                name: 'Awareness',
+                callsign: 'Built-In Radar',
                 detail: 'Reading the room and trusting your gut early.',
                 color: C.modA,
               },
               {
                 letter: 'T',
                 name: 'Tools & Trusted Support',
+                callsign: 'Safety Kit',
                 detail: 'Practical tools, access, and trusted support.',
                 color: C.modT,
               },
               {
                 letter: 'C',
                 name: 'Clear Communication & Consent',
+                callsign: 'Strongest Voice',
                 detail: 'F.R.I.E.S. consent and the words that hold a line.',
                 color: C.modC,
               },
               {
                 letter: 'H',
                 name: 'Healthy Habits / Choosing Your Pace',
+                callsign: 'Daily Superpower',
                 detail: 'Sleep, movement, habits, digital legacy.',
                 color: C.modH,
               },
@@ -153,7 +158,7 @@ export default function AboutCape() {
                 <MatchDial letter={node.letter} size={48} />
                 <View className="flex-1">
                   <Mono bold color={node.color} className="text-[13px]" tracking={1.5}>
-                    {node.name}
+                    {node.name} · {node.callsign}
                   </Mono>
                   <Mono className="mt-0.5 text-[13px]">{node.detail}</Mono>
                 </View>

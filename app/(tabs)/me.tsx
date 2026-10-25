@@ -130,6 +130,9 @@ export default function Me() {
         <View className="mt-8">
           <Eyebrow color={C.teal}>SafER SCORE BREAKDOWN</Eyebrow>
           <Display className="mt-2 text-3xl">{score} / 100</Display>
+          <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.85)}>
+            {`Module lessons are short MATCH-letter steps (${availableLessons.length} on your track), separate from the book's chapters. Point weights depend on your track's activities; the total is always 100.`}
+          </Mono>
           <View className="mt-4 gap-4">
             <ScoreRow
               label="MODULE LESSONS"

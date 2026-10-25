@@ -93,6 +93,12 @@ export default function Learn() {
           <Body className="mt-2">
             Follow along with your class. Your notes stay on this device.
           </Body>
+          {/* C-3: explain the count. Green copy never names Blue-only content (track rule). */}
+          <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.85)}>
+            {track === 'blue'
+              ? '18 lessons = the 18 chapters of the CAPE book.'
+              : 'Lesson numbers match the chapters of your CAPE book, so some numbers are skipped on your track.'}
+          </Mono>
           {([1, 2, 3, 4, 5] as const)
             .filter((part) => BOOK_PARTS[part].track === 'both' || track === 'blue')
             .map((part) => {
