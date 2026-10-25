@@ -8,7 +8,7 @@
  *   70% warm paper neutrals · 20% CAPE Teal structure · 10% CAPE Gold accents,
  *   with P-Magenta and E-Purple reserved for thin accent work only.
  *
- * Every brand colour ships in two tiers, because gold and teal at their locked
+ * Every brand color ships in two tiers, because gold and teal at their locked
  * spec values do not carry AA contrast as small type on cream:
  *   `teal` / `gold`             → depth-corrected, safe for 9–12px text
  *   `tealBright` / `goldBright` → the locked spec values, for rules, borders,

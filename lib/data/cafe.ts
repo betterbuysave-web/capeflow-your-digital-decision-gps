@@ -64,7 +64,7 @@ export const FRIES_CARDS: FriesCard[] = [
     nickname: 'The ingredient list',
     rule: 'Consent requires full, honest information. No hidden ingredients, no misleading descriptions. A yes built on a lie or an omission is not a yes.',
     cafeRule:
-      'A dish labelled vegetarian that secretly contains meat is a betrayal of trust. The choice only works with accurate information.',
+      'A dish labeled vegetarian that secretly contains meat is a betrayal of trust. The choice only works with accurate information.',
     example: {
       green:
         "A friend says it's just you two at the movies, but it's really a big group you don't know.",
@@ -174,7 +174,7 @@ const GREEN_QUIZ: CafeQuizQuestion[] = [
     options: ['Freely given', 'Enthusiastic', 'Specific', 'Informed'],
     answer: 0,
     correct:
-      'Yes. Stepping back was a no. Shame plus past behaviour was used to override it — that is pressure, not a free choice.',
+      'Yes. Stepping back was a no. Shame plus past behavior was used to override it — that is pressure, not a free choice.',
     wrong:
       'Jordan hugged them to escape an uncomfortable moment built out of guilt. Which letter covers pressure and coercion?',
   },
@@ -496,7 +496,7 @@ const GREEN_PRACTICE: PracticeCard[] = [
       },
     ],
     reflection:
-      'Which letter does the problem line push against? Does cropping or "posting privately" change whether consent was given? How does Person A honour Specific here?',
+      'Which letter does the problem line push against? Does cropping or "posting privately" change whether consent was given? How does Person A honor Specific here?',
   },
   {
     id: 'practice-cancel',

@@ -96,6 +96,7 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
                 label={returning ? 'CHANGE MY TRACK' : 'GET STARTED'}
                 onPress={() => router.push('/onboarding')}
               />
+              {/* C-9: intentional — the sample skips track selection (benign, on both tracks). Do not gate it. */}
               <GhostButton label="TRY A SAMPLE" onPress={() => router.push('/sample')} />
             </View>
 

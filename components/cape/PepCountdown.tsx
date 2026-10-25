@@ -61,7 +61,7 @@ export function pepTint(left: number, expired: boolean): string {
   return C.flame;
 }
 
-/** Console colours: neon on the dark mission panel. */
+/** Console colors: neon on the dark mission panel. */
 const NEON = { amber: '#FF7A2F', red: '#FF3B4E', cyan: '#3FE0D0', dim: '#2B3A47', grid: '#1E2E3B' };
 
 function neonFor(left: number, expired: boolean, running: boolean): string {

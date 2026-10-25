@@ -94,7 +94,7 @@ export default function SimDetail() {
           tint={C.violet}
           minutes={3}
           what={
-            'A Midnight Sim is a practice run of a hard moment. There is no grade and no judgment.'
+            "A Midnight Sim is a practice run of a hard moment. No grades — practice feedback only. You earn XP for finishing a scenario, not for picking a 'right' answer."
           }
           steps={[
             'Read the message.',

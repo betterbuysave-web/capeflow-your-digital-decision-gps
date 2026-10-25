@@ -5,6 +5,14 @@ import type { Track } from '@/lib/data/content';
 /**
  * The five M.A.T.C.H. nodes, each placed on its pillar in the
  * "5 Decision GPS Superpowers" compass artwork.
+ *
+ * Canonical youth wording (curriculum v3.1, C-2): letter · label · node name.
+ * M My Medical / Health Choices · Health Armor
+ * A Awareness · Built-In Radar
+ * T Tools & Trusted Support · Safety Kit
+ * C Clear Communication & Consent · Strongest Voice
+ * H Healthy Habits / Choosing Your Pace · Daily Superpower
+ * Use these exact labels everywhere (compass, cards, lesson titles, About page).
  */
 export interface CompassNode {
   id: ModuleId;
@@ -13,7 +21,7 @@ export interface CompassNode {
   callsign: string;
   hint: string;
   color: string;
-  /** Centre of this letter's pillar on the compass artwork, as fractions of width and height. */
+  /** Center of this letter's pillar on the compass artwork, as fractions of width and height. */
   spot: { x: number; y: number };
   green: string[];
   blue: string[];
@@ -28,6 +36,7 @@ export const COMPASS_NODES: CompassNode[] = [
     callsign: 'Health Armor',
     hint: 'Baseline knowledge, vaccines',
     color: C.modM,
+    // Intentionally narrower on Green Track: health choices only, no medical shields (C-2).
     green: [
       'Your body is the asset. Check-ups, sleep, and dental visits are armor maintenance, not punishment.',
       'Know your baseline: allergies, medications, and the last time you saw a clinician.',
@@ -45,7 +54,7 @@ export const COMPASS_NODES: CompassNode[] = [
     id: 'awareness',
     spot: { x: 0.137, y: 0.434 },
     letter: 'A',
-    title: 'Awareness of Self & Surroundings',
+    title: 'Awareness',
     callsign: 'Built-In Radar',
     hint: 'Trusting your gut, early warning signs',
     color: C.modA,

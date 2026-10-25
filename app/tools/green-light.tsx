@@ -147,7 +147,7 @@ export default function GreenLightPivot() {
 
           {step === 3 ? (
             <View>
-              <Eyebrow color={TINT}>STEP 4 · THE DRILL: PRACTISING THE PIVOT</Eyebrow>
+              <Eyebrow color={TINT}>STEP 4 · THE DRILL: PRACTICING THE PIVOT</Eyebrow>
               <View className="mt-3 gap-2">
                 {PIVOT_DRILL_STEPS.map((item, i) => (
                   <Body key={item.title}>{`${i + 1}. ${item.title}: ${item.detail}`}</Body>

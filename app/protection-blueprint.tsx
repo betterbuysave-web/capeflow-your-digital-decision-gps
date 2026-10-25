@@ -290,6 +290,9 @@ export default function ProtectionBlueprint() {
         <View className="mt-8">
           <Eyebrow color={C.teal}>LAYER BREAKDOWN</Eyebrow>
           <Display className="mt-2 text-3xl">Where the 100 points sit.</Display>
+          <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.85)}>
+            {`Module lessons are short MATCH-letter steps (${lessonsAvailable} on your track), separate from the book's chapters. Point weights depend on your track's activities; the total is always 100.`}
+          </Mono>
           <View className="mt-4 gap-4">
             <LayerRow
               label="MODULE LESSONS"

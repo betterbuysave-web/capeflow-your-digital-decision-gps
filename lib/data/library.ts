@@ -141,7 +141,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     body: [
       'Autonomy means you get to decide who touches you, how, and when — hugs and hair included.',
       'It also means you get a say in your own health care as you get older.',
-      'Practising on small things makes the big ones survivable.',
+      'Practicing on small things makes the big ones survivable.',
     ],
     realTalk: 'You do not owe anyone a hug. "I\'m good, high five?" is a complete sentence.',
     category: 'body',
@@ -527,7 +527,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
     short: 'What you do when the primary plan fails.',
     body: [
       'Every plan needs a second layer: a ride that is not the ride, a charged phone, cash, a friend who knows the address.',
-      'Rehearse the pivot out loud. Under stress you will run whatever you practised.',
+      'Rehearse the pivot out loud. Under stress you will run whatever you practiced.',
       'Leaving early is a successful outcome, not a failed night.',
     ],
     realTalk: 'The plan surviving contact with reality is rare. Having a second one is normal.',
@@ -628,7 +628,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
       'Store them somewhere that is not a back pocket or a hot car.',
     ],
     realTalk:
-      'Fumbling is normal and survivable. Practising once, alone, removes most of the fumble.',
+      'Fumbling is normal and survivable. Practicing once, alone, removes most of the fumble.',
     category: 'prevention',
     source: 'CDC · Condom effectiveness',
     keywords: ['condom', 'barrier', 'dam', 'lube', 'latex'],
@@ -660,7 +660,7 @@ export const LIBRARY_ENTRIES: LibraryEntry[] = [
       'None of them protect against STIs, which is why barriers stay in the plan.',
     ],
     realTalk:
-      'Pick the method that fits the life you actually have, not the one you wish you were organised enough for.',
+      'Pick the method that fits the life you actually have, not the one you wish you were organized enough for.',
     category: 'prevention',
     source: 'CDC · US Selected Practice Recommendations for Contraceptive Use',
     keywords: ['birth control', 'contraception', 'iud', 'implant', 'pill'],

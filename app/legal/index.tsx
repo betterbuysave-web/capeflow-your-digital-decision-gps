@@ -69,7 +69,9 @@ export default function LegalIndex() {
         </View>
 
         <Mono className="mt-6 text-[12px]" color={C.inkFaint}>
-          Version {LEGAL_VERSION} · Last updated {LEGAL_LAST_UPDATED}. Also published at
+          Legal pack v{LEGAL_VERSION}, last updated {LEGAL_LAST_UPDATED}. These documents describe
+          how this app stores and handles data. A review by a licensed attorney is in progress. We
+          will post the reviewed version here and update the date above. Also published at
           theharnessproject.org/legal. Questions: {LEGAL_CONTACT_EMAIL}.
         </Mono>
 

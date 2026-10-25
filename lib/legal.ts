@@ -1,11 +1,12 @@
 /**
  * CAPE Flow — Legal & Compliance content.
  *
- * Working drafts written to match how this app actually behaves: no accounts,
+ * Written to match how this app actually behaves: no accounts,
  * everything saved on the device, no analytics, no server sync. The same text is
  * published at theharnessproject.org/legal/cape-flow/. Edit the constants below
- * once and every document picks up the change. Have a licensed attorney review
- * the text before public release.
+ * once and every document picks up the change. Attorney review is in progress (Oct 2026);
+ * when the reviewed text lands, bump LEGAL_VERSION and remove the pending-review note in
+ * app/legal/index.tsx.
  *
  * Track rule: every document is readable on Green Track, so none of them names
  * Blue-only medications or links to Blue-only screens.
@@ -65,8 +66,8 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         body: 'The App is free. It has no purchases, subscriptions, ads, or paywalls, and it never asks for payment details.',
       },
       {
-        heading: '4. Your licence',
-        body: 'We give you a personal, limited, revocable, non-exclusive, non-transferable licence to use the App on devices you own or are allowed to use, for your own learning or for teaching. All rights not expressly granted are reserved.',
+        heading: '4. Your license',
+        body: 'We give you a personal, limited, revocable, non-exclusive, non-transferable license to use the App on devices you own or are allowed to use, for your own learning or for teaching. All rights not expressly granted are reserved.',
       },
       {
         heading: '5. Things you agree not to do',
@@ -80,7 +81,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: '6. What the App is, and is not',
-        body: 'The App is an educational tool. It helps you practise decisions, set boundaries, and find trusted help. It is not a doctor, a counsellor, a crisis service, or a way to contact anyone automatically. It cannot watch for danger or make a report. See the Health & Safety Disclaimer.',
+        body: 'The App is an educational tool. It helps you practice decisions, set boundaries, and find trusted help. It is not a doctor, a counselor, a crisis service, or a way to contact anyone automatically. It cannot watch for danger or make a report. See the Health & Safety Disclaimer.',
       },
       {
         heading: '7. What you save',
@@ -92,7 +93,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: '9. Links to other services',
-        body: 'The App links to outside websites and phone numbers, such as crisis lines and clinic finders. Those services are run by other organisations under their own terms and privacy policies. We do not control them and are not responsible for them.',
+        body: 'The App links to outside websites and phone numbers, such as crisis lines and clinic finders. Those services are run by other organizations under their own terms and privacy policies. We do not control them and are not responsible for them.',
       },
       {
         heading: '10. Changes',
@@ -211,7 +212,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: 'The App cannot watch or report',
-        body: 'No one monitors what you enter. The App cannot notice danger, contact your Safety Circle, or make a report. If you tell a teacher, counsellor, clinician, or facilitator about danger or abuse, they may be required by law to share it so you can be kept safe. You can ask them what they must share before you talk.',
+        body: 'No one monitors what you enter. The App cannot notice danger, contact your Safety Circle, or make a report. If you tell a teacher, counselor, clinician, or facilitator about danger or abuse, they may be required by law to share it so you can be kept safe. You can ask them what they must share before you talk.',
       },
       {
         heading: 'Education, not medical advice',
@@ -223,11 +224,11 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: 'Outside resources',
-        body: 'Hotlines, clinic finders, and websites listed in the App are run by other organisations. Their hours, services, and details can change. Check with them directly.',
+        body: 'Hotlines, clinic finders, and websites listed in the App are run by other organizations. Their hours, services, and details can change. Check with them directly.',
       },
       {
         heading: 'Talk to trusted adults',
-        body: 'The App works best alongside the people in your Safety Circle — a parent or guardian, a school counsellor or nurse, a teacher, or a clinician. Bring your questions to them.',
+        body: 'The App works best alongside the people in your Safety Circle — a parent or guardian, a school counselor or nurse, a teacher, or a clinician. Bring your questions to them.',
       },
       {
         heading: 'Report a mistake',
@@ -290,7 +291,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         bullets: [
           'A light, high-contrast design; we aim to keep all text above AA contrast on its background.',
           'Large touch targets for buttons, chips, and track choices.',
-          'Meaning is never shown by colour alone; YES, MAYBE, and NO are always written out.',
+          'Meaning is never shown by color alone; YES, MAYBE, and NO are always written out.',
           'Screen-reader labels and roles on buttons and choices. MATCH letter dials are marked decorative where a text label already names the letter.',
           'Layouts that reflow at larger system text sizes.',
           'Short, purposeful motion and haptics, with no flashing content.',

@@ -95,6 +95,13 @@ export default function Parents() {
               );
             })}
           </View>
+          {/* C-1 (decided Oct 25, 2026): the Blue gate is a warning screen by design, not age
+              verification. Do not turn it into verification without a product decision. */}
+          <Mono className="mt-3 text-[12px]" color={alpha(C.inkFaint, 0.85)}>
+            CAPE Flow does not verify age or grade. The Blue Track (Grades 9–12) is behind a warning
+            screen, and its content is kept separate from the Green Track (Grades 6–8). Schools
+            using CAPE Flow follow their own written parent-consent process.
+          </Mono>
         </View>
 
         <View className="mt-8">

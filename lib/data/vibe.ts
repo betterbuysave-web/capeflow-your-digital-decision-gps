@@ -268,4 +268,4 @@ export const EVERYDAY_YES = [
 ] as const;
 
 export const PILOT_CLOSE =
-  'Clear communication is never a mood killer. When you stop bracing for the fire drill and start practising the enthusiastic yes, you go from passenger to pilot. Know your worth. Protect your peace. Hit the gas safely.';
+  'Clear communication is never a mood killer. When you stop bracing for the fire drill and start practicing the enthusiastic yes, you go from passenger to pilot. Know your worth. Protect your peace. Hit the gas safely.';

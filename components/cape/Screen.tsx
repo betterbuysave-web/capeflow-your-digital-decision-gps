@@ -61,7 +61,7 @@ export function StackHeader({
   tint?: string;
   fallback?: Href;
   right?: ReactNode;
-  /** Overrides the default back behaviour (history, then `fallback`). */
+  /** Overrides the default back behavior (history, then `fallback`). */
   onBack?: () => void;
 }) {
   usePageTitle(title, 'CAPE Flow');

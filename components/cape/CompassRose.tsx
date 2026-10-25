@@ -10,7 +10,7 @@ const HOTSPOT = 52;
 
 /**
  * "5 Decision GPS Superpowers" compass artwork with a tap target on each
- * M.A.T.C.H. pillar. The selected pillar gets a ring in its module colour.
+ * M.A.T.C.H. pillar. The selected pillar gets a ring in its module color.
  */
 export function CompassRose({
   nodes,

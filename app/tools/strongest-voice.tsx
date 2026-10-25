@@ -137,13 +137,13 @@ export default function StrongestVoice() {
             className="mt-5"
             tint={TINT}
             minutes={15}
-            what="Athletes practise plays. Musicians practise scales. Here you practise the words you need, so they are ready when pressure shows up."
+            what="Athletes practice plays. Musicians practice scales. Here you practice the words you need, so they are ready when pressure shows up."
             steps={[
               'Check the five F.R.I.E.S. dials.',
               'Name the fear that makes speaking up hard.',
               'Learn the three parts of a script, then build yours.',
               'Say it out loud three times.',
-              'Practise it against pushback.',
+              'Practice it against pushback.',
               'Commit to one real situation this week.',
             ]}
             outcome="one script in your own words, saved on this phone."
@@ -543,7 +543,7 @@ function RolePlay({ track, onNext }: { track: Track; onNext: () => void }) {
   return (
     <View>
       <Eyebrow color={TINT}>STEP 6 · ROLE-PLAY</Eyebrow>
-      <Display className="mt-2 text-3xl">Practise against pushback.</Display>
+      <Display className="mt-2 text-3xl">Practice against pushback.</Display>
       <Body className="mt-2">
         Read the pushback, then type or say your answer using your script. With friends, take turns
         as Speaker, Listener, and Observer.

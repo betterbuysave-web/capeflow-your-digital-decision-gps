@@ -42,6 +42,9 @@ export default function BadgeCabinet() {
             </Mono>
           </View>
           <Rail value={(earned / BADGES.length) * 100} color={C.gold} height={5} />
+          <Mono className="mt-2 text-[12px]" color={alpha(C.inkFaint, 0.85)}>
+            Your badge total depends on the activities on your track.
+          </Mono>
         </View>
 
         <View className="mt-6 flex-row flex-wrap gap-3">

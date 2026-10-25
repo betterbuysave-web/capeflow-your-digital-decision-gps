@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 /**
  * Shared action surface. Solid by default: CAPE Teal, or the caller's own
  * `backgroundColor` / `tint` (use flame or red for urgent actions). The
- * four-colour CAPE gradient is reserved for `brand` moments such as Get Started.
+ * four-color CAPE gradient is reserved for `brand` moments such as Get Started.
  */
 export function GradientAction({
   children,
@@ -66,7 +66,7 @@ export function GradientAction({
   );
 }
 
-/** Primary action pill. `brand` turns on the four-colour CAPE gradient. */
+/** Primary action pill. `brand` turns on the four-color CAPE gradient. */
 export function MetallicButton({
   label,
   onPress,
