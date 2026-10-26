@@ -11,7 +11,14 @@ import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
-import { DISCLAIMER, PRIVACY_NOTE, SOURCES, TRACKS, trackFor } from '@/lib/data/content';
+import {
+  DISCLAIMER,
+  PRIVACY_NOTE,
+  SOURCES,
+  SOURCES_CHECKED,
+  TRACKS,
+  trackFor,
+} from '@/lib/data/content';
 import { SAFETY_EXCEPTION } from '@/lib/data/ghosts';
 import { PIPELINE_COPY, CAPE_APP_COPY } from '@/lib/data/canon';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -284,6 +291,9 @@ export default function AboutCape() {
               </View>
             ))}
           </View>
+          <Mono className="mt-3 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
+            Sources checked {SOURCES_CHECKED}.
+          </Mono>
         </View>
 
         <View className="mt-8 items-center">

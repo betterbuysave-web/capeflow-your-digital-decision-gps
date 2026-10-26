@@ -29,6 +29,7 @@ import {
   PARENT_CARDS,
   PRIVACY_SHORT,
   SOURCES,
+  SOURCES_CHECKED,
 } from '@/lib/data/content';
 import { PIPELINE_COPY } from '@/lib/data/canon';
 import { SAMPLE_SCENARIO } from '@/lib/data/scenarios';
@@ -446,6 +447,9 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
               </View>
             ))}
           </View>
+          <Mono className="mt-3 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
+            Sources checked {SOURCES_CHECKED}.
+          </Mono>
         </View>
 
         {/* CLOSER */}
