@@ -174,8 +174,15 @@ export interface SourceRef {
   detail: string;
 }
 
+/** W-8: the date this source list was last checked against current editions. */
+export const SOURCES_CHECKED = 'October 26, 2026';
+
 export const SOURCES: SourceRef[] = [
-  { name: 'CDC STI Surveillance', detail: 'Sexually Transmitted Disease Surveillance 2023' },
+  {
+    name: 'CDC STI Surveillance',
+    detail:
+      'Sexually Transmitted Infections Surveillance, 2024 (Provisional), released September 2025',
+  },
   { name: 'CDC Prevention Guidelines', detail: 'Clinical prevention and urgent-care guidance' },
   { name: 'Guttmacher Institute', detail: 'Adolescent reproductive health pressure data' },
   { name: 'JAMA Pediatrics', detail: 'Youth healthcare avoidance & anxiety studies' },

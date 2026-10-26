@@ -4,8 +4,9 @@ import { Mono } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
+/** W-12: the mandated footer line, word for word as on theharnessproject.org. Do not reword or split it. */
 export const BRAND_FOOTER_COPY =
-  'The HARNESS Project LLC | CAPE Youth Edition | CAPE Flow App | theharnessproject.org. For educational purposes only. Not medical advice. © 2026 Christopher Zacharie and The HARNESS Project LLC. All rights reserved.';
+  'The HARNESS Project LLC | theharnessproject.org. For educational purposes only. Not medical advice. © 2026 Christopher Zacharie and The HARNESS Project LLC. All rights reserved.';
 
 /** Mandatory HARNESS Project footer. */
 export function BrandFooter({ className }: { className?: string }) {
@@ -22,14 +23,8 @@ export function BrandFooter({ className }: { className?: string }) {
       <Mono bold className="mb-2 text-center text-[13px]" color={C.teal}>
         Your CAPE is yours to wear—every single day
       </Mono>
-      <Mono bold className="text-center text-[13px]" color={C.inkSoft}>
-        The HARNESS Project LLC | CAPE Youth Edition | CAPE Flow App | theharnessproject.org.
-      </Mono>
-      <Mono className="mt-1 text-center text-[12px]" color={C.inkFaint}>
-        For educational purposes only. Not medical advice.
-      </Mono>
-      <Mono className="text-center text-[12px]" color={C.inkFaint}>
-        © 2026 Christopher Zacharie and The HARNESS Project LLC. All rights reserved.
+      <Mono className="text-center text-[12px] leading-5" color={C.inkSoft}>
+        {BRAND_FOOTER_COPY}
       </Mono>
     </View>
   );

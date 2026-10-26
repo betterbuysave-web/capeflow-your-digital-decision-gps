@@ -24,7 +24,7 @@ import { Chip, GradientAction, TintedRow } from '@/components/cape/Buttons';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { C, alpha } from '@/lib/colors';
 import { badgesForTrack } from '@/lib/data/badges';
-import { PRIVACY_NOTE, SOURCES, trackFor } from '@/lib/data/content';
+import { PRIVACY_NOTE, SOURCES, SOURCES_CHECKED, trackFor } from '@/lib/data/content';
 import {
   TOTALS,
   VAULT_TARGET,
@@ -336,6 +336,9 @@ export default function Me() {
               </View>
             ))}
           </View>
+          <Mono className="mt-3 text-[12px]" color={alpha(C.inkFaint, 0.6)}>
+            Sources checked {SOURCES_CHECKED}.
+          </Mono>
         </View>
 
         <View className="mt-8 gap-3">
