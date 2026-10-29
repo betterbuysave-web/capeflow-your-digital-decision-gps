@@ -9,6 +9,7 @@ import {
   ScrollView,
   useWindowDimensions,
   View,
+  type ViewInstance,
 } from 'react-native';
 import { X } from '@/lib/icons';
 
@@ -35,7 +36,7 @@ export function AccessibleSheet({
   footer?: ReactNode;
 }) {
   const { height } = useWindowDimensions();
-  const headingRef = useRef<View>(null);
+  const headingRef = useRef<ViewInstance>(null);
 
   return (
     <Modal
@@ -47,7 +48,7 @@ export function AccessibleSheet({
       onShow={() => {
         if (Platform.OS !== 'web' && headingRef.current) {
           const handle = findNodeHandle(headingRef.current);
-          if (handle !== null) AccessibilityInfo.setAccessibilityFocus(handle);
+          if (typeof handle === 'number') AccessibilityInfo.setAccessibilityFocus(handle);
         }
       }}
     >

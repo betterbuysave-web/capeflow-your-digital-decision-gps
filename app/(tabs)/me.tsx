@@ -284,7 +284,12 @@ export default function Me() {
             </View>
           </TintedRow>
 
-          <TintedRow tint={C.magenta} fill={0.06} stroke={0.2} onPress={() => router.push('/legal')}>
+          <TintedRow
+            tint={C.magenta}
+            fill={0.06}
+            stroke={0.2}
+            onPress={() => router.push('/legal')}
+          >
             <View className="flex-row items-center gap-3">
               <FileText size={18} color={C.magenta} />
               <View className="flex-1">

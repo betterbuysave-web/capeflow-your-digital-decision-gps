@@ -98,7 +98,14 @@ export function MyGearIcon({ color, focused, size }: IconProps) {
   return (
     <Frame size={size}>
       <Path d="M8.6 14.4L7 21.2L12 19L17 21.2L15.4 14.4" {...line(color)} />
-      <Circle cx={12} cy={9.4} r={6.4} {...line(accent)} fill={focused ? accent : 'none'} fillOpacity={0.18} />
+      <Circle
+        cx={12}
+        cy={9.4}
+        r={6.4}
+        {...line(accent)}
+        fill={focused ? accent : 'none'}
+        fillOpacity={0.18}
+      />
       <Path d="M9.4 9.5L11.2 11.3L14.7 7.8" {...line(focused ? C.ink : color)} />
     </Frame>
   );

@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import { AppState, Platform, Pressable, ScrollView, View } from 'react-native';
+import { AppState, Platform, Pressable, ScrollView, View, type ViewInstance } from 'react-native';
 import { create } from 'zustand';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
@@ -44,7 +44,7 @@ export function useDiscreetLocked(): boolean {
  */
 export function DiscreetShield({ children }: { children: ReactNode }) {
   const locked = useDiscreetLocked();
-  const ref = useRef<View>(null);
+  const ref = useRef<ViewInstance>(null);
 
   useEffect(() => {
     if (Platform.OS !== 'web') return;

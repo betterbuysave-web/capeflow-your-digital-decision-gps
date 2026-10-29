@@ -5,6 +5,7 @@
  * stays in the facilitator curriculum and is never shown here. Blue-track
  * lessons (Parts 3 and 5) do not exist on the Green track.
  */
+import type { Href } from 'expo-router';
 import type { Track } from '@/lib/data/content';
 
 export interface BookLesson {
@@ -20,9 +21,9 @@ export interface BookLesson {
   /** One private reflection prompt; the answer is saved on the device. */
   prompt: string;
   takeaway: string;
-  tool?: { label: string; href: string };
+  tool?: { label: string; href: Href & string };
   /** Green Track version of the tool, when the Blue one does not fit grades 6–8. */
-  greenTool?: { label: string; href: string };
+  greenTool?: { label: string; href: Href & string };
 }
 
 export const BOOK_PARTS: Record<BookLesson['part'], { title: string; track: 'both' | 'blue' }> = {

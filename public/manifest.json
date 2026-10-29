@@ -30,8 +30,5 @@
   ],
   "id": "/",
   "lang": "en-US",
-  "categories": [
-    "health",
-    "education"
-  ]
+  "categories": ["health", "education"]
 }

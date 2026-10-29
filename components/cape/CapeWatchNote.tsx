@@ -13,7 +13,8 @@ const CAPE_WATCH_RATIO = 578 / 700;
 /** The core mantra, word for word. */
 export const CAPE_MANTRA = 'Your CAPE is yours to wear—every single day.';
 /** How the app explains the mantra: the CAPE is a watch you put on every day. */
-export const CAPE_WATCH_LINE = 'Wear it like a watch: put it on every day, check it before every decision.';
+export const CAPE_WATCH_LINE =
+  'Wear it like a watch: put it on every day, check it before every decision.';
 
 /**
  * Wherever the app says "wear your CAPE every day", it points to the watch:

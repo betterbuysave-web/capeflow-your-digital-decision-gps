@@ -9,6 +9,7 @@ import {
   ScrollView,
   useWindowDimensions,
   View,
+  type ViewInstance,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
@@ -168,7 +169,7 @@ function NodeBriefing({
   onClose: () => void;
 }) {
   const { height } = useWindowDimensions();
-  const headingRef = useRef<View>(null);
+  const headingRef = useRef<ViewInstance>(null);
 
   return (
     <Modal
@@ -179,7 +180,7 @@ function NodeBriefing({
       onShow={() => {
         if (Platform.OS !== 'web' && headingRef.current) {
           const heading = findNodeHandle(headingRef.current);
-          if (heading !== null) AccessibilityInfo.setAccessibilityFocus(heading);
+          if (typeof heading === 'number') AccessibilityInfo.setAccessibilityFocus(heading);
         }
       }}
       statusBarTranslucent

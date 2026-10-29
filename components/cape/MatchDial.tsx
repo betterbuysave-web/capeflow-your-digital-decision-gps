@@ -133,7 +133,15 @@ export function MatchDial({
         {/* Face */}
         <Circle cx="50" cy="50" r="33" fill={edge} />
         <Circle cx="50" cy="50" r="31.5" fill={`url(#face${uid})`} />
-        <Circle cx="50" cy="50" r="31.5" fill="none" stroke={base} strokeOpacity={0.35} strokeWidth="1" />
+        <Circle
+          cx="50"
+          cy="50"
+          r="31.5"
+          fill="none"
+          stroke={base}
+          strokeOpacity={0.35}
+          strokeWidth="1"
+        />
 
         {/* Pointer chevron at twelve o'clock */}
         <Path
