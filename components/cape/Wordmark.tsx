@@ -17,7 +17,7 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
         accessibilityLabel="CAPE Flow. The Digital Decision GPS. Moving from Anxiety to Agency. System Active. Wear Your CAPE."
         accessible
         resizeMode="contain"
-        style={{ width: '100%', height: (width * 1024) / 1834 }}
+        style={{ width: '100%', height: (width * 9) / 16 }}
       />
     </View>
   );

@@ -10,6 +10,7 @@ import { BrandFooter } from '@/components/cape/BrandFooter';
 import { NotebookBackdrop } from '@/components/cape/NotebookBackdrop';
 import { Telemetry } from '@/components/cape/Telemetry';
 import { Wordmark } from '@/components/cape/Wordmark';
+import { CapeWatchNote } from '@/components/cape/CapeWatchNote';
 import { C, alpha } from '@/lib/colors';
 import {
   DISCLAIMER,
@@ -86,9 +87,7 @@ export default function AboutCape() {
           <View className="mt-4">
             <Telemetry tint={C.teal} height={30} />
           </View>
-          <Mono bold className="mt-4 text-center text-[13px]" color={alpha(C.gold, 0.9)}>
-            &quot;Your CAPE is yours to wear — every single day.&quot;
-          </Mono>
+          <CapeWatchNote size={56} className="mt-4" />
         </Panel>
 
         <View className="mt-8 gap-2.5">
