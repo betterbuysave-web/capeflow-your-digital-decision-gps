@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 
+import { CapeWatchNote } from '@/components/cape/CapeWatchNote';
 import { Mono } from '@/components/cape/Type';
 import { C, alpha } from '@/lib/colors';
 import { cn } from '@/lib/utils';
@@ -20,9 +21,7 @@ export function BrandFooter({ className }: { className?: string }) {
         borderColor: alpha(C.ink, 0.12),
       }}
     >
-      <Mono bold className="mb-2 text-center text-[13px]" color={C.teal}>
-        Your CAPE is yours to wear—every single day
-      </Mono>
+      <CapeWatchNote size={44} className="mb-2 self-stretch" />
       <Mono className="text-center text-[12px] leading-5" color={C.inkSoft}>
         {BRAND_FOOTER_COPY}
       </Mono>

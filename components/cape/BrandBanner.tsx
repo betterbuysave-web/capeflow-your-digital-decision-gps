@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 
+import { CapeWatchNote } from '@/components/cape/CapeWatchNote';
 import { Mono } from '@/components/cape/Type';
 import { Wordmark } from '@/components/cape/Wordmark';
 import { useCapeStore } from '@/lib/store/useCapeStore';
@@ -60,9 +61,7 @@ export function BrandBanner({ className }: { className?: string }) {
         <View className="overflow-hidden rounded-xl">
           <Wordmark />
         </View>
-        <Mono bold className="mt-3 px-3 text-center text-[12px]" color={C.inkSoft} tracking={0.7}>
-          Your CAPE is yours to wear—every single day.
-        </Mono>
+        <CapeWatchNote size={52} className="mt-3 px-2" />
       </View>
 
       <View
