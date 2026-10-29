@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 
 /** The CAPE watch: a red cape and gold compass star on the watch face. */
 const CAPE_WATCH = require('@/assets/images/cape-watch.webp');
-/** Cutout artwork is 578 × 672 (width / height). */
-const CAPE_WATCH_RATIO = 578 / 672;
+/** Cutout artwork is 578 × 700 (width / height). */
+const CAPE_WATCH_RATIO = 578 / 700;
 
 /** The core mantra, word for word. */
 export const CAPE_MANTRA = 'Your CAPE is yours to wear—every single day.';
