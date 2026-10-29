@@ -18,7 +18,7 @@ export function PracticeSection() {
 
   return (
     <View>
-      <Eyebrow color={C.violet}>STATION 04 · PRACTICE</Eyebrow>
+      <Eyebrow color={C.purple}>STATION 04 · PRACTICE</Eyebrow>
       <Display className="mt-2 text-4xl">Run the drill.</Display>
       <Body className="mt-3">
         Muscle memory beats good intentions. Work the case files, then run the scripts out loud with
@@ -28,13 +28,13 @@ export function PracticeSection() {
       <View className="mt-5 flex-row gap-2">
         <DrillTab
           label="CASE FILES"
-          icon={<Search size={13} color={drill === 'detective' ? C.violet : C.inkFaint} />}
+          icon={<Search size={13} color={drill === 'detective' ? C.purple : C.inkFaint} />}
           active={drill === 'detective'}
           onPress={() => setDrill('detective')}
         />
         <DrillTab
           label="ROLE-PLAY"
-          icon={<Users size={13} color={drill === 'roleplay' ? C.violet : C.inkFaint} />}
+          icon={<Users size={13} color={drill === 'roleplay' ? C.purple : C.inkFaint} />}
           active={drill === 'roleplay'}
           onPress={() => setDrill('roleplay')}
         />
@@ -63,13 +63,13 @@ function DrillTab({
       onPress={onPress}
       className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-full py-2.5 active:opacity-70"
       style={{
-        backgroundColor: active ? wash(C.violet, 0.16) : C.card,
+        backgroundColor: active ? wash(C.purple, 0.16) : C.card,
         borderWidth: 1,
-        borderColor: alpha(active ? C.violet : C.ink, active ? 0.5 : 0.14),
+        borderColor: alpha(active ? C.purple : C.ink, active ? 0.5 : 0.14),
       }}
     >
       {icon}
-      <Mono bold tracking={1.5} color={active ? C.violet : C.inkFaint} className="text-[12px]">
+      <Mono bold tracking={1.5} color={active ? C.purple : C.inkFaint} className="text-[12px]">
         {label}
       </Mono>
     </Pressable>
@@ -157,24 +157,24 @@ function DetectiveDeck() {
         style={{
           backgroundColor: C.card,
           borderWidth: 1,
-          borderColor: alpha(C.violet, 0.3),
+          borderColor: alpha(C.purple, 0.3),
           borderTopWidth: 3,
-          borderTopColor: C.violet,
+          borderTopColor: C.purple,
           shadowColor: C.ink,
           shadowOpacity: 0.05,
           shadowRadius: 10,
           shadowOffset: { width: 0, height: 2 },
         }}
       >
-        <Eyebrow color={C.violet}>CASE FILE {String(index + 1).padStart(2, '0')}</Eyebrow>
+        <Eyebrow color={C.purple}>CASE FILE {String(index + 1).padStart(2, '0')}</Eyebrow>
         <Display className="mt-1.5 text-2xl">{scene.title}</Display>
 
         <View
           className="mt-3 rounded-xl p-3"
           style={{
-            backgroundColor: wash(C.violet, 0.07),
+            backgroundColor: wash(C.purple, 0.07),
             borderLeftWidth: 2,
-            borderLeftColor: C.violet,
+            borderLeftColor: C.purple,
           }}
         >
           <Mono color={C.inkSoft} className="text-[13px]">

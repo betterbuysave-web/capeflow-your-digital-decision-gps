@@ -106,7 +106,7 @@ export const EMERGENCY_GROUPS: EmergencyGroup[] = [
     id: 'abuse',
     label: 'ABUSE, ASSAULT & CONTROL',
     emoji: '🛡️',
-    tint: C.violet,
+    tint: C.purple,
     blurb: 'None of this was your fault, and none of these lines will pressure you into a report.',
     contacts: [
       {
@@ -162,7 +162,7 @@ export const EMERGENCY_GROUPS: EmergencyGroup[] = [
     id: 'identity',
     label: 'IDENTITY & BELONGING',
     emoji: '🏳️‍🌈',
-    tint: C.amber,
+    tint: C.gold,
     blurb: 'Counselors who will not make you explain the basics first.',
     contacts: [
       {
@@ -186,7 +186,7 @@ export const EMERGENCY_GROUPS: EmergencyGroup[] = [
     id: 'digital',
     label: 'DIGITAL HARM & EXPLOITATION',
     emoji: '📱',
-    tint: C.azure,
+    tint: C.magenta,
     blurb: 'Images, threats, and people online who are not who they said they were.',
     contacts: [
       {

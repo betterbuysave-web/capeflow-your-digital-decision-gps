@@ -92,8 +92,8 @@ export default function AboutCape() {
 
         <View className="mt-8 gap-2.5">
           {MISSION.map((item) => (
-            <Panel key={item.title} tint={C.violet} fill={0.05} stroke={0.16} className="p-3.5">
-              <Mono bold color={C.violet} className="text-[13px]" tracking={1.5}>
+            <Panel key={item.title} tint={C.purple} fill={0.05} stroke={0.16} className="p-3.5">
+              <Mono bold color={C.purple} className="text-[13px]" tracking={1.5}>
                 {item.title}
               </Mono>
               <Mono className="mt-1.5 text-[13px]">{item.detail}</Mono>
@@ -175,7 +175,7 @@ export default function AboutCape() {
 
         {/* TRACKS */}
         <View className="mt-10">
-          <Eyebrow color={C.azure}>TIERED TRACKS</Eyebrow>
+          <Eyebrow color={C.magenta}>TIERED TRACKS</Eyebrow>
           <Display className="mt-2 text-3xl">Age-appropriate by architecture.</Display>
           <Body className="mt-2">
             Every lesson, tool, finder, and library entry is written for your grade band.
@@ -252,11 +252,11 @@ export default function AboutCape() {
         </Panel>
 
         {/* DISCLAIMER */}
-        <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-3">
+        <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-3">
           <View className="flex-row items-start gap-3">
-            <HeartPulse size={16} color={C.lemon} />
+            <HeartPulse size={16} color={C.gold} />
             <View className="flex-1">
-              <Eyebrow color={C.lemon} className="mb-1.5">
+              <Eyebrow color={C.gold} className="mb-1.5">
                 MEDICAL DISCLAIMER
               </Eyebrow>
               <Mono className="text-[13px]">{DISCLAIMER}</Mono>

@@ -33,22 +33,22 @@ export function MenuSection() {
 
   return (
     <View>
-      <Eyebrow color={C.amber}>STATION 02 · MY MENU</Eyebrow>
+      <Eyebrow color={C.gold}>STATION 02 · MY MENU</Eyebrow>
       <Display className="mt-2 text-4xl">You are always the customer.</Display>
       <Body className="mt-3">
         Every person&apos;s menu is different — that is the point. Set your standing order, then
         build the three courses in your own words.
       </Body>
 
-      <Panel tint={C.amber} fill={0.09} stroke={0.4} className="mt-5">
+      <Panel tint={C.gold} fill={0.09} stroke={0.4} className="mt-5">
         <View className="flex-row items-center justify-between">
-          <Eyebrow color={C.amber}>YOUR STANDING ORDER</Eyebrow>
-          <Mono bold color={C.amber} className="text-[13px]">
+          <Eyebrow color={C.gold}>YOUR STANDING ORDER</Eyebrow>
+          <Mono bold color={C.gold} className="text-[13px]">
             {answered}/{BOUNDARY_MENU.length}
           </Mono>
         </View>
         <View className="mt-2.5">
-          <Rail value={(answered / BOUNDARY_MENU.length) * 100} color={C.amber} />
+          <Rail value={(answered / BOUNDARY_MENU.length) * 100} color={C.gold} />
         </View>
       </Panel>
 
@@ -63,9 +63,9 @@ export function MenuSection() {
                   key={item.id}
                   className="rounded-2xl p-3.5"
                   style={{
-                    backgroundColor: wash(C.amber, 0.06),
+                    backgroundColor: wash(C.gold, 0.06),
                     borderWidth: 1,
-                    borderColor: alpha(C.amber, 0.26),
+                    borderColor: alpha(C.gold, 0.26),
                   }}
                 >
                   <View className="flex-row items-center gap-2">
@@ -228,7 +228,7 @@ function MenuPreview({
       onClose={onClose}
       title="My Consent Café menu"
       eyebrow="PRIVATE PREVIEW"
-      tint={C.amber}
+      tint={C.gold}
     >
       <View className="mt-4">
         {MENU_COURSES.map((course) => {

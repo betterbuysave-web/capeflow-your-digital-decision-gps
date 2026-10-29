@@ -106,13 +106,13 @@ export default function Compass() {
             <View
               className="flex-row items-center gap-1.5 rounded-full px-3 py-1.5"
               style={{
-                backgroundColor: alpha(C.flame, 0.1),
+                backgroundColor: alpha(C.gold, 0.1),
                 borderWidth: 1,
-                borderColor: alpha(C.flame, 0.28),
+                borderColor: alpha(C.gold, 0.28),
               }}
             >
-              <Flame size={13} color={C.flame} />
-              <Mono bold color={C.flame} className="text-[13px]">
+              <Flame size={13} color={C.gold} />
+              <Mono bold color={C.gold} className="text-[13px]">
                 {streak}d
               </Mono>
             </View>
@@ -151,18 +151,18 @@ export default function Compass() {
 
         {/* QUICK TOOLS */}
         <View className="mt-8">
-          <Eyebrow color={C.amber}>QUICK ACCESS</Eyebrow>
+          <Eyebrow color={C.gold}>QUICK ACCESS</Eyebrow>
           <View className="mt-4 flex-row flex-wrap gap-3">
             <QuickTile
-              tint={C.amber}
-              icon={<Coffee size={18} color={C.amber} />}
+              tint={C.gold}
+              icon={<Coffee size={18} color={C.gold} />}
               label="CONSENT CAFÉ"
               detail={`${Object.keys(boundaries).length} items ordered`}
               onPress={() => router.push('/tools/consent-cafe')}
             />
             <QuickTile
-              tint={C.azure}
-              icon={<Users size={18} color={C.azure} />}
+              tint={C.magenta}
+              icon={<Users size={18} color={C.magenta} />}
               label="SAFETY CIRCLE"
               detail={`${circle.length} people`}
               onPress={() => router.push('/tools/safety-circle')}
@@ -175,8 +175,8 @@ export default function Compass() {
               onPress={() => router.push('/(tabs)/crisis')}
             />
             <QuickTile
-              tint={C.violet}
-              icon={<Moon size={18} color={C.violet} />}
+              tint={C.purple}
+              icon={<Moon size={18} color={C.purple} />}
               label="ALL SCENARIOS"
               detail={`${playedSims}/${scenarios.length} played`}
               onPress={() => router.push('/(tabs)/tools')}
@@ -203,12 +203,12 @@ export default function Compass() {
             </View>
             <View className="mt-4 flex-row flex-wrap gap-2">
               <Chip label={`${doneLessons}/${lessonTotal(gradeBand)} LESSONS`} tint={C.modM} />
-              <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.violet} />
+              <Chip label={`${playedSims}/${scenarios.length} SIMS`} tint={C.purple} />
               <Chip
                 label={`${Object.keys(boundaries).length}/${TOTALS.boundaries} MENU`}
-                tint={C.amber}
+                tint={C.gold}
               />
-              <Chip label={`${circle.length} CIRCLE`} tint={C.azure} />
+              <Chip label={`${circle.length} CIRCLE`} tint={C.magenta} />
               {gradeBand === '9-12' ? (
                 <Chip label={`${disarmedGhosts}/${ghostRange} HEALTHCARE GHOSTS`} tint={C.gold} />
               ) : null}
@@ -240,16 +240,16 @@ export default function Compass() {
           {/* GHOST VAULT */}
           {gradeBand === '9-12' ? (
             <TintedRow
-              tint={C.violet}
+              tint={C.purple}
               fill={0.07}
               stroke={0.22}
               className="mt-4"
               onPress={() => router.push('/tools/ghost-vault')}
             >
               <View className="flex-row items-center gap-3">
-                <Ghost size={18} color={C.violet} />
+                <Ghost size={18} color={C.purple} />
                 <View className="flex-1">
-                  <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
+                  <Mono bold color={C.purple} className="text-[13px]" tracking={1}>
                     Healthcare Anxiety Audit
                   </Mono>
                   <Mono className="mt-0.5 text-[12px]">
@@ -258,7 +258,7 @@ export default function Compass() {
                       : `${namedGhosts} named · ${disarmedGhosts} shields online`}
                   </Mono>
                 </View>
-                <ArrowRight size={14} color={C.violet} />
+                <ArrowRight size={14} color={C.purple} />
               </View>
             </TintedRow>
           ) : null}
@@ -362,7 +362,7 @@ function pickNextStep(
       eyebrow: 'YOUR NEXT STEP',
       title: nextSim.title,
       detail: 'Practice a real moment before it happens',
-      tint: C.violet,
+      tint: C.purple,
       onPress: () => router.push({ pathname: '/sim/[id]', params: { id: nextSim.id } }),
     };
   }

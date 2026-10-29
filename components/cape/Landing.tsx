@@ -166,7 +166,7 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
         {/* SEE IT IN ACTION */}
         <View className="px-5 pt-16">
           <View className="items-center">
-            <Eyebrow color={C.azure} className="mb-3">
+            <Eyebrow color={C.magenta} className="mb-3">
               SEE IT IN ACTION
             </Eyebrow>
             <Display className="text-center text-4xl">Built for how you actually learn.</Display>
@@ -177,11 +177,11 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
           </View>
 
           <View className="mt-8 gap-4">
-            <PreviewCard title="THE CONSENT CAFÉ" tint={C.amber}>
+            <PreviewCard title="THE CONSENT CAFÉ" tint={C.gold}>
               <View className="gap-1.5">
-                <MenuLine label="🙌 High-Fives" verdict="YES" tint={C.amber} chip={C.yes} />
-                <MenuLine label="🤗 Hugs" verdict="MAYBE" tint={C.amber} chip={C.maybe} />
-                <MenuLine label="📍 Share Location" verdict="NO" tint={C.amber} chip={C.no} />
+                <MenuLine label="🙌 High-Fives" verdict="YES" tint={C.gold} chip={C.yes} />
+                <MenuLine label="🤗 Hugs" verdict="MAYBE" tint={C.gold} chip={C.maybe} />
+                <MenuLine label="📍 Share Location" verdict="NO" tint={C.gold} chip={C.no} />
               </View>
               <Mono className="mt-3 text-[12px]" color={alpha(C.inkSoft, 0.55)}>
                 Order from a menu of boundaries. YES, MAYBE, or NO — your choice, always reversible.
@@ -227,19 +227,9 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
             </PreviewCard>
 
             <PreviewCard title="MATCH COMPASS" tint={C.teal}>
-              <View className="flex-row gap-1.5">
+              <View className="flex-row justify-between">
                 {MATCH_MODULES.map((mod) => (
-                  <View
-                    key={mod.id}
-                    className="aspect-square flex-1 items-center justify-center rounded-lg"
-                    style={{
-                      backgroundColor: alpha(C.teal, 0.08),
-                      borderWidth: 1,
-                      borderColor: alpha(C.teal, 0.2),
-                    }}
-                  >
-                    <Mono className="text-sm">{mod.emoji}</Mono>
-                  </View>
+                  <MatchDial key={mod.id} letter={mod.letter} size={44} />
                 ))}
               </View>
               <View
@@ -309,9 +299,9 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
               <View
                 className="ml-auto max-w-[85%] rounded-2xl px-4 py-3"
                 style={{
-                  backgroundColor: alpha(C.azure, 0.12),
+                  backgroundColor: alpha(C.magenta, 0.12),
                   borderWidth: 1,
-                  borderColor: alpha(C.azure, 0.25),
+                  borderColor: alpha(C.magenta, 0.25),
                   borderBottomLeftRadius: 4,
                 }}
               >
@@ -400,11 +390,11 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
 
         {/* DISCLAIMER */}
         <View className="px-5 pt-12">
-          <Panel tint={C.lemon} fill={0.05} stroke={0.2}>
+          <Panel tint={C.gold} fill={0.05} stroke={0.2}>
             <View className="flex-row items-start gap-3">
-              <CircleAlert size={20} color={C.lemon} />
+              <CircleAlert size={20} color={C.gold} />
               <View className="flex-1">
-                <Eyebrow color={C.lemon} className="mb-2">
+                <Eyebrow color={C.gold} className="mb-2">
                   IMPORTANT DISCLAIMER
                 </Eyebrow>
                 <Mono className="text-[13px]">{DISCLAIMER}</Mono>
@@ -456,7 +446,7 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
         <View className="items-center px-5 pt-20">
           <View className="mb-5 flex-row items-center gap-2">
             <Heart size={20} color={C.teal} />
-            <Stethoscope size={20} color={C.amber} />
+            <Stethoscope size={20} color={C.gold} />
           </View>
           <Display className="mb-4 text-center text-4xl">
             Your health. Your pace. Your power.

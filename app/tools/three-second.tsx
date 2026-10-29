@@ -73,7 +73,7 @@ export default function ThreeSecondChallenge() {
   };
 
   const ready = count === -1;
-  const verdictTint = picked === scenario.best ? C.yes : picked === 'send' ? C.no : C.amber;
+  const verdictTint = picked === scenario.best ? C.yes : picked === 'send' ? C.no : C.gold;
 
   return (
     <View className="bg-paper flex-1">

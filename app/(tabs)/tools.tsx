@@ -53,7 +53,7 @@ export default function ToolsTab() {
             title: 'CARE NAVIGATOR',
             detail: 'A mission: get Persona B from "I need care" to the clinic door.',
             emoji: '🧭',
-            tint: C.azure,
+            tint: C.magenta,
             href: '/tools/care-navigator',
           },
           {
@@ -138,15 +138,15 @@ export default function ToolsTab() {
         <View className="mt-3 gap-3">
           {gradeBand === '9-12' ? (
             <TintedRow
-              tint={C.violet}
+              tint={C.purple}
               fill={0.07}
               stroke={0.22}
               onPress={() => router.push('/tools/ghost-vault')}
             >
               <View className="flex-row items-center gap-3">
-                <Ghost size={20} color={C.violet} />
+                <Ghost size={20} color={C.purple} />
                 <View className="flex-1">
-                  <Mono bold color={C.violet} className="text-[14px]" tracking={1}>
+                  <Mono bold color={C.purple} className="text-[14px]" tracking={1}>
                     Healthcare Anxiety Audit
                   </Mono>
                   <Mono className="mt-1 text-[13px]">
@@ -155,41 +155,41 @@ export default function ToolsTab() {
                       : `${namedGhosts} named · ${disarmedGhosts} shields online`}
                   </Mono>
                 </View>
-                <ArrowRight size={14} color={C.violet} />
+                <ArrowRight size={14} color={C.purple} />
               </View>
             </TintedRow>
           ) : null}
 
           <TintedRow
-            tint={C.amber}
+            tint={C.gold}
             fill={0.07}
             stroke={0.2}
             onPress={() => router.push('/tools/consent-cafe')}
           >
             <View className="flex-row items-center gap-3">
-              <Coffee size={20} color={C.amber} />
+              <Coffee size={20} color={C.gold} />
               <View className="flex-1">
-                <Mono bold color={C.amber} className="text-[14px]" tracking={1}>
+                <Mono bold color={C.gold} className="text-[14px]" tracking={1}>
                   THE CONSENT CAFÉ
                 </Mono>
                 <Mono className="mt-1 text-[13px]">
                   Five stations: F.R.I.E.S., your menu, your rights, practice, exit card
                 </Mono>
               </View>
-              <ArrowRight size={14} color={C.amber} />
+              <ArrowRight size={14} color={C.gold} />
             </View>
           </TintedRow>
 
           <TintedRow
-            tint={C.azure}
+            tint={C.magenta}
             fill={0.07}
             stroke={0.2}
             onPress={() => router.push('/tools/safety-circle')}
           >
             <View className="flex-row items-center gap-3">
-              <Users size={20} color={C.azure} />
+              <Users size={20} color={C.magenta} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[14px]" tracking={1}>
+                <Mono bold color={C.magenta} className="text-[14px]" tracking={1}>
                   SAFETY CIRCLE
                 </Mono>
                 <Mono className="mt-1 text-[13px]">
@@ -198,7 +198,7 @@ export default function ToolsTab() {
                     : `${circle.length} people on call`}
                 </Mono>
               </View>
-              <ArrowRight size={14} color={C.azure} />
+              <ArrowRight size={14} color={C.magenta} />
             </View>
           </TintedRow>
 
@@ -298,7 +298,7 @@ export default function ToolsTab() {
         </View>
 
         <View className="mt-10">
-          <Eyebrow color={C.violet}>MIDNIGHT SIMULATOR</Eyebrow>
+          <Eyebrow color={C.purple}>MIDNIGHT SIMULATOR</Eyebrow>
           <Display className="mt-2 text-3xl">Run the hard nights first.</Display>
           <Body className="mt-2">
             Pick a response and see how the M.A.T.C.H. framework turns panic into a plan. No grades
@@ -312,7 +312,7 @@ export default function ToolsTab() {
               return (
                 <TintedRow
                   key={scenario.id}
-                  tint={C.violet}
+                  tint={C.purple}
                   fill={result ? 0.04 : 0.07}
                   stroke={0.18}
                   onPress={() =>
@@ -323,7 +323,7 @@ export default function ToolsTab() {
                     <Mono className="text-xl">{scenario.emoji}</Mono>
                     <View className="flex-1">
                       <View className="flex-row items-center gap-2">
-                        <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
+                        <Mono bold color={C.purple} className="text-[13px]" tracking={1}>
                           {scenario.time}
                         </Mono>
                         {result ? <VerdictBadge verdict={result.verdict} /> : null}
@@ -335,7 +335,7 @@ export default function ToolsTab() {
                         {scenario.choices.length} responses · {scenario.xp} XP
                       </Mono>
                     </View>
-                    <ArrowRight size={14} color={C.violet} />
+                    <ArrowRight size={14} color={C.purple} />
                   </View>
                 </TintedRow>
               );

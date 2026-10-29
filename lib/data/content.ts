@@ -52,7 +52,7 @@ export const TRACKS: Record<Track, TrackInfo> = {
     id: 'blue',
     label: 'BLUE TRACK',
     name: 'Full CAPE Scope',
-    tint: C.azure,
+    tint: C.blueTrack,
     scope: 'The full book scope: protection, vaccines, testing, clinical care, and self-advocacy.',
   },
 };
@@ -123,7 +123,7 @@ export const PARENT_CARDS: ParentCard[] = [
     emoji: '🧑‍🏫',
     title: 'Facilitation Approach',
     detail: 'How a session actually runs',
-    tint: C.azure,
+    tint: C.magenta,
     body: [
       'Short module, one interactive tool, one debrief question — designed for a 20 minute block.',
       'Judgment-free framing: scenarios explain why an option is risky rather than scoring students.',
@@ -134,7 +134,7 @@ export const PARENT_CARDS: ParentCard[] = [
     emoji: '⚖️',
     title: 'Parent Rights',
     detail: 'Preview rights, district policy, and written consent',
-    tint: C.violet,
+    tint: C.purple,
     body: [
       'You may preview all content before it is used with your student.',
       'Texas Senate Bill 12 (2025), in effect since September 1, 2025, requires schools to send parents or guardians a written consent request at least 14 days before human sexuality instruction begins, and to have written consent before a student takes part.',
@@ -159,7 +159,7 @@ export const PARENT_CARDS: ParentCard[] = [
     emoji: '🎲',
     title: 'Home Activities',
     detail: 'FRIES dinner game & MATCH role-play cards',
-    tint: C.amber,
+    tint: C.gold,
     body: [
       'FRIES dinner game: name a everyday situation and check it against all five letters together.',
       'MATCH role-play cards: one person reads a scenario, the other answers out loud in one sentence.',

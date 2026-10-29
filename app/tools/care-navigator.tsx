@@ -13,7 +13,7 @@ import { C, alpha } from '@/lib/colors';
 import { trackFor } from '@/lib/data/content';
 import { useCapeStore } from '@/lib/store/useCapeStore';
 
-const TINT = C.azure;
+const TINT = C.magenta;
 const STEPS = [
   'The mission',
   'Name the ghost',

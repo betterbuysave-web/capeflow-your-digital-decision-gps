@@ -12,12 +12,15 @@ import Animated, {
 import Svg, { Circle, Path } from 'react-native-svg';
 
 /**
- * TACTICAL NOTEBOOK canvas — the CAPE background shared with
- * theharnessproject.org's CAPE pages.
+ * TACTICAL NOTEBOOK canvas — the CAPE Flow background.
  *
  * Cream engineering graph paper (#FDFBF7, 20px cells, heavier line every
- * 100px), a slowly turning drafting cog in the top-right margin, a compass
- * rose with gold points in the bottom-left, and faint teal schematic traces.
+ * 100px) drawn with the exact CAPE hexes as accents:
+ *   C Teal #2A9D8F — heartbeat trace, cog, compass tick ring, schematic traces
+ *   A Gold #C29B38 — compass rose points, registration marks
+ *   P Magenta #A6387E — notebook margin rule, trace pads
+ *   E Purple #533B77 — small cog, trace pads
+ * A slowly turning drafting cog sits top right, the compass rose bottom left.
  *
  * Purely decorative: sits behind screen content and never takes touches.
  * `tint` is accepted for older call sites but no longer changes the canvas,
@@ -27,9 +30,13 @@ import Svg, { Circle, Path } from 'react-native-svg';
 const PAPER = '#FDFBF7';
 const GRID_MAJOR = '#E7DCC4';
 const GRID_MINOR = '#F1EBDD';
-const LINE_TEAL = '#BFDDD8';
-const LINE_GOLD = '#DCC79A';
-const LINE_SCHEM = '#D3E6E3';
+
+// Exact CAPE hexes; strength comes from stroke/fill opacity, never a washed hex.
+const CAPE_C = '#2A9D8F';
+const CAPE_A = '#C29B38';
+const CAPE_P = '#A6387E';
+const CAPE_E = '#533B77';
+const LINE = 1.5;
 
 const MINOR = 20;
 const MAJOR = 100;
@@ -84,6 +91,10 @@ function rose(cx: number, cy: number, R: number) {
   return { star, ticks };
 }
 
+/** Heartbeat trace, like the line through the CAPE Flow logo (1000×80 art space). */
+const PULSE =
+  'M0 40H300L318 40L330 18L344 64L360 6L376 74L390 40H560L574 40L584 26L596 54L608 40H1000';
+
 const COG_A = gear(200, 200, 150, 16, 22);
 const COG_B = gear(352, 352, 70, 10, 14);
 const ROSE = rose(200, 200, 140);
@@ -99,7 +110,11 @@ export function NotebookBackdrop(_props: { tint?: string } = {}) {
       cancelAnimation(spin);
       return;
     }
-    spin.value = withRepeat(withTiming(360, { duration: 120000, easing: Easing.linear }), -1, false);
+    spin.value = withRepeat(
+      withTiming(360, { duration: 120000, easing: Easing.linear }),
+      -1,
+      false,
+    );
     return () => cancelAnimation(spin);
   }, [reduceMotion, spin]);
 
@@ -131,51 +146,112 @@ export function NotebookBackdrop(_props: { tint?: string } = {}) {
       <Svg width={width} height={height} style={{ position: 'absolute', left: 0, top: 0 }}>
         <Path d={grid.minor} stroke={GRID_MINOR} strokeWidth={1} fill="none" />
         <Path d={grid.major} stroke={GRID_MAJOR} strokeWidth={1} fill="none" />
+        {/* Notebook margin rule in P-Magenta */}
+        <Path
+          d={`M10 0V${height}M13 0V${height}`}
+          stroke={CAPE_P}
+          strokeOpacity={0.18}
+          strokeWidth={1}
+          fill="none"
+        />
       </Svg>
 
-      {/* Schematic traces, lower right */}
+      {/* Heartbeat trace across the upper third */}
+      <Svg
+        width={width}
+        height={Math.min(80, width * 0.08)}
+        viewBox="0 0 1000 80"
+        preserveAspectRatio="none"
+        style={{ position: 'absolute', left: 0, top: 30 * vh }}
+      >
+        <Path
+          d={PULSE}
+          stroke={CAPE_C}
+          strokeOpacity={0.22}
+          strokeWidth={LINE}
+          strokeLinejoin="round"
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+        />
+      </Svg>
+
+      {/* Schematic traces, lower right, with C · A · P · E pads */}
       <Svg
         width={schemW}
         height={schemW / 2}
         viewBox="0 0 600 300"
         style={{ position: 'absolute', right: -6 * vw, bottom: 10 * vh }}
       >
-        <Path d={SCHEM} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
-        <Circle cx={180} cy={60} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
-        <Circle cx={340} cy={150} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
-        <Circle cx={260} cy={200} r={6} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Path d={SCHEM} stroke={CAPE_C} strokeOpacity={0.24} strokeWidth={LINE} fill="none" />
+        <Circle cx={180} cy={60} r={6} fill={CAPE_C} fillOpacity={0.42} />
+        <Circle cx={340} cy={150} r={6} fill={CAPE_A} fillOpacity={0.5} />
+        <Circle cx={260} cy={200} r={6} fill={CAPE_P} fillOpacity={0.36} />
+        <Circle cx={60} cy={200} r={6} fill={CAPE_E} fillOpacity={0.36} />
         <Circle
           cx={420}
           cy={40}
           r={22}
-          stroke={LINE_SCHEM}
-          strokeWidth={1.5}
+          stroke={CAPE_C}
+          strokeOpacity={0.24}
+          strokeWidth={LINE}
           strokeDasharray="3 5"
           fill="none"
         />
-        <Circle cx={420} cy={40} r={40} stroke={LINE_SCHEM} strokeWidth={1.5} fill="none" />
+        <Circle
+          cx={420}
+          cy={40}
+          r={40}
+          stroke={CAPE_C}
+          strokeOpacity={0.24}
+          strokeWidth={LINE}
+          fill="none"
+        />
       </Svg>
 
-      {/* Compass rose, bottom left */}
+      {/* Compass rose, bottom left: gold points on a teal tick ring */}
       <Svg
         width={roseW}
         height={roseW}
         viewBox="0 0 400 400"
         style={{ position: 'absolute', left: -16 * vw, bottom: -8 * vh }}
       >
-        <Circle cx={200} cy={200} r={156.8} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+        <Circle
+          cx={200}
+          cy={200}
+          r={156.8}
+          stroke={CAPE_C}
+          strokeOpacity={0.26}
+          strokeWidth={LINE}
+          fill="none"
+        />
         <Circle
           cx={200}
           cy={200}
           r={179.2}
-          stroke={LINE_TEAL}
-          strokeWidth={1.5}
+          stroke={CAPE_C}
+          strokeOpacity={0.26}
+          strokeWidth={LINE}
           strokeDasharray="2 7"
           fill="none"
         />
-        <Circle cx={200} cy={200} r={42} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
-        <Path d={ROSE.ticks} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
-        <Path d={ROSE.star} stroke={LINE_GOLD} strokeWidth={1.5} fill="none" />
+        <Circle
+          cx={200}
+          cy={200}
+          r={42}
+          stroke={CAPE_C}
+          strokeOpacity={0.26}
+          strokeWidth={LINE}
+          fill="none"
+        />
+        <Path d={ROSE.ticks} stroke={CAPE_C} strokeOpacity={0.3} strokeWidth={LINE} fill="none" />
+        <Path
+          d={ROSE.star}
+          stroke={CAPE_A}
+          strokeOpacity={0.55}
+          strokeWidth={LINE}
+          fill={CAPE_A}
+          fillOpacity={0.07}
+        />
       </Svg>
 
       {/* Drafting cog, top right — turns once every two minutes */}
@@ -186,25 +262,43 @@ export function NotebookBackdrop(_props: { tint?: string } = {}) {
         ]}
       >
         <Svg width={cogW} height={cogW} viewBox="0 0 400 400">
-          <Path d={COG_A} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
-          <Circle cx={200} cy={200} r={26} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Path d={COG_A} stroke={CAPE_C} strokeOpacity={0.26} strokeWidth={LINE} fill="none" />
+          <Circle
+            cx={200}
+            cy={200}
+            r={26}
+            stroke={CAPE_C}
+            strokeOpacity={0.26}
+            strokeWidth={LINE}
+            fill="none"
+          />
           <Circle
             cx={200}
             cy={200}
             r={93}
-            stroke={LINE_TEAL}
-            strokeWidth={1.5}
+            stroke={CAPE_C}
+            strokeOpacity={0.26}
+            strokeWidth={LINE}
             strokeDasharray="4 6"
             fill="none"
           />
-          <Path d={COG_B} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
-          <Circle cx={352} cy={352} r={12} stroke={LINE_TEAL} strokeWidth={1.5} fill="none" />
+          <Path d={COG_B} stroke={CAPE_E} strokeOpacity={0.24} strokeWidth={LINE} fill="none" />
+          <Circle
+            cx={352}
+            cy={352}
+            r={12}
+            stroke={CAPE_E}
+            strokeOpacity={0.24}
+            strokeWidth={LINE}
+            fill="none"
+          />
           <Circle
             cx={352}
             cy={352}
             r={43.4}
-            stroke={LINE_TEAL}
-            strokeWidth={1.5}
+            stroke={CAPE_E}
+            strokeOpacity={0.24}
+            strokeWidth={LINE}
             strokeDasharray="4 6"
             fill="none"
           />

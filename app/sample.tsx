@@ -66,9 +66,9 @@ export default function SampleScenario() {
             <View
               className="ml-auto max-w-[85%] rounded-2xl px-4 py-3"
               style={{
-                backgroundColor: alpha(C.azure, 0.12),
+                backgroundColor: alpha(C.magenta, 0.12),
                 borderWidth: 1,
-                borderColor: alpha(C.azure, 0.25),
+                borderColor: alpha(C.magenta, 0.25),
                 borderBottomLeftRadius: 4,
               }}
             >

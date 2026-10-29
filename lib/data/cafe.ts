@@ -11,9 +11,9 @@ export type CafeStation = 'fries' | 'menu' | 'rights' | 'practice' | 'exit';
 
 export const CAFE_STATIONS: { id: CafeStation; label: string; emoji: string; tint: string }[] = [
   { id: 'fries', label: 'F.R.I.E.S.', emoji: '🍟', tint: C.modC },
-  { id: 'menu', label: 'MY MENU', emoji: '📋', tint: C.amber },
+  { id: 'menu', label: 'MY MENU', emoji: '📋', tint: C.gold },
   { id: 'rights', label: 'YOUR RIGHTS', emoji: '⭐', tint: C.gold },
-  { id: 'practice', label: 'PRACTICE', emoji: '🎭', tint: C.violet },
+  { id: 'practice', label: 'PRACTICE', emoji: '🎭', tint: C.purple },
   { id: 'exit', label: 'EXIT CARD', emoji: '✍️', tint: C.teal },
 ];
 
@@ -97,7 +97,7 @@ export const FRIES_CARDS: FriesCard[] = [
       green: "Saying yes to one photo doesn't mean yes to posting it.",
       blue: 'Yes to kissing is not yes to anything else. Each step gets its own yes.',
     },
-    tint: C.violet,
+    tint: C.purple,
   },
 ];
 
@@ -242,7 +242,7 @@ export const MENU_COURSES: CourseDef[] = [
     emoji: '🍽️',
     title: 'Main Courses',
     desc: 'Things that need a clear, specific conversation first.',
-    tint: C.amber,
+    tint: C.gold,
     placeholder: 'Something that needs a talk first…',
     addLabel: 'ADD MAIN COURSE',
   },

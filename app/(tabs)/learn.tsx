@@ -102,7 +102,7 @@ export default function Learn() {
           {([1, 2, 3, 4, 5] as const)
             .filter((part) => BOOK_PARTS[part].track === 'both' || track === 'blue')
             .map((part) => {
-              const partTint = BOOK_PARTS[part].track === 'blue' ? C.azure : C.teal;
+              const partTint = BOOK_PARTS[part].track === 'blue' ? C.blueTrack : C.teal;
               return (
                 <View key={part} className="mt-5 gap-2">
                   <Mono bold color={partTint} tracking={1} className="text-[13px]">
@@ -155,15 +155,15 @@ export default function Learn() {
 
         {track === 'blue' ? (
           <View className="mt-8 gap-3">
-            <Eyebrow color={C.azure}>BLUE TRACK · PARTS 3 AND 5</Eyebrow>
+            <Eyebrow color={C.blueTrack}>BLUE TRACK · PARTS 3 AND 5</Eyebrow>
             {(['3', '5'] as const).map((part) => (
               <TintedRow
                 key={part}
-                tint={C.azure}
+                tint={C.blueTrack}
                 accessibilityLabel={`Part ${part}, Blue Track companion topics`}
                 onPress={() => router.push({ pathname: '/book-part/[part]', params: { part } })}
               >
-                <Mono bold className="text-[14px]" color={C.azure}>
+                <Mono bold className="text-[14px]" color={C.blueTrack}>
                   Part {part} · Companion topics
                 </Mono>
               </TintedRow>

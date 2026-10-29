@@ -23,10 +23,10 @@ export function CanonGate({
 }) {
   return (
     <View className="bg-paper flex-1">
-      <StackHeader title={title} tint={C.azure} fallback="/(tabs)/learn" />
+      <StackHeader title={title} tint={C.magenta} fallback="/(tabs)/learn" />
       <ScrollView className="flex-1" contentContainerClassName="px-5 py-8">
-        <ShieldAlert size={48} color={C.azure} />
-        <Eyebrow className="mt-6" color={C.azure}>
+        <ShieldAlert size={48} color={C.magenta} />
+        <Eyebrow className="mt-6" color={C.magenta}>
           CAPE Youth Edition · Track gate
         </Eyebrow>
         <Display className="mt-3 text-4xl">{title}</Display>

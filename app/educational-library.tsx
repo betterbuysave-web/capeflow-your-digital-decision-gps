@@ -66,7 +66,7 @@ export default function EducationalLibrary() {
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label={`${results.length} ENTRIES`} tint={C.gold} />
             <Chip label="EVIDENCE + REAL TALK" tint={C.teal} />
-            <Chip label="NOTHING LOGGED" tint={C.violet} />
+            <Chip label="NOTHING LOGGED" tint={C.purple} />
           </View>
 
           <View
