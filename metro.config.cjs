@@ -5,6 +5,9 @@ const { withUniwindConfig } = require('uniwind/metro');
 
 const config = getDefaultConfig(__dirname);
 
+// Keep the file map project-local so SDK upgrades do not reuse a stale shared index.
+config.fileMapCacheDirectory = path.join(__dirname, '.expo');
+
 const unique = (values) => Array.from(new Set(values));
 
 // Expo already includes the common source and asset extensions. Keep only the
