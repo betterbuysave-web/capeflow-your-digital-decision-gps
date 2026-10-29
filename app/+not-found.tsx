@@ -13,7 +13,7 @@ export default function NotFoundScreen() {
       <StackHeader title="Off the map" fallback="/" />
       <View className="bg-paper flex-1 items-center justify-center gap-3 px-8">
         <NotebookBackdrop />
-        <Eyebrow color={C.flame}>OFF THE MAP</Eyebrow>
+        <Eyebrow color={C.teal}>OFF THE MAP</Eyebrow>
         <Display className="text-center text-4xl">This screen doesn&apos;t exist.</Display>
         <Body className="text-center">
           The compass lost this route. Head back and pick a module.

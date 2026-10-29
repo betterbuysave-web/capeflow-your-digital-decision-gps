@@ -49,18 +49,19 @@ export const C = {
   /** CAPE Gold, spec-locked #C29B38 — active icons, headings, compass points. */
   goldBright: '#C29B38',
 
-  // ── Sparing accents: thin borders, letter highlights, badge rows ──────────
-  /** P-Magenta. */
+  // ── CAPE accents: every accent in the app is one of the four CAPE hexes ───
+  // C Teal #2A9D8F and A Gold #C29B38 above (text-safe shades for small type),
+  // P Magenta #A6387E and E Purple #533B77 here (already text-safe on cream).
+  /** P-Magenta — Protected: trusted support, safety circle, care navigation. */
   magenta: '#A6387E',
-  /** E-Purple. */
+  /** E-Purple — Empowered: mission, rights, leadership. */
   purple: '#533B77',
 
   // ── Semantics, depth-corrected for paper ──────────────────────────────────
+  /** Urgent / crisis only (SOS, 72-hour window). */
   flame: '#C2410C',
-  azure: '#1D5FA8',
-  amber: '#996515',
-  violet: '#6D3BA8',
-  lemon: '#7E6318',
+  /** Blue Track identity (grades 9–12) — track labels only, never a general accent. */
+  blueTrack: '#1D5FA8',
 
   yes: '#0F7A52',
   maybe: '#8A6A0B',

@@ -56,7 +56,7 @@ export const CARE_CATEGORIES: CareCategoryInfo[] = [
     id: 'mental',
     label: 'MENTAL HEALTH SUPPORT',
     emoji: '🧠',
-    tint: C.azure,
+    tint: C.magenta,
     blurb: 'Counselors, therapy, and treatment referral lines that answer every day.',
     mapsQuery: 'mental health clinic',
   },

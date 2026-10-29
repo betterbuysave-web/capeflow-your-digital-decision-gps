@@ -126,7 +126,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     title: 'Privacy Policy',
     summary: 'On-device only, no accounts, COPPA and FERPA',
     icon: 'lock',
-    accent: C.azure,
+    accent: C.magenta,
     intro: `${LEGAL_ENTITY} is built so we never receive your information. There is no account, no login, and no analytics. What you enter stays on your device. This policy explains exactly what that means, written for students and for parents, guardians and schools.`,
     sections: [
       {
@@ -241,7 +241,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     title: 'Parent & School Notice',
     summary: 'Preview rights, written consent, how schools use CAPE',
     icon: 'users',
-    accent: C.violet,
+    accent: C.purple,
     intro: `For parents, guardians, educators and administrators. ${LEGAL_ENTITY} is the student companion to CAPE Youth Edition. This notice explains what students see, your rights, and what a school is responsible for.`,
     sections: [
       {

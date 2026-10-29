@@ -26,7 +26,7 @@ export const CRISIS_LINES: CrisisLine[] = [
     name: 'CRISIS TEXT LINE',
     detail: 'Text HOME to 741741 · 24/7 · Trained counselor',
     sms: { number: '741741', body: 'HOME' },
-    tint: C.azure,
+    tint: C.magenta,
   },
   {
     id: 'emergency',
@@ -42,7 +42,7 @@ export const CRISIS_LINES: CrisisLine[] = [
     name: 'RAINN NATIONAL HOTLINE',
     detail: '800-656-4673 · Sexual assault support · 24/7',
     dial: '8006564673',
-    tint: C.violet,
+    tint: C.purple,
   },
   {
     id: 'trevor',
@@ -50,7 +50,7 @@ export const CRISIS_LINES: CrisisLine[] = [
     name: 'THE TREVOR PROJECT',
     detail: '866-488-7386 · LGBTQ+ youth · 24/7',
     dial: '8664887386',
-    tint: C.amber,
+    tint: C.gold,
   },
   {
     id: 'poison',

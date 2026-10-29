@@ -65,7 +65,7 @@ function readiness(score: number): { label: string; tint: string; line: string }
   if (score >= 30)
     return {
       label: 'CALIBRATING',
-      tint: C.amber,
+      tint: C.gold,
       line: 'You have started building. One more layer turns a good intention into a plan.',
     };
   return {
@@ -173,14 +173,14 @@ export default function ProtectionBlueprint() {
       moves.push({
         label: 'NAME 3 PEOPLE IN YOUR SAFETY CIRCLE',
         detail: `${circle.length} of 3 saved. A ride, a bed, and an adult who answers.`,
-        tint: C.azure,
+        tint: C.magenta,
         href: '/tools/safety-circle',
       });
     if (answered < BOUNDARY_MENU.length)
       moves.push({
         label: 'FINISH YOUR BOUNDARY MENU',
         detail: `${answered} of ${BOUNDARY_MENU.length} answered in the Consent Café.`,
-        tint: C.amber,
+        tint: C.gold,
         href: '/tools/consent-cafe',
       });
     if (auditAvailable && disarmed < VAULT_TARGET)
@@ -194,7 +194,7 @@ export default function ProtectionBlueprint() {
       moves.push({
         label: 'RUN A MIDNIGHT SIM',
         detail: `${sims.length} of ${availableScenarios.length} drills played. Practice the pivot before it is real.`,
-        tint: C.violet,
+        tint: C.purple,
         href: '/(tabs)/tools',
       });
     if (completedLessons.length < lessonsAvailable)
@@ -280,8 +280,8 @@ export default function ProtectionBlueprint() {
           </View>
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label={`${xp} XP`} tint={C.teal} />
-            <Chip label={`${streak}-DAY STREAK`} tint={C.flame} />
-            <Chip label={`${badges.length}/${BADGES.length} BADGES`} tint={C.violet} />
+            <Chip label={`${streak}-DAY STREAK`} tint={C.gold} />
+            <Chip label={`${badges.length}/${BADGES.length} BADGES`} tint={C.purple} />
             {fearInfo ? <Chip label={fearInfo.label.toUpperCase()} tint={fearInfo.tint} /> : null}
           </View>
         </Panel>
@@ -306,21 +306,21 @@ export default function ProtectionBlueprint() {
               detail={`${sims.length} of ${availableScenarios.length}`}
               weight="22 pts"
               value={(sims.length / availableScenarios.length) * 100}
-              tint={C.violet}
+              tint={C.purple}
             />
             <LayerRow
               label="BOUNDARY MENU"
               detail={`${answered} of ${TOTALS.boundaries}`}
               weight={auditAvailable ? '14 pts' : '24 pts'}
               value={(answered / TOTALS.boundaries) * 100}
-              tint={C.amber}
+              tint={C.gold}
             />
             <LayerRow
               label="SAFETY CIRCLE"
               detail={`${circle.length} of 3`}
               weight="14 pts"
               value={(Math.min(circle.length, 3) / 3) * 100}
-              tint={C.azure}
+              tint={C.magenta}
             />
             {auditAvailable ? (
               <LayerRow
@@ -459,10 +459,10 @@ export default function ProtectionBlueprint() {
             )}
           </Panel>
 
-          <Panel tint={C.azure} fill={0.05} stroke={0.18} className="mt-3">
+          <Panel tint={C.magenta} fill={0.05} stroke={0.18} className="mt-3">
             <View className="flex-row items-center gap-2">
-              <Users size={15} color={C.azure} />
-              <Mono bold color={C.azure} className="text-[13px]" tracking={1.5}>
+              <Users size={15} color={C.magenta} />
+              <Mono bold color={C.magenta} className="text-[13px]" tracking={1.5}>
                 SAFETY CIRCLE · {circle.length}
               </Mono>
             </View>
@@ -482,10 +482,10 @@ export default function ProtectionBlueprint() {
             )}
           </Panel>
 
-          <Panel tint={C.amber} fill={0.05} stroke={0.18} className="mt-3">
+          <Panel tint={C.gold} fill={0.05} stroke={0.18} className="mt-3">
             <View className="flex-row items-center gap-2">
-              <ListChecks size={15} color={C.amber} />
-              <Mono bold color={C.amber} className="text-[13px]" tracking={1.5}>
+              <ListChecks size={15} color={C.gold} />
+              <Mono bold color={C.gold} className="text-[13px]" tracking={1.5}>
                 BOUNDARY ORDER
               </Mono>
             </View>
@@ -633,12 +633,12 @@ export default function ProtectionBlueprint() {
 
         {/* DRILL LOG */}
         <View className="mt-10">
-          <Eyebrow color={C.violet}>DRILL LOG</Eyebrow>
+          <Eyebrow color={C.purple}>DRILL LOG</Eyebrow>
           <Display className="mt-2 text-3xl">How the pivots went.</Display>
           {sims.length === 0 ? (
-            <Panel tint={C.violet} fill={0.05} stroke={0.16} className="mt-4">
+            <Panel tint={C.purple} fill={0.05} stroke={0.16} className="mt-4">
               <View className="flex-row items-start gap-3">
-                <Radio size={16} color={C.violet} />
+                <Radio size={16} color={C.purple} />
                 <Mono className="flex-1 text-[13px]">
                   No Midnight Sims run yet. Each drill takes about a minute and shows what a
                   redundant layer buys you.
@@ -648,7 +648,7 @@ export default function ProtectionBlueprint() {
           ) : (
             <View className="mt-4 gap-2">
               <View className="flex-row flex-wrap gap-2">
-                <Chip label={`${sims.length}/${availableScenarios.length} RUN`} tint={C.violet} />
+                <Chip label={`${sims.length}/${availableScenarios.length} RUN`} tint={C.purple} />
                 <Chip label={`${bestRuns} BEST CALLS`} tint={C.yes} />
               </View>
               {sims.map(([id, result]) => {
@@ -788,11 +788,11 @@ export default function ProtectionBlueprint() {
           </View>
         </Panel>
 
-        <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-3">
+        <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-3">
           <View className="flex-row items-start gap-3">
-            <HeartPulse size={16} color={C.lemon} />
+            <HeartPulse size={16} color={C.gold} />
             <View className="flex-1">
-              <Eyebrow color={C.lemon} className="mb-1.5">
+              <Eyebrow color={C.gold} className="mb-1.5">
                 MEDICAL DISCLAIMER
               </Eyebrow>
               <Mono className="text-[13px]">{DISCLAIMER}</Mono>

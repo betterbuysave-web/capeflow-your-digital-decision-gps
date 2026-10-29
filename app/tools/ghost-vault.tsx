@@ -36,9 +36,9 @@ export default function HealthcareAnxietyAudit() {
   if (!hydrated)
     return (
       <View className="bg-paper flex-1">
-        <StackHeader title="Healthcare Anxiety Audit" tint={C.violet} fallback="/(tabs)/tools" />
+        <StackHeader title="Healthcare Anxiety Audit" tint={C.purple} fallback="/(tabs)/tools" />
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator color={C.violet} accessibilityLabel="Opening healthcare audit" />
+          <ActivityIndicator color={C.purple} accessibilityLabel="Opening healthcare audit" />
         </View>
       </View>
     );
@@ -59,7 +59,7 @@ function HealthcareAuditContent() {
   return (
     <View className="bg-paper flex-1">
       <NotebookBackdrop tint={C.magenta} />
-      <StackHeader title="Healthcare Anxiety Audit" tint={C.violet} fallback="/(tabs)/tools" />
+      <StackHeader title="Healthcare Anxiety Audit" tint={C.purple} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -76,7 +76,7 @@ function HealthcareAuditContent() {
           </Body>
           <ActivityGuide
             className="mt-5"
-            tint={C.violet}
+            tint={C.purple}
             minutes={10}
             what={
               'A "healthcare ghost" is a fear that stops you from getting care, like being scared to call or worried about cost. Naming it makes it smaller.'

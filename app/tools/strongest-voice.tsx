@@ -549,8 +549,8 @@ function RolePlay({ track, onNext }: { track: Track; onNext: () => void }) {
         as Speaker, Listener, and Observer.
       </Body>
       <Mono className="mt-3 text-[13px]">{`CARD ${index + 1} OF ${cards.length}`}</Mono>
-      <Panel tint={C.violet} fill={0.06} stroke={0.24} className="mt-2">
-        <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
+      <Panel tint={C.purple} fill={0.06} stroke={0.24} className="mt-2">
+        <Mono bold color={C.purple} className="text-[13px]" tracking={1}>
           {card.title.toUpperCase()}
         </Mono>
         <Body className="mt-1">{card.setup}</Body>
@@ -571,7 +571,7 @@ function RolePlay({ track, onNext }: { track: Track; onNext: () => void }) {
             setRevealed(true);
           }}
           className="mt-3 min-h-12 flex-row items-center justify-center gap-2 rounded-full active:opacity-80"
-          style={{ backgroundColor: C.violet }}
+          style={{ backgroundColor: C.purple }}
         >
           <Eye size={15} color={C.paper2} />
           <Mono bold color={C.paper2} tracking={1} className="text-[13px]">
@@ -650,7 +650,7 @@ function Commit({ track }: { track: Track }) {
       />
       {track === 'blue' ? (
         <View className="mt-6">
-          <Eyebrow color={C.azure}>THE LEGACY LETTER</Eyebrow>
+          <Eyebrow color={C.magenta}>THE LEGACY LETTER</Eyebrow>
           <Body className="mt-1">{LEGACY_PROMPT}</Body>
           <Field
             label="Legacy letter"

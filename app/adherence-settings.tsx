@@ -125,7 +125,7 @@ export default function AdherenceSettings() {
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label={`${armed} ARMED`} tint={C.teal} />
             <Chip label={`${loggedToday}/${reminders.length || 0} LOGGED TODAY`} tint={C.gold} />
-            <Chip label="DEVICE ONLY" tint={C.violet} />
+            <Chip label="DEVICE ONLY" tint={C.purple} />
           </View>
 
           <View className="mt-5">
@@ -133,9 +133,9 @@ export default function AdherenceSettings() {
           </View>
 
           {!notificationsSupported ? (
-            <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-5">
+            <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-5">
               <View className="flex-row items-start gap-3">
-                <BellOff size={16} color={C.lemon} />
+                <BellOff size={16} color={C.gold} />
                 <Mono className="flex-1 text-[13px]">{ADHERENCE_WEB_NOTE}</Mono>
               </View>
             </Panel>
@@ -229,7 +229,7 @@ export default function AdherenceSettings() {
 
           {/* CUSTOM */}
           <View className="mt-10">
-            <Eyebrow color={C.violet}>YOUR OWN LABEL</Eyebrow>
+            <Eyebrow color={C.purple}>YOUR OWN LABEL</Eyebrow>
             <Mono className="mt-2 text-[13px]">
               Name it whatever makes sense to you. Vague is fine — the point is that only you know
               what it means.

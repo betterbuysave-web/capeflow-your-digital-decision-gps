@@ -100,8 +100,8 @@ export default function GreenLightPivot() {
                   </Mono>
                   <Body className="mt-1">The genuine “Heck yes!” — from you and from them.</Body>
                 </Panel>
-                <Panel tint={C.amber} fill={0.06} stroke={0.25}>
-                  <Mono bold color={C.amber} className="text-[13px]" tracking={1}>
+                <Panel tint={C.gold} fill={0.06} stroke={0.25}>
+                  <Mono bold color={C.gold} className="text-[13px]" tracking={1}>
                     THE BRAKES VS. THE GAS
                   </Mono>
                   <Body className="mt-1">

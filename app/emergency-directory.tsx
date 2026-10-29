@@ -70,15 +70,15 @@ export default function EmergencyDirectory() {
           </GradientAction>
 
           <TintedRow
-            tint={C.azure}
+            tint={C.magenta}
             fill={0.08}
             stroke={0.24}
             onPress={() => router.push('/tools/safety-circle')}
           >
             <View className="flex-row items-center gap-3">
-              <Users size={18} color={C.azure} />
+              <Users size={18} color={C.magenta} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
+                <Mono bold color={C.magenta} className="text-[13px]" tracking={1}>
                   YOUR SAFETY CIRCLE
                 </Mono>
                 <Mono className="mt-0.5 text-[12px]">
@@ -143,11 +143,11 @@ export default function EmergencyDirectory() {
           </View>
         </Panel>
 
-        <Panel tint={C.lemon} fill={0.04} stroke={0.16} className="mt-3">
+        <Panel tint={C.gold} fill={0.04} stroke={0.16} className="mt-3">
           <View className="flex-row items-start gap-3">
-            <CircleAlert size={16} color={C.lemon} />
+            <CircleAlert size={16} color={C.gold} />
             <View className="flex-1">
-              <Eyebrow color={C.lemon} className="mb-1.5">
+              <Eyebrow color={C.gold} className="mb-1.5">
                 WHAT LEAVES THIS APP
               </Eyebrow>
               <Mono className="text-[13px]">{EMERGENCY_NOTE}</Mono>

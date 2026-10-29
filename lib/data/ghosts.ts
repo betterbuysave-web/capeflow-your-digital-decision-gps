@@ -112,7 +112,7 @@ export const FEAR_STATES: FearStateInfo[] = [
   {
     id: 'cautious',
     label: 'CAUTIOUS',
-    tint: C.amber,
+    tint: C.gold,
     detail: 'Gathering information about the visit, privacy, or cost.',
   },
   {

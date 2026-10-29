@@ -39,7 +39,7 @@ export default function SafetyCircle() {
   return (
     <View className="bg-paper flex-1">
       <NotebookBackdrop />
-      <StackHeader title="Safety Circle" tint={C.azure} fallback="/(tabs)/tools" />
+      <StackHeader title="Safety Circle" tint={C.magenta} fallback="/(tabs)/tools" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         className="flex-1"
@@ -50,7 +50,7 @@ export default function SafetyCircle() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <Eyebrow color={C.azure}>SAFETY CIRCLE</Eyebrow>
+          <Eyebrow color={C.magenta}>SAFETY CIRCLE</Eyebrow>
           <Display className="mt-2 text-4xl">Three people who answer at 2 AM.</Display>
           <Body className="mt-3">
             Pick a mix: one peer, one adult, one backup. Tell them they are on your list and agree
@@ -58,7 +58,7 @@ export default function SafetyCircle() {
           </Body>
           <ActivityGuide
             className="mt-5"
-            tint={C.azure}
+            tint={C.magenta}
             minutes={5}
             what={
               'Your Safety Circle is the short list of people you can call or text when something goes wrong, any time of day.'
@@ -74,9 +74,9 @@ export default function SafetyCircle() {
 
           <View className="mt-6 gap-2.5">
             {circle.length === 0 ? (
-              <Panel tint={C.azure} fill={0.05} stroke={0.16}>
+              <Panel tint={C.magenta} fill={0.05} stroke={0.16}>
                 <View className="flex-row items-center gap-3">
-                  <UserPlus size={18} color={C.azure} />
+                  <UserPlus size={18} color={C.magenta} />
                   <Mono className="flex-1 text-[13px]">
                     No contacts yet. Add them now — searching for a number under stress is the
                     problem this solves.
@@ -89,9 +89,9 @@ export default function SafetyCircle() {
                   key={contact.id}
                   className="rounded-2xl p-4"
                   style={{
-                    backgroundColor: alpha(C.azure, 0.06),
+                    backgroundColor: alpha(C.magenta, 0.06),
                     borderWidth: 1,
-                    borderColor: alpha(C.azure, 0.2),
+                    borderColor: alpha(C.magenta, 0.2),
                   }}
                 >
                   <View className="flex-row items-start justify-between gap-3">
@@ -143,7 +143,7 @@ export default function SafetyCircle() {
           </View>
 
           <View className="mt-8">
-            <Eyebrow color={C.azure}>ADD A CONTACT</Eyebrow>
+            <Eyebrow color={C.magenta}>ADD A CONTACT</Eyebrow>
             <View className="mt-3 gap-3">
               <TextField>
                 <Label className="font-mono text-[13px]">NAME</Label>
@@ -183,14 +183,14 @@ export default function SafetyCircle() {
                         onPress={() => setRole(option)}
                         className="rounded-full px-3.5 py-2 active:opacity-70"
                         style={{
-                          backgroundColor: alpha(C.azure, active ? 0.2 : 0.05),
+                          backgroundColor: alpha(C.magenta, active ? 0.2 : 0.05),
                           borderWidth: 1,
-                          borderColor: alpha(C.azure, active ? 0.5 : 0.15),
+                          borderColor: alpha(C.magenta, active ? 0.5 : 0.15),
                         }}
                       >
                         <Mono
                           bold
-                          color={active ? C.azure : alpha(C.inkFaint, 0.8)}
+                          color={active ? C.magenta : alpha(C.inkFaint, 0.8)}
                           className="text-[13px]"
                           tracking={1}
                         >

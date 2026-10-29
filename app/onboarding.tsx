@@ -161,12 +161,12 @@ export default function Onboarding() {
                   }
                   className="rounded-full px-3 py-1.5 active:opacity-70"
                   style={{
-                    backgroundColor: alpha(C.azure, 0.08),
+                    backgroundColor: alpha(C.magenta, 0.08),
                     borderWidth: 1,
-                    borderColor: alpha(C.azure, 0.3),
+                    borderColor: alpha(C.magenta, 0.3),
                   }}
                 >
-                  <Mono bold color={C.azure} className="text-[12px]">
+                  <Mono bold color={C.magenta} className="text-[12px]">
                     {item.label}
                   </Mono>
                 </Pressable>

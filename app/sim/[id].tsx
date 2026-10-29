@@ -81,17 +81,17 @@ export default function SimDetail() {
   return (
     <View className="bg-paper flex-1">
       <NotebookBackdrop />
-      <StackHeader title="Midnight Sim" tint={C.violet} fallback="/(tabs)/tools" />
+      <StackHeader title="Midnight Sim" tint={C.purple} fallback="/(tabs)/tools" />
       <ScrollView
         className="flex-1"
         contentContainerClassName="px-5 pt-6 pb-16"
         showsVerticalScrollIndicator={false}
       >
-        <Eyebrow color={C.violet}>{scenario.time} · STRESS TEST</Eyebrow>
+        <Eyebrow color={C.purple}>{scenario.time} · STRESS TEST</Eyebrow>
         <Display className="mt-2 text-4xl">{scenario.title}</Display>
         <ActivityGuide
           className="mt-5"
-          tint={C.violet}
+          tint={C.purple}
           minutes={3}
           what={
             "A Midnight Sim is a practice run of a hard moment. No grades — practice feedback only. You earn XP for finishing a scenario, not for picking a 'right' answer."
@@ -105,14 +105,14 @@ export default function SimDetail() {
           outcome={'a plan for this moment before it happens.'}
         />
 
-        <Panel tint={C.violet} fill={0.06} stroke={0.22} className="mt-5">
+        <Panel tint={C.purple} fill={0.06} stroke={0.22} className="mt-5">
           <Mono className="text-[13px]">{scenario.setup}</Mono>
           <View
             className="mt-4 ml-auto max-w-[90%] rounded-2xl px-4 py-3"
             style={{
-              backgroundColor: alpha(C.azure, 0.1),
+              backgroundColor: alpha(C.magenta, 0.1),
               borderWidth: 1,
-              borderColor: alpha(C.azure, 0.28),
+              borderColor: alpha(C.magenta, 0.28),
             }}
           >
             <Mono className="text-[14px]">{scenario.message}</Mono>
@@ -120,7 +120,7 @@ export default function SimDetail() {
               {scenario.bubbleTime}
             </Mono>
           </View>
-          <Eyebrow color={C.violet} className="mt-5">
+          <Eyebrow color={C.purple} className="mt-5">
             {scenario.prompt}
           </Eyebrow>
           <View className="mt-3 gap-2">
@@ -174,10 +174,10 @@ export default function SimDetail() {
                 </Mono>
               ) : null}
             </Panel>
-            <Panel tint={C.flame} fill={0.08} stroke={0.3}>
+            <Panel tint={C.purple} fill={0.08} stroke={0.3}>
               <View className="flex-row items-center gap-2">
-                <Zap size={17} color={C.flame} />
-                <Eyebrow color={C.flame}>THE PIVOT</Eyebrow>
+                <Zap size={17} color={C.purple} />
+                <Eyebrow color={C.purple}>THE PIVOT</Eyebrow>
               </View>
               <Mono bold className="mt-3 text-[13px]">
                 {pivot.trigger}

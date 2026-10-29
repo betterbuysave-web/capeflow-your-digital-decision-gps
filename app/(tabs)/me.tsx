@@ -120,8 +120,8 @@ export default function Me() {
           <View className="mt-3 flex-row flex-wrap gap-2">
             {gradeBand ? <Chip label={`GRADES ${gradeBand}`} tint={C.gold} /> : null}
             <Chip label={`${xp} XP`} tint={C.teal} />
-            <Chip label={`${streak}-DAY STREAK`} tint={C.flame} />
-            <Chip label={`${badges.length}/${BADGES.length} BADGES`} tint={C.violet} />
+            <Chip label={`${streak}-DAY STREAK`} tint={C.gold} />
+            <Chip label={`${badges.length}/${BADGES.length} BADGES`} tint={C.purple} />
           </View>
         </Panel>
 
@@ -146,21 +146,21 @@ export default function Me() {
               detail={`${doneScenarios} of ${availableScenarios.length}`}
               weight="22 pts"
               value={(doneScenarios / availableScenarios.length) * 100}
-              tint={C.violet}
+              tint={C.purple}
             />
             <ScoreRow
               label="BOUNDARY MENU"
               detail={`${Object.keys(boundaries).length} of ${TOTALS.boundaries}`}
               weight={gradeBand === '9-12' ? '14 pts' : '24 pts'}
               value={(Object.keys(boundaries).length / TOTALS.boundaries) * 100}
-              tint={C.amber}
+              tint={C.gold}
             />
             <ScoreRow
               label="SAFETY CIRCLE"
               detail={`${circle.length} of 3`}
               weight="14 pts"
               value={(Math.min(circle.length, 3) / 3) * 100}
-              tint={C.azure}
+              tint={C.magenta}
             />
             {gradeBand === '9-12' ? (
               <ScoreRow
@@ -216,15 +216,15 @@ export default function Me() {
           </TintedRow>
 
           <TintedRow
-            tint={C.azure}
+            tint={C.magenta}
             fill={0.06}
             stroke={0.2}
             onPress={() => router.push('/educational-library')}
           >
             <View className="flex-row items-center gap-3">
-              <Library size={18} color={C.azure} />
+              <Library size={18} color={C.magenta} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
+                <Mono bold color={C.magenta} className="text-[13px]" tracking={1}>
                   EDUCATIONAL LIBRARY
                 </Mono>
                 <Mono className="mt-0.5 text-[12px]">
@@ -266,15 +266,15 @@ export default function Me() {
           </TintedRow>
 
           <TintedRow
-            tint={C.violet}
+            tint={C.purple}
             fill={0.06}
             stroke={0.2}
             onPress={() => router.push('/parents')}
           >
             <View className="flex-row items-center gap-3">
-              <Users size={18} color={C.violet} />
+              <Users size={18} color={C.purple} />
               <View className="flex-1">
-                <Mono bold color={C.violet} className="text-[13px]" tracking={1}>
+                <Mono bold color={C.purple} className="text-[13px]" tracking={1}>
                   PARENT &amp; SCHOOL DASHBOARD
                 </Mono>
                 <Mono className="mt-0.5 text-[12px]">
@@ -284,11 +284,11 @@ export default function Me() {
             </View>
           </TintedRow>
 
-          <TintedRow tint={C.azure} fill={0.06} stroke={0.2} onPress={() => router.push('/legal')}>
+          <TintedRow tint={C.magenta} fill={0.06} stroke={0.2} onPress={() => router.push('/legal')}>
             <View className="flex-row items-center gap-3">
-              <FileText size={18} color={C.azure} />
+              <FileText size={18} color={C.magenta} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
+                <Mono bold color={C.magenta} className="text-[13px]" tracking={1}>
                   LEGAL &amp; PRIVACY
                 </Mono>
                 <Mono className="mt-0.5 text-[12px]">

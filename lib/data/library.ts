@@ -45,7 +45,7 @@ export const LIBRARY_CATEGORIES: LibraryCategoryInfo[] = [
     id: 'digital',
     label: 'DIGITAL SAFETY',
     emoji: '📱',
-    tint: C.azure,
+    tint: C.magenta,
     blurb: 'Footprint, image pressure, the 3-Second Rule, and account hygiene.',
   },
   {

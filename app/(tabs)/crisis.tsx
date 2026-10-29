@@ -184,15 +184,15 @@ export default function Crisis() {
           ) : null}
 
           <TintedRow
-            tint={C.azure}
+            tint={C.magenta}
             fill={0.07}
             stroke={0.22}
             onPress={() => router.push('/tools/safety-circle')}
           >
             <View className="flex-row items-center gap-3">
-              <Users size={18} color={C.azure} />
+              <Users size={18} color={C.magenta} />
               <View className="flex-1">
-                <Mono bold color={C.azure} className="text-[13px]" tracking={1}>
+                <Mono bold color={C.magenta} className="text-[13px]" tracking={1}>
                   OPEN YOUR SAFETY CIRCLE
                 </Mono>
                 <Mono className="mt-0.5 text-[12px]">
@@ -224,11 +224,11 @@ export default function Crisis() {
           </TintedRow>
         </View>
 
-        <Panel tint={C.lemon} fill={0.05} stroke={0.2} className="mt-8">
+        <Panel tint={C.gold} fill={0.05} stroke={0.2} className="mt-8">
           <View className="flex-row items-start gap-3">
-            <CircleAlert size={18} color={C.lemon} />
+            <CircleAlert size={18} color={C.gold} />
             <View className="flex-1">
-              <Eyebrow color={C.lemon} className="mb-2">
+              <Eyebrow color={C.gold} className="mb-2">
                 IMPORTANT DISCLAIMER
               </Eyebrow>
               <Mono className="text-[13px]">{DISCLAIMER}</Mono>

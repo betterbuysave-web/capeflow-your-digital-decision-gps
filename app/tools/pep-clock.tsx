@@ -211,9 +211,9 @@ export default function PepClock() {
             </Mono>
           </Panel>
 
-          <Panel tint={C.lemon} fill={0.05} stroke={0.2}>
+          <Panel tint={C.gold} fill={0.05} stroke={0.2}>
             <View className="flex-row items-start gap-2.5">
-              <CircleAlert size={15} color={C.lemon} />
+              <CircleAlert size={15} color={C.gold} />
               <Mono className="flex-1 text-[13px]">
                 This clock is a reminder, not medical advice or a prescription. Only a clinician can
                 decide whether PEP is right for your situation. In an emergency, call 911.

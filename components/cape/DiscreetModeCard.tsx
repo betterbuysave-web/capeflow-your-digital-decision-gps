@@ -68,10 +68,10 @@ export function DiscreetModeCard({ className }: { className?: string }) {
         : 'Enter your PIN to turn it off';
 
   return (
-    <Panel tint={C.violet} fill={0.05} stroke={0.2} className={className}>
+    <Panel tint={C.purple} fill={0.05} stroke={0.2} className={className}>
       <View className="flex-row items-center gap-2">
-        {on ? <ShieldCheck size={16} color={C.violet} /> : <EyeOff size={16} color={C.violet} />}
-        <Eyebrow color={C.violet}>{on ? 'DISCREET MODE · ON' : 'DISCREET MODE'}</Eyebrow>
+        {on ? <ShieldCheck size={16} color={C.purple} /> : <EyeOff size={16} color={C.purple} />}
+        <Eyebrow color={C.purple}>{on ? 'DISCREET MODE · ON' : 'DISCREET MODE'}</Eyebrow>
       </View>
       <Body className="mt-2">
         {blue
@@ -89,11 +89,11 @@ export function DiscreetModeCard({ className }: { className?: string }) {
           className="mt-4 min-h-12 items-center justify-center rounded-full active:opacity-80"
           style={
             on
-              ? { borderWidth: 1, borderColor: alpha(C.violet, 0.5) }
-              : { backgroundColor: C.violet }
+              ? { borderWidth: 1, borderColor: alpha(C.purple, 0.5) }
+              : { backgroundColor: C.purple }
           }
         >
-          <Mono bold color={on ? C.violet : C.paper2} tracking={1} className="text-[13px]">
+          <Mono bold color={on ? C.purple : C.paper2} tracking={1} className="text-[13px]">
             {on ? 'TURN OFF DISCREET MODE' : 'TURN ON DISCREET MODE'}
           </Mono>
         </Pressable>

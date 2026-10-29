@@ -159,7 +159,7 @@ export default function ClinicFinder() {
           <View className="mt-4 flex-row flex-wrap gap-2">
             <Chip label="NO ZIP STORED" tint={C.teal} />
             <Chip label="SLIDING SCALE OPTIONS" tint={C.gold} />
-            <Chip label="OPENS IN YOUR BROWSER" tint={C.violet} />
+            <Chip label="OPENS IN YOUR BROWSER" tint={C.purple} />
           </View>
 
           {/* SEARCH */}
@@ -392,8 +392,8 @@ export default function ClinicFinder() {
             <Mono className="text-[13px]">{CLINIC_COST_NOTE}</Mono>
           </Panel>
 
-          <Panel tint={C.azure} fill={0.05} stroke={0.18} className="mt-3">
-            <Eyebrow color={C.azure} className="mb-1.5">
+          <Panel tint={C.magenta} fill={0.05} stroke={0.18} className="mt-3">
+            <Eyebrow color={C.magenta} className="mb-1.5">
               CONFIDENTIALITY — ASK TWO QUESTIONS
             </Eyebrow>
             <Mono className="text-[13px]">{CLINIC_CONFIDENTIALITY_NOTE}</Mono>

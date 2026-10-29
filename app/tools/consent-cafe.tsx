@@ -75,8 +75,8 @@ export default function ConsentCafe() {
 
   return (
     <View className="bg-paper flex-1">
-      <NotebookBackdrop tint={C.amber} />
-      <StackHeader title="The Consent Café" tint={C.amber} fallback="/(tabs)/tools" />
+      <NotebookBackdrop tint={C.gold} />
+      <StackHeader title="The Consent Café" tint={C.gold} fallback="/(tabs)/tools" />
       <JourneyBar active={station} visited={visited} onSelect={go} />
 
       <KeyboardAvoidingView
@@ -91,7 +91,7 @@ export default function ConsentCafe() {
         >
           <ActivityGuide
             className="mb-6"
-            tint={C.amber}
+            tint={C.gold}
             minutes={STATION_GUIDE[station].minutes}
             what={STATION_GUIDE[station].what}
             steps={STATION_GUIDE[station].steps}
@@ -106,7 +106,7 @@ export default function ConsentCafe() {
           {nextStation ? (
             <NextStepButton
               label={`NEXT STATION: ${nextStation.label}`}
-              tint={C.amber}
+              tint={C.gold}
               onPress={() => go(nextStation.id)}
             />
           ) : null}

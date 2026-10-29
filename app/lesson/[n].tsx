@@ -38,7 +38,7 @@ export default function LessonScreen() {
     );
   }
 
-  const tint = lesson.track === 'blue' ? C.azure : C.teal;
+  const tint = lesson.track === 'blue' ? C.blueTrack : C.teal;
   const header = `Lesson ${lesson.number}`;
 
   if (!lessonUnlocked(lesson, track)) return <Redirect href="/(tabs)/learn" />;
