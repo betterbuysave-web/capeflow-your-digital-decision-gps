@@ -25,7 +25,7 @@ import { TRACKS, type GradeBand, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
 /** match-compass-title.webp is cropped tight to the art (1780 × 235), so no empty bands above or below. */
-const TITLE_ASPECT = 1780 / 235;
+const TITLE_ASPECT = 1200 / 677;
 
 /**
  * The M.A.T.C.H. Compass: supplied compass artwork with tappable node markers.
@@ -58,12 +58,12 @@ export function MatchCompass({
   return (
     <View onLayout={({ nativeEvent }) => setTitleWidth(nativeEvent.layout.width)}>
       <Image
-        source={require('@/assets/images/match-compass-title.webp')}
+        source={require('@/assets/images/match-compass-3d.webp')}
         accessible
         accessibilityRole="image"
         accessibilityLabel="M.A.T.C.H. Compass title logo, with five colored letter badges and a gold compass on a red cape"
         resizeMode="contain"
-        style={{ width: '100%', height: titleWidth / TITLE_ASPECT, marginBottom: 12 }}
+        style={{ width: '100%', height: titleWidth / TITLE_ASPECT, marginBottom: 12, borderRadius: 12 }}
       />
       {preview ? (
         <View className="flex-row flex-wrap items-center gap-2">
