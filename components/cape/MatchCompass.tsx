@@ -61,7 +61,7 @@ export function MatchCompass({
         source={require('@/assets/images/match-compass-3d.webp')}
         accessible
         accessibilityRole="image"
-        accessibilityLabel="M.A.T.C.H. Compass title logo, with five colored letter badges and a gold compass on a red cape"
+        accessibilityLabel="M.A.T.C.H. Compass title logo: five colored letter coins, and a watch with a compass face resting on a red cape"
         resizeMode="contain"
         style={{ width: '100%', height: titleWidth / TITLE_ASPECT, marginBottom: 12 }}
       />
