@@ -24,7 +24,7 @@ import { COMPASS_NODES, type CompassNode, nodeBullets } from '@/lib/data/compass
 import { TRACKS, type GradeBand, trackFor } from '@/lib/data/content';
 import { moduleProgress, useCapeStore } from '@/lib/store/useCapeStore';
 
-/** match-compass-title.webp is cropped tight to the art (1780 × 235), so no empty bands above or below. */
+/** match-compass-3d.webp is cropped tight to the art (1200 × 618), so no empty bands above or below. */
 const TITLE_ASPECT = 1200 / 618;
 
 /**
