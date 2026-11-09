@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import {
@@ -10,7 +10,6 @@ import {
   Shield,
   Stethoscope,
   Users,
-  X,
 } from '@/lib/icons';
 
 import { MatchDial } from '@/components/cape/MatchDial';
@@ -27,7 +26,6 @@ import {
   DISCLAIMER,
   GRADE_BANDS,
   PARENT_CARDS,
-  PRIVACY_SHORT,
   SOURCES,
   SOURCES_CHECKED,
 } from '@/lib/data/content';
@@ -42,10 +40,7 @@ import { useCapeStore } from '@/lib/store/useCapeStore';
  */
 export function Landing({ gateMode = false }: { gateMode?: boolean }) {
   const onboarded = useCapeStore((s) => s.onboarded);
-  const privacyAcknowledged = useCapeStore((s) => s.privacyAcknowledged);
-  const acknowledgePrivacy = useCapeStore((s) => s.acknowledgePrivacy);
   const registerVisit = useCapeStore((s) => s.registerVisit);
-  const [showPrivacy, setShowPrivacy] = useState(true);
   const returning = onboarded && gateMode;
 
   useEffect(() => {
@@ -464,39 +459,6 @@ export function Landing({ gateMode = false }: { gateMode?: boolean }) {
           <BrandFooter className="mt-12 w-full" />
         </View>
       </ScrollView>
-
-      {(!privacyAcknowledged || returning) && showPrivacy ? (
-        <View className="pb-safe-offset-4 absolute right-0 bottom-0 left-0 px-4">
-          <Panel tint={C.teal} fill={0.08} stroke={0.25} className="bg-paper-2">
-            <View className="flex-row items-start justify-between gap-3">
-              <View className="flex-1">
-                <Eyebrow color={C.teal} className="mb-1.5">
-                  ZERO STIGMA TAX — NO TRACKING
-                </Eyebrow>
-                <Mono className="text-[12px]">{PRIVACY_SHORT}</Mono>
-              </View>
-              <GradientAction
-                accessibilityLabel="Dismiss privacy notice"
-                onPress={() => setShowPrivacy(false)}
-                className="h-11 w-11 items-center justify-center rounded-full"
-              >
-                <X size={16} color={C.paper2} />
-              </GradientAction>
-            </View>
-            <GradientAction
-              onPress={() => {
-                acknowledgePrivacy();
-                setShowPrivacy(false);
-              }}
-              className="mt-3 self-start rounded-full px-4 py-2"
-            >
-              <Mono bold color={C.paper2} className="text-[13px]" tracking={1}>
-                GOT IT
-              </Mono>
-            </GradientAction>
-          </Panel>
-        </View>
-      ) : null}
     </View>
   );
 }
