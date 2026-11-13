@@ -259,7 +259,8 @@ export default function CareNavigator() {
               <Panel tint={TINT} fill={0.1} stroke={0.35} className="mt-4">
                 <Display className="text-3xl">{`“${DESK_SCRIPT}”`}</Display>
                 <Mono className="mt-2 text-[13px]">
-                  In Harris County, ask about the Harris Health Gold Card. For a possible HIV
+                  In Harris County, ask about the Harris Health Financial Assistance Program
+                  (once called the Gold Card). For a possible HIV
                   exposure, add: “I need to be evaluated for PEP now.”
                 </Mono>
               </Panel>
